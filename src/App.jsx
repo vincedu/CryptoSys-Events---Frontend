@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SetUser from './components/setUser';
-import Username from './components/username';
+import SetUser from './components/SetUser';
+import Username from './components/Username';
 
 function App() {
     return (
