@@ -14,7 +14,6 @@ class SetUser extends React.Component {
     };
 
     handleSetUser = () => {
-        // eslint-disable-next-line react/destructuring-assignment
         this.props.setUser(this.state.input);
         this.setState({ input: '' });
     };
@@ -37,4 +36,3 @@ SetUser.propTypes = {
 };
 
 export default connect(null, { setUser })(SetUser);
-// export default SetUser;
