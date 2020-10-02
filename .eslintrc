@@ -8,6 +8,7 @@
     },
     "rules": {
         "import/prefer-default-export": 0,
-        "react/destructuring-assignment": 0
+        "react/destructuring-assignment": 0,
+        "prefer-destructuring": 0
     }
 }
