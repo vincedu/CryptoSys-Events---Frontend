@@ -11,6 +11,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "date-fns": "^2.16.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "material-ui-chip-input": "^2.0.0-beta.2",
     "firebase": "^7.21.1",
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
