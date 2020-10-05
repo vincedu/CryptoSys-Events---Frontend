@@ -1,23 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import SetUser from './components/SetUser';
-import Username from './components/Username';
+import NavBar from './components/NavBar';
+import LearnReact from './components/LearnReact';
+import SignIn from './components/SignIn';
+import HowItWorks from './components/help/HowItWorks';
+import HelpCenter from './components/help/HelpCenter';
+import TicketCreation from './scenes/EventCreation/TicketCreation/TicketCreation';
+import EventCreation from './scenes/EventCreation/index';
 
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <Username />
-                <SetUser />
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload!
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
+            <NavBar />
+            <Switch>
+                <Route exact path="/" component={LearnReact} />
+                <Route exact path="/signIn" component={SignIn} />
+                <Route exact path="/howItWorks" component={HowItWorks} />
+                <Route exact path="/helpCenter" component={HelpCenter} />
+                <Route exact path="/createTicket" component={TicketCreation} />
+                <Route exact path="/createEvent" component={EventCreation} />
+            </Switch>
         </div>
     );
 }

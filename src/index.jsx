@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
@@ -12,7 +13,9 @@ ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <ThemeProvider theme={theme}>
-                <App />
+                <Router>
+                    <App />
+                </Router>
             </ThemeProvider>
         </Provider>
     </React.StrictMode>,

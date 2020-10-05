@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
+import TicketCreation from './TicketCreation/TicketCreation';
 import theme from '../../theme';
 
 const useStyles = makeStyles((t) => ({
@@ -21,6 +22,7 @@ const EventCreation = () => {
                 <GeneralInfo />
                 <Location />
                 <DateTime />
+                <TicketCreation />
             </Grid>
         </Grid>
     );
