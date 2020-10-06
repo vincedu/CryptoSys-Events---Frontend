@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import { DatePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Grid } from '@material-ui/core';
 
-import format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
-import frLocale from 'date-fns/locale/fr';
 
 import { TitledPaper } from '@components/TitledPaper';
 
-class LocalizedUtils extends DateFnsUtils {
-    getDatePickerHeaderText(date) {
-        return format(date, 'd MMM yyyy', { locale: this.locale });
-    }
-}
-
-function DateTime() {
-    const [startDate, handleStartDateChange] = useState(new Date());
-    const [endDate, handleEndDateChange] = useState(new Date());
+const DateTime = (props) => {
+    const handleChange = (name, value) => {
+        props.onChange(name, value);
+    };
 
     return (
         <div style={{ padding: 20 }}>
@@ -26,40 +20,90 @@ function DateTime() {
                     puissent planifier au mieux leur venue.
                 </p>
                 <Grid container>
-                    <Grid item sm={4} xs={8}>
-                        <h3>Début</h3>
-                        <MuiPickersUtilsProvider utils={LocalizedUtils} locale={frLocale}>
-                            <DatePicker
-                                value={startDate}
-                                onChange={handleStartDateChange}
-                                format="d MMM yyyy"
-                                clearLabel="vider"
-                                cancelLabel="annuler"
-                            />
-                            <TimePicker value={startDate} onChange={handleStartDateChange} />
-                        </MuiPickersUtilsProvider>
-                    </Grid>
-                    <Grid item sm={4} xs={8}>
-                        <h3>Fin</h3>
-                        <MuiPickersUtilsProvider utils={LocalizedUtils} locale={frLocale}>
-                            <DatePicker
-                                value={endDate}
-                                onChange={handleEndDateChange}
-                                format="d MMM yyyy"
-                                clearLabel="vider"
-                                cancelLabel="annuler"
-                            />
-                            <TimePicker value={endDate} onChange={handleEndDateChange} />
-                        </MuiPickersUtilsProvider>
-                    </Grid>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <KeyboardDatePicker
+                                    required
+                                    margin="normal"
+                                    inputVariant="outlined"
+                                    label="Start Date"
+                                    format="MM/dd/yyyy"
+                                    name="startDate"
+                                    value={props.value.startDate.value}
+                                    error={props.value.startDate.error}
+                                    onChange={(event) => handleChange('startDate', event)}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <KeyboardTimePicker
+                                    required
+                                    margin="normal"
+                                    inputVariant="outlined"
+                                    label="Start Time"
+                                    name="startDate"
+                                    value={props.value.startDate.value}
+                                    error={props.value.startDate.error}
+                                    onChange={(event) => handleChange('startDate', event)}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change time',
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <KeyboardDatePicker
+                                    required
+                                    margin="normal"
+                                    inputVariant="outlined"
+                                    label="End Date"
+                                    format="MM/dd/yyyy"
+                                    name="endDate"
+                                    value={props.value.endDate.value}
+                                    error={props.value.endDate.error}
+                                    onChange={(event) => handleChange('endDate', event)}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <KeyboardTimePicker
+                                    required
+                                    margin="normal"
+                                    inputVariant="outlined"
+                                    label="End Time"
+                                    name="endDate"
+                                    value={props.value.endDate.value}
+                                    error={props.value.endDate.error}
+                                    onChange={(event) => handleChange('endDate', event)}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change time',
+                                    }}
+                                />
+                            </Grid>
+                        </Grid>
+                    </MuiPickersUtilsProvider>
                 </Grid>
             </TitledPaper>
         </div>
     );
-}
+};
 
-// export default connect(
-//   null,
-//   {  }
-// )(GeneralInfo);
+DateTime.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.shape({
+        startDate: PropTypes.shape({
+            value: PropTypes.instanceOf(Date),
+            error: PropTypes.bool,
+        }),
+        endDate: PropTypes.shape({
+            value: PropTypes.instanceOf(Date),
+            error: PropTypes.bool,
+        }),
+    }).isRequired,
+};
+
 export default DateTime;
