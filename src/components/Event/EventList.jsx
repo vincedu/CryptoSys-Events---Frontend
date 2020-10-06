@@ -1,10 +1,20 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import EventItem from './EventItem';
 
+const useStyles = makeStyles({
+    seeMoreBtn: {
+        padding: 30,
+    },
+});
+
 export default function EventList(props) {
+    const classes = useStyles();
+
     // Fetch events from DB
     // TODO potentiellement à changer de file
     function FetchEvents(category) {
@@ -81,7 +91,8 @@ export default function EventList(props) {
                 {
                     id: 5,
                     name: 'Virtual African music',
-                    description: 'African music event blablabla',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
@@ -93,7 +104,8 @@ export default function EventList(props) {
                 {
                     id: 6,
                     name: 'Virtual Dance music',
-                    description: 'Dance music event blablabla',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
@@ -108,6 +120,7 @@ export default function EventList(props) {
 
     EventList.propTypes = {
         category: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
     };
 
     const events = FetchEvents(props.category);
@@ -127,6 +140,12 @@ export default function EventList(props) {
                         />
                     ))}
                 </Grid>
+                <div className={classes.seeMoreBtn}>
+                    {/* TODO Put link to specific category */}
+                    <Button variant="outlined" component={RouterLink} to={`/category/${props.id}`}>
+                        See More {props.category}
+                    </Button>
+                </div>
             </div>
         );
     }

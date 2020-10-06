@@ -2,58 +2,62 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import Typography from '@material-ui/core/Typography';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import { Link as RouterLink } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
-    root: {
-        maxWidth: 345,
-    },
     img: {
         maxWidth: '100%',
         minHeight: '100%',
         display: 'block',
     },
-    event: {
-        height: '100%',
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
     },
 });
 
 export default function EventItem(props) {
     const classes = useStyles();
 
+    // TODO Fix some props type
     EventItem.propTypes = {
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
     };
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3}>
-            <Card className={classes.event}>
-                <CardActionArea>
-                    <Grid container spacing={3} direction="row" justify="flex-start">
-                        <Grid item xs={12} sm={12} md={6}>
-                            <img className={classes.img} src={props.image} alt="Event" />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={6}>
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {props.name}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {props.description}
-                                </Typography>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon />
-                                </IconButton>
-                            </CardContent>
-                        </Grid>
-                    </Grid>
+            <Card className={classes.root}>
+                {/* TODO Fix link to specific event */}
+                <CardActionArea component={RouterLink} to={`/event/${props.id}`}>
+                    <CardMedia className={classes.media} image={props.image} title={props.name} />
+                    <CardHeader
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={props.name}
+                        subheader={props.date}
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p" maxLength={10}>
+                            {props.description.length < 100
+                                ? props.description
+                                : `${props.description.substring(0, 100)}...`}
+                        </Typography>
+                    </CardContent>
                 </CardActionArea>
             </Card>
         </Grid>
