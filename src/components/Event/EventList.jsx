@@ -39,7 +39,8 @@ export default function EventList(props) {
                 {
                     id: 1,
                     name: 'Electronic music',
-                    description: 'Electronic music event blablabla',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
@@ -51,7 +52,8 @@ export default function EventList(props) {
                 {
                     id: 2,
                     name: 'African music',
-                    description: 'African music event blablabla',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
@@ -63,11 +65,12 @@ export default function EventList(props) {
                 {
                     id: 3,
                     name: 'Dance music',
-                    description: 'Dance music event blablabla',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
-                    date: 'October 13, 2020',
+                    date: 'October 14, 2020',
                     tickets: [{}],
                     tags: ['Live', 'Dance', 'Music'],
                     image: 'https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png',
@@ -79,8 +82,8 @@ export default function EventList(props) {
                 {
                     id: 4,
                     name: 'Virtual Electronic music',
-                    description: 'Electronic music event blablabla',
-                    category: 'Live concert',
+                    description:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
                     date: 'October 12, 2020',
@@ -105,11 +108,11 @@ export default function EventList(props) {
                     id: 6,
                     name: 'Virtual Dance music',
                     description:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh.',
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu lobortis magna. Suspendisse ullamcorper tempus est vitae fringilla. Sed non tellus nibh. Curabitur egestas fringilla erat, porta venenatis mi malesuada non. Donec et magna quis lorem commodo eleifend nec non neque. Morbi dignissim dolor non est cursus gravida. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed venenatis, ligula sit amet sodales commodo, turpis libero efficitur eros, sit amet ultrices velit purus aliquam mauris.',
                     category: 'Live concert',
                     format: 'Live concert',
                     location: 'Montreal Bell Center',
-                    date: 'October 13, 2020',
+                    date: 'October 14, 2020',
                     tickets: [{}],
                     tags: ['Live', 'Dance', 'Music'],
                     image: 'https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png',

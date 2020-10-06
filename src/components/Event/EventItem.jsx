@@ -13,11 +13,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
-    img: {
-        maxWidth: '100%',
-        minHeight: '100%',
-        display: 'block',
-    },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
