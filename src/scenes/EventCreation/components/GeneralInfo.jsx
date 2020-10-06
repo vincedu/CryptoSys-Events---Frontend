@@ -2,8 +2,8 @@ import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
+import { TitledPaper } from '@components/TitledPaper';
 import ImageUpload from './ImageUpload';
-import { TitledPaper } from '../../../components/TitledPaper';
 
 const galleryImageList = [
     'https://raw.githubusercontent.com/dxyang/StyleTransfer/master/style_imgs/mosaic.jpg',

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Picture from '../../../assets/temp_picture.PNG';
+import Picture from '@assets/temp_picture.PNG';
 
 const DATE_FORMAT = 'MMMM d, YYYY, h:mma';
 

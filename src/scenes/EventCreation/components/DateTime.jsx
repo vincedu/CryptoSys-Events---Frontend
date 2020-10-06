@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import DateFnsUtils from '@date-io/date-fns';
 import frLocale from 'date-fns/locale/fr';
 
-import { TitledPaper } from '../../../components/TitledPaper';
+import { TitledPaper } from '@components/TitledPaper';
 
 class LocalizedUtils extends DateFnsUtils {
     getDatePickerHeaderText(date) {

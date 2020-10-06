@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Fab, Grid, makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { TitledPaper } from '../../../components/TitledPaper';
+import { TitledPaper } from '@components/TitledPaper';
 import CreateTicketDialog from './CreateTicketDialog';
 import TicketCard from './TicketCard';
 

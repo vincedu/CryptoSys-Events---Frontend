@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
+import { TitledPaper } from '@components/TitledPaper';
 import LocationButtonGroup from './LocationButtonGroup';
-import { TitledPaper } from '../../../components/TitledPaper';
 
 class Location extends React.Component {
     constructor(props) {
