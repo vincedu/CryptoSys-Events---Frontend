@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 
 import DateFnsUtils from '@date-io/date-fns';
 
-import { TitledPaper } from '@components/TitledPaper';
+import { TitledPaper } from '@components';
 
 const DateTime = (props) => {
     const handleChange = (name, value) => {

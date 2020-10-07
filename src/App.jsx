@@ -3,13 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import './App.css';
-import NavBar from './components/NavBar';
-import SignIn from './components/SignIn';
-import HowItWorks from './components/help/HowItWorks';
-import HelpCenter from './components/help/HelpCenter';
-import { TicketCreation } from './scenes/EventCreation/TicketCreation';
-import { EventCreation } from './scenes/EventCreation';
-import EventListContainer from './components/Event/EventListContainer';
+import { NavBar } from './components';
+import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from './scenes';
+import TicketCreation from './scenes/EventCreation/components/TicketCreation';
 
 const client = new ApolloClient({
     uri: 'http://localhost:4000/graphql',
@@ -21,7 +17,7 @@ function App() {
             <div className="App">
                 <NavBar />
                 <Switch>
-                    <Route exact path="/" component={EventListContainer} />
+                    <Route exact path="/" component={EventList} />
                     <Route exact path="/signIn" component={SignIn} />
                     <Route exact path="/howItWorks" component={HowItWorks} />
                     <Route exact path="/helpCenter" component={HelpCenter} />

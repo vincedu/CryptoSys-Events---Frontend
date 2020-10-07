@@ -3,8 +3,8 @@ import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import EventList from './EventList';
-import MainEventItem from './MainEventItem';
+import EventList from './components/EventList';
+import MainEventItem from './components/MainEventItem';
 
 // import Grid from '@material-ui/core/Grid';
 

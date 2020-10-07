@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Fab, Grid, makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { TitledPaper } from '@components/TitledPaper';
-import CreateTicketDialog from './CreateTicketDialog';
-import TicketCard from './TicketCard';
+import { TitledPaper } from '@components';
+import CreateTicketDialog from './components/CreateTicketDialog';
+import TicketCard from './components/TicketCard';
 
 const useStyles = makeStyles({
     createTicketFab: {

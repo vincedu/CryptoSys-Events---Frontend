@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { createEventMutation } from '../../queries/queries';
+import { createEventMutation } from '@queries/queries';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';

@@ -1,1 +1,3 @@
-export { default as EventCreation } from './EventCreation';
+import EventCreation from './EventCreation';
+
+export default EventCreation;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
-import { TitledPaper } from '@components/TitledPaper';
+import { TitledPaper } from '@components';
 import PropTypes from 'prop-types';
 
 import ImageUpload from './ImageUpload';

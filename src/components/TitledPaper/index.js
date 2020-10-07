@@ -1,1 +1,3 @@
-export { default as TitledPaper } from './TitledPaper';
+import TitledPaper from './TitledPaper';
+
+export default TitledPaper;

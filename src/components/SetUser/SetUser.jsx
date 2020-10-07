@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setUser } from '../redux/actions';
+import { setUser } from '@redux/actions';
 
 class SetUser extends React.Component {
     constructor(props) {
