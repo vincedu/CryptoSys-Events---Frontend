@@ -2,18 +2,10 @@ import React from 'react';
 import { Grid, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
-import { TitledPaper } from '@components';
 import PropTypes from 'prop-types';
+import ImageUploader from 'react-images-upload';
 
-import ImageUpload from './ImageUpload';
-
-const galleryImageList = [
-    'https://raw.githubusercontent.com/dxyang/StyleTransfer/master/style_imgs/mosaic.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
-    'https://raw.githubusercontent.com/ShafeenTejani/fast-style-transfer/master/examples/dora-maar-picasso.jpg',
-    'https://raw.githubusercontent.com/ShafeenTejani/fast-style-transfer/master/examples/dog.jpg',
-    'http://r.ddmcdn.com/s_f/o_1/cx_462/cy_245/cw_1349/ch_1349/w_720/APL/uploads/2015/06/caturday-shutterstock_149320799.jpg',
-];
+import { TitledPaper } from '@components';
 
 const GeneralInfo = (props) => {
     const handleTextChange = (event) => {
@@ -114,8 +106,18 @@ const GeneralInfo = (props) => {
                             }}
                         />
                     </Grid>
+
                     <Grid item xs={12} sm={4}>
-                        <ImageUpload cardName="Input Image" imageGallery={galleryImageList} />
+                        <ImageUploader
+                            withIcon
+                            singleImage
+                            withPreview
+                            buttonText="Choose Image"
+                            onChange={props.onImageUpload}
+                            imgExtension={['.jpg', '.gif', '.png']}
+                            maxFileSize={5242880}
+                        />
+                        {/* <ImageUpload cardName="Input Image" imageGallery={galleryImageList} /> */}
                     </Grid>
                 </Grid>
             </TitledPaper>
@@ -127,12 +129,15 @@ const propString = PropTypes.shape({
     value: PropTypes.string,
     error: PropTypes.bool,
 });
+
 const propArray = PropTypes.shape({
     value: PropTypes.arrayOf(PropTypes.string),
     error: PropTypes.bool,
 });
+
 GeneralInfo.propTypes = {
     onChange: PropTypes.func.isRequired,
+    onImageUpload: PropTypes.func.isRequired,
     value: PropTypes.shape({
         name: propString,
         description: propString,

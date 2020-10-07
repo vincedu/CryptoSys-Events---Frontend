@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
 const createEventMutation = gql`
     mutation(
@@ -6,6 +6,7 @@ const createEventMutation = gql`
         $description: String!
         $type: String!
         $category: String!
+        $imageFile: Upload!
         $languages: [String]!
         $tags: [String]!
         $location: String
@@ -19,6 +20,7 @@ const createEventMutation = gql`
                 description: $description
                 type: $type
                 category: $category
+                imageFile: $imageFile
                 languages: $languages
                 tags: $tags
                 location: { type: $locationType, location: $location }
@@ -33,4 +35,11 @@ const createEventMutation = gql`
     }
 `;
 
-export { createEventMutation };
+const uploadFileMutation = gql`
+    mutation($file: Upload!) {
+        uploadFile(file: $file) {
+            uri
+        }
+    }
+`;
+export { createEventMutation, uploadFileMutation };

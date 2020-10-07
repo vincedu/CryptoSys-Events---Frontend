@@ -65,23 +65,25 @@ const useStyles = makeStyles((t) => ({
 const EventCreation = (props) => {
     const classes = useStyles(theme);
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
+    const [eventImage, setEventImage] = useState(undefined);
 
     const handleFormChange = (field, value) => {
         setForm({ ...form, [field]: { value, error: false } });
     };
+
     const handleSubmit = () => {
         const variables = {};
         Object.keys(form).forEach((key) => {
             variables[key] = form[key].value;
         });
-        console.log('SUBMITTING', variables);
-        props.mutate({ variables });
+
+        props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
     };
     return (
         <Grid container direction="column" justify="flex-start" alignItems="stretch" className={classes.root}>
             <Typography variant="h3">Création d&apos;événement</Typography>
             <Grid item sm={12}>
-                <GeneralInfo value={form} onChange={handleFormChange} />
+                <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
                 <Location value={form} onChange={handleFormChange} />
                 <DateTime value={form} onChange={handleFormChange} />
                 <Grid container justify="center" className={classes.submit}>
@@ -102,4 +104,5 @@ const EventCreation = (props) => {
 EventCreation.propTypes = {
     mutate: PropTypes.func.isRequired,
 };
+
 export default graphql(createEventMutation)(EventCreation);
