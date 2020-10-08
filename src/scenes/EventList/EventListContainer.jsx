@@ -36,14 +36,6 @@ export default function EventListContainer() {
                 id: 1,
                 name: 'Live Concert',
             },
-            {
-                id: 2,
-                name: 'Virtual Concert',
-            },
-            {
-                id: 3,
-                name: 'Virtual Gaming',
-            },
         ];
     }
     const categories = FetchCategories();

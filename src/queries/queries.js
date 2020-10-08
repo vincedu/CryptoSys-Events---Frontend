@@ -35,4 +35,17 @@ const createEventMutation = gql`
     }
 `;
 
-export { createEventMutation };
+const eventsQuery = gql`
+    query {
+        events {
+            name
+            description
+            type
+            category
+            image
+            startDate
+        }
+    }
+`;
+
+export { createEventMutation, eventsQuery };
