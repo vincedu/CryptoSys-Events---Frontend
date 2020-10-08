@@ -2,6 +2,8 @@ import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
+const COLLECTION_NAME = "evenko123452"
+const SCHEMA_NAME = "ticket"
 async function takeAction(action, dataValue) {
     const userName = 'accounttest2'; // Changer en prod ne pas avoir la cle prive ici
     const privateKey = '5KVqJZ4DjKAFJxumLztZczmzRoNC8A9Ko4uv8gySVHxLDwnKnbX'; // Changer en prod ne pas avoir la cle prive ici
@@ -107,13 +109,12 @@ class NFTApiService {
 }
 
 export const handleCreateCollection = () => {
-        NFTApiService.createCollection('accounttest2', 'evenko123455', true, ['accounttest2'], [], 0.05, []);
-        // this.props.setUser(this.state.input);
-        // this.setState({ input: '' });
+        NFTApiService.createCollection('accounttest2', COLLECTION_NAME, true, ['accounttest2'], [], 0.05, []);
+        console.log("Collection Created")
     };
 
 export const handleCreateSchema = () => {
-        NFTApiService.createSchema('accounttest2', 'evenko123455', 'ticket', [
+        NFTApiService.createSchema('accounttest2', COLLECTION_NAME, SCHEMA_NAME, [
             {
                 name: 'id',
                 type: 'uint64',
@@ -158,12 +159,12 @@ export const handleCreateSchema = () => {
     };
    
 export const handleCreateTemplate = () => {
-        NFTApiService.createTemplate('accounttest2', 'evenko123455', "ticket",true, false,1, [{"key":"eventId","value":["uint64", 1]},{"key": "price","value":["uint64",1]}]);
+        NFTApiService.createTemplate('accounttest2', COLLECTION_NAME, SCHEMA_NAME,true, false,5, [{"key":"eventId","value":["uint64", 212340]},{"key": "price","value":["uint64",5]}]);
     };
 
 export const handleMintAsset = () => {
         console.log("allresulto")
-        NFTApiService.mintAsset('accounttest2', 'evenko123455', 'ticket', 21082, 'accounttest2', [], [], []);//object.processed.action_traces[0].inline_traces[0].data.template_id
+        NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 21082, 'accounttest2', [], [], []);//object.processed.action_traces[0].inline_traces[0].data.template_id
     };
 
 export default NFTApiService;
