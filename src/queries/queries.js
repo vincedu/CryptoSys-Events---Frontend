@@ -35,11 +35,4 @@ const createEventMutation = gql`
     }
 `;
 
-const uploadFileMutation = gql`
-    mutation($file: Upload!) {
-        uploadFile(file: $file) {
-            uri
-        }
-    }
-`;
-export { createEventMutation, uploadFileMutation };
+export { createEventMutation };

@@ -8,7 +8,6 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import TicketCreation from './components/TicketCreation/TicketCreation';
-import theme from '../../theme';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -53,17 +52,18 @@ const DEFAULT_EVENT_FORM = {
     },
 };
 
-const useStyles = makeStyles((t) => ({
-    root: () => ({
-        backgroundColor: t.palette.background.default,
-    }),
+const useStyles = makeStyles((theme) => ({
+    root: {
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(3),
+    },
     submit: {
-        paddingBottom: 20,
+        paddingBottom: theme.spacing(3),
     },
 }));
 
 const EventCreation = (props) => {
-    const classes = useStyles(theme);
+    const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [eventImage, setEventImage] = useState(undefined);
 
@@ -80,20 +80,32 @@ const EventCreation = (props) => {
         props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
     };
     return (
-        <Grid container direction="column" justify="flex-start" alignItems="stretch" className={classes.root}>
-            <Typography variant="h3">Create event</Typography>
-            <Grid item sm={12}>
-                <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
-                <Location value={form} onChange={handleFormChange} />
-                <DateTime value={form} onChange={handleFormChange} />
-                <TicketCreation />
-                <Grid container justify="center" className={classes.submit}>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Create Event
-                    </Button>
+        <div className={classes.root}>
+            <Grid container spacing={3} direction="column" justify="flex-start">
+                <Grid item xs={12}>
+                    <Typography variant="h3">Create event</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
+                </Grid>
+                <Grid item xs={12}>
+                    <Location value={form} onChange={handleFormChange} />
+                </Grid>
+                <Grid item xs={12}>
+                    <DateTime value={form} onChange={handleFormChange} />
+                </Grid>
+                <Grid item xs={12}>
+                    <TicketCreation />
+                </Grid>
+                <Grid item xs={12}>
+                    <Grid container justify="center" className={classes.submit}>
+                        <Button variant="contained" color="primary" onClick={handleSubmit}>
+                            Create Event
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </div>
     );
 };
 

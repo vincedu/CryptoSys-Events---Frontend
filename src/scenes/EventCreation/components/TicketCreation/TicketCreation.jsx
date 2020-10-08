@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
-import { Button, Fab, Grid, makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { TitledPaper } from '@components';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
 
-const useStyles = makeStyles({
-    createTicketFab: {
-        margin: 0,
-        right: 24,
-        bottom: 24,
-        position: 'fixed',
-    },
-});
+// TODO: Uncomment when moving ticket creation to a seperate page
+// const useStyles = makeStyles({
+//     createTicketFab: {
+//         margin: 0,
+//         right: 24,
+//         bottom: 24,
+//         position: 'fixed',
+//     },
+// });
 
 const TicketCreation = () => {
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const [tickets, setTickets] = useState([]);
 
-    const classes = useStyles();
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    // TODO: Uncomment when moving ticket creation to a seperate page
+    // const classes = useStyles();
+    // const theme = useTheme();
+    // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -44,15 +45,16 @@ const TicketCreation = () => {
                     </Typography>
                 </Grid>
                 <Grid container item md={2} xs={12} justify="flex-end">
+                    {/* TODO: Uncomment when moving ticket creation to a seperate page
                     {isSmallScreen ? (
                         <Fab className={classes.createTicketFab} color="secondary" onClick={handleOpenTicketDialog}>
                             <AddIcon />
                         </Fab>
-                    ) : (
-                        <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
-                            Create Ticket
-                        </Button>
-                    )}
+                    ) : ( */}
+                    <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
+                        Create Ticket
+                    </Button>
+                    {/* )} */}
                 </Grid>
             </Grid>
             <CreateTicketDialog
