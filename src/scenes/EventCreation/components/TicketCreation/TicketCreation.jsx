@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { TitledPaper } from '@components';
 import CreateTicketDialog from './components/CreateTicketDialog';
@@ -14,9 +15,10 @@ import TicketCard from './components/TicketCard';
 //     },
 // });
 
-const TicketCreation = () => {
+const TicketCreation = (props) => {
+    const { tickets, onCreateTicket } = props;
+
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
-    const [tickets, setTickets] = useState([]);
 
     // TODO: Uncomment when moving ticket creation to a seperate page
     // const classes = useStyles();
@@ -29,10 +31,6 @@ const TicketCreation = () => {
 
     const handleCloseTicketDialog = () => {
         setIsTicketDialogOpen(false);
-    };
-
-    const handleCreateTicket = (ticketData) => {
-        setTickets([...tickets, ticketData]);
     };
 
     return (
@@ -59,7 +57,7 @@ const TicketCreation = () => {
             </Grid>
             <CreateTicketDialog
                 isOpen={isTicketDialogOpen}
-                onSubmit={handleCreateTicket}
+                onSubmit={onCreateTicket}
                 onClose={handleCloseTicketDialog}
             />
             <div>
@@ -69,6 +67,20 @@ const TicketCreation = () => {
             </div>
         </TitledPaper>
     );
+};
+
+TicketCreation.propTypes = {
+    tickets: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            quantity: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired,
+            startDate: PropTypes.instanceOf(Date).isRequired,
+            endDate: PropTypes.instanceOf(Date).isRequired,
+        }),
+    ).isRequired,
+    onCreateTicket: PropTypes.func.isRequired,
 };
 
 export default TicketCreation;

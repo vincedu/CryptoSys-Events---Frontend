@@ -8,7 +8,8 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import TicketCreation from './components/TicketCreation/TicketCreation';
-import {handleCreateCollection, handleCreateSchema} from "../../services/nft-api"
+import { handleCreateCollection, handleCreateSchema } from '../../services/nft-api';
+
 const DEFAULT_EVENT_FORM = {
     name: {
         value: '',
@@ -66,6 +67,11 @@ const EventCreation = (props) => {
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [eventImage, setEventImage] = useState(undefined);
+    const [tickets, setTickets] = useState([]);
+
+    const handleCreateTicket = (ticketData) => {
+        setTickets([...tickets, ticketData]);
+    };
 
     const handleFormChange = (field, value) => {
         setForm({ ...form, [field]: { value, error: false } });
@@ -78,9 +84,10 @@ const EventCreation = (props) => {
         });
 
         props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
-        handleCreateCollection()
-        handleCreateSchema()
+        handleCreateCollection();
+        handleCreateSchema();
     };
+
     return (
         <div className={classes.root}>
             <Grid container spacing={3} direction="column" justify="flex-start">
@@ -97,7 +104,7 @@ const EventCreation = (props) => {
                     <DateTime value={form} onChange={handleFormChange} />
                 </Grid>
                 <Grid item xs={12}>
-                    <TicketCreation />
+                    <TicketCreation tickets={tickets} onCreateTicket={handleCreateTicket} />
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container justify="center" className={classes.submit}>
