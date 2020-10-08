@@ -14,11 +14,8 @@ const DateTime = (props) => {
 
     return (
         <div style={{ padding: 20 }}>
-            <TitledPaper title="Date et heure">
-                <p>
-                    Indiquez aux participants potentiels quand votre événement commence et se termine pour qu’ils
-                    puissent planifier au mieux leur venue.
-                </p>
+            <TitledPaper title="Date and time">
+                <p>Let potential attendees know when your event starts and ends so that they can plan their visit.</p>
                 <Grid container>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container spacing={3}>

@@ -28,16 +28,16 @@ const GeneralInfo = (props) => {
 
     return (
         <div style={{ padding: 20 }}>
-            <TitledPaper title="Informations générales">
+            <TitledPaper title="General information">
                 <p>
-                    Nommez votre événement et expliquez aux participants potentiels pourquoi ils doivent absolument
-                    venir. Ajoutez des informations soulignant son caractère unique.
+                    Name your event and explain to the prospect why they really need to attend the event. Add
+                    information underlining the uniqueness of your event
                 </p>
                 <Grid container direction="row" spacing={2}>
                     <Grid item xs={12} sm={4}>
                         <TextField
                             name="name"
-                            label="Nom de l'événement"
+                            label="Event name"
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -78,12 +78,12 @@ const GeneralInfo = (props) => {
                             inputValue={props.value.category.value || ''}
                             onChange={(event) => handleSelect(event, 'category')}
                             renderInput={(params) => (
-                                <TextField {...params} label="Catégorie" variant="outlined" margin="normal" required />
+                                <TextField {...params} label="Category" variant="outlined" margin="normal" required />
                             )}
                         />
                         <ChipInput
                             name="languages"
-                            label="Langue(s)"
+                            label="Language(s)"
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -95,7 +95,7 @@ const GeneralInfo = (props) => {
                         />
                         <ChipInput
                             name="tags"
-                            label="#étiquettes"
+                            label="#tags"
                             variant="outlined"
                             fullWidth
                             margin="normal"

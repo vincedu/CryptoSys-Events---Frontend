@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 
 const values = {
-    venue: 'Lieu',
-    online: 'Événement en ligne',
-    tbd: 'À communiquer',
+    venue: 'Venue',
+    online: 'Online event',
+    tbd: 'To be annouced',
 };
 
 const LocationButtonGroup = (props) => {

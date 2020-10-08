@@ -50,7 +50,7 @@ const TicketCreation = () => {
                         </Fab>
                     ) : (
                         <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
-                            Create
+                            Create Ticket
                         </Button>
                     )}
                 </Grid>

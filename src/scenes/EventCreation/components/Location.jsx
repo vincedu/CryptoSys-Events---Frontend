@@ -11,16 +11,14 @@ const Location = (props) => {
 
     return (
         <div style={{ padding: 20 }}>
-            <TitledPaper title="Endroit">
-                <p>
-                    Faites découvrir votre événement aux personnes de la région et faites-leur savoir où cela se passe.
-                </p>
+            <TitledPaper title="Location">
+                <p>Share your event with locals and let them know where it&#39;s going to be.</p>
                 <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
                 <Grid container spacing={2}>
                     <Grid item sm={6}>
                         <TextField
                             id="location"
-                            label="Emplacement"
+                            label="Location"
                             variant="outlined"
                             fullWidth
                             margin="normal"

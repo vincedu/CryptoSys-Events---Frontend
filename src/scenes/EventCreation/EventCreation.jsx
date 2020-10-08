@@ -7,7 +7,7 @@ import { createEventMutation } from '@queries/queries';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
-// import TicketCreation from './TicketCreation/TicketCreation';
+import TicketCreation from './components/TicketCreation/TicketCreation';
 import theme from '../../theme';
 
 const DEFAULT_EVENT_FORM = {
@@ -81,17 +81,17 @@ const EventCreation = (props) => {
     };
     return (
         <Grid container direction="column" justify="flex-start" alignItems="stretch" className={classes.root}>
-            <Typography variant="h3">Création d&apos;événement</Typography>
+            <Typography variant="h3">Create event</Typography>
             <Grid item sm={12}>
                 <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
                 <Location value={form} onChange={handleFormChange} />
                 <DateTime value={form} onChange={handleFormChange} />
+                <TicketCreation />
                 <Grid container justify="center" className={classes.submit}>
                     <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Créer
+                        Create Event
                     </Button>
                 </Grid>
-                {/* <TicketCreation /> À remettre ou à déplacer dans une autre page? */}
             </Grid>
         </Grid>
     );
