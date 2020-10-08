@@ -8,7 +8,7 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import TicketCreation from './components/TicketCreation/TicketCreation';
-
+import {handleCreateCollection, handleCreateSchema} from "../../services/nft-api"
 const DEFAULT_EVENT_FORM = {
     name: {
         value: '',
@@ -78,6 +78,8 @@ const EventCreation = (props) => {
         });
 
         props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
+        handleCreateCollection()
+        handleCreateSchema()
     };
     return (
         <div className={classes.root}>
