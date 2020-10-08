@@ -42,4 +42,18 @@ const uploadFileMutation = gql`
         }
     }
 `;
-export { createEventMutation, uploadFileMutation };
+
+const eventsQuery = gql`
+    query {
+        events {
+            name
+            description
+            type
+            category
+            image
+            startDate
+        }
+    }
+`;
+
+export { createEventMutation, uploadFileMutation, eventsQuery };
