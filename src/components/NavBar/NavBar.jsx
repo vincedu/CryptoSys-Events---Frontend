@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Button, IconButton, InputBase, MenuItem, Menu, Avatar } from '@material-ui/core';
+import { AppBar, Toolbar, Button, InputBase, Avatar } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router-dom';
+import firebase from 'firebase';
+import HelpMenu from './menu/HelpMenu';
+import ProfileMenu from './menu/ProfileMenu';
+import MobileMenu from './menu/MobileMenu';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -74,92 +77,28 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
-    // const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [helpAnchorEl, setHelpAnchorEl] = React.useState(null);
 
-    // const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const isHelpMenuOpen = Boolean(helpAnchorEl);
+    const [currentUser, setCurrentUser] = React.useState(null);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        setCurrentUser(user);
+    });
+
+    const isSignIn = Boolean(currentUser);
 
     const { history } = props;
-
-    // const handleProfileMenuOpen = (event) => {
-    //   setAnchorEl(event.currentTarget);
-    // };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-    // const handleMenuClose = () => {
-    //   setAnchorEl(null);
-    //   handleMobileMenuClose();
-    // };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
-    const handleHelpMenuOpen = (event) => {
-        setHelpAnchorEl(event.currentTarget);
-    };
-
-    const handleHelpMenuClose = () => {
-        setHelpAnchorEl(null);
-    };
 
     const handleButtonClick = (pageURL) => {
         history.push(pageURL);
     };
 
-    // const menuId = 'menu';
-    // const renderMenu = (
-    //   <Menu
-    //     anchorEl={anchorEl}
-    //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //     id={menuId}
-    //     keepMounted
-    //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //     open={isMenuOpen}
-    //     onClose={handleMenuClose}
-    //   >
-    //     <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-    //     <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    //   </Menu>
-    // );
-
-    const helpMenuId = 'help-menu';
-    const renderHelpMenu = (
-        <Menu
-            anchorEl={helpAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={helpMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isHelpMenuOpen}
-            onClose={handleHelpMenuClose}
-        >
-            <MenuItem onClick={() => handleButtonClick('./howItWorks')}>How it works</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('./helpCenter')}>Help Center</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem onClick={() => handleButtonClick('./helpCenter')}>Help Center</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('./createEvent')}>Create Event</MenuItem>
-        </Menu>
-    );
+    const handleCreateEventButtonClick = () => {
+        if (isSignIn) {
+            history.push('/createEvent');
+        } else {
+            history.push('/signIn');
+        }
+    };
 
     return (
         <div className={classes.grow}>
@@ -187,50 +126,23 @@ const NavBar = (props) => {
                     <div className={classes.grow} />
 
                     <div className={classes.sectionDesktop}>
-                        <Button
-                            aria-label="help menu"
-                            aria-controls={helpMenuId}
-                            aria-haspopup="true"
-                            onClick={handleHelpMenuOpen}
-                            color="inherit"
-                        >
-                            Help
-                        </Button>
-                        <Button color="inherit" onClick={() => handleButtonClick('/createEvent')}>
+                        <HelpMenu history={history} />
+                        <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
                             Create Event
                         </Button>
-                        {/* <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                            >
-                            <AccountCircle />
-                            </IconButton> */}
                     </div>
                     <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
+                        <MobileMenu history={history} />
                     </div>
-                    <div className={classes.signIn}>
+                    {isSignIn ? (
+                        <ProfileMenu history={history} />
+                    ) : (
                         <Button color="inherit" onClick={() => handleButtonClick('/signIn')}>
                             Sign In
                         </Button>
-                    </div>
+                    )}
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
-            {/* {renderMenu} */}
-            {renderHelpMenu}
         </div>
     );
 };
