@@ -8,7 +8,7 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import TicketCreation from './components/TicketCreation/TicketCreation';
-import { handleCreateCollection, handleCreateSchema } from '../../services/nft-api';
+import { handleCreateCollection, handleCreateSchema, handleCreateTemplate } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -72,20 +72,30 @@ const EventCreation = (props) => {
     const handleCreateTicket = (ticketData) => {
         setTickets([...tickets, ticketData]);
     };
-
+    
     const handleFormChange = (field, value) => {
         setForm({ ...form, [field]: { value, error: false } });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const variables = {};
+        var eventName = ""
         Object.keys(form).forEach((key) => {
             variables[key] = form[key].value;
+            if(key === "name") {
+                eventName = form[key].value
+            }
         });
-
         props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
-        handleCreateCollection();
-        handleCreateSchema();
+         await handleCreateCollection();
+         await handleCreateSchema();
+          if (tickets.length > 0){
+              tickets.forEach(function(ticket) {
+                    handleCreateTemplate(ticket.name, ticket.description, ticket.quantity, ticket.price, ticket.startDate, ticket.endDate,eventName)
+              })
+            
+         }
+        
     };
 
     return (
