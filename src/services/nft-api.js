@@ -2,7 +2,7 @@ import { Api, JsonRpc } from 'eosjs';
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
-const COLLECTION_NAME = "evenko123452"
+const COLLECTION_NAME = "22miglierina"
 const SCHEMA_NAME = "ticket"
 async function takeAction(action, dataValue) {
     const userName = 'accounttest2'; // Changer en prod ne pas avoir la cle prive ici
@@ -108,13 +108,13 @@ class NFTApiService {
     }
 }
 
-export const handleCreateCollection = () => {
-        NFTApiService.createCollection('accounttest2', COLLECTION_NAME, true, ['accounttest2'], [], 0.05, []);
+export const handleCreateCollection = async () => {
+         await NFTApiService.createCollection('accounttest2', COLLECTION_NAME, true, ['accounttest2'], [], 0.05, []);
         console.log("Collection Created")
     };
 
-export const handleCreateSchema = () => {
-        NFTApiService.createSchema('accounttest2', COLLECTION_NAME, SCHEMA_NAME, [
+export const handleCreateSchema = async () => {
+        await NFTApiService.createSchema('accounttest2', COLLECTION_NAME, SCHEMA_NAME, [
             {
                 name: 'id',
                 type: 'uint64',
@@ -158,13 +158,14 @@ export const handleCreateSchema = () => {
         ]);
     };
    
-export const handleCreateTemplate = () => {
-        NFTApiService.createTemplate('accounttest2', COLLECTION_NAME, SCHEMA_NAME,true, false,5, [{"key":"eventId","value":["uint64", 212340]},{"key": "price","value":["uint64",5]}]);
+export const handleCreateTemplate = async (name, description, quantity, price, startDate, endDate,eventName) => {
+        await NFTApiService.createTemplate('accounttest2', COLLECTION_NAME, SCHEMA_NAME,true, false,quantity, [{"key":"eventId","value":["uint64", 212340]},{"key": "price","value":["uint64",price]},
+        {"key": "quantity","value":["uint64",quantity]},{"key": "description","value":["string",description]},{"key": "startDate","value":["string",startDate.toString()]},{"key": "endDate","value":["string",endDate.toString()]},{"key": "name","value":["string",name]},{"key": "eventName","value":["string",eventName]}]);
     };
 
-export const handleMintAsset = () => {
+export const handleMintAsset = async () => {
         console.log("allresulto")
-        NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 21082, 'accounttest2', [], [], []);//object.processed.action_traces[0].inline_traces[0].data.template_id
+        await NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 21082, 'accounttest2', [], [], []);//object.processed.action_traces[0].inline_traces[0].data.template_id
     };
 
 export default NFTApiService;
