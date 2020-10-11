@@ -3,7 +3,7 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
 
-const COLLECTION_NAME = '26miglierina';
+const COLLECTION_NAME = '33miglierina';
 const SCHEMA_NAME = 'ticket';
 async function takeAction(action, dataValue) {
     const userName = 'accounttest2'; // Changer en prod ne pas avoir la cle prive ici
