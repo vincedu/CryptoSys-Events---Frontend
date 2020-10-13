@@ -1,9 +1,17 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import { shallow } from 'enzyme';
+import { Route } from 'react-router-dom';
+import { EventList } from './scenes';
+import { App } from './App';
 
-test('renders learn react link', () => {
-    const { getByText } = render(<App />);
-    const linkElement = getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+    it('renders without crashing', () => {
+        shallow(<App />);
+    });
+
+    it('renders EventList', () => {
+        const wrapper = shallow(<App />);
+        const eventList = <Route exact path="/" component={EventList} />;
+        expect(wrapper.contains(eventList)).toEqual(true);
+    });
 });
