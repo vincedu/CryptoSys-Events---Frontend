@@ -81,6 +81,9 @@
       "last 1 safari version"
     ]
   },
+  "scripts":{
+    "test": "craco"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && npm test"
