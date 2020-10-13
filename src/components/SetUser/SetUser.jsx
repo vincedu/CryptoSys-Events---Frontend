@@ -6,7 +6,7 @@ import { setUser } from '@redux/actions';
 class SetUser extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { input: '' };
+        this.state = { input: '' }; // salut
     }
 
     updateInput = (input) => {
