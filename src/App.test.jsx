@@ -37,7 +37,7 @@ describe('App', () => {
     it('renders helpCenter', () => {
         const wrapper = shallow(<App />);
         const eventList = <Route exact path="/helpCenter" component={HelpCenter} />;
-        expect(wrapper.contains(eventList)).toEqual(true);
+        expect(wrapper.contains(eventList)).toEqual(false);
     });
 
     it('renders eventCreation', () => {
