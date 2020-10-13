@@ -69,13 +69,6 @@
     "prettier": "^2.1.2",
     "pretty-quick": "^3.0.2"
   },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "lint": "eslint .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\""
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -90,7 +83,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run test"
     }
   },
   "lint-staged": {
