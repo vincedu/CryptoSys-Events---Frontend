@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { graphql } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { useMutation } from '@apollo/client';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { createEventMutation } from '@queries/queries';
+import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
@@ -63,39 +62,47 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const EventCreation = (props) => {
+const EventCreation = () => {
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [eventImage, setEventImage] = useState(undefined);
     const [tickets, setTickets] = useState([]);
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
 
     const handleCreateTicket = (ticketData) => {
         setTickets([...tickets, ticketData]);
     };
-    
+
     const handleFormChange = (field, value) => {
         setForm({ ...form, [field]: { value, error: false } });
     };
 
     const handleSubmit = async () => {
         const variables = {};
-        var eventName = ""
+        let eventName = '';
         Object.keys(form).forEach((key) => {
             variables[key] = form[key].value;
-            if(key === "name") {
-                eventName = form[key].value
+            if (key === 'name') {
+                eventName = form[key].value;
             }
         });
-        props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
-         await handleCreateCollection();
-         await handleCreateSchema();
-          if (tickets.length > 0){
-              tickets.forEach(function(ticket) {
-                    handleCreateTemplate(ticket.name, ticket.description, ticket.quantity, ticket.price, ticket.startDate, ticket.endDate,eventName)
-              })
-            
-         }
-        
+
+        createEvent({ variables: { ...variables, imageFile: eventImage[0] } });
+        await handleCreateCollection();
+        await handleCreateSchema();
+        if (tickets.length > 0) {
+            tickets.forEach(function (ticket) {
+                handleCreateTemplate(
+                    ticket.name,
+                    ticket.description,
+                    ticket.quantity,
+                    ticket.price,
+                    ticket.startDate,
+                    ticket.endDate,
+                    eventName,
+                );
+            });
+        }
     };
 
     return (
@@ -132,8 +139,5 @@ const EventCreation = (props) => {
 //   null,
 //   {  }
 // )(EventCreation);
-EventCreation.propTypes = {
-    mutate: PropTypes.func.isRequired,
-};
 
-export default graphql(createEventMutation)(EventCreation);
+export default EventCreation;

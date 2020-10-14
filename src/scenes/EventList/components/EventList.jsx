@@ -1,8 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { graphql } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { eventsQuery } from '@queries/queries';
+import { EVENTS_QUERY } from '@graphql/queries';
 import { Typography, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
@@ -17,12 +17,13 @@ const useStyles = makeStyles({
 
 const EventList = (props) => {
     const classes = useStyles();
+    const { data, loading } = useQuery(EVENTS_QUERY);
 
-    if (props.data.loading) {
+    if (loading) {
         return <CircularProgress />;
     }
 
-    const events = props.data.events;
+    const events = data.events;
 
     if (events !== undefined) {
         return (
@@ -56,9 +57,8 @@ const EventList = (props) => {
 };
 
 EventList.propTypes = {
-    data: PropTypes.objectOf.isRequired,
     category: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
 };
 
-export default graphql(eventsQuery)(EventList);
+export default EventList;

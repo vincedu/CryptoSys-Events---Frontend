@@ -7,7 +7,7 @@
       "@scenes/*": ["scenes/*"],
       "@redux/*": ["redux/*"],
       "@assets/*": ["assets/*"],
-      "@queries/*": ["queries/*"]
+      "@graphql/*": ["graphql/*"]
     }
   }
 }

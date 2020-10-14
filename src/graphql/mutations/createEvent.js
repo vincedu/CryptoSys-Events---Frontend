@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const createEventMutation = gql`
+const CREATE_EVENT_MUTATION = gql`
     mutation(
         $name: String!
         $description: String!
@@ -35,17 +35,4 @@ const createEventMutation = gql`
     }
 `;
 
-const eventsQuery = gql`
-    query {
-        events {
-            name
-            description
-            type
-            category
-            image
-            startDate
-        }
-    }
-`;
-
-export { createEventMutation, eventsQuery };
+export default CREATE_EVENT_MUTATION;
