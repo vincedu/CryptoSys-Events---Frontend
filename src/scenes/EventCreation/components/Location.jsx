@@ -22,9 +22,7 @@ const Location = (props) => {
 
     const handleScriptLoad = () => {
         // Declare Options For Autocomplete
-        const options = {
-            types: ['(cities)'],
-        }; // To disable any eslint 'google not defined' errors
+        const options = {}; // To disable any eslint 'google not defined' errors
 
         // Initialize Google Autocomplete
         /* global google */ autocomplete = new google.maps.places.Autocomplete(
