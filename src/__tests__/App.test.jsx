@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Route } from 'react-router-dom';
-import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from './scenes';
-import TicketCreation from './scenes/EventCreation/components/TicketCreation';
-import { App } from './App';
+import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from '../scenes';
+import TicketCreation from '../scenes/EventCreation/components/TicketCreation';
+import { App } from '../App';
 
 describe('App', () => {
     it('renders without crashing', () => {
