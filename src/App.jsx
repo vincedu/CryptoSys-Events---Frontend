@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import './App.css';
 import { createUploadLink } from 'apollo-upload-client';
 import { NavBar } from './components';
