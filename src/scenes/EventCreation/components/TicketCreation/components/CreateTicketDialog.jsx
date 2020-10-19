@@ -15,6 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import ImageUploader from 'react-images-upload';
 
 const DEFAULT_TICKET_FORM = {
     name: {
@@ -31,6 +32,10 @@ const DEFAULT_TICKET_FORM = {
     },
     price: {
         value: '',
+        error: false,
+    },
+    image: {
+        value: undefined,
         error: false,
     },
 };
@@ -152,11 +157,32 @@ const CreateTicketDialog = (props) => {
         setDate({ ...date, [field]: value, error });
     };
 
+    const handleImageUpload = async (images) => {
+        setForm({
+            ...form,
+            image: {
+                value: images[0],
+                error: form.image.error,
+            },
+        });
+    };
+
     return (
         <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
             <DialogTitle onClose={handleClose}>Create a ticket</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <ImageUploader
+                            withIcon
+                            singleImage
+                            withPreview
+                            buttonText="Choose Image"
+                            onChange={handleImageUpload}
+                            imgExtension={['.jpg', '.gif', '.png']}
+                            maxFileSize={5242880}
+                        />
+                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth

@@ -4,11 +4,11 @@ import { useMutation } from '@apollo/client';
 import { withRouter } from 'react-router-dom';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
+import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
-import TicketCreation from './components/TicketCreation/TicketCreation';
+import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
 import { handleCreateCollection, handleCreateSchema, handleCreateTemplate } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
@@ -72,6 +72,7 @@ const EventCreation = (props) => {
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
+    const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
 
     const isValueValid = (value) => {
         return value && (value.length > 0 || value.size);
@@ -143,17 +144,29 @@ const EventCreation = (props) => {
             await handleCreateCollection();
             await handleCreateSchema();
             if (tickets.length > 0) {
-                tickets.forEach((ticket) => {
-                    handleCreateTemplate(
-                        ticket.name,
-                        ticket.description,
-                        ticket.quantity,
-                        ticket.price,
-                        ticket.startDate,
-                        ticket.endDate,
-                        eventName,
-                    );
-                });
+                await Promise.all(
+                    tickets.map(async (ticket) => {
+                        let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
+
+                        if (ticket.image) {
+                            const pinTicketImageResult = await pinTicketImageMutation({
+                                variables: { file: ticket.image, ticketName: ticket.name, eventName },
+                            });
+                            ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
+                        }
+
+                        await handleCreateTemplate(
+                            ticket.name,
+                            ticket.description,
+                            ticket.quantity,
+                            ticket.price,
+                            ticket.startDate,
+                            ticket.endDate,
+                            eventName,
+                            ticketImageIpfsHash,
+                        );
+                    }),
+                );
             }
             props.history.push('/');
         } else {

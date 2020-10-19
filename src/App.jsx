@@ -6,7 +6,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
 import { NavBar } from './components';
 import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from './scenes';
-import TicketCreation from './scenes/EventCreation/components/TicketCreation';
+import { TicketCreation } from './scenes/EventCreation/components/TicketCreation';
 
 const API_URI = 'http://localhost:4000/graphql';
 
