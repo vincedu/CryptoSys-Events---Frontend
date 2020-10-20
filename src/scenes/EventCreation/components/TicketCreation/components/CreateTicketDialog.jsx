@@ -33,14 +33,6 @@ const DEFAULT_TICKET_FORM = {
         value: '',
         error: false,
     },
-    // startDate: {
-    //     value: new Date(),
-    //     error: false,
-    // },
-    // endDate: {
-    //     value: new Date(),
-    //     error: false,
-    // },
 };
 
 const DEFAULT_TICKET_DATE = {
@@ -159,26 +151,6 @@ const CreateTicketDialog = (props) => {
         else error = value < date.start;
         setDate({ ...date, [field]: value, error });
     };
-
-    // const handleStartDateChange = (date) => {
-    //     setForm({
-    //         ...form,
-    //         startDate: {
-    //             value: date,
-    //             error: form.startDate.error,
-    //         },
-    //     });
-    // };
-
-    // const handleEndDateChange = (date) => {
-    //     setForm({
-    //         ...form,
-    //         endDate: {
-    //             value: date,
-    //             error: form.endDate.error,
-    //         },
-    //     });
-    // };
 
     return (
         <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
