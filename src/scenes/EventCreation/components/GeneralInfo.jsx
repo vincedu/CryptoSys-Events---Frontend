@@ -1,11 +1,77 @@
 import React from 'react';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, TextField, Chip, Box, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
 import PropTypes from 'prop-types';
 import ImageUploader from 'react-images-upload';
+import _ from 'lodash';
 
 import { TitledPaper } from '@components';
+
+const TYPES = [
+    'Appearance or Signing',
+    'Attraction',
+    'Camp, Trip or Retreat',
+    'Class, Training or Workshop',
+    'Concert or Performance',
+    'Conference',
+    'Convention',
+    'Dinner or Gala',
+    'Festival or Fair',
+    'Game or Competition',
+    'Meeting or Networking Event',
+    'Other',
+    'Party or Social Gathering',
+    'Race or Endurance Event',
+    'Rally',
+    'Screening',
+    'Seminar or Talk',
+    'Tour',
+    'Tournament',
+    'Tradeshow, Consumer Show or Expo',
+];
+const CATEGORIES = [
+    'Auto, Boat & Air',
+    'Business & Professional',
+    'Charity & Causes',
+    'Community & Culture',
+    'Family & Education',
+    'Fashion & Beauty',
+    'Film, Media & Entertainment',
+    'Food & Drink',
+    'Government & Politics',
+    'Health & Wellness',
+    'Hobbies & Special Interest',
+    'Home & Lifestyle',
+    'Music',
+    'Other',
+    'Performing & Visual Arts',
+    'Religion & Spirituality',
+    'School Activities',
+    'Science & Technology',
+    'Seasonal & Holiday',
+    'Sports & Fitness',
+    'Travel & Outdoor',
+];
+const LANGUAGES = [
+    'Bengali',
+    'English',
+    'French',
+    'German',
+    'Hindi',
+    'Japanese',
+    'Korean',
+    'Mandarin Chinese',
+    'Marathi',
+    'Spanish',
+    'Portuguese',
+    'Punjabi',
+    'Russian',
+    'Telugu',
+    'Turkish',
+    'Vietnamese',
+    'Wu Chinese',
+];
 
 const GeneralInfo = (props) => {
     const handleTextChange = (event) => {
@@ -22,8 +88,20 @@ const GeneralInfo = (props) => {
         props.onChange(name, value);
     };
 
-    const handleChipsChange = (chips, name) => {
-        props.onChange(name, chips);
+    const handleLanguageAdd = (addedLanguage) => {
+        let value = '';
+        if (addedLanguage.firstChild) {
+            value = addedLanguage.firstChild.data;
+        }
+        const languages = props.value.languages.value;
+        if (languages.indexOf(value) === -1) languages.push(value);
+        props.onChange('languages', languages);
+    };
+
+    const handleLanguageDelete = (removedLanguage) => {
+        const languages = props.value.languages.value;
+        _.remove(languages, (language) => language === removedLanguage);
+        props.onChange('languages', languages);
     };
 
     return (
@@ -62,36 +140,65 @@ const GeneralInfo = (props) => {
                 <Grid item xs={12} sm={4}>
                     <Autocomplete
                         name="type"
-                        options={['1', '2', '3']}
+                        options={TYPES}
                         getOptionLabel={(option) => option}
-                        inputValue={props.value.type.value || ''}
                         onChange={(event) => handleSelect(event, 'type')}
                         renderInput={(params) => (
-                            <TextField {...params} label="Type" variant="outlined" margin="normal" required />
+                            <TextField
+                                {...params}
+                                label="Type"
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                error={props.value.type.error}
+                            />
                         )}
                     />
                     <Autocomplete
                         name="category"
-                        options={['1', '2', '3']}
+                        options={CATEGORIES}
                         getOptionLabel={(option) => option}
-                        inputValue={props.value.category.value || ''}
                         onChange={(event) => handleSelect(event, 'category')}
                         renderInput={(params) => (
-                            <TextField {...params} label="Category" variant="outlined" margin="normal" required />
+                            <TextField
+                                {...params}
+                                label="Category"
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                error={props.value.category.error}
+                            />
                         )}
                     />
-                    <ChipInput
+                    <Autocomplete
                         name="languages"
-                        label="Language(s)"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        newChipKeys={[' ']}
-                        required
-                        onChange={(chips) => {
-                            handleChipsChange(chips, 'languages');
-                        }}
+                        options={LANGUAGES}
+                        getOptionLabel={(option) => option}
+                        inputValue=""
+                        onChange={(event) => handleLanguageAdd(event.target)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Languages"
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                error={props.value.languages.error}
+                            />
+                        )}
                     />
+                    {_.map(props.value.languages.value, (language, i) => {
+                        return (
+                            <Chip
+                                key={i}
+                                value={language}
+                                label={language}
+                                onDelete={() => {
+                                    handleLanguageDelete(language);
+                                }}
+                            />
+                        );
+                    })}
                     <ChipInput
                         name="tags"
                         label="#tags"
@@ -100,22 +207,25 @@ const GeneralInfo = (props) => {
                         margin="normal"
                         newChipKeys={[' ']}
                         required
+                        error={props.value.tags.error}
                         onChange={(chips) => {
-                            handleChipsChange(chips, 'tags');
+                            props.onChange('tags', chips);
                         }}
                     />
                 </Grid>
-
                 <Grid item xs={12} sm={4}>
                     <ImageUploader
                         withIcon
                         singleImage
                         withPreview
                         buttonText="Choose Image"
-                        onChange={props.onImageUpload}
+                        onChange={(image) => props.onChange('imageFile', image[0])}
                         imgExtension={['.jpg', '.gif', '.png']}
                         maxFileSize={5242880}
                     />
+                    <Box hidden={!props.value.imageFile.error}>
+                        <Typography color="error">*Missing image</Typography>
+                    </Box>
                     {/* <ImageUpload cardName="Input Image" imageGallery={galleryImageList} /> */}
                 </Grid>
             </Grid>
@@ -143,6 +253,11 @@ GeneralInfo.propTypes = {
         category: propString,
         languages: propArray,
         tags: propArray,
+        imageFile: PropTypes.shape({
+            // eslint-disable-next-line react/forbid-prop-types
+            value: PropTypes.object,
+            error: PropTypes.bool,
+        }),
     }).isRequired,
 };
 

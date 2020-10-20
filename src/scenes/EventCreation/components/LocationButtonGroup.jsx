@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 const values = {
     venue: 'Venue',
     online: 'Online event',
-    tbd: 'To be annouced',
+    tbd: 'To be announced',
 };
 
 const LocationButtonGroup = (props) => {
