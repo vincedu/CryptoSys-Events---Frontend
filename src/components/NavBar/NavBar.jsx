@@ -94,7 +94,7 @@ const NavBar = (props) => {
 
     const handleCreateEventButtonClick = () => {
         if (isSignIn) {
-            history.push('/createEvent');
+            history.push('/createEvent/general');
         } else {
             history.push('/signIn');
         }
