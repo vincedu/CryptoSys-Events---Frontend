@@ -1,7 +1,8 @@
 import React from 'react';
 import { CircularProgress, makeStyles } from '@material-ui/core';
-import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { useQuery } from '@apollo/client';
+import { EVENT_BY_ID_QUERY } from '@graphql/queries';
+import { PageContainer } from '@components';
 import EventList from './components/EventList';
 import MainEventItem from './components/MainEventItem';
 import CustomSearchBar from './components/CustomSearchBar';
@@ -37,9 +38,9 @@ const EventListContainer = () => {
     const categories = FetchCategories();
 
     return (
-        <div>
+        <>
             <CustomSearchBar />
-            <div className={classes.eventListContainer}>
+            <PageContainer>
                 {/* Main Event */}
                 <div className={classes.eventListContainer}>
                     {mainEvent.loading ? (
@@ -62,8 +63,9 @@ const EventListContainer = () => {
                         <EventList category={category.name} id={category.id} />
                     </div>
                 ))}
-            </div>
-        </div>
+            </PageContainer>
+        </>
     );
 };
+
 export default EventListContainer;

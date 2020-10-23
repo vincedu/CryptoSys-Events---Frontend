@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, ListItemIcon, Typography, IconButton, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import firebase from 'firebase';
+import { withUAL } from 'ual-reactjs-renderer';
+import { AuthContext } from '@providers';
 
 const ProfileMenu = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { userData } = useContext(AuthContext);
 
     const isMenuOpen = Boolean(anchorEl);
 
-    const { history } = props;
+    const { history, ual } = props;
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -22,14 +25,13 @@ const ProfileMenu = (props) => {
     const handleSignOut = () => {
         handleMenuClose();
         firebase.auth().signOut();
+        ual.logout();
         history.push('./signIn');
     };
 
     // const handleButtonClick = (pageURL) => {
     //     history.push(pageURL);
     // };
-
-    const currentUser = firebase.auth().currentUser;
 
     const menuId = 'profile-menu';
     const renderProfileMenu = (
@@ -46,7 +48,7 @@ const ProfileMenu = (props) => {
                 <ListItemIcon>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
-                <Typography variant="h6">{currentUser.displayName}</Typography>
+                {userData && userData.displayName ? <Typography variant="h6">{userData.displayName}</Typography> : null}
             </MenuItem>
             <hr />
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
@@ -76,6 +78,7 @@ const ProfileMenu = (props) => {
 
 ProfileMenu.propTypes = {
     history: PropTypes.object.isRequired,
+    ual: PropTypes.object.isRequired,
 };
 
-export default ProfileMenu;
+export default withUAL(ProfileMenu);

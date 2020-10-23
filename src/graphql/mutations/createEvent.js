@@ -28,9 +28,7 @@ const CREATE_EVENT_MUTATION = gql`
                 endDate: $endDate
             }
         ) {
-            name
-            startDate
-            endDate
+            id
         }
     }
 `;

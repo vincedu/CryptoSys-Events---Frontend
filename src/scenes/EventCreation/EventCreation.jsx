@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
-import { Grid, Typography, Button } from '@material-ui/core';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
+import { PageContainer } from '@components';
+import { NFTContext } from '@providers/';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
-import { handleCreateCollection, handleCreateSchema, handleCreateTemplate } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -56,18 +57,12 @@ const DEFAULT_EVENT_DATE = {
     error: false,
 };
 
-// TODO: Replace this temp IPFS Hash with real default ticket image IPFS Hash
-const DEFAULT_TICKET_IMAGE_IPFS_HASH = 'QmUSRaUYknQeVKGn3AzrtZuN9UA1aDrPaDP7M4Z1B6ktYS';
-
 const useStyles = makeStyles((theme) => ({
-    root: {
-        backgroundColor: theme.palette.background.default,
-        padding: theme.spacing(3),
-    },
     submit: {
         paddingBottom: theme.spacing(3),
     },
 }));
+
 const variables = {};
 const EventCreation = (props) => {
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
@@ -76,6 +71,8 @@ const EventCreation = (props) => {
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
+
+    const { createCollection, createSchema, createTemplate } = useContext(NFTContext);
 
     const isValueValid = (value) => {
         return value && (value.length > 0 || value.size);
@@ -151,9 +148,10 @@ const EventCreation = (props) => {
             variables.startDate = date.start;
             variables.endDate = date.end;
             if (variables.locationType !== 'venue') variables.location = null;
-            await createEvent({ variables: { ...variables } });
-            await handleCreateCollection();
-            await handleCreateSchema();
+
+            const createEventResult = await createEvent({ variables: { ...variables } });
+            await createCollection();
+            await createSchema();
             if (tickets.length > 0) {
                 await Promise.all(
                     tickets.map(async (ticket) => {
@@ -166,15 +164,18 @@ const EventCreation = (props) => {
                             ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
                         }
 
-                        await handleCreateTemplate(
-                            ticket.name,
-                            ticket.description,
+                        await createTemplate(
+                            {
+                                name: ticket.name,
+                                description: ticket.description,
+                                price: ticket.price,
+                                startDate: ticket.startDate.toString(),
+                                endDate: ticket.endDate.toString(),
+                                eventId: createEventResult.data.createEvent.id,
+                                eventName,
+                                image: ticketImageIpfsHash,
+                            },
                             ticket.quantity,
-                            ticket.price,
-                            ticket.startDate,
-                            ticket.endDate,
-                            eventName,
-                            ticketImageIpfsHash,
                         );
                     }),
                 );
@@ -187,13 +188,10 @@ const EventCreation = (props) => {
     };
 
     return (
-        <Switch>
-            <Route path="/createEvent/general">
-                <div className={classes.root}>
+        <PageContainer title="Create event">
+            <Switch>
+                <Route path="/createEvent/general">
                     <Grid container spacing={3} direction="column" justify="flex-start">
-                        <Grid item xs={12}>
-                            <Typography variant="h3">Create event</Typography>
-                        </Grid>
                         <Grid item xs={12}>
                             <GeneralInfo value={form} onChange={handleFormChange} />
                         </Grid>
@@ -211,28 +209,28 @@ const EventCreation = (props) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                </div>
-            </Route>
+                </Route>
 
-            <Route
-                path="/createEvent/createTicket"
-                render={() => (
-                    <Grid item xs={12}>
-                        <TicketCreation
-                            {...props}
-                            handleSubmit={handleSubmit}
-                            tickets={tickets}
-                            onCreateTicket={handleCreateTicket}
-                        />
-                    </Grid>
-                )}
-            />
-        </Switch>
+                <Route
+                    path="/createEvent/createTicket"
+                    render={() => (
+                        <Grid item xs={12}>
+                            <TicketCreation
+                                {...props}
+                                handleSubmit={handleSubmit}
+                                tickets={tickets}
+                                onCreateTicket={handleCreateTicket}
+                            />
+                        </Grid>
+                    )}
+                />
+            </Switch>
+        </PageContainer>
     );
 };
 
 EventCreation.propTypes = {
-    history: PropTypes.node.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
 export default withRouter(EventCreation);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Route } from 'react-router-dom';
+import { AuthenticatedRoute } from '@components';
 import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from '../scenes';
 import App from '../App';
 
@@ -35,7 +36,7 @@ describe('App', () => {
 
     it('renders eventCreation', () => {
         const wrapper = shallow(<App />);
-        const eventList = <Route path="/createEvent" component={EventCreation} />;
+        const eventList = <AuthenticatedRoute path="/createEvent" component={EventCreation} />;
         expect(wrapper.contains(eventList)).toEqual(true);
     });
 });

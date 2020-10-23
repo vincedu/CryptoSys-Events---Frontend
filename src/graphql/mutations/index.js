@@ -1,2 +1,5 @@
-export { default as CREATE_EVENT_MUTATION } from './createEvent';
-export { default as PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from './pinTicketImageToIpfs';
+import CREATE_EVENT_MUTATION from './createEvent';
+import PIN_TICKET_IMAGE_TO_IPFS_MUTATION from './pinTicketImageToIpfs';
+import SET_USER_DATA_MUTATION from './setUserData';
+
+export { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION, SET_USER_DATA_MUTATION };
