@@ -21,25 +21,6 @@
     "eosjs": "^21.0.3",
     "firebase": "^7.21.1",
     "graphql": "^15.3.0",
-    "jest": {
-      "snapshotSerializers": [
-        "enzyme-to-json/serializer"
-      ],
-      "collectCoverageFrom": [
-        "src/**/*.js",
-        "!src/index.js"
-      ],
-      "coverageReporters": [
-        "text"
-      ],
-      "setupFilesAfterEnv": [
-        "jest-enzyme"
-      ],
-      "testEnvironment": "enzyme",
-      "testEnvironmentOptions": {
-        "enzymeAdapter": "react16"
-      }
-    },
     "material-ui-chip-input": "^2.0.0-beta.2",
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
@@ -93,6 +74,18 @@
     "hooks": {
       "pre-commit": "lint-staged && CI=true npm test -- --coverage"
     }
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
