@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { Button, Grid, Typography, makeStyles, useTheme, useMediaQuery, Fab } from '@material-ui/core';
 import { TitledPaper } from '@components';
 import AddIcon from '@material-ui/icons/Add';
-import { useMutation } from '@apollo/client';
-import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
-import { handleCreateSchema, handleCreateTemplate } from '../../../../services/nft-api';
 
 const useStyles = makeStyles({
     createTicketFab: {
@@ -19,11 +16,10 @@ const useStyles = makeStyles({
 });
 
 const TicketCreation = (props) => {
-    const { tickets, onCreateTicket, variables, eventImage, history } = props;
+    const { handleSubmit, tickets, onCreateTicket } = props;
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
-    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -35,25 +31,6 @@ const TicketCreation = (props) => {
         setIsTicketDialogOpen(false);
     };
 
-    const handleSubmit = async () => {
-        createEvent({ variables: { ...variables, imageFile: eventImage[0] } });
-        // await handleCreateCollection();
-        await handleCreateSchema();
-        if (tickets.length > 0) {
-            tickets.forEach(function (ticket) {
-                handleCreateTemplate(
-                    ticket.name,
-                    ticket.description,
-                    ticket.quantity,
-                    ticket.price,
-                    ticket.startDate,
-                    ticket.endDate,
-                    variables.name,
-                );
-            });
-        }
-        history.push({ pathname: '/' });
-    };
     return (
         <TitledPaper title="Tickets">
             <Grid container spacing={3}>
@@ -106,17 +83,7 @@ TicketCreation.propTypes = {
         }),
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
-    history: PropTypes.node.isRequired,
-    eventImage: PropTypes.instanceOf(Object).isRequired,
-    variables: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-        languages: PropTypes.arrayOf(PropTypes.string).isRequired,
-        location: PropTypes.string.isRequired,
-        startDate: PropTypes.instanceOf(Date).isRequired,
-        endDate: PropTypes.instanceOf(Date).isRequired,
-    }).isRequired,
+    handleSubmit: PropTypes.func.isRequired,
 };
 
 export default TicketCreation;

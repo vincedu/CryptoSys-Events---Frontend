@@ -3,10 +3,13 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
+import { useMutation } from '@apollo/client';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import TicketCreation from './components/TicketCreation/TicketCreation';
+import { handleCreateCollection, handleCreateSchema, handleCreateTemplate } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -62,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const variables = {};
 const EventCreation = (props) => {
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [eventImage, setEventImage] = useState(undefined);
@@ -82,6 +86,29 @@ const EventCreation = (props) => {
             variables[key] = form[key].value;
         });
         history.push({ pathname: '/createEvent/createTicket' });
+    };
+
+    const handleSubmit = async () => {
+        createEvent({ variables: { ...variables, imageFile: eventImage[0] } });
+        await handleCreateCollection();
+        await handleCreateSchema();
+        if (tickets.length > 0) {
+            console.log('allo');
+            console.log(tickets);
+            tickets.forEach(function (ticket) {
+                handleCreateTemplate(
+                    ticket.name,
+                    ticket.description,
+                    ticket.quantity,
+                    ticket.price,
+                    ticket.startDate,
+                    ticket.endDate,
+                    variables.name,
+                );
+                console.log(ticket);
+            });
+        }
+        history.push({ pathname: '/' });
     };
 
     return (
@@ -119,9 +146,8 @@ const EventCreation = (props) => {
                     <Grid item xs={12}>
                         <TicketCreation
                             {...props}
-                            eventImage={eventImage}
+                            handleSubmit={handleSubmit}
                             tickets={tickets}
-                            variables={variables}
                             onCreateTicket={handleCreateTicket}
                         />
                     </Grid>
@@ -134,9 +160,5 @@ const EventCreation = (props) => {
 EventCreation.propTypes = {
     history: PropTypes.node.isRequired,
 };
-// export default connect(
-//   null,
-//   {  }
-// )(EventCreation);
 
 export default withRouter(EventCreation);
