@@ -11,6 +11,7 @@
         "react/destructuring-assignment": 0,
         "prefer-destructuring": 0,
         "react/jsx-props-no-spreading": 0,
-        "import/no-unresolved": 0
+        "import/no-unresolved": 0,
+        "react/forbid-prop-types": 0
     }
 }

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
+import { useMutation } from '@apollo/client';
+import { withRouter } from 'react-router-dom';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { createEventMutation } from '@queries/queries';
+import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
-import TicketCreation from './components/TicketCreation/TicketCreation';
+import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
 import { handleCreateCollection, handleCreateSchema, handleCreateTemplate } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
@@ -43,14 +44,16 @@ const DEFAULT_EVENT_FORM = {
         value: '',
         error: false,
     },
-    startDate: {
-        value: new Date(),
+    imageFile: {
+        value: undefined,
         error: false,
     },
-    endDate: {
-        value: new Date(),
-        error: false,
-    },
+};
+
+const DEFAULT_EVENT_DATE = {
+    start: new Date(),
+    end: new Date(),
+    error: false,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -66,36 +69,109 @@ const useStyles = makeStyles((theme) => ({
 const EventCreation = (props) => {
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
-    const [eventImage, setEventImage] = useState(undefined);
+    const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
+    const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
+
+    const isValueValid = (value) => {
+        return value && (value.length > 0 || value.size);
+    };
+
+    const areDatesValid = () => {
+        return date.start <= date.end;
+    };
+
+    const isFormValid = () => {
+        let isValid = true;
+
+        Object.keys(form).forEach((key) => {
+            if (key === 'location') {
+                if (form.location.value === '' && form.locationType.value === 'venue') {
+                    isValid = false;
+                }
+            } else if (form[key].error || !isValueValid(form[key].value)) {
+                isValid = false;
+            }
+        });
+        if (!areDatesValid()) {
+            isValid = false;
+        }
+        return isValid;
+    };
+
+    const updateFormErrors = () => {
+        const updatedForm = {};
+        Object.keys(form).forEach((key) => {
+            updatedForm[key] = {
+                value: form[key].value,
+                error: !isValueValid(form[key].value),
+            };
+        });
+        setForm(updatedForm);
+        setDate({ ...date, error: !areDatesValid() });
+    };
 
     const handleCreateTicket = (ticketData) => {
         setTickets([...tickets, ticketData]);
     };
-    
+
     const handleFormChange = (field, value) => {
-        setForm({ ...form, [field]: { value, error: false } });
+        setForm({ ...form, [field]: { value, error: !isValueValid(value) } });
+    };
+
+    const handleDateChange = (field, value) => {
+        let error;
+        if (field === 'start') error = value > date.end;
+        else error = value < date.start;
+        setDate({ ...date, [field]: value, error });
     };
 
     const handleSubmit = async () => {
-        const variables = {};
-        var eventName = ""
-        Object.keys(form).forEach((key) => {
-            variables[key] = form[key].value;
-            if(key === "name") {
-                eventName = form[key].value
+        if (isFormValid()) {
+            const variables = {};
+            let eventName = '';
+            Object.keys(form).forEach((key) => {
+                variables[key] = form[key].value;
+                if (key === 'name') {
+                    eventName = form[key].value;
+                }
+            });
+            variables.startDate = date.start;
+            variables.endDate = date.end;
+            if (variables.locationType !== 'venue') variables.location = null;
+            await createEvent({ variables: { ...variables } });
+            await handleCreateCollection();
+            await handleCreateSchema();
+            if (tickets.length > 0) {
+                await Promise.all(
+                    tickets.map(async (ticket) => {
+                        let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
+
+                        if (ticket.image) {
+                            const pinTicketImageResult = await pinTicketImageMutation({
+                                variables: { file: ticket.image, ticketName: ticket.name, eventName },
+                            });
+                            ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
+                        }
+
+                        await handleCreateTemplate(
+                            ticket.name,
+                            ticket.description,
+                            ticket.quantity,
+                            ticket.price,
+                            ticket.startDate,
+                            ticket.endDate,
+                            eventName,
+                            ticketImageIpfsHash,
+                        );
+                    }),
+                );
             }
-        });
-        props.mutate({ variables: { ...variables, imageFile: eventImage[0] } });
-         await handleCreateCollection();
-         await handleCreateSchema();
-          if (tickets.length > 0){
-              tickets.forEach(function(ticket) {
-                    handleCreateTemplate(ticket.name, ticket.description, ticket.quantity, ticket.price, ticket.startDate, ticket.endDate,eventName)
-              })
-            
-         }
-        
+            props.history.push('/');
+        } else {
+            updateFormErrors();
+        }
     };
 
     return (
@@ -105,13 +181,13 @@ const EventCreation = (props) => {
                     <Typography variant="h3">Create event</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
+                    <GeneralInfo value={form} onChange={handleFormChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Location value={form} onChange={handleFormChange} />
                 </Grid>
                 <Grid item xs={12}>
-                    <DateTime value={form} onChange={handleFormChange} />
+                    <DateTime value={date} onChange={handleDateChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <TicketCreation tickets={tickets} onCreateTicket={handleCreateTicket} />
@@ -128,12 +204,8 @@ const EventCreation = (props) => {
     );
 };
 
-// export default connect(
-//   null,
-//   {  }
-// )(EventCreation);
 EventCreation.propTypes = {
-    mutate: PropTypes.func.isRequired,
+    history: PropTypes.node.isRequired,
 };
 
-export default graphql(createEventMutation)(EventCreation);
+export default withRouter(EventCreation);

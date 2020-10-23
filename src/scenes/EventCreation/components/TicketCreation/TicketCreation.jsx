@@ -5,6 +5,9 @@ import { TitledPaper } from '@components';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
 
+// TODO: Replace this temp IPFS Hash with real default ticket image IPFS Hash
+export const DEFAULT_TICKET_IMAGE_IPFS_HASH = 'QmUSRaUYknQeVKGn3AzrtZuN9UA1aDrPaDP7M4Z1B6ktYS';
+
 // TODO: Uncomment when moving ticket creation to a seperate page
 // const useStyles = makeStyles({
 //     createTicketFab: {
@@ -15,7 +18,7 @@ import TicketCard from './components/TicketCard';
 //     },
 // });
 
-const TicketCreation = (props) => {
+export const TicketCreation = (props) => {
     const { tickets, onCreateTicket } = props;
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
@@ -62,7 +65,11 @@ const TicketCreation = (props) => {
             />
             <div>
                 {tickets.map((ticket) => (
-                    <TicketCard ticket={ticket} />
+                    <TicketCard
+                        key={ticket.name}
+                        ticket={ticket}
+                        defaultTicketImageUrl={`https://ipfs.io/ipfs/${DEFAULT_TICKET_IMAGE_IPFS_HASH}`}
+                    />
                 ))}
             </div>
         </TitledPaper>

@@ -3,7 +3,7 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
 
-const COLLECTION_NAME = '33miglierina';
+const COLLECTION_NAME = '41miglierina';
 const SCHEMA_NAME = 'ticket';
 async function takeAction(action, dataValue) {
     const userName = 'accounttest2'; // Changer en prod ne pas avoir la cle prive ici
@@ -156,10 +156,23 @@ export const handleCreateSchema = async () => {
             name: 'eventName',
             type: 'string',
         },
+        {
+            name: 'img',
+            type: 'image',
+        },
     ]);
 };
 
-export const handleCreateTemplate = async (name, description, quantity, price, startDate, endDate, eventName) => {
+export const handleCreateTemplate = async (
+    name,
+    description,
+    quantity,
+    price,
+    startDate,
+    endDate,
+    eventName,
+    image,
+) => {
     await NFTApiService.createTemplate('accounttest2', COLLECTION_NAME, SCHEMA_NAME, true, false, quantity, [
         { key: 'eventId', value: ['uint64', 212340] },
         { key: 'price', value: ['uint64', price] },
@@ -169,6 +182,7 @@ export const handleCreateTemplate = async (name, description, quantity, price, s
         { key: 'endDate', value: ['string', endDate.toString()] },
         { key: 'name', value: ['string', name] },
         { key: 'eventName', value: ['string', eventName] },
+        { key: 'img', value: ['string', image] },
     ]);
 };
 

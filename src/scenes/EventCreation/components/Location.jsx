@@ -2,19 +2,61 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, TextField } from '@material-ui/core';
 import { TitledPaper } from '@components';
+import Script from 'react-load-script';
 import LocationButtonGroup from './LocationButtonGroup';
+
+let autocomplete;
 
 const Location = (props) => {
     const handleChange = (name, l) => {
         props.onChange(name, l);
     };
 
+    const handlePlaceSelect = () => {
+        const addressObject = autocomplete.getPlace();
+        if (addressObject) {
+            const address = addressObject.formatted_address;
+            handleChange('location', address);
+        }
+    };
+
+    const handleScriptLoad = () => {
+        // Declare Options For Autocomplete
+        const options = {}; // To disable any eslint 'google not defined' errors
+
+        // Initialize Google Autocomplete
+        /* global google */ autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('location'),
+            options,
+        );
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components and formatted
+        // address.
+        autocomplete.setFields(['address_components', 'formatted_address']);
+
+        // // Fire Event when a suggested name is selected
+        autocomplete.addListener('place_changed', handlePlaceSelect);
+    };
+
     return (
         <TitledPaper title="Location">
             <p>Share your event with locals and let them know where it&#39;s going to be.</p>
-            <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
-            <Grid container spacing={2}>
-                <Grid item sm={6}>
+            <Grid container spacing={2} direction="column">
+                <Grid item>
+                    <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
+                    <Script
+                        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
+                        onLoad={handleScriptLoad}
+                    />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    md={6}
+                    hidden={props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'}
+                >
                     <TextField
                         id="location"
                         label="Location"
@@ -25,7 +67,7 @@ const Location = (props) => {
                         disabled={
                             props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'
                         }
-                        value={props.value.location.value}
+                        value={props.value.locationType.value === 'venue' ? props.value.location.value : ''}
                         error={props.value.location.error}
                         onChange={(e) => handleChange('location', e.target.value)}
                     />

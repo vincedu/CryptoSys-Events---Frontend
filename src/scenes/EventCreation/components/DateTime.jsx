@@ -26,9 +26,9 @@ const DateTime = (props) => {
                                 label="Start Date"
                                 format="MM/dd/yyyy"
                                 name="startDate"
-                                value={props.value.startDate.value}
-                                error={props.value.startDate.error}
-                                onChange={(event) => handleChange('startDate', event)}
+                                value={props.value.start}
+                                error={props.value.error}
+                                onChange={(event) => handleChange('start', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
@@ -41,9 +41,9 @@ const DateTime = (props) => {
                                 inputVariant="outlined"
                                 label="Start Time"
                                 name="startDate"
-                                value={props.value.startDate.value}
-                                error={props.value.startDate.error}
-                                onChange={(event) => handleChange('startDate', event)}
+                                value={props.value.start}
+                                error={props.value.error}
+                                onChange={(event) => handleChange('start', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
                                 }}
@@ -57,9 +57,9 @@ const DateTime = (props) => {
                                 label="End Date"
                                 format="MM/dd/yyyy"
                                 name="endDate"
-                                value={props.value.endDate.value}
-                                error={props.value.endDate.error}
-                                onChange={(event) => handleChange('endDate', event)}
+                                value={props.value.end}
+                                error={props.value.error}
+                                onChange={(event) => handleChange('end', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
@@ -72,9 +72,9 @@ const DateTime = (props) => {
                                 inputVariant="outlined"
                                 label="End Time"
                                 name="endDate"
-                                value={props.value.endDate.value}
-                                error={props.value.endDate.error}
-                                onChange={(event) => handleChange('endDate', event)}
+                                value={props.value.end}
+                                error={props.value.error}
+                                onChange={(event) => handleChange('end', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
                                 }}
@@ -90,14 +90,9 @@ const DateTime = (props) => {
 DateTime.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.shape({
-        startDate: PropTypes.shape({
-            value: PropTypes.instanceOf(Date),
-            error: PropTypes.bool,
-        }),
-        endDate: PropTypes.shape({
-            value: PropTypes.instanceOf(Date),
-            error: PropTypes.bool,
-        }),
+        start: PropTypes.instanceOf(Date),
+        end: PropTypes.instanceOf(Date),
+        error: PropTypes.bool,
     }).isRequired,
 };
 

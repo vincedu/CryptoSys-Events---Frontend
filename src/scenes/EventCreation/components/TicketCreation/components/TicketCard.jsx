@@ -2,9 +2,8 @@ import React from 'react';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Picture from '@assets/temp_picture.PNG';
 
-const DATE_FORMAT = 'MMMM d, YYYY, h:mma';
+const DATE_FORMAT = 'MMMM Do, YYYY, h:mma';
 
 const useStyles = makeStyles({
     ticketCard: {
@@ -30,12 +29,15 @@ const useStyles = makeStyles({
 
 const TicketCard = (props) => {
     const classes = useStyles();
-    const { ticket } = props;
+    const { ticket, defaultTicketImageUrl } = props;
+
+    const ticketImageUrl = ticket.image ? URL.createObjectURL(ticket.image) : defaultTicketImageUrl;
+
     return (
         <Card className={classes.ticketCard}>
             <Grid container>
                 <Grid item container xs={4}>
-                    <CardMedia className={classes.ticketImage} image={Picture} />
+                    <CardMedia className={classes.ticketImage} image={ticketImageUrl} />
                 </Grid>
                 <Grid item container xs={8}>
                     <Grid item md={6} xs={12} className={classes.ticketMainContent}>
@@ -72,7 +74,9 @@ TicketCard.propTypes = {
         soldQuantity: PropTypes.number,
         quantity: PropTypes.number.isRequired,
         price: PropTypes.number.isRequired,
+        image: PropTypes.object,
     }).isRequired,
+    defaultTicketImageUrl: PropTypes.string.isRequired,
 };
 
 export default TicketCard;
