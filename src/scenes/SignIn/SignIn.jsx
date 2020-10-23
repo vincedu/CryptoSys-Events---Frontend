@@ -28,6 +28,12 @@ const uiConfig = {
             requireDisplayName: true,
         },
     ],
+    callbacks: {
+        signInSuccessWithAuthResult: async () => {
+            const token = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
+            localStorage.setItem('token', token);
+        },
+    },
 };
 
 const SignIn = () => {
