@@ -29,9 +29,14 @@ const uiConfig = {
         },
     ],
     callbacks: {
-        signInSuccessWithAuthResult: async () => {
-            const token = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true);
-            localStorage.setItem('token', token);
+        signInSuccessWithAuthResult: () => {
+            firebase
+                .auth()
+                .currentUser.getIdToken(/* forceRefresh */ true)
+                .then((idToken) => {
+                    localStorage.setItem('token', idToken);
+                });
+            return true;
         },
     },
 };
