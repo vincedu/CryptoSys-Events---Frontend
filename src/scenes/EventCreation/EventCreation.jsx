@@ -67,11 +67,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 const variables = {};
 const EventCreation = (props) => {
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
-    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
 
     const isValueValid = (value) => {
