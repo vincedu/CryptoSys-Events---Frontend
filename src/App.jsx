@@ -33,7 +33,7 @@ const client = new ApolloClient({
     uri: API_URI,
 });
 
-function App() {
+const App = () => {
     return (
         <ApolloProvider client={client}>
             <div className="App">
@@ -49,7 +49,6 @@ function App() {
             </div>
         </ApolloProvider>
     );
-}
+};
 
 export default App;
-export { App };
