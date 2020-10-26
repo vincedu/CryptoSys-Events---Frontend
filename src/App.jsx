@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { offsetLimitPagination } from '@apollo/client/utilities';
 import './App.css';
 import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
 import { NavBar } from './components';
-import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from './scenes';
 import { TicketCreation } from './scenes/EventCreation/components/TicketCreation';
+import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, EventPage } from './scenes';
 
 const API_URI = 'http://localhost:4000/graphql';
 
@@ -29,7 +30,15 @@ const authLink = setContext(async (_, { headers }) => {
 
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        typePolicies: {
+            Query: {
+                fields: {
+                    eventsByParam: offsetLimitPagination(['category']),
+                },
+            },
+        },
+    }),
     uri: API_URI,
 });
 
@@ -40,6 +49,10 @@ const App = () => {
                 <NavBar />
                 <Switch>
                     <Route exact path="/" component={EventList} />
+                    <Route path="/event" component={EventPage} />
+                    <Route path="/search" component={HowItWorks} />
+                    <Route path="/location" component={HowItWorks} />
+                    <Route path="/date" component={HowItWorks} />
                     <Route exact path="/signIn" component={SignIn} />
                     <Route exact path="/howItWorks" component={HowItWorks} />
                     <Route exact path="/helpCenter" component={HelpCenter} />

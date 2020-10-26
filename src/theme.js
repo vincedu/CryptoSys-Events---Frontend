@@ -14,6 +14,7 @@ const theme = createMuiTheme({
         },
         background: {
             default: '#F7F9FC',
+            gradient: 'linear-gradient(30deg, rgba(244,249,255,1) 0%, rgba(247,249,252,1) 100%)',
         },
         divider: 'rgba(250,250,250,0.5)',
         colors: {

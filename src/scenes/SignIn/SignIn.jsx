@@ -43,7 +43,7 @@ const uiConfig = {
 
 const SignIn = () => {
     return (
-        <div>
+        <div style={{ padding: 50 }}>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         </div>
     );

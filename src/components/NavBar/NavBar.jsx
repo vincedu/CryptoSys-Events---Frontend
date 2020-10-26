@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Button, InputBase, Typography, Hidden } from '@material-ui/core';
+import { AppBar, Toolbar, Button, InputBase, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
@@ -10,11 +9,11 @@ import ProfileMenu from './menu/ProfileMenu';
 import MobileMenu from './menu/MobileMenu';
 
 const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
+    appBar: {
+        position: 'sticky',
     },
-    mainLogo: {
-        width: 'auto',
+    appBarMainPage: {
+        position: 'fixed',
     },
     title: {
         marginTop: '5px',
@@ -27,22 +26,21 @@ const useStyles = makeStyles((theme) => ({
         width: 'auto',
         height: '5vh',
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     search: {
+        transition: 'display .3s',
         position: 'relative',
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: 3,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '100%',
+        width: 'auto',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(3),
-            width: 'auto',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '30%',
         },
     },
     searchIcon: {
@@ -67,22 +65,62 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
-    sectionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-        },
+    transparent: {
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
     },
-    sectionMobile: {
-        display: 'flex',
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        },
+    progressContainer: {
+        width: '100%',
+        height: 2,
+    },
+    progressBar: {
+        height: 2,
+        background: theme.palette.secondary.main,
+        width: '0%',
+    },
+    hidden: {
+        display: 'none',
     },
 }));
 
 const NavBar = (props) => {
     const classes = useStyles();
+
+    const mainPage = () => {
+        switch (window.location.pathname) {
+            case '/':
+                return true;
+            default:
+                return false;
+        }
+    };
+
+    let mainPageTheme = mainPage();
+    const [transparent, setTransparent] = React.useState(true);
+    const progressBar = useRef();
+    const searchNav = useRef();
+
+    // Change NavBar theme when scrolling
+    function scrollFunction() {
+        mainPageTheme = mainPage();
+        if (window.pageYOffset > 100 && mainPageTheme) {
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.pageYOffset / height) * 100;
+            progressBar.current.style.width = `${scrolled}%`;
+            if (transparent) setTransparent(false);
+        } else if (window.pageYOffset <= 100 && !transparent && mainPageTheme) {
+            progressBar.current.style.width = '0%';
+            setTransparent(true);
+        } else if (!mainPageTheme) {
+            progressBar.current.style.width = '0%';
+        }
+    }
+
+    if (mainPageTheme) {
+        window.onscroll = () => {
+            scrollFunction();
+        };
+    }
 
     const [currentUser, setCurrentUser] = React.useState(null);
 
@@ -106,53 +144,70 @@ const NavBar = (props) => {
         }
     };
 
+    const checkEnterKey = (key) => {
+        if (key.keyCode === 13) {
+            if (searchNav.current.value === '') return;
+            history.push({
+                pathname: `/search/${searchNav.current.value}`,
+                state: {
+                    search: searchNav.current.value,
+                },
+            });
+        }
+    };
+
     return (
-        <div className={classes.grow}>
-            <AppBar position="static">
-                <Toolbar>
-                    <div className={classes.mainLogo}>
-                        <Button onClick={() => handleButtonClick('/')}>
-                            <img src="eos.svg" className={classes.avatar} alt="eos event" />
-                            <Hidden smDown>
-                                <Typography className={classes.title}>EOS Event</Typography>
-                            </Hidden>
-                        </Button>
+        <AppBar
+            className={`${mainPageTheme ? classes.appBarMainPage : ''} ${classes.appBar} ${
+                transparent && mainPageTheme ? classes.transparent : ''
+            }`}
+        >
+            <Toolbar>
+                <Button onClick={() => handleButtonClick('/')}>
+                    <img src="/eos.svg" className={classes.avatar} alt="eos event" />
+                    <Hidden smDown>
+                        <Typography className={classes.title}>EOS Event</Typography>
+                    </Hidden>
+                </Button>
+                <div className={`${classes.search} ${transparent && mainPageTheme ? classes.hidden : ''}`}>
+                    <div className={classes.searchIcon}>
+                        <SearchIcon />
                     </div>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
+                    <InputBase
+                        inputRef={searchNav}
+                        placeholder="Search…"
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        inputProps={{ 'aria-label': 'search' }}
+                        onKeyDown={(e) => checkEnterKey(e)}
+                    />
+                </div>
 
-                    <div className={classes.grow} />
+                <div style={{ flexGrow: 1 }} />
 
-                    <div className={classes.sectionDesktop}>
-                        <HelpMenu history={history} />
-                        <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
-                            Create Event
-                        </Button>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <MobileMenu history={history} />
-                    </div>
-                    {isSignIn ? (
-                        <ProfileMenu history={history} />
-                    ) : (
-                        <Button color="inherit" onClick={() => handleButtonClick('/signIn')}>
-                            Sign In
-                        </Button>
-                    )}
-                </Toolbar>
-            </AppBar>
-        </div>
+                <Hidden xsDown>
+                    <HelpMenu history={history} />
+                    <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
+                        Create Event
+                    </Button>
+                </Hidden>
+                <Hidden smUp>
+                    <MobileMenu history={history} />
+                </Hidden>
+                {isSignIn ? (
+                    <ProfileMenu history={history} />
+                ) : (
+                    <Button color="inherit" onClick={() => handleButtonClick('/signIn')}>
+                        Sign In
+                    </Button>
+                )}
+            </Toolbar>
+            <div className={classes.progressContainer}>
+                <div className={classes.progressBar} ref={progressBar} />
+            </div>
+        </AppBar>
     );
 };
 

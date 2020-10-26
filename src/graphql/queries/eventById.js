@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const EVENTS_QUERY = gql`
-    query {
-        events {
+const EVENT_BY_ID_QUERY = gql`
+    query eventById($id: String) {
+        eventById(id: $id) {
             id
             name
             description
@@ -14,4 +14,4 @@ const EVENTS_QUERY = gql`
     }
 `;
 
-export default EVENTS_QUERY;
+export default EVENT_BY_ID_QUERY;

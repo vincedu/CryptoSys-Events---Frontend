@@ -1,16 +1,7 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import { Link as RouterLink } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import { makeStyles, Grid, Card, Typography, CardContent, CardMedia, CardHeader } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -20,39 +11,69 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: '56.25%',
         },
     },
+    root: {
+        transition: 'transform .2s',
+        '&:hover': {
+            transform: 'scale(1.01)',
+        },
+        borderRadius: '2px',
+        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
+    },
+    categoryTitle: {
+        padding: '0px 20px 20px 20px',
+        textAlign: 'left',
+        color: theme.palette.secondary.main,
+        fontFamily: `'Bebas Neue', sans-serif`,
+    },
+    horizontalLine: {
+        margin: '80px 30px 30px 30px',
+        border: 0,
+        height: 1,
+        backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
+    },
 }));
 
-export default function MainEventItem(props) {
+const MainEventItem = (props) => {
     const classes = useStyles();
 
     // TODO Fix some props type
     MainEventItem.propTypes = {
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
+        history: PropTypes.object.isRequired,
+    };
+
+    const { history } = props;
+
+    // TODO change pathname to something else than ID?
+    const handleButtonClick = (pageURL) => {
+        history.push({
+            pathname: pageURL,
+            state: {
+                id: props.id,
+            },
+        });
     };
 
     return (
-        <Grid item sm={12} md={8}>
-            <Card className={classes.root}>
-                {/* TODO Fix link to specific event */}
-                <CardActionArea component={RouterLink} to={`/event/${props.id}`}>
+        <div>
+            <Typography className={classes.categoryTitle} variant="h3">
+                Main Event
+            </Typography>
+            <Grid item sm={12} md={8}>
+                <Card className={classes.root} onClick={() => handleButtonClick(`/event/${props.id}`)}>
                     <Grid container direction="row">
                         <Grid item xs={12} sm={6}>
                             <CardMedia className={classes.media} image={props.image} title={props.name} />
                         </Grid>
                         <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
                             <CardHeader
-                                action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon />
-                                    </IconButton>
-                                }
                                 titleTypographyProps={{ variant: 'h4' }}
                                 title={props.name}
-                                subheader={props.date}
+                                subheader={props.date.substring(0, 10)}
                             />
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p" maxLength={10}>
@@ -63,8 +84,10 @@ export default function MainEventItem(props) {
                             </CardContent>
                         </Grid>
                     </Grid>
-                </CardActionArea>
-            </Card>
-        </Grid>
+                </Card>
+            </Grid>
+            <hr className={classes.horizontalLine} />
+        </div>
     );
-}
+};
+export default withRouter(MainEventItem);

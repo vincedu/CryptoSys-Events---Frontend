@@ -75,7 +75,7 @@ const ProfileMenu = (props) => {
 };
 
 ProfileMenu.propTypes = {
-    history: PropTypes.node.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
 export default ProfileMenu;

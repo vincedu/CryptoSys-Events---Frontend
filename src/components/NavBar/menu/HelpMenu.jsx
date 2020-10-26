@@ -65,7 +65,7 @@ const HelpMenu = (props) => {
 };
 
 HelpMenu.propTypes = {
-    history: PropTypes.node.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
 export default HelpMenu;

@@ -57,7 +57,7 @@ const MobileMenu = (props) => {
 };
 
 MobileMenu.propTypes = {
-    history: PropTypes.node.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
 export default MobileMenu;
