@@ -11,6 +11,7 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
+import { handleMintAsset } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -177,6 +178,9 @@ const EventCreation = (props) => {
                             },
                             ticket.quantity,
                         );
+                        for (let i = 0; i < ticket.quantity; i += 1) {
+                            handleMintAsset();
+                        }
                     }),
                 );
             }

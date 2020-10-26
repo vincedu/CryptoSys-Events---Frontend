@@ -3,8 +3,10 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
 
-const COLLECTION_NAME = '41miglierina';
+const COLLECTION_NAME = '44miglierina';
 const SCHEMA_NAME = 'ticket';
+const ATOMIC_MARKET_ACCOUNT = 'atomicmarket';
+const SALE_STRING = 'sale';
 async function takeAction(action, dataValue) {
     const userName = 'accounttest2'; // Changer en prod ne pas avoir la cle prive ici
     const privateKey = '5KVqJZ4DjKAFJxumLztZczmzRoNC8A9Ko4uv8gySVHxLDwnKnbX'; // Changer en prod ne pas avoir la cle prive ici
@@ -35,8 +37,6 @@ async function takeAction(action, dataValue) {
             expireSeconds: 30,
         },
     );
-    console.log('allos');
-    console.log(resultWithConfig);
     return resultWithConfig;
 }
 
@@ -106,6 +106,35 @@ class NFTApiService {
             tokens_to_back: tokensToBack,
         };
         return takeAction('mintasset', dataValue);
+    }
+
+    static transfer(from, to, assetsID, memo) {
+        const dataValue = {
+            from,
+            to,
+            asset_ids: assetsID,
+            memo,
+        };
+        return takeAction('transfer', dataValue);
+    }
+
+    static announceDepo(owner, symbolToAnnounce) {
+        const dataValue = {
+            owner,
+            symbol_to_announce: symbolToAnnounce,
+        };
+        return takeAction('announcedepo', dataValue);
+    }
+
+    static createOffer(sender, recipient, senderAssetsId, recipientAssetsId, memo) {
+        const dataValue = {
+            sender,
+            recipient,
+            sender_asset_ids: senderAssetsId,
+            recipient_asset_ids: recipientAssetsId,
+            memo,
+        };
+        return takeAction('createoffer', dataValue);
     }
 }
 
@@ -187,8 +216,10 @@ export const handleCreateTemplate = async (
 };
 
 export const handleMintAsset = async () => {
-    console.log('allresulto');
-    await NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 21082, 'accounttest2', [], [], []); // object.processed.action_traces[0].inline_traces[0].data.template_id
+    await NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 22201, 'accounttest2', [], [], []); // object.processed.action_traces[0].inline_traces[0].data.template_id
 };
 
-export default NFTApiService;
+export const handleCreateOffer = async () => {
+    await NFTApiService.createOffer('accounttest2', ATOMIC_MARKET_ACCOUNT, [1099512017467], [], SALE_STRING); // Les 2 dernier parametre vont toujours etre un tableau vide et le mot "sale"
+    console.log('Offer Created');
+};
