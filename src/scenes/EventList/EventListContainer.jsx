@@ -2,7 +2,6 @@ import React from 'react';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { useQuery } from '@apollo/client';
-import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
 import MainEventItem from './components/MainEventItem';
 import CustomSearchBar from './components/CustomSearchBar';
