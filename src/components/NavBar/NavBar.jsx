@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Button, InputBase, Avatar } from '@material-ui/core';
+import { AppBar, Toolbar, Button, InputBase, Typography, Hidden } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
@@ -14,12 +14,18 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     mainLogo: {
-        width: 140,
+        width: 'auto',
+    },
+    title: {
+        marginTop: '5px',
+        fontFamily: `'Bebas Neue', sans-serif`,
+        color: '#fff',
+        fontSize: 40,
+        lineHeight: 1,
     },
     avatar: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 0,
+        width: 'auto',
+        height: '5vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -106,7 +112,10 @@ const NavBar = (props) => {
                 <Toolbar>
                     <div className={classes.mainLogo}>
                         <Button onClick={() => handleButtonClick('/')}>
-                            <Avatar src="eos.png" className={classes.avatar} />
+                            <img src="eos.svg" className={classes.avatar} alt="eos event" />
+                            <Hidden smDown>
+                                <Typography className={classes.title}>EOS Event</Typography>
+                            </Hidden>
                         </Button>
                     </div>
                     <div className={classes.search}>
@@ -148,7 +157,7 @@ const NavBar = (props) => {
 };
 
 NavBar.propTypes = {
-    history: PropTypes.node.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
 export default withRouter(NavBar);

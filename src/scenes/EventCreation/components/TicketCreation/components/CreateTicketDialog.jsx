@@ -33,14 +33,12 @@ const DEFAULT_TICKET_FORM = {
         value: '',
         error: false,
     },
-    startDate: {
-        value: new Date(),
-        error: false,
-    },
-    endDate: {
-        value: new Date(),
-        error: false,
-    },
+};
+
+const DEFAULT_TICKET_DATE = {
+    start: new Date(),
+    end: new Date(),
+    error: false,
 };
 
 const useStyles = makeStyles({
@@ -57,8 +55,17 @@ const CreateTicketDialog = (props) => {
     const { isOpen, onClose, onSubmit } = props;
 
     const [form, setForm] = useState(DEFAULT_TICKET_FORM);
+    const [date, setDate] = useState(DEFAULT_TICKET_DATE);
     const theme = useTheme();
     const isFullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const isValueValid = (value) => {
+        return value !== '';
+    };
+
+    const areDatesValid = () => {
+        return date.start <= date.end;
+    };
 
     const isFormValid = () => {
         let isValid = true;
@@ -68,12 +75,10 @@ const CreateTicketDialog = (props) => {
                 isValid = false;
             }
         });
-
+        if (!areDatesValid()) {
+            isValid = false;
+        }
         return isValid;
-    };
-
-    const isValueValid = (value) => {
-        return value !== '';
     };
 
     const updateFormErrors = () => {
@@ -85,6 +90,7 @@ const CreateTicketDialog = (props) => {
             };
         });
         setForm(updatedForm);
+        setDate({ ...date, error: !areDatesValid() });
     };
 
     const mapFormToTicket = () => {
@@ -92,6 +98,8 @@ const CreateTicketDialog = (props) => {
         Object.keys(form).forEach((key) => {
             ticket[key] = form[key].value;
         });
+        ticket.startDate = date.start;
+        ticket.endDate = date.end;
 
         return ticket;
     };
@@ -137,24 +145,11 @@ const CreateTicketDialog = (props) => {
         });
     };
 
-    const handleStartDateChange = (date) => {
-        setForm({
-            ...form,
-            startDate: {
-                value: date,
-                error: form.startDate.error,
-            },
-        });
-    };
-
-    const handleEndDateChange = (date) => {
-        setForm({
-            ...form,
-            endDate: {
-                value: date,
-                error: form.endDate.error,
-            },
-        });
+    const handleDateChange = (field, value) => {
+        let error;
+        if (field === 'start') error = value > date.end;
+        else error = value < date.start;
+        setDate({ ...date, [field]: value, error });
     };
 
     return (
@@ -228,9 +223,9 @@ const CreateTicketDialog = (props) => {
                                         label="Start Date"
                                         format="MM/dd/yyyy"
                                         name="startDate"
-                                        value={form.startDate.value}
-                                        error={form.startDate.error}
-                                        onChange={handleStartDateChange}
+                                        value={date.start}
+                                        error={date.error}
+                                        onChange={(value) => handleDateChange('start', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
@@ -243,9 +238,9 @@ const CreateTicketDialog = (props) => {
                                         inputVariant="outlined"
                                         label="Start Time"
                                         name="startDate"
-                                        value={form.startDate.value}
-                                        error={form.startDate.error}
-                                        onChange={handleStartDateChange}
+                                        value={date.start}
+                                        error={date.error}
+                                        onChange={(value) => handleDateChange('start', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change time',
                                         }}
@@ -261,9 +256,9 @@ const CreateTicketDialog = (props) => {
                                         label="End Date"
                                         format="MM/dd/yyyy"
                                         name="endDate"
-                                        value={form.endDate.value}
-                                        error={form.endDate.error}
-                                        onChange={handleEndDateChange}
+                                        value={date.end}
+                                        error={date.error}
+                                        onChange={(value) => handleDateChange('end', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
@@ -276,9 +271,9 @@ const CreateTicketDialog = (props) => {
                                         inputVariant="outlined"
                                         label="End Time"
                                         name="endDate"
-                                        value={form.endDate.value}
-                                        error={form.endDate.error}
-                                        onChange={handleEndDateChange}
+                                        value={date.end}
+                                        error={date.error}
+                                        onChange={(value) => handleDateChange('end', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change time',
                                         }}

@@ -42,13 +42,21 @@ const Location = (props) => {
     return (
         <TitledPaper title="Location">
             <p>Share your event with locals and let them know where it&#39;s going to be.</p>
-            <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
-            <Script
-                url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
-                onLoad={handleScriptLoad}
-            />
-            <Grid container spacing={2}>
-                <Grid item sm={6}>
+            <Grid container spacing={2} direction="column">
+                <Grid item>
+                    <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
+                    <Script
+                        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
+                        onLoad={handleScriptLoad}
+                    />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    md={6}
+                    hidden={props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'}
+                >
                     <TextField
                         id="location"
                         label="Location"
@@ -59,7 +67,7 @@ const Location = (props) => {
                         disabled={
                             props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'
                         }
-                        value={props.value.location.value}
+                        value={props.value.locationType.value === 'venue' ? props.value.location.value : ''}
                         error={props.value.location.error}
                         onChange={(e) => handleChange('location', e.target.value)}
                     />

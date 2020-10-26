@@ -59,7 +59,7 @@ const TicketCreation = (props) => {
             />
             <div>
                 {tickets.map((ticket) => (
-                    <TicketCard ticket={ticket} />
+                    <TicketCard key={ticket.name} ticket={ticket} />
                 ))}
             </div>
             <Grid container justify="center" className={classes.submit}>

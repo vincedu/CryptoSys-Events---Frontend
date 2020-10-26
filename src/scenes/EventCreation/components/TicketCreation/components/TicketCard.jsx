@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Picture from '@assets/temp_picture.PNG';
 
-const DATE_FORMAT = 'MMMM d, YYYY, h:mma';
+const DATE_FORMAT = 'MMMM Do, YYYY, h:mma';
 
 const useStyles = makeStyles({
     ticketCard: {

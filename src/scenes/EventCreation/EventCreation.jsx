@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useMutation } from '@apollo/client';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
-import { useMutation } from '@apollo/client';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
@@ -44,14 +44,16 @@ const DEFAULT_EVENT_FORM = {
         value: '',
         error: false,
     },
-    startDate: {
-        value: new Date(),
+    imageFile: {
+        value: undefined,
         error: false,
     },
-    endDate: {
-        value: new Date(),
-        error: false,
-    },
+};
+
+const DEFAULT_EVENT_DATE = {
+    start: new Date(),
+    end: new Date(),
+    error: false,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -68,15 +70,15 @@ const EventCreation = (props) => {
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
-    const [eventImage, setEventImage] = useState(undefined);
+    const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
 
-    const handleCreateTicket = (ticketData) => {
-        setTickets([...tickets, ticketData]);
+    const isValueValid = (value) => {
+        return value && (value.length > 0 || value.size);
     };
 
-    const handleFormChange = (field, value) => {
-        setForm({ ...form, [field]: { value, error: false } });
+    const areDatesValid = () => {
+        return date.start <= date.end;
     };
 
     const { history } = props;
@@ -88,25 +90,82 @@ const EventCreation = (props) => {
         history.push({ pathname: '/createEvent/createTicket' });
     };
 
+    const isFormValid = () => {
+        let isValid = true;
+
+        Object.keys(form).forEach((key) => {
+            if (key === 'location') {
+                if (form.location.value === '' && form.locationType.value === 'venue') {
+                    isValid = false;
+                }
+            } else if (form[key].error || !isValueValid(form[key].value)) {
+                isValid = false;
+            }
+        });
+        if (!areDatesValid()) {
+            isValid = false;
+        }
+        return isValid;
+    };
+
+    const updateFormErrors = () => {
+        const updatedForm = {};
+        Object.keys(form).forEach((key) => {
+            updatedForm[key] = {
+                value: form[key].value,
+                error: !isValueValid(form[key].value),
+            };
+        });
+        setForm(updatedForm);
+        setDate({ ...date, error: !areDatesValid() });
+    };
+
+    const handleCreateTicket = (ticketData) => {
+        setTickets([...tickets, ticketData]);
+    };
+
+    const handleFormChange = (field, value) => {
+        setForm({ ...form, [field]: { value, error: !isValueValid(value) } });
+    };
+
+    const handleDateChange = (field, value) => {
+        let error;
+        if (field === 'start') error = value > date.end;
+        else error = value < date.start;
+        setDate({ ...date, [field]: value, error });
+    };
+
     const handleSubmit = async () => {
-        createEvent({ variables: { ...variables, imageFile: eventImage[0] } });
-        await handleCreateCollection();
-        await handleCreateSchema();
-        if (tickets.length > 0) {
-            console.log('allo');
-            console.log(tickets);
-            tickets.forEach(function (ticket) {
-                handleCreateTemplate(
-                    ticket.name,
-                    ticket.description,
-                    ticket.quantity,
-                    ticket.price,
-                    ticket.startDate,
-                    ticket.endDate,
-                    variables.name,
-                );
-                console.log(ticket);
+        if (isFormValid()) {
+            let eventName = '';
+            Object.keys(form).forEach((key) => {
+                variables[key] = form[key].value;
+                if (key === 'name') {
+                    eventName = form[key].value;
+                }
             });
+            variables.startDate = date.start;
+            variables.endDate = date.end;
+            if (variables.locationType !== 'venue') variables.location = null;
+            await createEvent({ variables: { ...variables } });
+            await handleCreateCollection();
+            await handleCreateSchema();
+            if (tickets.length > 0) {
+                tickets.forEach((ticket) => {
+                    handleCreateTemplate(
+                        ticket.name,
+                        ticket.description,
+                        ticket.quantity,
+                        ticket.price,
+                        ticket.startDate,
+                        ticket.endDate,
+                        eventName,
+                    );
+                });
+            }
+            props.history.push('/');
+        } else {
+            updateFormErrors();
         }
         history.push({ pathname: '/' });
     };
@@ -120,15 +179,14 @@ const EventCreation = (props) => {
                             <Typography variant="h3">Create event</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <GeneralInfo value={form} onChange={handleFormChange} onImageUpload={setEventImage} />
+                            <GeneralInfo value={form} onChange={handleFormChange} />
                         </Grid>
                         <Grid item xs={12}>
                             <Location value={form} onChange={handleFormChange} />
                         </Grid>
                         <Grid item xs={12}>
-                            <DateTime value={form} onChange={handleFormChange} />
+                            <DateTime value={date} onChange={handleDateChange} />
                         </Grid>
-                        <Grid item xs={12} />
                         <Grid item xs={12}>
                             <Grid container justify="center" className={classes.submit}>
                                 <Button variant="contained" color="primary" onClick={handleNextButtonClick}>
