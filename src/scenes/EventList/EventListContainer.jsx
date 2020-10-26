@@ -2,6 +2,7 @@ import React from 'react';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { useQuery } from '@apollo/client';
+import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
 import MainEventItem from './components/MainEventItem';
 import CustomSearchBar from './components/CustomSearchBar';
@@ -19,20 +20,9 @@ const EventListContainer = () => {
 
     // TODO Fetch categories from DB?
     function FetchCategories() {
-        return [
-            {
-                id: 1,
-                name: 'Live Concert',
-            },
-            {
-                id: 2,
-                name: 'Virtual Concert',
-            },
-            {
-                id: 3,
-                name: 'Music Concert',
-            },
-        ];
+        return CATEGORIES.map((name, id) => {
+            return { id, name };
+        });
     }
     const categories = FetchCategories();
 

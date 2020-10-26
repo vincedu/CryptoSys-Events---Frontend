@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
-import { makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
+import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import CheckoutDialog from './components/CheckoutDialog';
 
 const useStyles = makeStyles({
     imageBackground: {
@@ -18,7 +19,39 @@ const useStyles = makeStyles({
     },
 });
 
+const DEFAULT_TICKETS = {
+    1: {
+        id: 1,
+        name: 'General',
+        description: 'General admission',
+        quantity: 20,
+        price: 15,
+        number: 0,
+    },
+    2: {
+        id: 2,
+        name: 'VIP',
+        description: 'Access to backstage',
+        quantity: 4,
+        price: 150,
+        number: 0,
+    },
+};
+
 const EventPage = (props) => {
+    const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+    const handleOpenTicketDialog = () => {
+        setIsTicketDialogOpen(true);
+    };
+
+    const handleCloseTicketDialog = () => {
+        setIsTicketDialogOpen(false);
+    };
+
+    const handleBuyTicket = (ticket) => {
+        console.log('BUYING', ticket);
+    };
+
     EventPage.propTypes = {
         location: PropTypes.shape({
             pathname: PropTypes.string.isRequired,
@@ -53,6 +86,17 @@ const EventPage = (props) => {
                     <Typography variant="h1">{data.eventById.name}</Typography>
                     <Typography variant="subtitle1">{data.eventById.description}</Typography>
                 </Grid>
+                <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
+                    Buy Tickets
+                </Button>
+                <CheckoutDialog
+                    isOpen={isTicketDialogOpen}
+                    onSubmit={handleBuyTicket}
+                    onClose={handleCloseTicketDialog}
+                    newTickets={DEFAULT_TICKETS}
+                    otherTickets={{}}
+                    event={{ name: 'Default Event', image: data.eventById.image }}
+                />
             </div>
         );
     }

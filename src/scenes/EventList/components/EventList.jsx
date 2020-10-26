@@ -45,7 +45,7 @@ const EventList = (props) => {
         return <CircularProgress />;
     }
 
-    if (query.data.eventsByParam !== undefined) {
+    if (query.data.eventsByParam && query.data.eventsByParam.length) {
         return (
             <div>
                 <Typography className={classes.categoryTitle} variant="h3">
