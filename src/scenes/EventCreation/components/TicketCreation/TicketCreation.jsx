@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Typography, makeStyles, useTheme, useMediaQuery, Fab } from '@material-ui/core';
 import { TitledPaper } from '@components';
+import AddIcon from '@material-ui/icons/Add';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
 
@@ -9,24 +10,22 @@ import TicketCard from './components/TicketCard';
 export const DEFAULT_TICKET_IMAGE_IPFS_HASH = 'QmUSRaUYknQeVKGn3AzrtZuN9UA1aDrPaDP7M4Z1B6ktYS';
 
 // TODO: Uncomment when moving ticket creation to a seperate page
-// const useStyles = makeStyles({
-//     createTicketFab: {
-//         margin: 0,
-//         right: 24,
-//         bottom: 24,
-//         position: 'fixed',
-//     },
-// });
+const useStyles = makeStyles({
+    createTicketFab: {
+        margin: 0,
+        right: 24,
+        bottom: 24,
+        position: 'fixed',
+    },
+});
 
 export const TicketCreation = (props) => {
-    const { tickets, onCreateTicket } = props;
+    const { handleSubmit, tickets, onCreateTicket } = props;
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
-
-    // TODO: Uncomment when moving ticket creation to a seperate page
-    // const classes = useStyles();
-    // const theme = useTheme();
-    // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const classes = useStyles();
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -46,16 +45,15 @@ export const TicketCreation = (props) => {
                     </Typography>
                 </Grid>
                 <Grid container item md={2} xs={12} justify="flex-end">
-                    {/* TODO: Uncomment when moving ticket creation to a seperate page
                     {isSmallScreen ? (
                         <Fab className={classes.createTicketFab} color="secondary" onClick={handleOpenTicketDialog}>
                             <AddIcon />
                         </Fab>
-                    ) : ( */}
-                    <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
-                        Create Ticket
-                    </Button>
-                    {/* )} */}
+                    ) : (
+                        <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
+                            Create Ticket
+                        </Button>
+                    )}
                 </Grid>
             </Grid>
             <CreateTicketDialog
@@ -72,6 +70,11 @@ export const TicketCreation = (props) => {
                     />
                 ))}
             </div>
+            <Grid container justify="center" className={classes.submit}>
+                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    Create Event
+                </Button>
+            </Grid>
         </TitledPaper>
     );
 };
@@ -88,6 +91,7 @@ TicketCreation.propTypes = {
         }),
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
 };
 
 export default TicketCreation;
