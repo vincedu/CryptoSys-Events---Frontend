@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     },
 });
 
-const TicketCreation = (props) => {
+export const TicketCreation = (props) => {
     const { handleSubmit, tickets, onCreateTicket } = props;
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);

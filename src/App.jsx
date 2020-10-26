@@ -1,13 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
 import './App.css';
 import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
 import { NavBar } from './components';
-import { TicketCreation } from './scenes/EventCreation/components/TicketCreation';
-import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, EventPage } from './scenes';
+import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from './scenes';
 
 const API_URI = 'http://localhost:4000/graphql';
 
@@ -44,23 +43,20 @@ const client = new ApolloClient({
 
 const App = () => {
     return (
-        <ApolloProvider client={client}>
-            <div className="App">
-                <NavBar />
-                <Switch>
-                    <Route exact path="/" component={EventList} />
-                    <Route path="/event" component={EventPage} />
-                    <Route path="/search" component={HowItWorks} />
-                    <Route path="/location" component={HowItWorks} />
-                    <Route path="/date" component={HowItWorks} />
-                    <Route exact path="/signIn" component={SignIn} />
-                    <Route exact path="/howItWorks" component={HowItWorks} />
-                    <Route exact path="/helpCenter" component={HelpCenter} />
-                    <Route exact path="/createTicket" component={TicketCreation} />
-                    <Route exact path="/createEvent" component={EventCreation} />
-                </Switch>
-            </div>
-        </ApolloProvider>
+        <Router>
+            <ApolloProvider client={client}>
+                <div className="App">
+                    <NavBar />
+                    <Switch>
+                        <Route exact path="/" component={EventList} />
+                        <Route exact path="/signIn" component={SignIn} />
+                        <Route exact path="/howItWorks" component={HowItWorks} />
+                        <Route exact path="/helpCenter" component={HelpCenter} />
+                        <Route path="/createEvent" component={EventCreation} />
+                    </Switch>
+                </div>
+            </ApolloProvider>
+        </Router>
     );
 };
 

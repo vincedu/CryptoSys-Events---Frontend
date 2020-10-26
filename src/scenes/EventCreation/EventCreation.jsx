@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
-import { Route, Switch, withRouter } from 'react-router-dom';
 import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
@@ -82,6 +82,15 @@ const EventCreation = (props) => {
         return date.start <= date.end;
     };
 
+    const { history } = props;
+
+    const handleNextButtonClick = () => {
+        Object.keys(form).forEach((key) => {
+            variables[key] = form[key].value;
+        });
+        history.push({ pathname: '/createEvent/createTicket' });
+    };
+
     const isFormValid = () => {
         let isValid = true;
 
@@ -125,15 +134,6 @@ const EventCreation = (props) => {
         if (field === 'start') error = value > date.end;
         else error = value < date.start;
         setDate({ ...date, [field]: value, error });
-    };
-
-    const { history } = props;
-
-    const handleNextButtonClick = () => {
-        Object.keys(form).forEach((key) => {
-            variables[key] = form[key].value;
-        });
-        history.push({ pathname: '/createEvent/createTicket' });
     };
 
     const handleSubmit = async () => {
@@ -180,6 +180,7 @@ const EventCreation = (props) => {
         } else {
             updateFormErrors();
         }
+        history.push({ pathname: '/' });
     };
 
     return (

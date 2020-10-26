@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Route } from 'react-router-dom';
 import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn } from '../scenes';
-import { TicketCreation } from '../scenes/EventCreation/components/TicketCreation';
 import App from '../App';
 
 describe('App', () => {
@@ -28,12 +27,6 @@ describe('App', () => {
         expect(wrapper.contains(eventList)).toEqual(true);
     });
 
-    it('renders ticketCreation', () => {
-        const wrapper = shallow(<App />);
-        const eventList = <Route exact path="/createTicket" component={TicketCreation} />;
-        expect(wrapper.contains(eventList)).toEqual(true);
-    });
-
     it('renders helpCenter', () => {
         const wrapper = shallow(<App />);
         const eventList = <Route exact path="/helpCenter" component={HelpCenter} />;
@@ -42,7 +35,7 @@ describe('App', () => {
 
     it('renders eventCreation', () => {
         const wrapper = shallow(<App />);
-        const eventList = <Route exact path="/createEvent" component={EventCreation} />;
+        const eventList = <Route path="/createEvent" component={EventCreation} />;
         expect(wrapper.contains(eventList)).toEqual(true);
     });
 });
