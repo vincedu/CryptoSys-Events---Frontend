@@ -86,7 +86,7 @@ export const handleCreateMarketPlace = async () => {
 export const handleAnnounceSale = async () => {
     await MarketplaceApiService.announceSale(
         ACCOUNT_SELLING,
-        [1099512017467],
+        [1099512018975],
         '1.00000000 WAX',
         WAX_SETTLEMENT_SYMBOL,
         MARKETPLACE_NAME,
@@ -95,12 +95,12 @@ export const handleAnnounceSale = async () => {
 };
 
 export const handlePurchaseSale = async () => {
-    await MarketplaceApiService.purchaseSale(ACCOUNT_BUYIN, 21239, 0, MARKETPLACE_NAME); // mettre sale Id dans le tableau
+    await MarketplaceApiService.purchaseSale(ACCOUNT_BUYIN, 21242, 0, MARKETPLACE_NAME); // mettre sale Id dans le tableau
     console.log('Sale PURCHASE !');
 };
 
 export const handleCancelSale = async () => {
-    await MarketplaceApiService.cancelSale([21237]); // mettre sale Id dans le tableau
+    await MarketplaceApiService.cancelSale([21242]); // mettre sale Id dans le tableau
     console.log('Sale Cancel !');
 };
 
