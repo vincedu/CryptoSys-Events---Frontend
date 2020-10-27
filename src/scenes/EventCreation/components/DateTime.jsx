@@ -13,14 +13,16 @@ const DateTime = (props) => {
     };
 
     return (
-        <TitledPaper title="Date and time">
+        <TitledPaper title="Date & Time">
             <p>Let potential attendees know when your event starts and ends so that they can plan their visit.</p>
             <Grid container>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
+                    <Grid item container md={8} spacing={3}>
+                        <Grid item xs={12} sm={6}>
                             <KeyboardDatePicker
                                 required
+                                variant="inline"
+                                disablePast
                                 margin="normal"
                                 inputVariant="outlined"
                                 label="Start Date"
@@ -31,12 +33,15 @@ const DateTime = (props) => {
                                 onChange={(event) => handleChange('start', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
+                                    color: 'primary',
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid item xs={12} sm={6}>
                             <KeyboardTimePicker
                                 required
+                                variant="inline"
+                                disablePast
                                 margin="normal"
                                 inputVariant="outlined"
                                 label="Start Time"
@@ -46,12 +51,15 @@ const DateTime = (props) => {
                                 onChange={(event) => handleChange('start', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
+                                    color: 'primary',
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid item xs={12} sm={6}>
                             <KeyboardDatePicker
                                 required
+                                variant="inline"
+                                disablePast
                                 margin="normal"
                                 inputVariant="outlined"
                                 label="End Date"
@@ -62,12 +70,15 @@ const DateTime = (props) => {
                                 onChange={(event) => handleChange('end', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
+                                    color: 'primary',
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid item xs={12} sm={6}>
                             <KeyboardTimePicker
                                 required
+                                variant="inline"
+                                disablePast
                                 margin="normal"
                                 inputVariant="outlined"
                                 label="End Time"
@@ -77,6 +88,7 @@ const DateTime = (props) => {
                                 onChange={(event) => handleChange('end', event)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
+                                    color: 'primary',
                                 }}
                             />
                         </Grid>

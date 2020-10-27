@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
         flexGrow: 1,
     },
+    title: {
+        fontStyle: `'Roboto', sans-serif`,
+        fontWeight: 900,
+        color: '#242424',
+        paddingLeft: 30,
+    },
 }));
 
 const PageContainer = (props) => {
@@ -18,7 +24,9 @@ const PageContainer = (props) => {
             <Grid container spacing={3} direction="column">
                 {title ? (
                     <Grid item xs={12}>
-                        <Typography variant="h3">{title}</Typography>
+                        <Typography className={classes.title} variant="h2">
+                            {title}
+                        </Typography>
                     </Grid>
                 ) : null}
                 <Grid item xs={12}>

@@ -5,11 +5,18 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles({
     root: {
         padding: '16px',
+        boxShadow: 'none',
+        backgroundColor: 'transparent',
     },
     header: {
         paddingBottom: '16px',
     },
     content: {},
+    title: {
+        fontStyle: `'Roboto', sans-serif`,
+        fontWeight: 900,
+        color: '#242424',
+    },
 });
 
 const TitledPaper = (props) => {
@@ -17,7 +24,9 @@ const TitledPaper = (props) => {
     return (
         <Paper className={classes.root}>
             <div className={classes.header}>
-                <Typography variant="h4">{props.title}</Typography>
+                <Typography className={classes.title} variant="h3">
+                    {props.title}
+                </Typography>
             </div>
             <div className={classes.content}>{props.children}</div>
         </Paper>

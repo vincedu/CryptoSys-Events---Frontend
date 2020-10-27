@@ -35,6 +35,17 @@ const theme = createMuiTheme({
             disabled: 'rgba(0,0,0, 0.5)',
         },
     },
+    overrides: {
+        MuiOutlinedInput: {
+            root: {
+                borderRadius: '3px',
+                backgroundColor: '#fff',
+            },
+            adornedEnd: {
+                paddingRight: 0,
+            },
+        },
+    },
 });
 
 export default theme;

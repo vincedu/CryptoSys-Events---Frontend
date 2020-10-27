@@ -100,18 +100,18 @@ const AccountSetup = (props) => {
 
     return (
         <PageContainer>
-            <TitledPaper title="Setup your account">
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
+            <TitledPaper title="Setup your Account">
+                <Grid container spacing={3} justify="center">
+                    <Grid item spacing={3} xs={12} md={10}>
                         <Typography variant="body2">
                             Before you get started with your account, we will need a little more information about you.
                         </Typography>
                     </Grid>
-                    <Grid container item spacing={3} xs={12}>
-                        <Grid item xs={12}>
+                    <Grid container item spacing={3} xs={12} md={10}>
+                        <Grid item xs={8}>
                             <Typography variant="h6">User information</Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={8}>
                             <TextField
                                 fullWidth
                                 required
@@ -124,19 +124,25 @@ const AccountSetup = (props) => {
                             />
                         </Grid>
                     </Grid>
-                    <Grid container item spacing={3} xs={12}>
-                        <Grid item xs={12}>
+                    <Grid container item spacing={3} xs={12} md={10}>
+                        <Grid item xs={10}>
                             <Typography variant="h6">Wallet</Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={10}>
                             <LinkWallet onLinkWalletClick={resetIsShowingWalletLinkError} />
                             <Box hidden={!isShowingWalletLinkError}>
                                 <Typography color="error">*You need to link a wallet to your account</Typography>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container item xs={12} justify="flex-end">
-                        <Button variant="contained" color="secondary" type="submit" onClick={handleSubmit}>
+                    <Grid container item xs={12} md={10} justify="flex-end">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            style={{ padding: 12 }}
+                            type="submit"
+                            onClick={handleSubmit}
+                        >
                             Submit
                         </Button>
                     </Grid>

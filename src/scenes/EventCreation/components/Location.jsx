@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, TextField, Typography } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
 import { TitledPaper } from '@components';
 import Script from 'react-load-script';
 import LocationButtonGroup from './LocationButtonGroup';
@@ -54,19 +55,17 @@ const Location = (props) => {
                     item
                     xs={12}
                     sm={8}
-                    md={6}
                     hidden={props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'}
                 >
+                    <Typography variant="body1">Venue Location</Typography>
                     <TextField
                         id="location"
-                        label="Location"
+                        placeholder="Search for a venue or address"
                         variant="outlined"
                         fullWidth
                         margin="normal"
                         color="primary"
-                        disabled={
-                            props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'
-                        }
+                        InputProps={{ startAdornment: <Search style={{ marginRight: 10 }} /> }}
                         value={props.value.locationType.value === 'venue' ? props.value.location.value : ''}
                         error={props.value.location.error}
                         onChange={(e) => handleChange('location', e.target.value)}

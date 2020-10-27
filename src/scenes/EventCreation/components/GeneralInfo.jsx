@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField, Chip, Box, Typography } from '@material-ui/core';
+import { Grid, TextField, Chip, Box, Typography, makeStyles } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
 import PropTypes from 'prop-types';
@@ -10,6 +10,18 @@ import { TitledPaper } from '@components';
 import { TYPES, CATEGORIES, LANGUAGES } from '../lists';
 
 const GeneralInfo = (props) => {
+    const useStyles = makeStyles((theme) => ({
+        textField: {
+            borderRadius: 0,
+        },
+        button: {
+            backgroundColor: `${theme.palette.primary.main} !important`,
+            borderRadius: '3px !important',
+        },
+    }));
+    // .MuiOutlinedInput-root
+    const classes = useStyles();
+
     const handleTextChange = (event) => {
         event.persist();
         props.onChange([event.target.name], event.target.value);
@@ -42,11 +54,14 @@ const GeneralInfo = (props) => {
 
     return (
         <TitledPaper title="General information">
-            <p>
-                Name your event and explain to the prospect why they really need to attend the event. Add information
-                underlining the uniqueness of your event
-            </p>
             <Grid container direction="row" spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="body1" style={{ width: '80%' }}>
+                        Name your event and explain to the prospect why they really need to attend the event. Add
+                        information underlining the uniqueness of your event
+                    </Typography>
+                </Grid>
+
                 <Grid item xs={12} sm={4}>
                     <TextField
                         name="name"
@@ -55,6 +70,7 @@ const GeneralInfo = (props) => {
                         fullWidth
                         margin="normal"
                         required
+                        className={classes.textField}
                         value={props.value.name.value}
                         error={props.value.name.error}
                         onChange={handleTextChange}
@@ -67,7 +83,13 @@ const GeneralInfo = (props) => {
                         margin="normal"
                         required
                         multiline
+                        inputProps={{
+                            style: {
+                                paddingBottom: 6,
+                            },
+                        }}
                         rows={9}
+                        className={classes.textField}
                         value={props.value.description.value}
                         error={props.value.description.error}
                         onChange={handleTextChange}
@@ -86,6 +108,7 @@ const GeneralInfo = (props) => {
                                 variant="outlined"
                                 margin="normal"
                                 required
+                                className={classes.textField}
                                 error={props.value.type.error}
                             />
                         )}
@@ -102,6 +125,7 @@ const GeneralInfo = (props) => {
                                 variant="outlined"
                                 margin="normal"
                                 required
+                                className={classes.textField}
                                 error={props.value.category.error}
                             />
                         )}
@@ -119,6 +143,7 @@ const GeneralInfo = (props) => {
                                 variant="outlined"
                                 margin="normal"
                                 required
+                                className={classes.textField}
                                 error={props.value.languages.error}
                             />
                         )}
@@ -154,15 +179,23 @@ const GeneralInfo = (props) => {
                         withIcon
                         singleImage
                         withPreview
+                        withLabel={false}
                         buttonText="Choose Image"
                         onChange={(image) => props.onChange('imageFile', image[0])}
                         imgExtension={['.jpg', '.gif', '.png']}
                         maxFileSize={5242880}
+                        buttonClassName={classes.button}
+                        fileContainerStyle={{
+                            boxShadow: 'none',
+                            borderRadius: '3px',
+                            border: '1px solid #cacaca',
+                            marginTop: 16,
+                        }}
                     />
                     <Box hidden={!props.value.imageFile.error}>
                         <Typography color="error">*Missing image</Typography>
                     </Box>
-                    {/* <ImageUpload cardName="Input Image" imageGallery={galleryImageList} /> */}
+                    {/* <ImageUpload cardName='Input Image' imageGallery={galleryImageList} /> */}
                 </Grid>
             </Grid>
         </TitledPaper>

@@ -56,7 +56,7 @@ const LinkWallet = (props) => {
             </Button>
         </>
     ) : (
-        <Button variant="contained" color="primary" onClick={handleLinkWalletButtonClick}>
+        <Button variant="contained" color="primary" style={{ padding: 12 }} onClick={handleLinkWalletButtonClick}>
             <AccountBalanceWalletIcon className={classes.walletButtonIcon} />
             Link account to a wallet
         </Button>

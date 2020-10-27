@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Hidden } from '@material-ui/core';
+import { FindInPage, Event, Map, Receipt } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
 import { PageContainer } from '@components';
@@ -61,6 +62,33 @@ const DEFAULT_EVENT_DATE = {
 const useStyles = makeStyles((theme) => ({
     submit: {
         paddingBottom: theme.spacing(3),
+    },
+    button: {
+        padding: '12px 30px',
+        fontWeight: 900,
+    },
+    horizontalLine: {
+        margin: '50px 30px 30px 30px',
+        border: 0,
+        height: 1,
+        backgroundColor: '#e2e2e2',
+    },
+    icon: {
+        fontSize: '5em',
+        textAlign: 'right',
+    },
+    iconGrid: {
+        [theme.breakpoints.up('md')]: {
+            padding: '28px 0 12px 12px !important',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            color: 'lightgrey',
+        },
+    },
+    noPaddingLeft: {
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: 0,
+        },
     },
 }));
 
@@ -195,19 +223,47 @@ const EventCreation = (props) => {
         <PageContainer title="Create event">
             <Switch>
                 <Route path="/createEvent/general">
-                    <Grid container spacing={3} direction="column" justify="flex-start">
-                        <Grid item xs={12}>
-                            <GeneralInfo value={form} onChange={handleFormChange} />
+                    <Grid container spacing={3} direction="row" justify="center">
+                        <Grid item container spacing={3} direction="row" justify="center">
+                            <Hidden smDown>
+                                <Grid item md={1} className={classes.iconGrid}>
+                                    <FindInPage className={classes.icon} />
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
+                                <GeneralInfo value={form} onChange={handleFormChange} />
+                                <hr className={classes.horizontalLine} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Location value={form} onChange={handleFormChange} />
+                        <Grid item container spacing={3} direction="row" justify="center">
+                            <Hidden smDown>
+                                <Grid item md={1} className={classes.iconGrid}>
+                                    <Map className={classes.icon} />
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
+                                <Location value={form} onChange={handleFormChange} />
+                                <hr className={classes.horizontalLine} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <DateTime value={date} onChange={handleDateChange} />
+                        <Grid item container spacing={3} direction="row" justify="center">
+                            <Hidden smDown>
+                                <Grid item md={1} className={classes.iconGrid}>
+                                    <Event className={classes.icon} />
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
+                                <DateTime value={date} onChange={handleDateChange} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Grid container justify="center" className={classes.submit}>
-                                <Button variant="contained" color="primary" onClick={handleNextButtonClick}>
+                        <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
+                            <Grid container justify="flex-end" className={classes.submit}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    onClick={handleNextButtonClick}
+                                >
                                     Next
                                 </Button>
                             </Grid>
@@ -218,13 +274,20 @@ const EventCreation = (props) => {
                 <Route
                     path="/createEvent/createTicket"
                     render={() => (
-                        <Grid item xs={12}>
-                            <TicketCreation
-                                {...props}
-                                handleSubmit={handleSubmit}
-                                tickets={tickets}
-                                onCreateTicket={handleCreateTicket}
-                            />
+                        <Grid container spacing={3} direction="row" justify="center">
+                            <Hidden smDown>
+                                <Grid item md={1} className={classes.iconGrid}>
+                                    <Receipt className={classes.icon} />
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
+                                <TicketCreation
+                                    {...props}
+                                    handleSubmit={handleSubmit}
+                                    tickets={tickets}
+                                    onCreateTicket={handleCreateTicket}
+                                />
+                            </Grid>
                         </Grid>
                     )}
                 />

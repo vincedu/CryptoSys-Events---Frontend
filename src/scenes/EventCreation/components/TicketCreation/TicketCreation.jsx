@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Typography, makeStyles, useTheme, useMediaQuery, Fab } from '@material-ui/core';
 import { TitledPaper } from '@components';
+import { withRouter } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
@@ -17,15 +18,33 @@ const useStyles = makeStyles({
         bottom: 24,
         position: 'fixed',
     },
+    button: {
+        padding: 15,
+    },
+    submit: {
+        paddingTop: 40,
+    },
+    lowerButton: {
+        padding: 15,
+        margin: '60px 10px 0 10px',
+    },
+    special: {
+        fontWeight: 900,
+    },
 });
 
 export const TicketCreation = (props) => {
     const { handleSubmit, tickets, onCreateTicket } = props;
+    const { history } = props;
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const handleBack = () => {
+        history.goBack();
+    };
 
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -38,19 +57,24 @@ export const TicketCreation = (props) => {
     return (
         <TitledPaper title="Tickets">
             <Grid container spacing={3}>
-                <Grid item md={10} xs={12}>
+                <Grid item xs={12} md={10}>
                     <Typography variant="subtitle2">
                         Create tickets for your event. You can create multiple types of tickets if you want to offer
                         different experiences for your attendees.
                     </Typography>
                 </Grid>
-                <Grid container item md={2} xs={12} justify="flex-end">
+                <Grid container item xs={12} md={2} justify="flex-end">
                     {isSmallScreen ? (
                         <Fab className={classes.createTicketFab} color="secondary" onClick={handleOpenTicketDialog}>
                             <AddIcon />
                         </Fab>
                     ) : (
-                        <Button variant="contained" color="secondary" onClick={handleOpenTicketDialog}>
+                        <Button
+                            variant="outlined"
+                            className={classes.button}
+                            color="secondary"
+                            onClick={handleOpenTicketDialog}
+                        >
                             Create Ticket
                         </Button>
                     )}
@@ -71,7 +95,15 @@ export const TicketCreation = (props) => {
                 ))}
             </div>
             <Grid container justify="center" className={classes.submit}>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                <Button variant="outlined" className={classes.lowerButton} color="primary" onClick={handleBack}>
+                    Back
+                </Button>
+                <Button
+                    variant="contained"
+                    className={`${classes.lowerButton} ${classes.special}`}
+                    color="primary"
+                    onClick={handleSubmit}
+                >
                     Create Event
                 </Button>
             </Grid>
@@ -92,6 +124,7 @@ TicketCreation.propTypes = {
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
-export default TicketCreation;
+export default withRouter(TicketCreation);
