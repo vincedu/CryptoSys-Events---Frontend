@@ -1,4 +1,4 @@
-import atomicMarketTransaction from './atomicAssets';
+import atomicMarketTransaction from './atomicAssetsAction';
 
 const INTENDED_DELPHI_MEDIAN = 0;
 const purchaseSaleTransaction = (buyer, saleId, marketplaceNAme) => {

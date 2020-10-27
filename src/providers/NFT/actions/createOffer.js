@@ -1,4 +1,4 @@
-import atomicAssetsTransaction from './atomicAssets';
+import atomicAssetsTransaction from './atomicAssetsAction';
 
 const SALE_STRING = 'sale';
 const ATOMIC_MARKET_ACCOUNT = 'atomicmarket';

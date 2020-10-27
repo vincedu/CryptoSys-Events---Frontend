@@ -1,6 +1,6 @@
-import atomicAssetsTransaction from './atomicAssets';
+import atomicAssetsAction from './atomicAssetsAction';
 
-const createCollectionTransaction = (collectionName, accountName) => {
+const createCollectionAction = (collectionName, accountName) => {
     const actionData = {
         author: accountName,
         collection_name: collectionName,
@@ -11,7 +11,7 @@ const createCollectionTransaction = (collectionName, accountName) => {
         data: [],
     };
 
-    return atomicAssetsTransaction('createcol', actionData, accountName);
+    return atomicAssetsAction('createcol', actionData, accountName);
 };
 
-export default createCollectionTransaction;
+export default createCollectionAction;

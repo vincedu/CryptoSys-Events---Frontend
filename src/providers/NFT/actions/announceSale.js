@@ -1,4 +1,4 @@
-import atomicMarketTransaction from './atomicAssets';
+import atomicMarketTransaction from './atomicAssetsAction';
 
 const WAX_SETTLEMENT_SYMBOL = '8,WAX';
 const createMarketplaceTransaction = (seller, assetIds, price, marketplaceName) => {

@@ -1,4 +1,4 @@
-import eosioTokenTransaction from './atomicAssets';
+import eosioTokenTransaction from './atomicAssetsAction';
 
 const DEPOSIT_STRING = 'deposit';
 const ATOMIC_MARKET_ACCOUNT = 'atomicmarket';

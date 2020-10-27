@@ -1,4 +1,4 @@
-import atomicMarketTransaction from './atomicAssets';
+import atomicMarketTransaction from './atomicAssetsAction';
 
 const createMarketplaceTransaction = (creator, marketplaceName) => {
     const actionData = {

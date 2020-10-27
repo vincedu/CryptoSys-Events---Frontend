@@ -1,4 +1,4 @@
-import atomicAssetsTransaction from './atomicAssets';
+import atomicAssetsTransaction from './atomicAssetsAction';
 
 const mintAssetTransaction = (collectionName, accountName, schemaName, templateId, newAssetOwner) => {
     const actionData = {

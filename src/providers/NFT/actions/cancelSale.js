@@ -1,4 +1,4 @@
-import atomicMarketTransaction from './atomicAssets';
+import atomicMarketTransaction from './atomicAssetsAction';
 
 const cancelSaleTransaction = (saleId) => {
     const actionData = {

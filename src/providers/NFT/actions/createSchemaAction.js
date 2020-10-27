@@ -1,6 +1,6 @@
-import atomicAssetsTransaction from './atomicAssets';
+import atomicAssetsAction from './atomicAssetsAction';
 
-const createSchemaTransaction = (schemaName, collectionName, accountName) => {
+const createSchemaAction = (schemaName, collectionName, accountName) => {
     const actionData = {
         authorized_creator: accountName,
         collection_name: collectionName,
@@ -45,7 +45,7 @@ const createSchemaTransaction = (schemaName, collectionName, accountName) => {
         ],
     };
 
-    return atomicAssetsTransaction('createschema', actionData, accountName);
+    return atomicAssetsAction('createschema', actionData, accountName);
 };
 
-export default createSchemaTransaction;
+export default createSchemaAction;
