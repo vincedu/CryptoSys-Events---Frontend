@@ -38,7 +38,7 @@ const DEFAULT_TICKETS = {
     },
 };
 
-const EventPage = (props) => {
+export const EventPage = (props) => {
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
