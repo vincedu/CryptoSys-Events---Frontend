@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TransactionProcessDialog } from '@components';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
-import { createCollectionAction, createSchemaAction, createTemplateAction } from './actions';
+import { createCollectionAction, createSchemaAction, createTemplateAction, mintAssetAction } from './actions';
 
 const defaultNFTContext = {
     createEventTickets: () => {},
@@ -15,7 +15,7 @@ export const NFTContext = React.createContext(defaultNFTContext);
 
 const DEFAULT_TRANSACTION_CONFIG = { broadcast: true, blocksBehind: 3, expireSeconds: 30 };
 
-const TEMP_COLLECTION_NAME = 'testcollec24';
+const TEMP_COLLECTION_NAME = 'testcollec41';
 const TEMP_SCHEMA_NAME = 'ticket';
 
 class NFTProvider extends React.Component {
@@ -27,29 +27,46 @@ class NFTProvider extends React.Component {
     componentDidMount() {
         this.setState({
             createTicketNFTs: async (tickets) => {
-                const createCollectionResult = await this.createCollection();
-                const collectionName = createCollectionResult.transaction.transaction.actions[0].data.collection_name;
-                const createSchemaResult = await this.createSchema(collectionName);
-                const schemaName = createSchemaResult.transaction.transaction.actions[0].data.schema_name;
-
-                const templateIds = await Promise.all(
-                    tickets.map(async (ticket) => {
-                        const createTemplateResult = await this.createTemplate(
-                            schemaName,
-                            collectionName,
-                            ticket.ticketData,
-                            ticket.maxSupply,
-                        );
-
-                        const templateId =
-                            createTemplateResult.transaction.processed.action_traces[0].inline_traces[0].act.data
-                                .template_id;
-
-                        return templateId;
-                    }),
+                const collectionAction = createCollectionAction(
+                    TEMP_COLLECTION_NAME,
+                    this.props.auth.userData.walletAccountName,
+                );
+                const schemaAction = createSchemaAction(
+                    TEMP_SCHEMA_NAME,
+                    TEMP_COLLECTION_NAME,
+                    this.props.auth.userData.walletAccountName,
+                );
+                const templateActions = tickets.map((template) =>
+                    createTemplateAction(
+                        TEMP_SCHEMA_NAME,
+                        TEMP_COLLECTION_NAME,
+                        template.maxSupply,
+                        template.ticketData,
+                        this.props.auth.userData.walletAccountName,
+                    ),
                 );
 
-                console.log('templateIds', templateIds);
+                const transaction = this.createTransactionFromActions([
+                    collectionAction,
+                    schemaAction,
+                    ...templateActions,
+                ]);
+
+                const transactionResult = await this.transact(transaction);
+
+                const createTemplateActionTraces = transactionResult.transaction.processed.action_traces.filter(
+                    (actionTrace) => actionTrace.act.name === 'createtempl',
+                );
+                const ticketTemplates = createTemplateActionTraces.map((actionTrace) => ({
+                    templateId: actionTrace.inline_traces[0].act.data.template_id,
+                    amount: actionTrace.inline_traces[0].act.data.max_supply,
+                }));
+
+                const mintAssetsResults = await this.mintAssetsForTemplates(
+                    TEMP_SCHEMA_NAME,
+                    TEMP_COLLECTION_NAME,
+                    ticketTemplates,
+                );
             },
         });
     }
@@ -75,16 +92,33 @@ class NFTProvider extends React.Component {
         return this.transact(transaction);
     };
 
-    createTemplate = async (schemaName, collectionName, templateData, maxSupply) => {
-        const action = createTemplateAction(
-            schemaName,
-            collectionName,
-            maxSupply,
-            templateData,
-            this.props.auth.userData.walletAccountName,
+    createTemplates = async (schemaName, collectionName, ticketTemplates) => {
+        const templateActions = ticketTemplates.map((template) =>
+            createTemplateAction(
+                schemaName,
+                collectionName,
+                template.maxSupply,
+                template.ticketData,
+                this.props.auth.userData.walletAccountName,
+            ),
         );
 
-        const transaction = this.createTransactionFromActions([action]);
+        const transaction = this.createTransactionFromActions(templateActions);
+        return this.transact(transaction);
+    };
+
+    mintAssetsForTemplates = async (schemaName, collectionName, ticketTemplates) => {
+        const mintActions = ticketTemplates.flatMap((ticketTemplate) => {
+            const action = mintAssetAction(
+                schemaName,
+                collectionName,
+                ticketTemplate.templateId,
+                this.props.auth.userData.walletAccountName,
+            );
+            return new Array(ticketTemplate.amount).fill(action);
+        });
+
+        const transaction = this.createTransactionFromActions(mintActions);
         return this.transact(transaction);
     };
 
