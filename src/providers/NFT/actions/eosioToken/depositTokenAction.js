@@ -1,8 +1,8 @@
-import eosioTokenTransaction from './atomicAssetsAction';
+import eosioTokenAction from './eosioTokenAction';
 
 const DEPOSIT_STRING = 'deposit';
 const ATOMIC_MARKET_ACCOUNT = 'atomicmarket';
-const depositTokenTransaction = (from, quantity) => {
+const depositTokenAction = (from, quantity) => {
     const actionData = {
         from,
         to: ATOMIC_MARKET_ACCOUNT,
@@ -10,7 +10,7 @@ const depositTokenTransaction = (from, quantity) => {
         memo: DEPOSIT_STRING,
     };
 
-    return eosioTokenTransaction('transfer', actionData);
+    return eosioTokenAction('transfer', actionData);
 };
 
-export default depositTokenTransaction;
+export default depositTokenAction;

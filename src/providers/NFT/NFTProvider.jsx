@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { TransactionProcessDialog } from '@components';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
-import { createCollectionAction, createSchemaAction, createTemplateAction, mintAssetAction } from './actions';
+import {
+    createCollectionAction,
+    createSchemaAction,
+    createTemplateAction,
+    mintAssetAction,
+    announceSaleAction,
+    createOfferAction,
+} from './actions';
 
 const defaultNFTContext = {
     createEventTickets: () => {},
@@ -15,8 +22,9 @@ export const NFTContext = React.createContext(defaultNFTContext);
 
 const DEFAULT_TRANSACTION_CONFIG = { broadcast: true, blocksBehind: 3, expireSeconds: 30 };
 
-const TEMP_COLLECTION_NAME = 'testcollec41';
+const TEMP_COLLECTION_NAME = 'testcolle113';
 const TEMP_SCHEMA_NAME = 'ticket';
+const TEMP_MARKETPLACE_NAME = 'testmarket11';
 
 class NFTProvider extends React.Component {
     constructor() {
@@ -27,14 +35,11 @@ class NFTProvider extends React.Component {
     componentDidMount() {
         this.setState({
             createTicketNFTs: async (tickets) => {
-                const collectionAction = createCollectionAction(
-                    TEMP_COLLECTION_NAME,
-                    this.props.auth.userData.walletAccountName,
-                );
+                const collectionAction = createCollectionAction(TEMP_COLLECTION_NAME, this.getWalletAccountName());
                 const schemaAction = createSchemaAction(
                     TEMP_SCHEMA_NAME,
                     TEMP_COLLECTION_NAME,
-                    this.props.auth.userData.walletAccountName,
+                    this.getWalletAccountName(),
                 );
                 const templateActions = tickets.map((template) =>
                     createTemplateAction(
@@ -42,7 +47,7 @@ class NFTProvider extends React.Component {
                         TEMP_COLLECTION_NAME,
                         template.maxSupply,
                         template.ticketData,
-                        this.props.auth.userData.walletAccountName,
+                        this.getWalletAccountName(),
                     ),
                 );
 
@@ -57,16 +62,31 @@ class NFTProvider extends React.Component {
                 const createTemplateActionTraces = transactionResult.transaction.processed.action_traces.filter(
                     (actionTrace) => actionTrace.act.name === 'createtempl',
                 );
-                const ticketTemplates = createTemplateActionTraces.map((actionTrace) => ({
-                    templateId: actionTrace.inline_traces[0].act.data.template_id,
-                    amount: actionTrace.inline_traces[0].act.data.max_supply,
-                }));
+                const ticketTemplates = createTemplateActionTraces.map((actionTrace) => {
+                    const templateData = actionTrace.inline_traces[0].act.data;
+                    return {
+                        templateId: templateData.template_id,
+                        amount: templateData.max_supply,
+                        price: templateData.immutable_data.filter((data) => data.key === 'price')[0].value[1],
+                    };
+                });
 
                 const mintAssetsResults = await this.mintAssetsForTemplates(
                     TEMP_SCHEMA_NAME,
                     TEMP_COLLECTION_NAME,
                     ticketTemplates,
                 );
+
+                const assetsForSale = mintAssetsResults.transaction.processed.action_traces.map((actionTrace) => {
+                    const assetData = actionTrace.inline_traces[0].act.data;
+                    return {
+                        assetId: assetData.asset_id,
+                        price: ticketTemplates.filter((template) => template.templateId === assetData.template_id)[0]
+                            .price,
+                    };
+                });
+
+                await this.setupAssetSales(assetsForSale);
             },
         });
     }
@@ -80,14 +100,14 @@ class NFTProvider extends React.Component {
 
     createCollection = async () => {
         // TODO: Add automatic collection name generation
-        const action = createCollectionAction(TEMP_COLLECTION_NAME, this.props.auth.userData.walletAccountName);
+        const action = createCollectionAction(TEMP_COLLECTION_NAME, this.getWalletAccountName());
         const transaction = this.createTransactionFromActions([action]);
         return this.transact(transaction);
     };
 
     createSchema = async (collectionName) => {
         // TODO: Add automatic schema name generation
-        const action = createSchemaAction(TEMP_SCHEMA_NAME, collectionName, this.props.auth.userData.walletAccountName);
+        const action = createSchemaAction(TEMP_SCHEMA_NAME, collectionName, this.getWalletAccountName());
         const transaction = this.createTransactionFromActions([action]);
         return this.transact(transaction);
     };
@@ -99,7 +119,7 @@ class NFTProvider extends React.Component {
                 collectionName,
                 template.maxSupply,
                 template.ticketData,
-                this.props.auth.userData.walletAccountName,
+                this.getWalletAccountName(),
             ),
         );
 
@@ -113,12 +133,29 @@ class NFTProvider extends React.Component {
                 schemaName,
                 collectionName,
                 ticketTemplate.templateId,
-                this.props.auth.userData.walletAccountName,
+                this.getWalletAccountName(),
             );
             return new Array(ticketTemplate.amount).fill(action);
         });
 
         const transaction = this.createTransactionFromActions(mintActions);
+        return this.transact(transaction);
+    };
+
+    setupAssetSales = async (assets) => {
+        console.log('assets', assets);
+        const actions = assets.flatMap((asset) => {
+            const announceSale = announceSaleAction(
+                this.getWalletAccountName(),
+                [asset.assetId],
+                asset.price,
+                TEMP_MARKETPLACE_NAME,
+            );
+            const createOffer = createOfferAction(this.getWalletAccountName(), [asset.assetId]);
+            return [announceSale, createOffer];
+        });
+        console.log(actions);
+        const transaction = this.createTransactionFromActions(actions);
         return this.transact(transaction);
     };
 
@@ -158,6 +195,10 @@ class NFTProvider extends React.Component {
 
     isWalletAuthenticated = () => {
         return !!this.props.ual.activeUser;
+    };
+
+    getWalletAccountName = () => {
+        return this.props.auth.userData.walletAccountName;
     };
 
     getAuthenticatorWithAuthType = (authType) => {
