@@ -1,18 +1,14 @@
 const atomicAssetsAction = (actionName, actionData, accountName) => {
     return {
-        actions: [
+        account: 'atomicassets',
+        name: actionName,
+        authorization: [
             {
-                account: 'atomicassets',
-                name: actionName,
-                authorization: [
-                    {
-                        actor: accountName,
-                        permission: 'active',
-                    },
-                ],
-                data: actionData,
+                actor: accountName,
+                permission: 'active',
             },
         ],
+        data: actionData,
     };
 };
 
