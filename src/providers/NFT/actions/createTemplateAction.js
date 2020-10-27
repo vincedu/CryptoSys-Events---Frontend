@@ -1,6 +1,6 @@
-import atomicAssetsTransaction from './atomicAssets';
+import atomicAssetsAction from './atomicAssetsAction';
 
-const createTemplateTransaction = (schemaName, collectionName, maxSupply, templateData, accountName) => {
+const createTemplateAction = (schemaName, collectionName, maxSupply, templateData, accountName) => {
     const actionData = {
         authorized_creator: accountName,
         collection_name: collectionName,
@@ -20,7 +20,7 @@ const createTemplateTransaction = (schemaName, collectionName, maxSupply, templa
         ],
     };
 
-    return atomicAssetsTransaction('createtempl', actionData, accountName);
+    return atomicAssetsAction('createtempl', actionData, accountName);
 };
 
-export default createTemplateTransaction;
+export default createTemplateAction;

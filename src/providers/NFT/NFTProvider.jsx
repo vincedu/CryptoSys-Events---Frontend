@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TransactionProcessDialog } from '@components';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
-import { createCollectionTransaction, createSchemaTransaction, createTemplateTransaction } from './transactions';
+import { createCollectionAction, createSchemaAction, createTemplateAction } from './actions';
 
 const defaultNFTContext = {
     createCollection: () => {},
@@ -27,29 +27,26 @@ class NFTProvider extends React.Component {
         this.setState({
             createCollection: async () => {
                 // TODO: Add automatic collection name generation
-                const transaction = createCollectionTransaction(
-                    'testcollec13',
-                    this.props.auth.userData.walletAccountName,
-                );
+                const action = createCollectionAction('testcollec13', this.props.auth.userData.walletAccountName);
+                const transaction = this.createTransactionFromActions([action]);
                 return this.transact(transaction);
             },
             createSchema: async () => {
                 // TODO: Add automatic schema name generation
-                const transaction = createSchemaTransaction(
-                    'ticket',
-                    'testcollec13',
-                    this.props.auth.userData.walletAccountName,
-                );
+                const action = createSchemaAction('ticket', 'testcollec13', this.props.auth.userData.walletAccountName);
+                const transaction = this.createTransactionFromActions([action]);
                 return this.transact(transaction);
             },
             createTemplate: async (templateData, maxSupply) => {
-                const transaction = createTemplateTransaction(
+                const action = createTemplateAction(
                     'ticket',
                     'testcollec13',
                     maxSupply,
                     templateData,
                     this.props.auth.userData.walletAccountName,
                 );
+
+                const transaction = this.createTransactionFromActions([action]);
                 return this.transact(transaction);
             },
         });
@@ -61,6 +58,12 @@ class NFTProvider extends React.Component {
             this.signTransaction(nextTransaction);
         }
     }
+
+    createTransactionFromActions = (actions) => {
+        return {
+            actions,
+        };
+    };
 
     shouldExecuteTransactionQueue = () => {
         return this.state.transactionQueue.length > 0 && !this.state.isLoading;
@@ -143,8 +146,8 @@ class NFTProvider extends React.Component {
             this.setIsLoading(true);
             ual.activeUser
                 .signTransaction(transaction.transaction, DEFAULT_TRANSACTION_CONFIG)
-                .then(() => {
-                    transaction.resolve();
+                .then((result) => {
+                    transaction.resolve(result);
                     this.setIsLoading(false);
                 })
                 .catch((error) => {

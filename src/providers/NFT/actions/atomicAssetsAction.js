@@ -1,4 +1,4 @@
-const atomicAssetsTransaction = (actionName, actionData, accountName) => {
+const atomicAssetsAction = (actionName, actionData, accountName) => {
     return {
         actions: [
             {
@@ -16,4 +16,4 @@ const atomicAssetsTransaction = (actionName, actionData, accountName) => {
     };
 };
 
-export default atomicAssetsTransaction;
+export default atomicAssetsAction;
