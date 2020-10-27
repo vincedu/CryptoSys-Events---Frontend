@@ -95,7 +95,7 @@ export const handleAnnounceSale = async () => {
 };
 
 export const handlePurchaseSale = async () => {
-    await MarketplaceApiService.purchaseSale(ACCOUNT_BUYIN, 21238, 0, MARKETPLACE_NAME); // mettre sale Id dans le tableau
+    await MarketplaceApiService.purchaseSale(ACCOUNT_BUYIN, 21239, 0, MARKETPLACE_NAME); // mettre sale Id dans le tableau
     console.log('Sale PURCHASE !');
 };
 
