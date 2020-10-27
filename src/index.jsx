@@ -12,8 +12,8 @@ import theme from './theme';
 import store from './redux/store';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-
 import './index.css';
+import './i18n';
 
 ReactDOM.render(
     <React.StrictMode>

@@ -4,6 +4,7 @@ import { makeStyles, Grid, InputBase, Paper, Divider, Typography, Hidden, IconBu
 import { LocationOn, Search, Event } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,7 @@ const CustomSearchBar = (props) => {
         history: PropTypes.object.isRequired,
     };
 
+    const { t } = useTranslation();
     const classes = useStyles();
     const { history } = props;
     const date = new Date();
@@ -113,8 +115,7 @@ const CustomSearchBar = (props) => {
                             Eos Event
                         </Typography>
                         <Typography variant="subtitle1" className={classes.title}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec porttitor dolor. Aliquam
-                            ac posuere ipsum. Phasellus ac augue a nulla pharetra.
+                            {t('customSearchBar.paragraph')}
                         </Typography>
                     </div>
                 </div>
@@ -124,7 +125,7 @@ const CustomSearchBar = (props) => {
                             inputRef={locationRef}
                             className={classes.input}
                             style={{ flex: 1 }}
-                            placeholder="Location"
+                            placeholder={t('customSearchBar.location')}
                             onKeyDown={(e) => checkEnterKey(e, 'location')}
                         />
                         <IconButton
@@ -159,7 +160,7 @@ const CustomSearchBar = (props) => {
                         inputRef={searchRef}
                         className={classes.input}
                         style={{ flex: 4 }}
-                        placeholder="Search artists, venues, and events"
+                        placeholder={t('customSearchBar.search')}
                         onKeyDown={(e) => checkEnterKey(e, 'search')}
                     />
                     <IconButton
