@@ -13,6 +13,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import ImageUploader from 'react-images-upload';
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateTicketDialog = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const { isOpen, onClose, onSubmit } = props;
 
@@ -177,7 +179,7 @@ const CreateTicketDialog = (props) => {
     return (
         <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
             <Typography variant="h4" className={classes.title}>
-                Create a ticket
+                {t('createEvent.tickets.createTicket')}
             </Typography>
             <DialogContent dividers>
                 <Grid container spacing={3}>
@@ -187,7 +189,7 @@ const CreateTicketDialog = (props) => {
                             singleImage
                             withPreview
                             withLabel={false}
-                            buttonText="Choose Image"
+                            buttonText={t('createEvent.tickets.image')}
                             onChange={handleImageUpload}
                             buttonClassName={classes.button}
                             fileContainerStyle={{
@@ -202,7 +204,7 @@ const CreateTicketDialog = (props) => {
                         <TextField
                             fullWidth
                             required
-                            label="Ticket Name"
+                            label={t('createEvent.tickets.ticketName')}
                             variant="outlined"
                             name="name"
                             value={form.name.value}
@@ -216,7 +218,7 @@ const CreateTicketDialog = (props) => {
                             required
                             multiline
                             rows={4}
-                            label="Ticket Description"
+                            label={t('createEvent.tickets.ticketDescription')}
                             variant="outlined"
                             name="description"
                             value={form.description.value}
@@ -228,7 +230,7 @@ const CreateTicketDialog = (props) => {
                         <TextField
                             fullWidth
                             required
-                            label="Quantity"
+                            label={t('createEvent.tickets.quantity')}
                             variant="outlined"
                             type="number"
                             name="quantity"
@@ -241,7 +243,7 @@ const CreateTicketDialog = (props) => {
                         <TextField
                             fullWidth
                             required
-                            label="Unit price"
+                            label={t('createEvent.tickets.unitPrice')}
                             variant="outlined"
                             type="number"
                             InputProps={{
@@ -261,7 +263,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="Start Date"
+                                        label={t('createEvent.date.startDate')}
                                         format="MM/dd/yyyy"
                                         name="startDate"
                                         value={date.start}
@@ -278,7 +280,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="Start Time"
+                                        label={t('createEvent.date.startTime')}
                                         name="startDate"
                                         value={date.start}
                                         error={date.error}
@@ -296,7 +298,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="End Date"
+                                        label={t('createEvent.date.endDate')}
                                         format="MM/dd/yyyy"
                                         name="endDate"
                                         value={date.end}
@@ -313,7 +315,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="End Time"
+                                        label={t('createEvent.date.endTime')}
                                         name="endDate"
                                         value={date.end}
                                         error={date.error}
@@ -333,7 +335,7 @@ const CreateTicketDialog = (props) => {
                 <Grid container justify="space-between" spacing={3}>
                     <Grid item sm={3} xs={12}>
                         <Button fullWidth variant="outlined" color="primary" onClick={handleClose}>
-                            Cancel
+                            {t('cancel')}
                         </Button>
                     </Grid>
                     <Grid item sm={3} xs={12}>
@@ -345,7 +347,7 @@ const CreateTicketDialog = (props) => {
                             style={{ fontWeight: 900 }}
                             onClick={handleCreateTicket}
                         >
-                            Create
+                            {t('create')}
                         </Button>
                     </Grid>
                 </Grid>

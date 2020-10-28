@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
 import { TitledPaper } from '@components';
 import Script from 'react-load-script';
 import LocationButtonGroup from './LocationButtonGroup';
@@ -12,7 +13,7 @@ const Location = (props) => {
     const handleChange = (name, l) => {
         props.onChange(name, l);
     };
-
+    const { t } = useTranslation();
     const handlePlaceSelect = () => {
         const addressObject = autocomplete.getPlace();
         if (addressObject) {
@@ -41,10 +42,12 @@ const Location = (props) => {
     };
 
     return (
-        <TitledPaper title="Location">
-            <p>Share your event with locals and let them know where it&#39;s going to be.</p>
+        <TitledPaper title={t('createEvent.location.title')}>
+            <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>
+                {t('createEvent.location.description')}
+            </Typography>
             <Grid container spacing={2} direction="column">
-                <Grid item>
+                <Grid item xs={8}>
                     <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
                     <Script
                         url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
@@ -57,10 +60,9 @@ const Location = (props) => {
                     sm={8}
                     hidden={props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'}
                 >
-                    <Typography variant="body1">Venue Location</Typography>
                     <TextField
                         id="location"
-                        placeholder="Search for a venue or address"
+                        placeholder={t('createEvent.location.search')}
                         variant="outlined"
                         fullWidth
                         margin="normal"

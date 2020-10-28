@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
         fontStyle: `'Roboto', sans-serif`,
         fontWeight: 900,
         color: '#242424',
-        paddingLeft: 30,
+        padding: '30px 30px 30px 60px',
+        [theme.breakpoints.down('sm')]: {
+            padding: '20px 0 0 20px',
+            fontSize: '3em',
+        },
     },
 }));
 

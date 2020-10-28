@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, InputBase, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
@@ -85,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     const mainPage = () => {
         switch (window.location.pathname) {
@@ -175,7 +177,7 @@ const NavBar = (props) => {
                     </div>
                     <InputBase
                         inputRef={searchNav}
-                        placeholder="Search…"
+                        placeholder={t('navBar.search')}
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput,
@@ -190,7 +192,7 @@ const NavBar = (props) => {
                 <Hidden xsDown>
                     <HelpMenu history={history} />
                     <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
-                        Create Event
+                        {t('navBar.create')}
                     </Button>
                 </Hidden>
                 <Hidden smUp>
@@ -200,7 +202,7 @@ const NavBar = (props) => {
                     <ProfileMenu history={history} />
                 ) : (
                     <Button color="inherit" onClick={() => handleButtonClick('/signIn')}>
-                        Sign In
+                        {t('navBar.signIn')}
                     </Button>
                 )}
             </Toolbar>

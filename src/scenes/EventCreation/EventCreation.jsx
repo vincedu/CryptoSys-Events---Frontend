@@ -5,6 +5,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Grid, Button, Hidden } from '@material-ui/core';
 import { FindInPage, Event, Map, Receipt } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
 import { PageContainer } from '@components';
 import { NFTContext } from '@providers/';
@@ -100,6 +101,7 @@ const EventCreation = (props) => {
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
+    const { t } = useTranslation();
 
     const { createCollection, createSchema, createTemplate } = useContext(NFTContext);
 
@@ -220,7 +222,7 @@ const EventCreation = (props) => {
     };
 
     return (
-        <PageContainer title="Create event">
+        <PageContainer title={t('createEvent.title')}>
             <Switch>
                 <Route path="/createEvent/general">
                     <Grid container spacing={3} direction="row" justify="center">
@@ -264,7 +266,7 @@ const EventCreation = (props) => {
                                     className={classes.button}
                                     onClick={handleNextButtonClick}
                                 >
-                                    Next
+                                    {t('next')}
                                 </Button>
                             </Grid>
                         </Grid>

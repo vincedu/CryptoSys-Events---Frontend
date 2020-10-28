@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
-const values = {
-    venue: 'Venue',
-    online: 'Online event',
-    tbd: 'To be announced',
-};
+const values = ['venue', 'online', 'tbd'];
 
 const useStyles = makeStyles({
     selected: {
@@ -19,22 +16,23 @@ const useStyles = makeStyles({
 
 const LocationButtonGroup = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const handleClick = (button) => {
         props.onChange('locationType', button);
     };
 
     return (
         <div>
-            {Object.keys(values).map((key) => (
+            {values.map((value) => (
                 <Button
-                    key={key}
-                    value={key}
-                    variant={key === props.value ? 'outlined' : 'text'}
-                    className={`${classes.button} ${key === props.value ? classes.selected : classes.notSelected}`}
+                    key={value}
+                    value={value}
+                    variant={value === props.value ? 'outlined' : 'text'}
+                    className={`${classes.button} ${value === props.value ? classes.selected : classes.notSelected}`}
                     color="primary"
-                    onClick={() => handleClick(key)}
+                    onClick={() => handleClick(value)}
                 >
-                    {values[key]}
+                    {t(value)}
                 </Button>
             ))}
         </div>

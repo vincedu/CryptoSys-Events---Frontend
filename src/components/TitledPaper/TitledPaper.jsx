@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Paper, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         padding: '16px',
         boxShadow: 'none',
@@ -16,8 +16,11 @@ const useStyles = makeStyles({
         fontStyle: `'Roboto', sans-serif`,
         fontWeight: 900,
         color: '#242424',
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '2em',
+        },
     },
-});
+}));
 
 const TitledPaper = (props) => {
     const classes = useStyles();

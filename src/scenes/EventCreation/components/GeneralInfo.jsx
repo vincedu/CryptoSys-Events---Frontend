@@ -5,7 +5,7 @@ import ChipInput from 'material-ui-chip-input';
 import PropTypes from 'prop-types';
 import ImageUploader from 'react-images-upload';
 import _ from 'lodash';
-
+import { useTranslation } from 'react-i18next';
 import { TitledPaper } from '@components';
 import { TYPES, CATEGORIES, LANGUAGES } from '../lists';
 
@@ -19,7 +19,8 @@ const GeneralInfo = (props) => {
             borderRadius: '3px !important',
         },
     }));
-    // .MuiOutlinedInput-root
+
+    const { t } = useTranslation();
     const classes = useStyles();
 
     const handleTextChange = (event) => {
@@ -53,19 +54,15 @@ const GeneralInfo = (props) => {
     };
 
     return (
-        <TitledPaper title="General information">
+        <TitledPaper title={t('createEvent.generalInfo.title')}>
             <Grid container direction="row" spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant="body1" style={{ width: '80%' }}>
-                        Name your event and explain to the prospect why they really need to attend the event. Add
-                        information underlining the uniqueness of your event
-                    </Typography>
+                <Grid item xs={12} sm={9}>
+                    <Typography variant="body1">{t('createEvent.generalInfo.description')}</Typography>
                 </Grid>
-
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6} md={5}>
                     <TextField
                         name="name"
-                        label="Event name"
+                        label={t('createEvent.generalInfo.eventName')}
                         variant="outlined"
                         fullWidth
                         margin="normal"
@@ -75,6 +72,23 @@ const GeneralInfo = (props) => {
                         error={props.value.name.error}
                         onChange={handleTextChange}
                     />
+                    <Autocomplete
+                        name="category"
+                        options={CATEGORIES}
+                        getOptionLabel={(option) => t(option)}
+                        onChange={(event) => handleSelect(event, 'category')}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label={t('createEvent.generalInfo.category')}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                className={classes.textField}
+                                error={props.value.category.error}
+                            />
+                        )}
+                    />
                     <TextField
                         name="description"
                         label="Description"
@@ -83,23 +97,37 @@ const GeneralInfo = (props) => {
                         margin="normal"
                         required
                         multiline
-                        inputProps={{
-                            style: {
-                                paddingBottom: 6,
-                            },
-                        }}
                         rows={9}
+                        rowsMax={10}
                         className={classes.textField}
                         value={props.value.description.value}
                         error={props.value.description.error}
                         onChange={handleTextChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6} md={5}>
+                    <ImageUploader
+                        singleImage
+                        withLabel={false}
+                        buttonText={t('createEvent.generalInfo.image')}
+                        onChange={(image) => props.onChange('imageFile', image[0])}
+                        buttonClassName={classes.button}
+                        fileContainerStyle={{
+                            boxShadow: 'none',
+                            borderRadius: '3px',
+                            border: '1px solid #cacaca',
+                            margin: '16px 0 8px 0',
+                            padding: '18px 0',
+                        }}
+                    />
+                    <Box hidden={!props.value.imageFile.error}>
+                        <Typography color="error">*Missing image</Typography>
+                    </Box>
+                    {/* <ImageUpload cardName='Input Image' imageGallery={galleryImageList} /> */}
                     <Autocomplete
                         name="type"
                         options={TYPES}
-                        getOptionLabel={(option) => option}
+                        getOptionLabel={(option) => t(option)}
                         onChange={(event) => handleSelect(event, 'type')}
                         renderInput={(params) => (
                             <TextField
@@ -114,32 +142,15 @@ const GeneralInfo = (props) => {
                         )}
                     />
                     <Autocomplete
-                        name="category"
-                        options={CATEGORIES}
-                        getOptionLabel={(option) => option}
-                        onChange={(event) => handleSelect(event, 'category')}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Category"
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                className={classes.textField}
-                                error={props.value.category.error}
-                            />
-                        )}
-                    />
-                    <Autocomplete
                         name="languages"
                         options={LANGUAGES}
-                        getOptionLabel={(option) => option}
+                        getOptionLabel={(option) => t(option)}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Languages"
+                                label={t('createEvent.generalInfo.languages')}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -173,29 +184,6 @@ const GeneralInfo = (props) => {
                             props.onChange('tags', chips);
                         }}
                     />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <ImageUploader
-                        withIcon
-                        singleImage
-                        withPreview
-                        withLabel={false}
-                        buttonText="Choose Image"
-                        onChange={(image) => props.onChange('imageFile', image[0])}
-                        imgExtension={['.jpg', '.gif', '.png']}
-                        maxFileSize={5242880}
-                        buttonClassName={classes.button}
-                        fileContainerStyle={{
-                            boxShadow: 'none',
-                            borderRadius: '3px',
-                            border: '1px solid #cacaca',
-                            marginTop: 16,
-                        }}
-                    />
-                    <Box hidden={!props.value.imageFile.error}>
-                        <Typography color="error">*Missing image</Typography>
-                    </Box>
-                    {/* <ImageUpload cardName='Input Image' imageGallery={galleryImageList} /> */}
                 </Grid>
             </Grid>
         </TitledPaper>

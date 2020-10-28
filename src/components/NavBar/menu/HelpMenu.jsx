@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HelpMenu = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -43,8 +45,8 @@ const HelpMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={() => handleButtonClick('/howItWorks')}>How it works</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>Help Center</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/howItWorks')}>{t('navBar.howItWorks')}</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
         </Menu>
     );
 
@@ -57,7 +59,7 @@ const HelpMenu = (props) => {
                 onClick={handleMenuOpen}
                 color="inherit"
             >
-                Help
+                {t('navBar.help')}
             </Button>
             {renderHelpMenu}
         </div>

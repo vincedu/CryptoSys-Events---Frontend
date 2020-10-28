@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Grid, Typography, makeStyles, useTheme, useMediaQuery, Fab } from '@material-ui/core';
 import { TitledPaper } from '@components';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AddIcon from '@material-ui/icons/Add';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
     },
     button: {
         padding: 15,
+        maxHeight: 50,
     },
     submit: {
         paddingTop: 40,
@@ -36,7 +38,7 @@ const useStyles = makeStyles({
 export const TicketCreation = (props) => {
     const { handleSubmit, tickets, onCreateTicket } = props;
     const { history } = props;
-
+    const { t } = useTranslation();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
     const theme = useTheme();
@@ -55,15 +57,12 @@ export const TicketCreation = (props) => {
     };
 
     return (
-        <TitledPaper title="Tickets">
+        <TitledPaper title={t('createEvent.tickets.title')}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={10}>
-                    <Typography variant="subtitle2">
-                        Create tickets for your event. You can create multiple types of tickets if you want to offer
-                        different experiences for your attendees.
-                    </Typography>
+                <Grid item xs={12} md={8}>
+                    <Typography variant="body1">{t('createEvent.tickets.description')}</Typography>
                 </Grid>
-                <Grid container item xs={12} md={2} justify="flex-end">
+                <Grid container item xs={12} md={4} justify="flex-end">
                     {isSmallScreen ? (
                         <Fab className={classes.createTicketFab} color="secondary" onClick={handleOpenTicketDialog}>
                             <AddIcon />
@@ -75,7 +74,7 @@ export const TicketCreation = (props) => {
                             color="secondary"
                             onClick={handleOpenTicketDialog}
                         >
-                            Create Ticket
+                            {t('createEvent.tickets.createTickets')}
                         </Button>
                     )}
                 </Grid>
@@ -96,7 +95,7 @@ export const TicketCreation = (props) => {
             </div>
             <Grid container justify="center" className={classes.submit}>
                 <Button variant="outlined" className={classes.lowerButton} color="primary" onClick={handleBack}>
-                    Back
+                    {t('back')}
                 </Button>
                 <Button
                     variant="contained"
@@ -104,7 +103,7 @@ export const TicketCreation = (props) => {
                     color="primary"
                     onClick={handleSubmit}
                 >
-                    Create Event
+                    {t('createEvent.tickets.createEvent')}
                 </Button>
             </Grid>
         </TitledPaper>

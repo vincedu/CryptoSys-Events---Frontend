@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, ListItemIcon, Typography, IconButton, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
@@ -13,6 +14,7 @@ const ProfileMenu = (props) => {
     const isMenuOpen = Boolean(anchorEl);
 
     const { history, ual } = props;
+    const { t } = useTranslation();
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -44,18 +46,18 @@ const ProfileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem style={{ width: '180px' }}>
+            <MenuItem>
                 <ListItemIcon>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
                 {userData && userData.displayName ? <Typography variant="h6">{userData.displayName}</Typography> : null}
             </MenuItem>
             <hr />
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Manage Events</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('profileMenu.profile')}</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('profileMenu.manage')}</MenuItem>
             <hr />
-            <MenuItem onClick={handleMenuClose}>Account Settings</MenuItem>
-            <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+            <MenuItem onClick={handleMenuClose}>{t('profileMenu.settings')}</MenuItem>
+            <MenuItem onClick={handleSignOut}>{t('profileMenu.signOut')}</MenuItem>
         </Menu>
     );
 

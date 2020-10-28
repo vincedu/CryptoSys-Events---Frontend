@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Grid } from '@material-ui/core';
-
+import { Grid, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
-
 import { TitledPaper } from '@components';
 
 const DateTime = (props) => {
     const handleChange = (name, value) => {
         props.onChange(name, value);
     };
+    const { t } = useTranslation();
 
     return (
-        <TitledPaper title="Date & Time">
-            <p>Let potential attendees know when your event starts and ends so that they can plan their visit.</p>
+        <TitledPaper title={t('createEvent.date.title')}>
+            <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>
+                {t('createEvent.date.description')}
+            </Typography>
             <Grid container>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid item container md={8} spacing={3}>
@@ -25,7 +27,7 @@ const DateTime = (props) => {
                                 disablePast
                                 margin="normal"
                                 inputVariant="outlined"
-                                label="Start Date"
+                                label={t('createEvent.date.startDate')}
                                 format="MM/dd/yyyy"
                                 name="startDate"
                                 value={props.value.start}
@@ -44,7 +46,7 @@ const DateTime = (props) => {
                                 disablePast
                                 margin="normal"
                                 inputVariant="outlined"
-                                label="Start Time"
+                                label={t('createEvent.date.startTime')}
                                 name="startDate"
                                 value={props.value.start}
                                 error={props.value.error}
@@ -62,7 +64,7 @@ const DateTime = (props) => {
                                 disablePast
                                 margin="normal"
                                 inputVariant="outlined"
-                                label="End Date"
+                                label={t('createEvent.date.endDate')}
                                 format="MM/dd/yyyy"
                                 name="endDate"
                                 value={props.value.end}
@@ -81,7 +83,7 @@ const DateTime = (props) => {
                                 disablePast
                                 margin="normal"
                                 inputVariant="outlined"
-                                label="End Time"
+                                label={t('createEvent.date.endTime')}
                                 name="endDate"
                                 value={props.value.end}
                                 error={props.value.error}
