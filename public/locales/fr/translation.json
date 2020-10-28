@@ -35,7 +35,7 @@
     "displayName": "Nom d'utilisateur",
     "userInfo": "Information de l'usager",
     "wallet": "Portefeuilles",
-    "linkWallet": "Connecter à un portefeuilles",
+    "linkWallet": "Lier un portefeuilles",
     "submit": "Soumettre",
     "error": "*Vous devez connecter un portefeuilles à votre compte"
   },

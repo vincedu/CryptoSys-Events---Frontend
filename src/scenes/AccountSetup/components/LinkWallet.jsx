@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withUAL } from 'ual-reactjs-renderer';
 import PropTypes from 'prop-types';
 import { Button, makeStyles, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import { CenteredCircularProgress } from '@components';
 
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LinkWallet = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const { ual, onLinkWalletClick } = props;
     const [walletAccountName, setWalletAccountName] = useState(undefined);
@@ -58,7 +60,7 @@ const LinkWallet = (props) => {
     ) : (
         <Button variant="contained" color="primary" style={{ padding: 12 }} onClick={handleLinkWalletButtonClick}>
             <AccountBalanceWalletIcon className={classes.walletButtonIcon} />
-            Link account to a wallet
+            {t('accountSetup.linkWallet')}
         </Button>
     );
 };
