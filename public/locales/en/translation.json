@@ -12,6 +12,9 @@
   "eventList": {
     "seeMore": "See More"
   },
+  "eventPage": {
+    "tickets": "Tickets"
+  },
   "navBar": {
     "help": "Help",
     "search": "Search",

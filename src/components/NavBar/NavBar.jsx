@@ -105,12 +105,12 @@ const NavBar = (props) => {
     // Change NavBar theme when scrolling
     function scrollFunction() {
         mainPageTheme = mainPage();
-        if (window.pageYOffset > 100 && mainPageTheme) {
+        if (window.pageYOffset > 0 && mainPageTheme) {
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (window.pageYOffset / height) * 100;
             progressBar.current.style.width = `${scrolled}%`;
             if (transparent) setTransparent(false);
-        } else if (window.pageYOffset <= 100 && !transparent && mainPageTheme) {
+        } else if (window.pageYOffset === 0 && !transparent && mainPageTheme) {
             progressBar.current.style.width = '0%';
             setTransparent(true);
         } else if (!mainPageTheme) {

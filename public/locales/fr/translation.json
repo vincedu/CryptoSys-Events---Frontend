@@ -12,6 +12,9 @@
   "eventList": {
     "seeMore": "Voir plus de"
   },
+  "eventPage": {
+    "tickets": "Billets"
+  },
   "navBar": {
     "help": "Aide",
     "search": "Rechercher",

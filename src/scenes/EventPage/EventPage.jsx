@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import CheckoutDialog from './components/CheckoutDialog';
 
@@ -51,6 +52,7 @@ const DEFAULT_TICKETS = {
 };
 
 const EventPage = (props) => {
+    const { t } = useTranslation();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -115,7 +117,7 @@ const EventPage = (props) => {
                             style={{ float: 'right', margin: 20 }}
                             onClick={handleOpenTicketDialog}
                         >
-                            Tickets
+                            {t('eventPage.tickets')}
                         </Button>
                     </Grid>
                 </Grid>
