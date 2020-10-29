@@ -209,7 +209,7 @@ const EventCreation = (props) => {
     return (
         <PageContainer title={t('createEvent.title')}>
             <Grid item xs={12} sm={10} md={8} style={{ margin: 'auto' }}>
-                <Stepper activeStep={activeStep} className={classes.stepper}>
+                <Stepper activeStep={activeStep} className={classes.stepper} alternativeLabel>
                     {Object.values(PROGRESSION_STEPS).map((name) => (
                         <Step key={name}>
                             <StepLabel>{name}</StepLabel>
@@ -217,8 +217,8 @@ const EventCreation = (props) => {
                     ))}
                 </Stepper>
             </Grid>
-            <Switch>
-                <Grid item xs={12} style={{ margin: 'auto' }}>
+            <Grid item xs={12} style={{ margin: 'auto' }}>
+                <Switch>
                     <Route path="/createEvent/general">
                         <Information
                             {...props}
@@ -228,6 +228,7 @@ const EventCreation = (props) => {
                             date={date}
                             handleFormChange={handleFormChange}
                             handleDateChange={handleDateChange}
+                            setActiveStep={setActiveStep}
                         />
                     </Route>
 
@@ -238,6 +239,7 @@ const EventCreation = (props) => {
                             onCreateTicket={handleCreateTicket}
                             handleBackStep={handleBackStep}
                             handleNextStep={handleNextStep}
+                            setActiveStep={setActiveStep}
                         />
                     </Route>
 
@@ -248,10 +250,12 @@ const EventCreation = (props) => {
                             handleSubmit={handleSubmit}
                             handleBackStep={handleBackStep}
                             variables={variables}
+                            date={date}
+                            setActiveStep={setActiveStep}
                         />
                     </Route>
-                </Grid>
-            </Switch>
+                </Switch>
+            </Grid>
         </PageContainer>
     );
 };

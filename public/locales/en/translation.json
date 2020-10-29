@@ -2,10 +2,12 @@
   "title": "EOS Event",
   "next": "Next",
   "back": "Back",
+  "language": "fr",
+  "submit": "Submit",
   "cancel": "Cancel",
   "create": "Create",
   "customSearchBar": {
-    "paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec porttitor dolor. Aliquam ac posuere ipsum. Phasellus ac augue a nulla pharetra.",
+    "paragraph": "The future of online ticketing. EOS Event is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
     "search": "Search events",
     "location": "Location"
   },

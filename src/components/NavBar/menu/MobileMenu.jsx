@@ -4,8 +4,10 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
+import { useTranslation } from 'react-i18next';
 
 const MobileMenu = (props) => {
+    const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -35,8 +37,9 @@ const MobileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={() => handleButtonClick('/howItWorks')}>How it works</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>Help Center</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/howItWorks')}>{t('navBar.howItWorks')}</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
         </Menu>
     );
 

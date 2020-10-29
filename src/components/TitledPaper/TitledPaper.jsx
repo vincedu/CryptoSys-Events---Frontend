@@ -26,9 +26,11 @@ const TitledPaper = (props) => {
     return (
         <Paper className={classes.root}>
             <div className={classes.header}>
-                <Typography className={classes.title} variant="h3">
-                    {props.title}
-                </Typography>
+                {props?.title ? (
+                    <Typography className={classes.title} variant="h3">
+                        {props.title}
+                    </Typography>
+                ) : null}
             </div>
             <div className={classes.content}>{props.children}</div>
         </Paper>
@@ -36,8 +38,11 @@ const TitledPaper = (props) => {
 };
 
 TitledPaper.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     children: PropTypes.node.isRequired,
+};
+TitledPaper.defaultProps = {
+    title: '',
 };
 
 export default TitledPaper;

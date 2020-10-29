@@ -114,7 +114,7 @@ const CustomSearchBar = (props) => {
                         <Typography variant="h2" className={classes.title}>
                             Eos Event
                         </Typography>
-                        <Typography variant="subtitle1" className={classes.title}>
+                        <Typography variant="body1" className={classes.title}>
                             {t('customSearchBar.paragraph')}
                         </Typography>
                     </div>

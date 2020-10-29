@@ -2,11 +2,12 @@
   "title": "EOS Event",
   "next": "Suivant",
   "back": "Retour",
+  "language": "en",
   "submit": "Soumettre",
   "cancel": "Annuler",
   "create": "Créer",
   "customSearchBar": {
-    "paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec porttitor dolor. Aliquam ac posuere ipsum. Phasellus ac augue a nulla pharetra.",
+    "paragraph": "Le futur des billeteries en ligne. EOS Event est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
     "search": "Rechercher des événements",
     "location": "Emplacement"
   },

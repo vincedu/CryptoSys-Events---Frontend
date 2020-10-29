@@ -60,9 +60,10 @@ const EventList = (props) => {
                             id={event.id}
                             name={event.name}
                             description={event.description}
-                            date={event.startDate.substring(0, 10)}
+                            date={event.startDate}
                             image={event.image}
                             type={event.type}
+                            withBanner
                         />
                     ))}
                 </Grid>

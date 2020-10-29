@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const mainPage = () => {
         switch (window.location.pathname) {
@@ -190,6 +190,9 @@ const NavBar = (props) => {
                 <div style={{ flexGrow: 1 }} />
 
                 <Hidden xsDown>
+                    <Button color="inherit" onClick={() => i18n.changeLanguage(t('language'))}>
+                        {t('language')}
+                    </Button>
                     <HelpMenu history={history} />
                     <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
                         {t('navBar.create')}

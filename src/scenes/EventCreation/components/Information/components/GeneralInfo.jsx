@@ -203,7 +203,7 @@ const propArray = PropTypes.shape({
 
 GeneralInfo.propTypes = {
     onChange: PropTypes.func.isRequired,
-    onImageUpload: PropTypes.func.isRequired,
+    onImageUpload: PropTypes.func,
     value: PropTypes.shape({
         name: propString,
         description: propString,
@@ -217,6 +217,9 @@ GeneralInfo.propTypes = {
             error: PropTypes.bool,
         }),
     }).isRequired,
+};
+GeneralInfo.defaultProps = {
+    onImageUpload: {},
 };
 
 export default GeneralInfo;
