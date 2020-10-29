@@ -1,4 +1,5 @@
 import NavBar from './NavBar';
+import Footer from './Footer';
 import SetUser from './SetUser';
 import TitledPaper from './TitledPaper';
 import Username from './Username';
@@ -9,6 +10,7 @@ import TransactionProcessDialog from './TransactionProcessDialog';
 
 export {
     NavBar,
+    Footer,
     SetUser,
     TitledPaper,
     Username,

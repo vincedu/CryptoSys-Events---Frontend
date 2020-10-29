@@ -104,17 +104,17 @@ const AccountSetup = (props) => {
         <PageContainer>
             <TitledPaper title={t('accountSetup.title')}>
                 <Grid container spacing={3} justify="center">
-                    <Grid item spacing={3} xs={12} md={10}>
+                    <Grid item xs={12} md={10}>
                         <Typography variant="subtitle1">{t('accountSetup.description')}</Typography>
                     </Grid>
-                    <Grid item spacing={3} sm={12} md={4}>
+                    <Grid item sm={12} md={4}>
                         <Typography variant="h6">{t('accountSetup.wallet')}</Typography>
                         <LinkWallet onLinkWalletClick={resetIsShowingWalletLinkError} />
                         <Box hidden={!isShowingWalletLinkError}>
                             <Typography color="error">{t('accountSetup.error')}</Typography>
                         </Box>
                     </Grid>
-                    <Grid item spacing={3} sm={12} md={5}>
+                    <Grid item sm={12} md={5}>
                         <Typography variant="h6">{t('accountSetup.userInfo')}</Typography>
                         <TextField
                             fullWidth

@@ -19,11 +19,6 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '6vh',
         maxHeight: '100%',
     },
-    logoDiv: {
-        maxWidth: '40%',
-        maxHeight: '100%',
-        display: 'flex',
-    },
     logo: {
         maxWidth: '100%',
     },
@@ -107,7 +102,7 @@ const CustomSearchBar = (props) => {
         <Grid container className={classes.promotion} direction="row" justify="center">
             <Grid item className={classes.grid} xs={11} sm={8} md={7}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 50 }}>
-                    <div className={classes.logoDiv}>
+                    <div>
                         <img src="/eos.svg" alt="eos event" className={classes.logo} />
                     </div>
                     <div>

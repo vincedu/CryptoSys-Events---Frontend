@@ -39,7 +39,6 @@ const MobileMenu = (props) => {
         >
             <MenuItem onClick={() => handleButtonClick('/howItWorks')}>{t('navBar.howItWorks')}</MenuItem>
             <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
         </Menu>
     );
 

@@ -3,6 +3,7 @@
   "next": "Next",
   "back": "Back",
   "language": "fr",
+  "languageFlag": "fr",
   "submit": "Submit",
   "cancel": "Cancel",
   "create": "Create",
@@ -24,6 +25,9 @@
     "helpCenter": "Help Center",
     "howItWorks": "How it Works",
     "signIn": "Sign In"
+  },
+  "footer": {
+    "contactUs": "Contact Us"
   },
   "profileMenu": {
     "profile": "Profile",

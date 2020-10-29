@@ -3,6 +3,7 @@
   "next": "Suivant",
   "back": "Retour",
   "language": "en",
+  "languageFlag": "us",
   "submit": "Soumettre",
   "cancel": "Annuler",
   "create": "Créer",
@@ -24,6 +25,9 @@
     "helpCenter": "Centre d'aide",
     "howItWorks": "Comment ça marche?",
     "signIn": "Connexion"
+  },
+  "footer": {
+    "contactUs": "Nous contacter"
   },
   "profileMenu": {
     "profile": "Profil",
