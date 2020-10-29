@@ -7,7 +7,8 @@ import ImageUploader from 'react-images-upload';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { TitledPaper } from '@components';
-import { TYPES, CATEGORIES, LANGUAGES } from '../lists';
+// TODO Potentiellement à déplacer
+import { TYPES, CATEGORIES, LANGUAGES } from '../../../lists';
 
 const GeneralInfo = (props) => {
     const useStyles = makeStyles((theme) => ({
@@ -55,11 +56,11 @@ const GeneralInfo = (props) => {
 
     return (
         <TitledPaper title={t('createEvent.generalInfo.title')}>
-            <Grid container direction="row" spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12} sm={9}>
                     <Typography variant="body1">{t('createEvent.generalInfo.description')}</Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} md={5}>
+                <Grid item xs={12} sm={6}>
                     <TextField
                         name="name"
                         label={t('createEvent.generalInfo.eventName')}
@@ -105,7 +106,7 @@ const GeneralInfo = (props) => {
                         onChange={handleTextChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={5}>
+                <Grid item xs={12} sm={6}>
                     <ImageUploader
                         singleImage
                         withLabel={false}

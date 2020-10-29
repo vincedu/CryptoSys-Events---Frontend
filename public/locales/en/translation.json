@@ -41,6 +41,11 @@
   },
   "createEvent": {
     "title": "Create Event",
+    "stepper": {
+      "step1": "Information",
+      "step2": "Tickets",
+      "step3": "Review"
+    },
     "generalInfo": {
       "eventName": "Event Name",
       "title": "General Information",
@@ -69,12 +74,16 @@
       "description": "Create tickets for your event. You can create multiple types of tickets if you want to offerdifferent experiences for your attendees",
       "createTickets": "Create Tickets",
       "createTicket": "Create a Ticket",
-      "createEvent": "Create Event",
       "image": "Choose Image",
       "ticketName": "Ticket Name",
       "ticketDescription": "Ticket Description",
       "quantity": "Quantity",
       "unitPrice": "Unit Price"
+    },
+    "confirm": {
+      "title": "Confirm",
+      "description": "Confirm your Event",
+      "createEvent": "Create Event"
     }
   },
 

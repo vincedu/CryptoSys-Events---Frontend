@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, AccountSetup, PostAuth, EventPage } from '@scenes';
 import { NavBar, AuthenticatedRoute } from '@components';
 import { TicketCreation } from '@scenes/EventCreation/components/TicketCreation';
+import { Confirm } from '@scenes/EventCreation/components/Confirm';
 import { AuthProvider, NFTProvider } from '@providers';
 
 import './App.css';
@@ -20,6 +21,7 @@ const App = () => {
                         <Route exact path="/howItWorks" component={HowItWorks} />
                         <Route exact path="/helpCenter" component={HelpCenter} />
                         <Route exact path="/createTicket" component={TicketCreation} />
+                        <Route exact path="/confirm" component={Confirm} />
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />
                         <AuthenticatedRoute exact path="/setupAccount" component={AccountSetup} />
                         <AuthenticatedRoute exact path="/postAuth" component={PostAuth} />

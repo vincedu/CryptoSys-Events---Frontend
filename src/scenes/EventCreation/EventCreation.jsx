@@ -2,17 +2,15 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { Grid, Button, Hidden } from '@material-ui/core';
-import { FindInPage, Event, Map, Receipt } from '@material-ui/icons';
+import { Grid, Stepper, StepLabel, Step } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
 import { PageContainer } from '@components';
 import { NFTContext } from '@providers/';
-import GeneralInfo from './components/GeneralInfo';
-import Location from './components/Location';
-import DateTime from './components/DateTime';
 import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
+import { Confirm } from './components/Confirm';
+import { Information } from './components/Information';
 import { handleMintAsset } from '../../services/nft-api';
 
 const DEFAULT_EVENT_FORM = {
@@ -60,36 +58,10 @@ const DEFAULT_EVENT_DATE = {
     error: false,
 };
 
-const useStyles = makeStyles((theme) => ({
-    submit: {
-        paddingBottom: theme.spacing(3),
-    },
-    button: {
-        padding: '12px 30px',
-        fontWeight: 900,
-    },
-    horizontalLine: {
-        margin: '50px 30px 30px 30px',
-        border: 0,
-        height: 1,
-        backgroundColor: '#e2e2e2',
-    },
-    icon: {
-        fontSize: '5em',
-        textAlign: 'right',
-    },
-    iconGrid: {
-        [theme.breakpoints.up('md')]: {
-            padding: '28px 0 12px 12px !important',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            color: 'lightgrey',
-        },
-    },
-    noPaddingLeft: {
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: 0,
-        },
+const useStyles = makeStyles(() => ({
+    stepper: {
+        backgroundColor: 'transparent',
+        paddingBottom: 35,
     },
 }));
 
@@ -103,6 +75,9 @@ const EventCreation = (props) => {
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
     const { t } = useTranslation();
 
+    const [activeStep, setActiveStep] = useState(0);
+    const PROGRESSION_STEPS = t('createEvent.stepper', { returnObjects: true });
+
     const { createCollection, createSchema, createTemplate } = useContext(NFTContext);
 
     const isValueValid = (value) => {
@@ -115,10 +90,20 @@ const EventCreation = (props) => {
 
     const { history } = props;
 
+    const handleNextStep = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBackStep = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        history.goBack();
+    };
+
     const handleNextButtonClick = () => {
         Object.keys(form).forEach((key) => {
             variables[key] = form[key].value;
         });
+        handleNextStep();
         history.push({ pathname: '/createEvent/createTicket' });
     };
 
@@ -223,76 +208,49 @@ const EventCreation = (props) => {
 
     return (
         <PageContainer title={t('createEvent.title')}>
+            <Grid item xs={12} sm={10} md={8} style={{ margin: 'auto' }}>
+                <Stepper activeStep={activeStep} className={classes.stepper}>
+                    {Object.values(PROGRESSION_STEPS).map((name) => (
+                        <Step key={name}>
+                            <StepLabel>{name}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+            </Grid>
             <Switch>
-                <Route path="/createEvent/general">
-                    <Grid container spacing={3} direction="row" justify="center">
-                        <Grid item container spacing={3} direction="row" justify="center">
-                            <Hidden smDown>
-                                <Grid item md={1} className={classes.iconGrid}>
-                                    <FindInPage className={classes.icon} />
-                                </Grid>
-                            </Hidden>
-                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
-                                <GeneralInfo value={form} onChange={handleFormChange} />
-                                <hr className={classes.horizontalLine} />
-                            </Grid>
-                        </Grid>
-                        <Grid item container spacing={3} direction="row" justify="center">
-                            <Hidden smDown>
-                                <Grid item md={1} className={classes.iconGrid}>
-                                    <Map className={classes.icon} />
-                                </Grid>
-                            </Hidden>
-                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
-                                <Location value={form} onChange={handleFormChange} />
-                                <hr className={classes.horizontalLine} />
-                            </Grid>
-                        </Grid>
-                        <Grid item container spacing={3} direction="row" justify="center">
-                            <Hidden smDown>
-                                <Grid item md={1} className={classes.iconGrid}>
-                                    <Event className={classes.icon} />
-                                </Grid>
-                            </Hidden>
-                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
-                                <DateTime value={date} onChange={handleDateChange} />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
-                            <Grid container justify="flex-end" className={classes.submit}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    onClick={handleNextButtonClick}
-                                >
-                                    {t('next')}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Route>
+                <Grid item xs={12} style={{ margin: 'auto' }}>
+                    <Route path="/createEvent/general">
+                        <Information
+                            {...props}
+                            tickets={tickets}
+                            handleNextButtonClick={handleNextButtonClick}
+                            form={form}
+                            date={date}
+                            handleFormChange={handleFormChange}
+                            handleDateChange={handleDateChange}
+                        />
+                    </Route>
 
-                <Route
-                    path="/createEvent/createTicket"
-                    render={() => (
-                        <Grid container spacing={3} direction="row" justify="center">
-                            <Hidden smDown>
-                                <Grid item md={1} className={classes.iconGrid}>
-                                    <Receipt className={classes.icon} />
-                                </Grid>
-                            </Hidden>
-                            <Grid item xs={12} md={9} className={classes.noPaddingLeft}>
-                                <TicketCreation
-                                    {...props}
-                                    handleSubmit={handleSubmit}
-                                    tickets={tickets}
-                                    onCreateTicket={handleCreateTicket}
-                                />
-                            </Grid>
-                        </Grid>
-                    )}
-                />
+                    <Route path="/createEvent/createTicket">
+                        <TicketCreation
+                            {...props}
+                            tickets={tickets}
+                            onCreateTicket={handleCreateTicket}
+                            handleBackStep={handleBackStep}
+                            handleNextStep={handleNextStep}
+                        />
+                    </Route>
+
+                    <Route path="/createEvent/confirm">
+                        <Confirm
+                            {...props}
+                            tickets={tickets}
+                            handleSubmit={handleSubmit}
+                            handleBackStep={handleBackStep}
+                            variables={variables}
+                        />
+                    </Route>
+                </Grid>
             </Switch>
         </PageContainer>
     );

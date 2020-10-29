@@ -2,6 +2,7 @@
   "title": "EOS Event",
   "next": "Suivant",
   "back": "Retour",
+  "submit": "Soumettre",
   "cancel": "Annuler",
   "create": "Créer",
   "customSearchBar": {
@@ -41,6 +42,11 @@
   },
   "createEvent": {
     "title": "Création d'événement",
+    "stepper": {
+      "step1": "Informations",
+      "step2": "Billets",
+      "step3": "Confirmation"
+    },
     "generalInfo": {
       "eventName": "Nom de l'événement",
       "title": "Informations Générales",
@@ -69,12 +75,16 @@
       "description": "Créez des billets pour votre événement. Vous pouvez créer plusieurs types de billets si vous souhaitez offrir des expériences différentes à vos participants",
       "createTickets": "Créer des billets",
       "createTicket": "Créer un billet",
-      "createEvent": "Créer l'événement",
       "image": "Choisir image",
       "ticketName": "Nom du billet",
       "ticketDescription": "Description du billet",
       "quantity": "Quantité",
       "unitPrice": "Prix unitaire"
+    },
+    "confirm": {
+      "title": "Confirmation",
+      "description": "Confirmer votre événement",
+      "createEvent": "Créer l'événement"
     }
   },
 

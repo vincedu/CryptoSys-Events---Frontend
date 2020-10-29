@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     header: {
         paddingBottom: '16px',
     },
-    content: {},
     title: {
         fontStyle: `'Roboto', sans-serif`,
         fontWeight: 900,
