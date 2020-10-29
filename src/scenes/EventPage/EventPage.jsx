@@ -3,9 +3,7 @@ import { useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { handleDeposit } from '../../services/transferTokenApi';
 import CheckoutDialog from './components/CheckoutDialog';
-import { handlePurchaseSale } from '../../services/marketPlaceApi';
 
 const useStyles = makeStyles({
     imageBackground: {
@@ -52,8 +50,6 @@ export const EventPage = (props) => {
 
     const handleBuyTicket = async (ticket) => {
         console.log('BUYING', ticket);
-        await handleDeposit();
-        await handlePurchaseSale();
     };
 
     EventPage.propTypes = {
