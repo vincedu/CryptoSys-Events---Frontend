@@ -87,6 +87,9 @@ const EventCreation = (props) => {
     };
 
     const isLocationValid = () => {
+        // if (location.locationType.value === 'venue') {
+        //     return location.location.value.size
+        // }
         return true;
     };
 
@@ -157,13 +160,11 @@ const EventCreation = (props) => {
                     eventName = form[key].value;
                 }
             });
-            variables.location = location.location;
-            variables.locationType = location.locationType;
+            variables.location = location.location.value;
+            variables.locationType = location.locationType.value;
             variables.startDate = date.start;
             variables.endDate = date.end;
             if (variables.locationType !== 'venue') variables.location = null;
-
-            console.log(`variables: ${variables.toString()}`);
 
             const createEventResult = await createEvent({ variables: { ...variables } });
 
