@@ -31,10 +31,8 @@
     "react-firebaseui": "^4.1.0",
     "react-images-upload": "^1.2.8",
     "react-load-script": "0.0.6",
-    "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "redux": "^4.0.5",
     "ual-anchor": "^0.5.1",
     "ual-reactjs-renderer": "^0.3.1"
   },
