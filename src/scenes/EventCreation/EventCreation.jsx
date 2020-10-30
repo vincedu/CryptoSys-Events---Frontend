@@ -87,9 +87,9 @@ const EventCreation = (props) => {
     };
 
     const isLocationValid = () => {
-        // if (location.locationType.value === 'venue') {
-        //     return location.location.value.size
-        // }
+        if (location.locationType.value === 'venue') {
+            return location.location.value !== '';
+        }
         return true;
     };
 
@@ -141,7 +141,7 @@ const EventCreation = (props) => {
     };
 
     const handleLocationChange = (field, value) => {
-        setLocation({ ...location, [field]: { value, error: !isLocationValid() } });
+        setLocation({ ...location, [field]: { value, error: !isValueValid(value) } });
     };
 
     const handleDateChange = (field, value) => {
