@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer } from '@material-ui/core';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import AccountSettings from './component/AccountSettings';
 import SideBar from './component/SideBar';
 
 const drawerWidth = 240;
@@ -100,7 +101,7 @@ const UserProfile = () => {
                 </nav>
                 <main className={classes.content}>
                     <Switch>
-                        <Route path="/accountSettings" render={() => <div> Account Settings </div>} />
+                        <Route path="/accountSettings" component={AccountSettings} />
                         <Route path="/tickets" render={() => <div> Tickets </div>} />
                         <Route path="/manageEvents" render={() => <div> Manage Events </div>} />
                     </Switch>

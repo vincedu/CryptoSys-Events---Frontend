@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, Avatar, Typography, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { AuthContext } from '@providers';
 import SideBarItems from './SideBarItems';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SideBar = () => {
     const classes = useStyles();
 
+    const { userData } = useContext(AuthContext);
     return (
         <div className={classes.sidebar}>
             <div className={classes.toolbar} /> {/* Clip sidebar drawer under navbar */}
@@ -30,7 +32,9 @@ const SideBar = () => {
                     }}
                 />
                 <Typography variant="h6" noWrap>
-                    Sandra Adams
+                    {userData && userData.displayName ? (
+                        <Typography variant="h6">{userData.displayName}</Typography>
+                    ) : null}
                 </Typography>
                 <Typography color="textSecondary" noWrap gutterBottom>
                     sandra_88@gmail.com
