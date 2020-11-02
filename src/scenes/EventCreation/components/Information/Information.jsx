@@ -13,12 +13,9 @@ export const Information = (props) => {
         handleFormChange: PropTypes.func.isRequired,
         handleDateChange: PropTypes.func.isRequired,
         handleNextButtonClick: PropTypes.func.isRequired,
-        setActiveStep: PropTypes.func.isRequired,
         form: PropTypes.object.isRequired,
         date: PropTypes.object.isRequired,
     };
-
-    props.setActiveStep(0);
 
     const useStyles = makeStyles((theme) => ({
         submit: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, TextField, Chip, Box, Typography, makeStyles } from '@material-ui/core';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
 import PropTypes from 'prop-types';
@@ -7,7 +8,6 @@ import ImageUploader from 'react-images-upload';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { TitledPaper } from '@components';
-// TODO Potentiellement à déplacer
 import { TYPES, CATEGORIES, LANGUAGES } from '../../../lists';
 
 const GeneralInfo = (props) => {
@@ -29,13 +29,11 @@ const GeneralInfo = (props) => {
         props.onChange([event.target.name], event.target.value);
     };
 
-    const handleSelect = (event, name) => {
-        event.persist();
-        let value = '';
-        if (event.target.firstChild) {
-            value = event.target.firstChild.data;
-        }
-        props.onChange(name, value);
+    const handleSelectCategory = (event, name) => {
+        props.onChange(name, CATEGORIES[event.target.dataset.optionIndex]);
+    };
+    const handleSelectType = (event, name) => {
+        props.onChange(name, TYPES[event.target.dataset.optionIndex]);
     };
 
     const handleLanguageAdd = (addedLanguage) => {
@@ -77,7 +75,8 @@ const GeneralInfo = (props) => {
                         name="category"
                         options={CATEGORIES}
                         getOptionLabel={(option) => t(option)}
-                        onChange={(event) => handleSelect(event, 'category')}
+                        onChange={(event) => handleSelectCategory(event, 'category')}
+                        popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -129,7 +128,8 @@ const GeneralInfo = (props) => {
                         name="type"
                         options={TYPES}
                         getOptionLabel={(option) => t(option)}
-                        onChange={(event) => handleSelect(event, 'type')}
+                        onChange={(event) => handleSelectType(event, 'type')}
+                        popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -148,6 +148,7 @@ const GeneralInfo = (props) => {
                         getOptionLabel={(option) => t(option)}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
+                        popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -203,7 +204,7 @@ const propArray = PropTypes.shape({
 
 GeneralInfo.propTypes = {
     onChange: PropTypes.func.isRequired,
-    onImageUpload: PropTypes.func,
+    onImageUpload: PropTypes.object,
     value: PropTypes.shape({
         name: propString,
         description: propString,
@@ -212,7 +213,6 @@ GeneralInfo.propTypes = {
         languages: propArray,
         tags: propArray,
         imageFile: PropTypes.shape({
-            // eslint-disable-next-line react/forbid-prop-types
             value: PropTypes.object,
             error: PropTypes.bool,
         }),

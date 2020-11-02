@@ -1,11 +1,11 @@
 import React from 'react';
-import { Grid, Button, makeStyles, Typography } from '@material-ui/core';
+import { Grid, Button, makeStyles, Typography, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
         backgroundColor: theme.palette.primary.main,
-        padding: '20px 40px',
+        padding: '12px 40px',
         position: 'absolute',
         bottom: 0,
     },
@@ -36,31 +36,37 @@ const Footer = () => {
 
     return (
         <Grid container justify="space-between" className={classes.footer}>
-            <Grid item xs={2} className={classes.footerItems}>
+            <Grid item xs={2} sm={3} className={classes.footerItems}>
                 <img src="/eos.svg" className={classes.avatar} alt="eos event" />
-                <Typography className={classes.title}>EOS Event</Typography>
+                <Hidden xsDown>
+                    <Typography className={classes.title}>EOS Event</Typography>
+                </Hidden>
             </Grid>
             <Grid item xs={6} className={classes.footerItems} style={{ justifyContent: 'space-evenly' }}>
+                <Hidden xsDown>
+                    <Typography variant="caption">
+                        <a href="https://eos.io/" target="_blank" rel="noopener noreferrer" className={classes.links}>
+                            EOSIO
+                        </a>
+                    </Typography>
+                </Hidden>
                 <Typography variant="caption">
                     <a href="https://eosnation.io/" target="_blank" rel="noopener noreferrer" className={classes.links}>
                         EOS Nation
                     </a>
                 </Typography>
-                <Typography variant="caption">
-                    <a href="https://eos.io/" target="_blank" rel="noopener noreferrer" className={classes.links}>
-                        EOSIO
-                    </a>
-                </Typography>
-                <Typography variant="caption">
-                    <a
-                        href="mailto:info@eosnation.io"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={classes.links}
-                    >
-                        {t('footer.contactUs')}
-                    </a>
-                </Typography>
+                <Hidden xsDown>
+                    <Typography variant="caption">
+                        <a
+                            href="mailto:info@eosnation.io"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={classes.links}
+                        >
+                            {t('footer.contactUs')}
+                        </a>
+                    </Typography>
+                </Hidden>
             </Grid>
             <Grid item xs={2} className={classes.footerItems} style={{ justifyContent: 'flex-end' }}>
                 <Button onClick={() => i18n.changeLanguage(t('language'))} className={classes.links}>

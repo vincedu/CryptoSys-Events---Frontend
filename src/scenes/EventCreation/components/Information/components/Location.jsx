@@ -47,7 +47,7 @@ const Location = (props) => {
                 {t('createEvent.location.description')}
             </Typography>
             <Grid container spacing={2} direction="column">
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={8}>
                     <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
                     <Script
                         url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"

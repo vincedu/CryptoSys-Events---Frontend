@@ -61,12 +61,26 @@ const DEFAULT_EVENT_DATE = {
 const useStyles = makeStyles(() => ({
     stepper: {
         backgroundColor: 'transparent',
-        paddingBottom: 35,
     },
 }));
 
 const variables = {};
 const EventCreation = (props) => {
+    const [activeStep, setActiveStep] = useState(0);
+    switch (window.location.pathname) {
+        case '/createEvent/createTicket':
+            if (activeStep !== 1) {
+                setActiveStep(1);
+            }
+            break;
+        case '/createEvent/confirm':
+            if (activeStep !== 2) {
+                setActiveStep(2);
+            }
+            break;
+        default:
+    }
+
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
@@ -75,7 +89,6 @@ const EventCreation = (props) => {
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
     const { t } = useTranslation();
 
-    const [activeStep, setActiveStep] = useState(0);
     const PROGRESSION_STEPS = t('createEvent.stepper', { returnObjects: true });
 
     const { createCollection, createSchema, createTemplate } = useContext(NFTContext);
@@ -100,8 +113,8 @@ const EventCreation = (props) => {
     };
 
     const handleNextButtonClick = () => {
-        Object.keys(form).forEach((key) => {
-            variables[key] = form[key].value;
+        Object.entries(form).forEach(([key, value]) => {
+            variables[key] = value;
         });
         handleNextStep();
         history.push({ pathname: '/createEvent/createTicket' });
@@ -221,7 +234,7 @@ const EventCreation = (props) => {
                 <Switch>
                     <Route path="/createEvent/general">
                         <Information
-                            {...props}
+                            history={history}
                             tickets={tickets}
                             handleNextButtonClick={handleNextButtonClick}
                             form={form}
@@ -234,7 +247,7 @@ const EventCreation = (props) => {
 
                     <Route path="/createEvent/createTicket">
                         <TicketCreation
-                            {...props}
+                            history={history}
                             tickets={tickets}
                             onCreateTicket={handleCreateTicket}
                             handleBackStep={handleBackStep}
@@ -245,13 +258,12 @@ const EventCreation = (props) => {
 
                     <Route path="/createEvent/confirm">
                         <Confirm
-                            {...props}
+                            history={history}
                             tickets={tickets}
                             handleSubmit={handleSubmit}
                             handleBackStep={handleBackStep}
                             variables={variables}
                             date={date}
-                            setActiveStep={setActiveStep}
                         />
                     </Route>
                 </Switch>

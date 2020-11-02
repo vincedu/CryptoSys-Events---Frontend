@@ -1,41 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, makeStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
 const values = ['venue', 'online', 'tbd'];
 
-const useStyles = makeStyles({
-    selected: {
-        fontWeight: 900,
+const StyledToggleButtonGroup = withStyles((theme) => ({
+    grouped: {
+        margin: theme.spacing(0.5),
+        border: 'none',
+        '&:not(:first-child)': {
+            borderRadius: theme.shape.borderRadius,
+        },
+        '&:first-child': {
+            borderRadius: theme.shape.borderRadius,
+        },
     },
-    button: {
-        margin: 5,
-    },
-});
+}))(ToggleButtonGroup);
 
 const LocationButtonGroup = (props) => {
-    const classes = useStyles();
     const { t } = useTranslation();
-    const handleClick = (button) => {
-        props.onChange('locationType', button);
+    const [location, setLocation] = useState(props.value);
+
+    const handleLocation = (event, newLocation) => {
+        if (newLocation !== null) {
+            setLocation(newLocation);
+            props.onChange('locationType', newLocation);
+        }
     };
 
     return (
-        <div>
+        <StyledToggleButtonGroup value={location} exclusive onChange={handleLocation}>
             {values.map((value) => (
-                <Button
-                    key={value}
-                    value={value}
-                    variant={value === props.value ? 'outlined' : 'text'}
-                    className={`${classes.button} ${value === props.value ? classes.selected : classes.notSelected}`}
-                    color="primary"
-                    onClick={() => handleClick(value)}
-                >
+                <ToggleButton key={value} value={value}>
                     {t(value)}
-                </Button>
+                </ToggleButton>
             ))}
-        </div>
+        </StyledToggleButtonGroup>
     );
 };
 

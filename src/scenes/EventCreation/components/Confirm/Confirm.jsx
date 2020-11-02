@@ -50,12 +50,11 @@ export const Confirm = (props) => {
     Confirm.propTypes = {
         handleBackStep: PropTypes.func.isRequired,
         handleSubmit: PropTypes.func.isRequired,
-        setActiveStep: PropTypes.func.isRequired,
         variables: PropTypes.shape({
-            name: PropTypes.string,
-            description: PropTypes.string,
-            startDate: PropTypes.string,
-            type: PropTypes.string,
+            name: PropTypes.object,
+            description: PropTypes.object,
+            startDate: PropTypes.object,
+            type: PropTypes.object,
         }),
     };
 
@@ -66,7 +65,6 @@ export const Confirm = (props) => {
     const { handleSubmit } = props;
     const { t } = useTranslation();
     const classes = useStyles();
-    props.setActiveStep(3);
 
     return (
         <Grid container justify="center">
@@ -95,11 +93,15 @@ export const Confirm = (props) => {
                         <EventItem
                             key={1}
                             id="1"
-                            name={props.variables?.name ? props.variables.name : event.name}
-                            description={props.variables?.description ? props.variables.description : event.description}
-                            date={props.variables?.startDate ? props.variables.startDate : event.startDate}
+                            name={props.variables.name?.value ? props.variables.name.value : event.name}
+                            description={
+                                props.variables.description?.value
+                                    ? props.variables.description.value
+                                    : event.description
+                            }
+                            date={props.variables.startDate?.value ? props.variables.startDate.value : event.startDate}
                             image="https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png"
-                            type={props.variables?.type ? props.variables.type : event.type}
+                            type={props.variables.type?.value ? props.variables.type.value : event.type}
                             style={{ transform: 'scale(1.3)' }}
                         />
                         <Hidden smDown>

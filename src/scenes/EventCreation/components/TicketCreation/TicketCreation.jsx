@@ -47,8 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TicketCreation = (props) => {
-    const { handleNextStep, handleBackStep, tickets, onCreateTicket, setActiveStep } = props;
-    const { history } = props;
+    const { handleBackStep, tickets, onCreateTicket, setActiveStep, history } = props;
     const { t } = useTranslation();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
@@ -64,11 +63,9 @@ export const TicketCreation = (props) => {
     };
 
     const handleNextButtonClick = () => {
-        handleNextStep();
+        setActiveStep(2);
         history.push({ pathname: '/createEvent/confirm' });
     };
-
-    setActiveStep(1);
 
     return (
         <Grid container justify="center">
@@ -155,7 +152,6 @@ TicketCreation.propTypes = {
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
     handleBackStep: PropTypes.func.isRequired,
-    handleNextStep: PropTypes.func.isRequired,
     setActiveStep: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
 };
