@@ -37,16 +37,19 @@ const DEFAULT_EVENT_FORM = {
         value: [],
         error: false,
     },
-    locationType: {
-        value: 'venue',
+    imageFile: {
+        value: undefined,
         error: false,
     },
+};
+
+const DEFAULT_EVENT_LOCATION = {
     location: {
         value: '',
         error: false,
     },
-    imageFile: {
-        value: undefined,
+    locationType: {
+        value: 'venue',
         error: false,
     },
 };
@@ -67,6 +70,7 @@ const variables = {};
 const EventCreation = (props) => {
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
+    const [location, setLocation] = useState(DEFAULT_EVENT_LOCATION);
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
@@ -82,6 +86,13 @@ const EventCreation = (props) => {
         return date.start <= date.end;
     };
 
+    const isLocationValid = () => {
+        if (location.locationType.value === 'venue') {
+            return location.location.value !== '';
+        }
+        return true;
+    };
+
     const { history } = props;
 
     const handleNextButtonClick = () => {
@@ -95,14 +106,13 @@ const EventCreation = (props) => {
         let isValid = true;
 
         Object.keys(form).forEach((key) => {
-            if (key === 'location') {
-                if (form.location.value === '' && form.locationType.value === 'venue') {
-                    isValid = false;
-                }
-            } else if (form[key].error || !isValueValid(form[key].value)) {
+            if (form[key].error || !isValueValid(form[key].value)) {
                 isValid = false;
             }
         });
+        if (!isLocationValid()) {
+            isValid = false;
+        }
         if (!areDatesValid()) {
             isValid = false;
         }
@@ -118,6 +128,7 @@ const EventCreation = (props) => {
             };
         });
         setForm(updatedForm);
+        setLocation({ ...location, error: !isLocationValid() });
         setDate({ ...date, error: !areDatesValid() });
     };
 
@@ -127,6 +138,10 @@ const EventCreation = (props) => {
 
     const handleFormChange = (field, value) => {
         setForm({ ...form, [field]: { value, error: !isValueValid(value) } });
+    };
+
+    const handleLocationChange = (field, value) => {
+        setLocation({ ...location, [field]: { value, error: !isValueValid(value) } });
     };
 
     const handleDateChange = (field, value) => {
@@ -145,6 +160,8 @@ const EventCreation = (props) => {
                     eventName = form[key].value;
                 }
             });
+            variables.location = location.location.value;
+            variables.locationType = location.locationType.value;
             variables.startDate = date.start;
             variables.endDate = date.end;
             if (variables.locationType !== 'venue') variables.location = null;
@@ -195,7 +212,7 @@ const EventCreation = (props) => {
                             <GeneralInfo value={form} onChange={handleFormChange} />
                         </Grid>
                         <Grid item xs={12}>
-                            <Location value={form} onChange={handleFormChange} />
+                            <Location value={location} onChange={handleLocationChange} />
                         </Grid>
                         <Grid item xs={12}>
                             <DateTime value={date} onChange={handleDateChange} />
