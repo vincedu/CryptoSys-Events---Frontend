@@ -62,7 +62,6 @@ export const Confirm = (props) => {
         variables: {},
     };
 
-    const { handleSubmit } = props;
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -131,7 +130,7 @@ export const Confirm = (props) => {
                             variant="contained"
                             className={`${classes.lowerButton} ${classes.special}`}
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={props.handleSubmit}
                         >
                             {t('submit')}
                         </Button>

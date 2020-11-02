@@ -13,6 +13,7 @@ export const Information = (props) => {
         handleFormChange: PropTypes.func.isRequired,
         handleDateChange: PropTypes.func.isRequired,
         handleNextButtonClick: PropTypes.func.isRequired,
+        value: PropTypes.object.isRequired,
         form: PropTypes.object.isRequired,
         date: PropTypes.object.isRequired,
     };
@@ -63,7 +64,7 @@ export const Information = (props) => {
                     </Grid>
                 </Hidden>
                 <Grid item xs={12} sm={11} md={9} className={classes.noPaddingLeft}>
-                    <Location value={props.form} onChange={props.handleFormChange} />
+                    <Location value={props.value} onChange={props.handleFormChange} />
                     <hr className={classes.horizontalLine} />
                 </Grid>
             </Grid>

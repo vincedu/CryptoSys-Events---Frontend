@@ -22,6 +22,9 @@ const App = () => {
                         <Route exact path="/helpCenter" component={HelpCenter} />
                         <Route exact path="/createTicket" component={TicketCreation} />
                         <Route exact path="/confirm" component={Confirm} />
+                        <Route path="/search" component={HowItWorks} />
+                        <Route path="/location" component={HowItWorks} />
+                        <Route path="/date" component={HowItWorks} />
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />
                         <AuthenticatedRoute exact path="/setupAccount" component={AccountSetup} />
                         <AuthenticatedRoute exact path="/postAuth" component={PostAuth} />

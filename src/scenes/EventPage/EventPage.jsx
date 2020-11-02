@@ -62,7 +62,7 @@ const EventPage = (props) => {
         setIsTicketDialogOpen(false);
     };
 
-    const handleBuyTicket = (ticket) => {
+    const handleBuyTicket = async (ticket) => {
         console.log('BUYING', ticket);
     };
 
