@@ -29,9 +29,9 @@ const ProfileMenu = (props) => {
         history.push('./signIn');
     };
 
-    // const handleButtonClick = (pageURL) => {
-    //     history.push(pageURL);
-    // };
+    const handleButtonClick = (pageURL) => {
+        history.push(pageURL);
+    };
 
     const menuId = 'profile-menu';
     const renderProfileMenu = (
@@ -44,14 +44,14 @@ const ProfileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem style={{ width: '180px' }}>
+            <MenuItem style={{ width: '180px' }} onClick={() => handleButtonClick('/userProfile')}>
                 <ListItemIcon>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
                 {userData && userData.displayName ? <Typography variant="h6">{userData.displayName}</Typography> : null}
             </MenuItem>
             <hr />
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Tickets(0)</MenuItem>
             <MenuItem onClick={handleMenuClose}>Manage Events</MenuItem>
             <hr />
             <MenuItem onClick={handleMenuClose}>Account Settings</MenuItem>
