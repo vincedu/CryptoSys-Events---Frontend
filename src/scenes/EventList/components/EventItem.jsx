@@ -14,12 +14,14 @@ const EventItem = (props) => {
         history: PropTypes.object.isRequired,
         withBanner: PropTypes.bool,
         hoverZoom: PropTypes.bool,
+        clickeable: PropTypes.bool,
         style: PropTypes.object,
     };
     EventItem.defaultProps = {
         withBanner: false,
         hoverZoom: true,
         style: {},
+        clickeable: true,
     };
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -78,7 +80,7 @@ const EventItem = (props) => {
                     </Paper>
                 </div>
             ) : null}
-            <Card onClick={handleButtonClick} className={classes.card}>
+            <Card onClick={props.clickeable ? handleButtonClick : null} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
                 <CardHeader title={props.name} subheader={props.date.substring(0, 10)} />
                 <CardContent>

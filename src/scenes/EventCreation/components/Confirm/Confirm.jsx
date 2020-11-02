@@ -85,6 +85,7 @@ export const Confirm = (props) => {
                                 date={event.startDate}
                                 image={event.image}
                                 type={event.type}
+                                clickeable={false}
                                 style={{ opacity: 0.5, filter: 'blur(1px)' }}
                                 hoverZoom={false}
                             />
@@ -102,6 +103,7 @@ export const Confirm = (props) => {
                             image="https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png"
                             type={props.variables.type?.value ? props.variables.type.value : event.type}
                             style={{ transform: 'scale(1.3)' }}
+                            clickeable={false}
                         />
                         <Hidden smDown>
                             <EventItem
@@ -114,6 +116,7 @@ export const Confirm = (props) => {
                                 type={event.type}
                                 style={{ opacity: 0.5, filter: 'blur(1px)' }}
                                 hoverZoom={false}
+                                clickeable={false}
                             />
                         </Hidden>
                     </Grid>
