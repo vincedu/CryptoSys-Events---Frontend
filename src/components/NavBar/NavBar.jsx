@@ -12,6 +12,7 @@ import MobileMenu from './menu/MobileMenu';
 const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'sticky',
+        zIndex: theme.zIndex.drawer + 1, // Clip sidebar drawer under navbar
     },
     appBarMainPage: {
         position: 'fixed',

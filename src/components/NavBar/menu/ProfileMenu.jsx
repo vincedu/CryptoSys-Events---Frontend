@@ -31,9 +31,9 @@ const ProfileMenu = (props) => {
         history.push('./signIn');
     };
 
-    // const handleButtonClick = (pageURL) => {
-    //     history.push(pageURL);
-    // };
+    const handleButtonClick = (pageURL) => {
+        history.push(pageURL);
+    };
 
     const menuId = 'profile-menu';
     const renderProfileMenu = (
@@ -46,7 +46,7 @@ const ProfileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem>
+            <MenuItem style={{ width: '180px' }} onClick={() => handleButtonClick('/userProfile')}>
                 <ListItemIcon>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
