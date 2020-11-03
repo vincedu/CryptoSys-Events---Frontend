@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles, CssBaseline, Hidden, Drawer } from '@material-ui/core';
+import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './component/AccountSettings';
 import SideBar from './component/SideBar';
 
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
         background: theme.palette.primary.main,
+        top: 60,
     },
     content: {
         flexGrow: 1,
@@ -53,23 +55,6 @@ const UserProfile = () => {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            {/* <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    User Profile
-                </Typography>
-                </Toolbar>
-            </AppBar> */}
-
             <BrowserRouter>
                 <nav className={classes.drawer} aria-label="sidebar">
                     <Hidden smUp>
@@ -101,6 +86,15 @@ const UserProfile = () => {
                     </Hidden>
                 </nav>
                 <main className={classes.content}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        className={classes.menuButton}
+                    >
+                        <MenuIcon />
+                    </IconButton>
                     <Switch>
                         <Route path="/accountSettings" component={AccountSettings} />
                         <Route path="/myTickets" render={() => <div> My Tickets </div>} />

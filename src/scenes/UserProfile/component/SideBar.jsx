@@ -5,7 +5,11 @@ import { AuthContext } from '@providers';
 import SidebarItems from './SideBarItems';
 
 const useStyles = makeStyles((theme) => ({
-    text: {
+    primaryText: {
+        fontSize: '22px',
+        color: '#FFF',
+    },
+    secondaryText: {
         color: '#FFF',
     },
     sidebar: {
@@ -27,14 +31,13 @@ const SideBar = () => {
     const user = firebase.auth().currentUser;
     return (
         <div className={classes.sidebar}>
-            <div className={classes.toolbar} /> {/* Clip sidebar drawer under navbar */}
             <div className={classes.user}>
                 <ListItem style={{ padding: 0 }}>
                     <ListItemAvatar>
                         <Avatar className={classes.avatar} />
                     </ListItemAvatar>
                     <ListItemText
-                        className={classes.text}
+                        classes={{ primary: classes.primaryText, secondary: classes.secondaryText }}
                         primary={userData && userData.displayName ? userData.displayName : null}
                         secondary={user && user.email ? user.email : null}
                     />
