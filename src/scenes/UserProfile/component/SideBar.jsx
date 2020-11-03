@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
-import { makeStyles, Avatar, Typography, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { makeStyles, ListItemAvatar, Divider, ListItem, ListItemText, Avatar } from '@material-ui/core';
+import firebase from 'firebase';
 import { AuthContext } from '@providers';
-import SideBarItems from './SideBarItems';
+import SidebarItems from './SideBarItems';
 
 const useStyles = makeStyles((theme) => ({
+    text: {
+        color: '#FFF',
+    },
     sidebar: {
-        background: '#324856',
         position: 'sticky',
+    },
+    avatar: {
+        backgroundColor: '#e38360',
     },
     user: {
         flexGrow: 1,
@@ -19,40 +23,25 @@ const useStyles = makeStyles((theme) => ({
 
 const SideBar = () => {
     const classes = useStyles();
-
     const { userData } = useContext(AuthContext);
+    const user = firebase.auth().currentUser;
     return (
         <div className={classes.sidebar}>
             <div className={classes.toolbar} /> {/* Clip sidebar drawer under navbar */}
             <div className={classes.user}>
-                <Avatar
-                    style={{
-                        width: 60,
-                        height: 60,
-                    }}
-                />
-                <Typography variant="h6" noWrap>
-                    {userData && userData.displayName ? (
-                        <Typography variant="h6">{userData.displayName}</Typography>
-                    ) : null}
-                </Typography>
-                <Typography color="textSecondary" noWrap gutterBottom>
-                    sandra_88@gmail.com
-                </Typography>
+                <ListItem style={{ padding: 0 }}>
+                    <ListItemAvatar>
+                        <Avatar className={classes.avatar} />
+                    </ListItemAvatar>
+                    <ListItemText
+                        className={classes.text}
+                        primary={userData && userData.displayName ? userData.displayName : null}
+                        secondary={user && user.email ? user.email : null}
+                    />
+                </ListItem>
             </div>
             <Divider />
-            <List>
-                {SideBarItems.map((item) => (
-                    <Link to={item.route}>
-                        <ListItem button key={item.name}>
-                            <ListItemIcon>
-                                <SettingsIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={item.name} />
-                        </ListItem>
-                    </Link>
-                ))}
-            </List>
+            <SidebarItems />
         </div>
     );
 };

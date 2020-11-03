@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, ListItemIcon, Typography, IconButton, MenuItem } from '@material-ui/core';
+import { Menu, ListItemIcon, IconButton, MenuItem, ListItemText } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import firebase from 'firebase';
 import { withUAL } from 'ual-reactjs-renderer';
@@ -9,6 +9,7 @@ import { AuthContext } from '@providers';
 const ProfileMenu = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const { userData } = useContext(AuthContext);
+    const user = firebase.auth().currentUser;
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -44,11 +45,14 @@ const ProfileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem style={{ width: '180px' }} onClick={() => handleButtonClick('/userProfile')}>
-                <ListItemIcon>
+            <MenuItem style={{ width: '220px' }} onClick={() => handleButtonClick('/userProfile')}>
+                <ListItemIcon style={{ minWidth: '45px' }}>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
-                {userData && userData.displayName ? <Typography variant="h6">{userData.displayName}</Typography> : null}
+                <ListItemText
+                    primary={userData && userData.displayName ? userData.displayName : null}
+                    secondary={user && user.email ? user.email : null}
+                />
             </MenuItem>
             <hr />
             <MenuItem onClick={handleMenuClose}>Tickets(0)</MenuItem>
