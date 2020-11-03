@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
+        background: theme.palette.primary.main,
     },
     content: {
         flexGrow: 1,
@@ -102,7 +103,8 @@ const UserProfile = () => {
                 <main className={classes.content}>
                     <Switch>
                         <Route path="/accountSettings" component={AccountSettings} />
-                        <Route path="/tickets" render={() => <div> Tickets </div>} />
+                        <Route path="/myTickets" render={() => <div> My Tickets </div>} />
+                        <Route path="/sellTickets" render={() => <div> Sell Tickets </div>} />
                         <Route path="/manageEvents" render={() => <div> Manage Events </div>} />
                     </Switch>
                 </main>
