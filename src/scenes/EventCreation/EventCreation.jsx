@@ -80,6 +80,11 @@ const EventCreation = (props) => {
                 setActiveStep(2);
             }
             break;
+        case '/createEvent/general':
+            if (activeStep !== 0) {
+                setActiveStep(0);
+            }
+            break;
         default:
     }
 
@@ -113,12 +118,7 @@ const EventCreation = (props) => {
 
     const { history } = props;
 
-    const handleNextStep = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
     const handleBackStep = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
         history.goBack();
     };
 
@@ -126,7 +126,6 @@ const EventCreation = (props) => {
         Object.entries(form).forEach(([key, value]) => {
             variables[key] = value;
         });
-        handleNextStep();
         history.push({ pathname: '/createEvent/createTicket' });
     };
 
@@ -168,9 +167,9 @@ const EventCreation = (props) => {
         setForm({ ...form, [field]: { value, error: !isValueValid(value) } });
     };
 
-    /* const handleLocationChange = (field, value) => {
+    const handleLocationChange = (field, value) => {
         setLocation({ ...location, [field]: { value, error: !isValueValid(value) } });
-    }; */
+    };
 
     const handleDateChange = (field, value) => {
         let error;
@@ -228,7 +227,6 @@ const EventCreation = (props) => {
         } else {
             updateFormErrors();
         }
-        history.push({ pathname: '/' });
     };
 
     return (
@@ -253,7 +251,7 @@ const EventCreation = (props) => {
                             date={date}
                             handleFormChange={handleFormChange}
                             handleDateChange={handleDateChange}
-                            setActiveStep={setActiveStep}
+                            handleLocationChange={handleLocationChange}
                         />
                     </Route>
 
@@ -263,8 +261,6 @@ const EventCreation = (props) => {
                             tickets={tickets}
                             onCreateTicket={handleCreateTicket}
                             handleBackStep={handleBackStep}
-                            handleNextStep={handleNextStep}
-                            setActiveStep={setActiveStep}
                         />
                     </Route>
 

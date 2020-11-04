@@ -16,17 +16,21 @@ const EventItem = (props) => {
         hoverZoom: PropTypes.bool,
         clickeable: PropTypes.bool,
         style: PropTypes.object,
+        confirmPage: PropTypes.bool,
     };
     EventItem.defaultProps = {
         withBanner: false,
         hoverZoom: true,
         style: {},
         clickeable: true,
+        confirmPage: false,
     };
+    const confirmPageStyle = props.confirmPage ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%' } : {};
     const useStyles = makeStyles((theme) => ({
         root: {
             ...props.style,
             position: 'relative',
+            [theme.breakpoints.up('md')]: confirmPageStyle,
         },
         media: {
             height: 0,
