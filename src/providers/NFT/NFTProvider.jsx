@@ -35,58 +35,15 @@ class NFTProvider extends React.Component {
     componentDidMount() {
         this.setState({
             createTicketNFTs: async (tickets) => {
-                const collectionAction = createCollectionAction(TEMP_COLLECTION_NAME, this.getWalletAccountName());
-                const schemaAction = createSchemaAction(
-                    TEMP_SCHEMA_NAME,
-                    TEMP_COLLECTION_NAME,
-                    this.getWalletAccountName(),
-                );
-                const templateActions = tickets.map((template) =>
-                    createTemplateAction(
-                        TEMP_SCHEMA_NAME,
-                        TEMP_COLLECTION_NAME,
-                        template.maxSupply,
-                        template.ticketData,
-                        this.getWalletAccountName(),
-                    ),
-                );
-
-                const transaction = this.createTransactionFromActions([
-                    collectionAction,
-                    schemaAction,
-                    ...templateActions,
+                return this.createTicketNFTs(tickets);
+            },
+            sellTicket: async (assetId, price) => {
+                return this.setupAssetSales([
+                    {
+                        assetId,
+                        price,
+                    },
                 ]);
-
-                const transactionResult = await this.transact(transaction);
-
-                const createTemplateActionTraces = transactionResult.transaction.processed.action_traces.filter(
-                    (actionTrace) => actionTrace.act.name === 'createtempl',
-                );
-                const ticketTemplates = createTemplateActionTraces.map((actionTrace) => {
-                    const templateData = actionTrace.inline_traces[0].act.data;
-                    return {
-                        templateId: templateData.template_id,
-                        amount: templateData.max_supply,
-                        price: templateData.immutable_data.filter((data) => data.key === 'price')[0].value[1],
-                    };
-                });
-
-                const mintAssetsResults = await this.mintAssetsForTemplates(
-                    TEMP_SCHEMA_NAME,
-                    TEMP_COLLECTION_NAME,
-                    ticketTemplates,
-                );
-
-                const assetsForSale = mintAssetsResults.transaction.processed.action_traces.map((actionTrace) => {
-                    const assetData = actionTrace.inline_traces[0].act.data;
-                    return {
-                        assetId: assetData.asset_id,
-                        price: ticketTemplates.filter((template) => template.templateId === assetData.template_id)[0]
-                            .price,
-                    };
-                });
-
-                await this.setupAssetSales(assetsForSale);
             },
         });
     }
@@ -97,6 +54,52 @@ class NFTProvider extends React.Component {
             this.signTransaction(nextTransaction);
         }
     }
+
+    createTicketNFTs = async (tickets) => {
+        const collectionAction = createCollectionAction(TEMP_COLLECTION_NAME, this.getWalletAccountName());
+        const schemaAction = createSchemaAction(TEMP_SCHEMA_NAME, TEMP_COLLECTION_NAME, this.getWalletAccountName());
+        const templateActions = tickets.map((template) =>
+            createTemplateAction(
+                TEMP_SCHEMA_NAME,
+                TEMP_COLLECTION_NAME,
+                template.maxSupply,
+                template.ticketData,
+                this.getWalletAccountName(),
+            ),
+        );
+
+        const transaction = this.createTransactionFromActions([collectionAction, schemaAction, ...templateActions]);
+
+        const transactionResult = await this.transact(transaction);
+
+        const createTemplateActionTraces = transactionResult.transaction.processed.action_traces.filter(
+            (actionTrace) => actionTrace.act.name === 'createtempl',
+        );
+        const ticketTemplates = createTemplateActionTraces.map((actionTrace) => {
+            const templateData = actionTrace.inline_traces[0].act.data;
+            return {
+                templateId: templateData.template_id,
+                amount: templateData.max_supply,
+                price: templateData.immutable_data.filter((data) => data.key === 'price')[0].value[1],
+            };
+        });
+
+        const mintAssetsResults = await this.mintAssetsForTemplates(
+            TEMP_SCHEMA_NAME,
+            TEMP_COLLECTION_NAME,
+            ticketTemplates,
+        );
+
+        const assetsForSale = mintAssetsResults.transaction.processed.action_traces.map((actionTrace) => {
+            const assetData = actionTrace.inline_traces[0].act.data;
+            return {
+                assetId: assetData.asset_id,
+                price: ticketTemplates.filter((template) => template.templateId === assetData.template_id)[0].price,
+            };
+        });
+
+        await this.setupAssetSales(assetsForSale);
+    };
 
     createCollection = async () => {
         // TODO: Add automatic collection name generation
@@ -143,7 +146,6 @@ class NFTProvider extends React.Component {
     };
 
     setupAssetSales = async (assets) => {
-        console.log('assets', assets);
         const actions = assets.flatMap((asset) => {
             const announceSale = announceSaleAction(
                 this.getWalletAccountName(),
@@ -154,7 +156,6 @@ class NFTProvider extends React.Component {
             const createOffer = createOfferAction(this.getWalletAccountName(), [asset.assetId]);
             return [announceSale, createOffer];
         });
-        console.log(actions);
         const transaction = this.createTransactionFromActions(actions);
         return this.transact(transaction);
     };
@@ -265,9 +266,9 @@ class NFTProvider extends React.Component {
 
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, isLoading } = this.state;
+        const { createTicketNFTs, sellTicket, isLoading } = this.state;
         return (
-            <NFTContext.Provider value={{ createTicketNFTs }}>
+            <NFTContext.Provider value={{ createTicketNFTs, sellTicket }}>
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
             </NFTContext.Provider>
