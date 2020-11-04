@@ -227,7 +227,6 @@ const EventCreation = (props) => {
         } else {
             updateFormErrors();
         }
-        history.push({ pathname: '/' });
     };
 
     return (
