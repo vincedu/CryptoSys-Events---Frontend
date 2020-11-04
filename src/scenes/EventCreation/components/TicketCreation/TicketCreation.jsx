@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, Typography, makeStyles, useTheme, useMediaQuery, Fab, Hidden } from '@material-ui/core';
+import { Button, Grid, Typography, makeStyles, Hidden } from '@material-ui/core';
 import { TitledPaper } from '@components';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Add, Receipt } from '@material-ui/icons';
+import { Receipt } from '@material-ui/icons';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
 
@@ -47,12 +47,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TicketCreation = (props) => {
-    const { handleBackStep, tickets, onCreateTicket, setActiveStep, history } = props;
+    const { handleBackStep, tickets, onCreateTicket, history } = props;
     const { t } = useTranslation();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -63,7 +61,6 @@ export const TicketCreation = (props) => {
     };
 
     const handleNextButtonClick = () => {
-        setActiveStep(2);
         history.push({ pathname: '/createEvent/confirm' });
     };
 
@@ -81,24 +78,14 @@ export const TicketCreation = (props) => {
                             <Typography variant="body1">{t('createEvent.tickets.description')}</Typography>
                         </Grid>
                         <Grid container item xs={12} md={3} justify="flex-end">
-                            {isSmallScreen ? (
-                                <Fab
-                                    className={classes.createTicketFab}
-                                    color="secondary"
-                                    onClick={handleOpenTicketDialog}
-                                >
-                                    <Add />
-                                </Fab>
-                            ) : (
-                                <Button
-                                    variant="outlined"
-                                    className={classes.button}
-                                    color="secondary"
-                                    onClick={handleOpenTicketDialog}
-                                >
-                                    {t('createEvent.tickets.createTickets')}
-                                </Button>
-                            )}
+                            <Button
+                                variant="outlined"
+                                className={classes.button}
+                                color="secondary"
+                                onClick={handleOpenTicketDialog}
+                            >
+                                {t('createEvent.tickets.createTickets')}
+                            </Button>
                         </Grid>
                     </Grid>
                     <CreateTicketDialog
@@ -152,7 +139,6 @@ TicketCreation.propTypes = {
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
     handleBackStep: PropTypes.func.isRequired,
-    setActiveStep: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
 };
 

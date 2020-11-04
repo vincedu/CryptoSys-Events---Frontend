@@ -9,6 +9,9 @@ import EventItem from '../../../EventList/components/EventItem';
 const useStyles = makeStyles((theme) => ({
     submit: {
         paddingTop: 60,
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: 10,
+        },
     },
     lowerButton: {
         padding: 15,
@@ -32,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     },
     eventItems: {
         padding: '100px 0',
+        [theme.breakpoints.down('sm')]: {
+            padding: '20px 0',
+        },
     },
 }));
 
@@ -102,7 +108,7 @@ export const Confirm = (props) => {
                             date={props.variables.startDate?.value ? props.variables.startDate.value : event.startDate}
                             image="https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png"
                             type={props.variables.type?.value ? props.variables.type.value : event.type}
-                            style={{ transform: 'scale(1.3)' }}
+                            confirmPage
                             clickeable={false}
                         />
                         <Hidden smDown>

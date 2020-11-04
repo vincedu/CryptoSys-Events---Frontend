@@ -17,83 +17,81 @@ const DateTime = (props) => {
             <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>
                 {t('createEvent.date.description')}
             </Typography>
-            <Grid container>
+            <Grid container spacing={3}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid item container md={8} spacing={3}>
-                        <Grid item xs={12} sm={6}>
-                            <KeyboardDatePicker
-                                required
-                                variant="inline"
-                                disablePast
-                                margin="normal"
-                                inputVariant="outlined"
-                                label={t('createEvent.date.startDate')}
-                                format="MM/dd/yyyy"
-                                name="startDate"
-                                value={props.value.start}
-                                error={props.value.error}
-                                onChange={(event) => handleChange('start', event)}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                    color: 'primary',
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <KeyboardTimePicker
-                                required
-                                variant="inline"
-                                disablePast
-                                margin="normal"
-                                inputVariant="outlined"
-                                label={t('createEvent.date.startTime')}
-                                name="startDate"
-                                value={props.value.start}
-                                error={props.value.error}
-                                onChange={(event) => handleChange('start', event)}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change time',
-                                    color: 'primary',
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <KeyboardDatePicker
-                                required
-                                variant="inline"
-                                disablePast
-                                margin="normal"
-                                inputVariant="outlined"
-                                label={t('createEvent.date.endDate')}
-                                format="MM/dd/yyyy"
-                                name="endDate"
-                                value={props.value.end}
-                                error={props.value.error}
-                                onChange={(event) => handleChange('end', event)}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                    color: 'primary',
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <KeyboardTimePicker
-                                required
-                                variant="inline"
-                                disablePast
-                                margin="normal"
-                                inputVariant="outlined"
-                                label={t('createEvent.date.endTime')}
-                                name="endDate"
-                                value={props.value.end}
-                                error={props.value.error}
-                                onChange={(event) => handleChange('end', event)}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change time',
-                                    color: 'primary',
-                                }}
-                            />
-                        </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <KeyboardDatePicker
+                            required
+                            variant="inline"
+                            disablePast
+                            margin="normal"
+                            inputVariant="outlined"
+                            label={t('createEvent.date.startDate')}
+                            format="MM/dd/yyyy"
+                            name="startDate"
+                            value={props.value.start}
+                            error={props.value.error}
+                            onChange={(event) => handleChange('start', event)}
+                            KeyboardButtonProps={{
+                                color: 'primary',
+                            }}
+                            style={{ width: '100%' }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <KeyboardTimePicker
+                            required
+                            variant="inline"
+                            disablePast
+                            margin="normal"
+                            inputVariant="outlined"
+                            label={t('createEvent.date.startTime')}
+                            name="startDate"
+                            value={props.value.start}
+                            error={props.value.error}
+                            onChange={(event) => handleChange('start', event)}
+                            KeyboardButtonProps={{
+                                color: 'primary',
+                            }}
+                            style={{ width: '100%' }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <KeyboardDatePicker
+                            required
+                            variant="inline"
+                            disablePast
+                            margin="normal"
+                            inputVariant="outlined"
+                            label={t('createEvent.date.endDate')}
+                            format="MM/dd/yyyy"
+                            name="endDate"
+                            value={props.value.end}
+                            error={props.value.error}
+                            onChange={(event) => handleChange('end', event)}
+                            KeyboardButtonProps={{
+                                color: 'primary',
+                            }}
+                            style={{ width: '100%' }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <KeyboardTimePicker
+                            required
+                            variant="inline"
+                            disablePast
+                            margin="normal"
+                            inputVariant="outlined"
+                            label={t('createEvent.date.endTime')}
+                            name="endDate"
+                            value={props.value.end}
+                            error={props.value.error}
+                            onChange={(event) => handleChange('end', event)}
+                            KeyboardButtonProps={{
+                                color: 'primary',
+                            }}
+                            style={{ width: '100%' }}
+                        />
                     </Grid>
                 </MuiPickersUtilsProvider>
             </Grid>
