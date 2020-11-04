@@ -11,7 +11,7 @@ import GeneralInfo from './components/GeneralInfo';
 import Location from './components/Location';
 import DateTime from './components/DateTime';
 import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
-import { handleMintAsset } from '../../services/nft-api';
+import { isFirstEventCreation } from '../../services/atomicAssetsApi';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -151,8 +151,10 @@ const EventCreation = (props) => {
             if (variables.locationType !== 'venue') variables.location = null;
 
             const createEventResult = await createEvent({ variables: { ...variables } });
-            await createCollection();
-            await createSchema();
+            if (isFirstEventCreation()) {
+                await createCollection();
+                await createSchema();
+            }
             if (tickets.length > 0) {
                 await Promise.all(
                     tickets.map(async (ticket) => {
@@ -178,9 +180,6 @@ const EventCreation = (props) => {
                             },
                             ticket.quantity,
                         );
-                        for (let i = 0; i < ticket.quantity; i += 1) {
-                            handleMintAsset();
-                        }
                     }),
                 );
             }
