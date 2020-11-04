@@ -3,6 +3,7 @@ import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-u
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './component/AccountSettings';
+import TicketList from './component/TicketList';
 import SideBar from './component/SideBar';
 
 const drawerWidth = 240;
@@ -97,7 +98,7 @@ const UserProfile = () => {
                     </IconButton>
                     <Switch>
                         <Route path="/accountSettings" component={AccountSettings} />
-                        <Route path="/myTickets" render={() => <div> My Tickets </div>} />
+                        <Route path="/myTickets" component={TicketList} />
                         <Route path="/sellTickets" render={() => <div> Sell Tickets </div>} />
                         <Route path="/manageEvents" render={() => <div> Manage Events </div>} />
                     </Switch>
