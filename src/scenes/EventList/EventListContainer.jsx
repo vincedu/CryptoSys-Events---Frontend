@@ -3,6 +3,7 @@ import { CircularProgress, makeStyles } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
 import { PageContainer } from '@components';
+import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
 import MainEventItem from './components/MainEventItem';
 import CustomSearchBar from './components/CustomSearchBar';
@@ -20,25 +21,9 @@ const EventListContainer = () => {
 
     // TODO Fetch categories from DB?
     function FetchCategories() {
-        /* à garder mais pour la démo de demain on ferait mieux de garder juste les 3
-        puisque la fonction map toute les catégories, on veut pas 30 catégories sur la page d'accueil
         return CATEGORIES.map((name, id) => {
             return { id, name };
-        }); */
-        return [
-            {
-                id: 1,
-                name: 'Live Concert',
-            },
-            {
-                id: 2,
-                name: 'Virtual Concert',
-            },
-            {
-                id: 3,
-                name: 'Music Concert',
-            },
-        ];
+        });
     }
     const categories = FetchCategories();
 

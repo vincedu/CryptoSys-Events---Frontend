@@ -127,13 +127,6 @@ const EventCreation = (props) => {
         history.goBack();
     };
 
-    const handleNextButtonClick = () => {
-        Object.entries(form).forEach(([key, value]) => {
-            variables[key] = value;
-        });
-        history.push({ pathname: '/createEvent/createTicket' });
-    };
-
     const isFormValid = () => {
         let isValid = true;
 
@@ -160,8 +153,19 @@ const EventCreation = (props) => {
             };
         });
         setForm(updatedForm);
-        setLocation({ ...location, error: !isLocationValid() });
+        setLocation({ ...location, location: { ...location.location, error: !isLocationValid() } });
         setDate({ ...date, error: !areDatesValid() });
+    };
+
+    const handleNextButtonClick = () => {
+        if (isFormValid()) {
+            Object.entries(form).forEach(([key, value]) => {
+                variables[key] = value;
+            });
+            history.push({ pathname: '/createEvent/createTicket' });
+        } else {
+            updateFormErrors();
+        }
     };
 
     const handleCreateTicket = (ticketData) => {
@@ -184,59 +188,53 @@ const EventCreation = (props) => {
     };
 
     const handleSubmit = async () => {
-        if (isFormValid()) {
-            let eventName = '';
-            Object.keys(form).forEach((key) => {
-                variables[key] = form[key].value;
-                if (key === 'name') {
-                    eventName = form[key].value;
+        let eventName = '';
+        Object.keys(form).forEach((key) => {
+            variables[key] = form[key].value;
+            if (key === 'name') {
+                eventName = form[key].value;
+            }
+        });
+        variables.location = location.location.value;
+        variables.locationType = location.locationType.value;
+        variables.startDate = date.start;
+        variables.endDate = date.end;
+        if (variables.locationType !== 'venue') variables.location = null;
+
+        const createEventResult = await createEvent({ variables: { ...variables } });
+        const eventId = createEventResult.data.createEvent.id;
+
+        const ticketNFTs = await Promise.all(
+            tickets.map(async (ticket) => {
+                let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
+
+                if (ticket.image) {
+                    const pinTicketImageResult = await pinTicketImageMutation({
+                        variables: { file: ticket.image, ticketName: ticket.name, eventName },
+                    });
+                    ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
                 }
-            });
-            variables.location = location.location.value;
-            variables.locationType = location.locationType.value;
-            variables.startDate = date.start;
-            variables.endDate = date.end;
-            if (variables.locationType !== 'venue') variables.location = null;
 
-            const createEventResult = await createEvent({ variables: { ...variables } });
-            const eventId = createEventResult.data.createEvent.id;
+                return {
+                    ticketData: {
+                        name: ticket.name,
+                        description: ticket.description,
+                        price: ticket.price,
+                        startDate: ticket.startDate.toString(),
+                        endDate: ticket.endDate.toString(),
+                        eventId,
+                        eventName,
+                        image: ticketImageIpfsHash,
+                    },
+                    maxSupply: ticket.quantity,
+                };
+            }),
+        );
 
-            const ticketNFTs = await Promise.all(
-                tickets.map(async (ticket) => {
-                    let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
-
-                    if (ticket.image) {
-                        const pinTicketImageResult = await pinTicketImageMutation({
-                            variables: { file: ticket.image, ticketName: ticket.name, eventName },
-                        });
-                        ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
-                    }
-
-                    return {
-                        ticketData: {
-                            name: ticket.name,
-                            description: ticket.description,
-                            price: ticket.price,
-                            startDate: ticket.startDate.toString(),
-                            endDate: ticket.endDate.toString(),
-                            eventId,
-                            eventName,
-                            image: ticketImageIpfsHash,
-                        },
-                        maxSupply: ticket.quantity,
-                    };
-                }),
-            );
-
-            const { collectionName, schemaName } = await createTicketNFTs(ticketNFTs);
-            await linkNftToEvent({ variables: { eventId, collectionName, schemaName } });
-            props.history.push('/');
-        } else {
-            updateFormErrors();
-        }
+        const { collectionName, schemaName } = await createTicketNFTs(ticketNFTs);
+        await linkNftToEvent({ variables: { eventId, collectionName, schemaName } });
+        props.history.push('/');
     };
-
-    console.log(form);
 
     return (
         <PageContainer title={t('createEvent.title')}>
