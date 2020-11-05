@@ -57,10 +57,10 @@ export const Confirm = (props) => {
         handleBackStep: PropTypes.func.isRequired,
         handleSubmit: PropTypes.func.isRequired,
         variables: PropTypes.shape({
-            name: PropTypes.object,
-            description: PropTypes.object,
-            startDate: PropTypes.object,
-            type: PropTypes.object,
+            name: PropTypes.string,
+            description: PropTypes.string,
+            startDate: PropTypes.instanceOf(Date),
+            type: PropTypes.string,
         }),
     };
 

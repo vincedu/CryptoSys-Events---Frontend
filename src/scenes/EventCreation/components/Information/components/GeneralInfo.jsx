@@ -107,10 +107,12 @@ const GeneralInfo = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <ImageUploader
+                        withIcon
                         singleImage
+                        withPreview
                         withLabel={false}
                         buttonText={t('createEvent.generalInfo.image')}
-                        onChange={(image) => props.onChange('imageFile', image[0])}
+                        onChange={(images) => props.onChange('imageFile', images[0])}
                         buttonClassName={classes.button}
                         fileContainerStyle={{
                             boxShadow: 'none',

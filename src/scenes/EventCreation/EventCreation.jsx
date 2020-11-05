@@ -5,7 +5,11 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Grid, Stepper, StepLabel, Step } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import { CREATE_EVENT_MUTATION, PIN_TICKET_IMAGE_TO_IPFS_MUTATION } from '@graphql/mutations';
+import {
+    CREATE_EVENT_MUTATION,
+    PIN_TICKET_IMAGE_TO_IPFS_MUTATION,
+    LINK_NFT_TO_EVENT_MUTATION,
+} from '@graphql/mutations';
 import { PageContainer } from '@components';
 import { NFTContext } from '@providers';
 import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
@@ -88,13 +92,14 @@ const EventCreation = (props) => {
         default:
     }
 
-    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const classes = useStyles();
     const [form, setForm] = useState(DEFAULT_EVENT_FORM);
     const [location, setLocation] = useState(DEFAULT_EVENT_LOCATION);
     const [date, setDate] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
+    const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
+    const [linkNftToEvent] = useMutation(LINK_NFT_TO_EVENT_MUTATION);
     const { t } = useTranslation();
 
     const PROGRESSION_STEPS = t('createEvent.stepper', { returnObjects: true });
@@ -194,6 +199,7 @@ const EventCreation = (props) => {
             if (variables.locationType !== 'venue') variables.location = null;
 
             const createEventResult = await createEvent({ variables: { ...variables } });
+            const eventId = createEventResult.data.createEvent.id;
 
             const ticketNFTs = await Promise.all(
                 tickets.map(async (ticket) => {
@@ -213,7 +219,7 @@ const EventCreation = (props) => {
                             price: ticket.price,
                             startDate: ticket.startDate.toString(),
                             endDate: ticket.endDate.toString(),
-                            eventId: createEventResult.data.createEvent.id,
+                            eventId,
                             eventName,
                             image: ticketImageIpfsHash,
                         },
@@ -222,12 +228,15 @@ const EventCreation = (props) => {
                 }),
             );
 
-            await createTicketNFTs(ticketNFTs);
+            const { collectionName, schemaName } = await createTicketNFTs(ticketNFTs);
+            await linkNftToEvent({ variables: { eventId, collectionName, schemaName } });
             props.history.push('/');
         } else {
             updateFormErrors();
         }
     };
+
+    console.log(form);
 
     return (
         <PageContainer title={t('createEvent.title')}>
