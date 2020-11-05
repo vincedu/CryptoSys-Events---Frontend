@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
-    query ticketSalesByEventId($accountName: String!) {
+const TICKET_BY_ACCOUNT_NAME_QUERY = gql`
+    query ticketsByAccountName($accountName: String!) {
         ticketsByAccountName(accountName: $accountName) {
             assetId
             owner
@@ -14,4 +14,4 @@ const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
     }
 `;
 
-export default TICKET_SALES_BY_EVENT_ID_QUERY;
+export default TICKET_BY_ACCOUNT_NAME_QUERY;
