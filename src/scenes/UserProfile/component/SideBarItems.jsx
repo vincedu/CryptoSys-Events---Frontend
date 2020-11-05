@@ -26,7 +26,7 @@ const SidebarItems = () => {
     };
     return (
         <List>
-            <Link to="/accountSettings" className={classes.link}>
+            <Link to="/userProfile/accountSettings" className={classes.link}>
                 <ListItem button>
                     <ListItemIcon>
                         <SettingsIcon style={{ color: '#FFF' }} />
@@ -45,7 +45,7 @@ const SidebarItems = () => {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
-                    <Link to="/myTickets" className={classes.link}>
+                    <Link to="/userProfile/myTickets" className={classes.link}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon style={{ color: '#FFF' }} />
@@ -54,7 +54,7 @@ const SidebarItems = () => {
                         </ListItem>
                     </Link>
 
-                    <Link to="/sellTickets" className={classes.link}>
+                    <Link to="/userProfile/sellTickets" className={classes.link}>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon style={{ color: '#FFF' }} />
@@ -65,7 +65,7 @@ const SidebarItems = () => {
                 </List>
             </Collapse>
 
-            <Link to="/manageEvents" className={classes.link}>
+            <Link to="/userProfile/manageEvents" className={classes.link}>
                 <ListItem button>
                     <ListItemIcon>
                         <EventIcon style={{ color: '#FFF' }} />

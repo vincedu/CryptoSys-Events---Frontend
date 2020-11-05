@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './component/AccountSettings';
 import TicketList from './component/TicketList';
@@ -56,54 +56,52 @@ const UserProfile = () => {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <BrowserRouter>
-                <nav className={classes.drawer} aria-label="sidebar">
-                    <Hidden smUp>
-                        <Drawer
-                            variant="temporary"
-                            anchor="left"
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            ModalProps={{
-                                keepMounted: true, // Better open performance on mobile.
-                            }}
-                        >
-                            <SideBar />
-                        </Drawer>
-                    </Hidden>
-                    <Hidden xsDown>
-                        <Drawer
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            variant="permanent"
-                            open
-                        >
-                            <SideBar />
-                        </Drawer>
-                    </Hidden>
-                </nav>
-                <main className={classes.content}>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        className={classes.menuButton}
+            <nav className={classes.drawer} aria-label="sidebar">
+                <Hidden smUp>
+                    <Drawer
+                        variant="temporary"
+                        anchor="left"
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Switch>
-                        <Route path="/accountSettings" component={AccountSettings} />
-                        <Route path="/myTickets" component={TicketList} />
-                        <Route path="/sellTickets" render={() => <div> Sell Tickets </div>} />
-                        <Route path="/manageEvents" render={() => <div> Manage Events </div>} />
-                    </Switch>
-                </main>
-            </BrowserRouter>
+                        <SideBar />
+                    </Drawer>
+                </Hidden>
+                <Hidden xsDown>
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                    >
+                        <SideBar />
+                    </Drawer>
+                </Hidden>
+            </nav>
+            <main className={classes.content}>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    className={classes.menuButton}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Switch>
+                    <Route path="/userProfile/accountSettings" component={AccountSettings} />
+                    <Route path="/userProfile/myTickets" component={TicketList} />
+                    <Route path="/userProfile/sellTickets" render={() => <div> Sell Tickets </div>} />
+                    <Route path="/userProfile/manageEvents" render={() => <div> Manage Events </div>} />
+                </Switch>
+            </main>
         </div>
     );
 };

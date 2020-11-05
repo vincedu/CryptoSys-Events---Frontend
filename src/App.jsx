@@ -27,7 +27,7 @@ const App = () => {
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />
                         <AuthenticatedRoute exact path="/setupAccount" component={AccountSetup} />
                         <AuthenticatedRoute exact path="/postAuth" component={PostAuth} />
-                        <AuthenticatedRoute exact path="/userProfile" component={UserProfile} />
+                        <AuthenticatedRoute path="/userProfile" component={UserProfile} />
                     </Switch>
                 </NFTProvider>
             </AuthProvider>

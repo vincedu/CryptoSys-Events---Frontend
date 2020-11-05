@@ -45,7 +45,7 @@ const ProfileMenu = (props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem style={{ width: '220px' }} onClick={() => handleButtonClick('/userProfile')}>
+            <MenuItem style={{ width: '220px' }} onClick={() => handleButtonClick('/userProfile/accountSettings')}>
                 <ListItemIcon style={{ minWidth: '45px' }}>
                     <AccountCircle fontSize="large" />
                 </ListItemIcon>
