@@ -100,8 +100,7 @@ class NFTProvider extends React.Component {
 
         await this.setupAssetSales(assetsForSale);
 
-        // TODO: Return correct collection name and schema name when adding dynamic collection name and schema name generation.
-        return { collectionName: TEMP_COLLECTION_NAME, schemaName: TEMP_SCHEMA_NAME };
+        return { templateIds: ticketTemplates.map((template) => template.templateId.toString()) };
     };
 
     createCollection = async () => {
