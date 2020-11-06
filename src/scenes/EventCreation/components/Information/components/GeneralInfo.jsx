@@ -26,14 +26,15 @@ const GeneralInfo = (props) => {
 
     const handleTextChange = (event) => {
         event.persist();
-        props.onChange([event.target.name], event.target.value);
+        props.onChange(event.target.name, event.target.value);
     };
 
-    const handleSelectCategory = (event, name) => {
-        props.onChange(name, CATEGORIES[event.target.dataset.optionIndex]);
+    const handleSelectCategory = (inputName, newValue) => {
+        props.onChange(inputName, newValue);
     };
-    const handleSelectType = (event, name) => {
-        props.onChange(name, TYPES[event.target.dataset.optionIndex]);
+
+    const handleSelectType = (inputName, newValue) => {
+        props.onChange(inputName, newValue);
     };
 
     const handleLanguageAdd = (addedLanguage) => {
@@ -75,7 +76,8 @@ const GeneralInfo = (props) => {
                         name="category"
                         options={CATEGORIES}
                         getOptionLabel={(option) => t(option)}
-                        onChange={(event) => handleSelectCategory(event, 'category')}
+                        value={props.value.category.value}
+                        onChange={(__, newValue) => handleSelectCategory('category', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
                             <TextField
@@ -130,7 +132,8 @@ const GeneralInfo = (props) => {
                         name="type"
                         options={TYPES}
                         getOptionLabel={(option) => t(option)}
-                        onChange={(event) => handleSelectType(event, 'type')}
+                        value={props.value.type.value}
+                        onChange={(__, newValue) => handleSelectType('type', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
                             <TextField
@@ -183,6 +186,7 @@ const GeneralInfo = (props) => {
                         margin="normal"
                         newChipKeys={[' ']}
                         required
+                        value={props.value.tags.value}
                         error={props.value.tags.error}
                         onChange={(chips) => {
                             props.onChange('tags', chips);
