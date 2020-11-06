@@ -4,6 +4,7 @@ import { makeStyles, Grid, InputBase, Paper, Divider, Typography, Hidden, IconBu
 import { LocationOn, Search, Event } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
     grid: {
         paddingTop: '6vh',
         maxHeight: '100%',
-    },
-    logoDiv: {
-        maxWidth: '40%',
-        maxHeight: '100%',
-        display: 'flex',
     },
     logo: {
         maxWidth: '100%',
@@ -59,6 +55,7 @@ const CustomSearchBar = (props) => {
         history: PropTypes.object.isRequired,
     };
 
+    const { t } = useTranslation();
     const classes = useStyles();
     const { history } = props;
     const date = new Date();
@@ -105,16 +102,15 @@ const CustomSearchBar = (props) => {
         <Grid container className={classes.promotion} direction="row" justify="center">
             <Grid item className={classes.grid} xs={11} sm={8} md={7}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 50 }}>
-                    <div className={classes.logoDiv}>
+                    <div>
                         <img src="/eos.svg" alt="eos event" className={classes.logo} />
                     </div>
                     <div>
                         <Typography variant="h2" className={classes.title}>
                             Eos Event
                         </Typography>
-                        <Typography variant="subtitle1" className={classes.title}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec porttitor dolor. Aliquam
-                            ac posuere ipsum. Phasellus ac augue a nulla pharetra.
+                        <Typography variant="body1" className={classes.title}>
+                            {t('customSearchBar.paragraph')}
                         </Typography>
                     </div>
                 </div>
@@ -124,7 +120,7 @@ const CustomSearchBar = (props) => {
                             inputRef={locationRef}
                             className={classes.input}
                             style={{ flex: 1 }}
-                            placeholder="Location"
+                            placeholder={t('customSearchBar.location')}
                             onKeyDown={(e) => checkEnterKey(e, 'location')}
                         />
                         <IconButton
@@ -159,7 +155,7 @@ const CustomSearchBar = (props) => {
                         inputRef={searchRef}
                         className={classes.input}
                         style={{ flex: 4 }}
-                        placeholder="Search artists, venues, and events"
+                        placeholder={t('customSearchBar.search')}
                         onKeyDown={(e) => checkEnterKey(e, 'search')}
                     />
                     <IconButton

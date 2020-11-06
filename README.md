@@ -1,4 +1,4 @@
-# CryptoSys Events - Backend
+# CryptoSys Events - Frontend
 
 ## Development environment configuration
 

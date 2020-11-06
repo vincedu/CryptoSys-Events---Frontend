@@ -1,0 +1,159 @@
+{
+  "title": "EOS Event",
+  "next": "Suivant",
+  "back": "Retour",
+  "language": "en",
+  "languageFlag": "us",
+  "submit": "Soumettre",
+  "cancel": "Annuler",
+  "create": "Créer",
+  "customSearchBar": {
+    "paragraph": "Le futur des billeteries en ligne. EOS Event est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
+    "search": "Rechercher des événements",
+    "location": "Emplacement"
+  },
+  "eventList": {
+    "seeMore": "Voir plus de"
+  },
+  "eventPage": {
+    "tickets": "Billets"
+  },
+  "navBar": {
+    "help": "Aide",
+    "search": "Rechercher",
+    "create": "Créer un événement",
+    "helpCenter": "Centre d'aide",
+    "howItWorks": "Comment ça marche?",
+    "signIn": "Connexion"
+  },
+  "footer": {
+    "contactUs": "Nous contacter"
+  },
+  "profileMenu": {
+    "profile": "Profil",
+    "manage": "Gérer les événements",
+    "settings": "Réglages",
+    "signOut": "Déconnexion"
+  },
+  "accountSetup": {
+    "title": "Configurez votre compte",
+    "description": "Avant de commencer à utiliser votre compte, on aurait besoin d'un petit peu plus d'information sur vous",
+    "displayName": "Nom d'utilisateur",
+    "userInfo": "Information de l'usager",
+    "wallet": "Portefeuilles",
+    "linkWallet": "Lier un portefeuilles",
+    "submit": "Soumettre",
+    "error": "*Vous devez connecter un portefeuilles à votre compte"
+  },
+  "createEvent": {
+    "title": "Création d'événement",
+    "stepper": {
+      "step1": "Informations",
+      "step2": "Billets",
+      "step3": "Confirmation"
+    },
+    "generalInfo": {
+      "eventName": "Nom de l'événement",
+      "title": "Informations Générales",
+      "description": "Nommez votre événement et expliquez aux amateurs pourquoi ils doivent absolument y assister. Ajoutez des informations soulignant le caractère unique de votre événement",
+      "languages": "Langages",
+      "category": "Categorie",
+      "eventDescription": "Description",
+      "tagDescription": "Améliorez la visibilité de votre événement en ajoutant les balises pertinentes au sujet",
+      "image": "Choisir image"
+    },
+    "location": {
+      "title": "Emplacement",
+      "description": "Partager votre événements et dites l'emplacement",
+      "search": "Rechercher un lieu ou une adresse"
+    },
+    "date": {
+      "title": "Date et heure",
+      "description": "Informez les participants potentiels du début et de la fin de votre événement afin qu'ils puissent planifier leur visite",
+      "startDate": "Date de début",
+      "endDate": "Heure de début",
+      "startTime": "Date de fin",
+      "endTime": "Heure de fin"
+    },
+    "tickets": {
+      "title": "Billets",
+      "description": "Créez des billets pour votre événement. Vous pouvez créer plusieurs types de billets si vous souhaitez offrir des expériences différentes à vos participants",
+      "createTickets": "Créer des billets",
+      "createTicket": "Créer un billet",
+      "image": "Choisir image",
+      "ticketName": "Nom du billet",
+      "ticketDescription": "Description du billet",
+      "quantity": "Quantité",
+      "unitPrice": "Prix unitaire"
+    },
+    "confirm": {
+      "title": "Confirmation",
+      "description": "Confirmer votre événement",
+      "createEvent": "Créer l'événement"
+    }
+  },
+
+  "venue": "Lieu",
+  "online": "Événement en ligne",
+  "tbd": "À communiquer",
+
+  "Appearance or Signing": "Apparence ou chant",
+  "Attraction": "Attraction",
+  "Camp, Trip or Retreat": "Camp, voyage ou retraite",
+  "Class, Training or Workshop": "Cours, formation ou atelier",
+  "Concert or Performance": "Concert ou performance",
+  "Conference": "Conférence",
+  "Convention": "Convention",
+  "Dinner or Gala": "Dîner ou Gala",
+  "Festival or Fair": "Festival ou foire",
+  "Game or Competition": "Jeu ou compétition",
+  "Meeting or Networking Event": "Réunion ou événement de réseautage",
+  "Other": "Autre",
+  "Party or Social Gathering": "Fête ou rassemblement social ",
+  "Race or Endurance Event": "Épreuve de course ou dendurance",
+  "Rally": "Se rallier",
+  "Screening": "Dépistage",
+  "Seminar or Talk": "Séminaire ou discussion",
+  "Tour": "Tour",
+  "Tournament": "Tournoi",
+  "Tradeshow, Consumer Show or Expo": "Salon professionnel salon grand public ou expo",
+
+  "Auto, Boat & Air": "Auto, bateau et air",
+  "Business & Professional": "Entreprise et professionnel",
+  "Charity & Causes": "Charité et causes",
+  "Community & Culture": "Communauté et culture",
+  "Family & Education": "Famille et éducation",
+  "Fashion & Beauty": "Fashion beauté",
+  "Film, Media & Entertainment": "Film, médias et divertissement",
+  "Food & Drink": "Nourriture boisson",
+  "Government & Politics": "Gouvernement et politique",
+  "Health & Wellness": "Santé",
+  "Hobbies & Special Interest": "Loisirs et intérêts particuliers",
+  "Home & Lifestyle": "Maison et style de vie",
+  "Music": "La musique",
+  "Performing & Visual Arts": "Arts du spectacle et visuels",
+  "Religion & Spirituality": "Religion et spiritualité",
+  "School Activities": "Activités scolaires",
+  "Science & Technology": "Technologie scientifique",
+  "Seasonal & Holiday": "Saisonnier et vacances",
+  "Sports & Fitness": "Sports et fitness",
+  "Travel & Outdoor": "Voyage et plein air",
+
+  "Bengali": "Bengali",
+  "English": "Anglais",
+  "French": "Français",
+  "German": "Allemand",
+  "Hindi": "Hindi",
+  "Japanese": "Japonais",
+  "Korean": "Coréen",
+  "Mandarin Chinese": "Mandarin",
+  "Marathi": "Marathi",
+  "Spanish": "Espagnol",
+  "Portuguese": "Portugais",
+  "Punjabi": "Punjabi",
+  "Russian": "Russe",
+  "Telugu": "Telugu",
+  "Turkish": "Turc",
+  "Vietnamese": "Vietnamien",
+  "Wu Chinese": "Wu chinois"
+}

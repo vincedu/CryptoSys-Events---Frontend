@@ -3,8 +3,8 @@ import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 // Main action call to blockchain
 
-const COLLECTION_NAME = '44miglierina';
-const SCHEMA_NAME = 'ticket';
+const COLLECTION_NAME = '11miglierins';
+const SCHEMA_NAME = 'tickets';
 const ATOMIC_MARKET_ACCOUNT = 'atomicmarket';
 const SALE_STRING = 'sale';
 async function takeAction(action, dataValue) {
@@ -216,10 +216,10 @@ export const handleCreateTemplate = async (
 };
 
 export const handleMintAsset = async () => {
-    await NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 22201, 'accounttest2', [], [], []); // object.processed.action_traces[0].inline_traces[0].data.template_id
+    await NFTApiService.mintAsset('accounttest2', COLLECTION_NAME, SCHEMA_NAME, 22534, 'accounttest2', [], [], []); // object.processed.action_traces[0].inline_traces[0].data.template_id
 };
 
 export const handleCreateOffer = async () => {
-    await NFTApiService.createOffer('accounttest2', ATOMIC_MARKET_ACCOUNT, [1099512017467], [], SALE_STRING); // Les 2 dernier parametre vont toujours etre un tableau vide et le mot "sale"
+    await NFTApiService.createOffer('accounttest2', ATOMIC_MARKET_ACCOUNT, [1099512018975], [], SALE_STRING); // Les 2 dernier parametre vont toujours etre un tableau vide et le mot "sale"
     console.log('Offer Created');
 };

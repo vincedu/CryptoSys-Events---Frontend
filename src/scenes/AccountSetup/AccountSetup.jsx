@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { withUAL } from 'ual-reactjs-renderer';
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import { useMutation } from '@apollo/client';
@@ -19,6 +20,7 @@ const DEFAULT_FORM = {
 const AccountSetup = (props) => {
     const { ual, redirectPath } = props;
 
+    const { t } = useTranslation();
     const history = useHistory();
     const [form, setForm] = useState(DEFAULT_FORM);
     const [isShowingWalletLinkError, setIsShowingWalletLinkError] = useState(false);
@@ -100,44 +102,40 @@ const AccountSetup = (props) => {
 
     return (
         <PageContainer>
-            <TitledPaper title="Setup your account">
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <Typography variant="body2">
-                            Before you get started with your account, we will need a little more information about you.
-                        </Typography>
+            <TitledPaper title={t('accountSetup.title')}>
+                <Grid container spacing={3} justify="center">
+                    <Grid item xs={12} md={10}>
+                        <Typography variant="subtitle1">{t('accountSetup.description')}</Typography>
                     </Grid>
-                    <Grid container item spacing={3} xs={12}>
-                        <Grid item xs={12}>
-                            <Typography variant="h6">User information</Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                required
-                                label="Display Name"
-                                variant="outlined"
-                                name="displayName"
-                                value={form.displayName.value}
-                                error={form.displayName.error}
-                                onChange={handleFormChange}
-                            />
-                        </Grid>
+                    <Grid item sm={12} md={4}>
+                        <Typography variant="h6">{t('accountSetup.wallet')}</Typography>
+                        <LinkWallet onLinkWalletClick={resetIsShowingWalletLinkError} />
+                        <Box hidden={!isShowingWalletLinkError}>
+                            <Typography color="error">{t('accountSetup.error')}</Typography>
+                        </Box>
                     </Grid>
-                    <Grid container item spacing={3} xs={12}>
-                        <Grid item xs={12}>
-                            <Typography variant="h6">Wallet</Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <LinkWallet onLinkWalletClick={resetIsShowingWalletLinkError} />
-                            <Box hidden={!isShowingWalletLinkError}>
-                                <Typography color="error">*You need to link a wallet to your account</Typography>
-                            </Box>
-                        </Grid>
+                    <Grid item sm={12} md={5}>
+                        <Typography variant="h6">{t('accountSetup.userInfo')}</Typography>
+                        <TextField
+                            fullWidth
+                            required
+                            label={t('accountSetup.displayName')}
+                            variant="outlined"
+                            name="displayName"
+                            value={form.displayName.value}
+                            error={form.displayName.error}
+                            onChange={handleFormChange}
+                        />
                     </Grid>
                     <Grid container item xs={12} justify="flex-end">
-                        <Button variant="contained" color="secondary" type="submit" onClick={handleSubmit}>
-                            Submit
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            style={{ padding: 12 }}
+                            type="submit"
+                            onClick={handleSubmit}
+                        >
+                            {t('accountSetup.submit')}
                         </Button>
                     </Grid>
                 </Grid>

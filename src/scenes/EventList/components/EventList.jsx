@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
 import { makeStyles, Grid, Typography, Button, CircularProgress } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import EventItem from './EventItem';
 
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EventList = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const offset = 0;
     const limit = 4;
@@ -58,15 +60,16 @@ const EventList = (props) => {
                             id={event.id}
                             name={event.name}
                             description={event.description}
-                            date={event.startDate.substring(0, 10)}
+                            date={event.startDate}
                             image={event.image}
                             type={event.type}
+                            withBanner
                         />
                     ))}
                 </Grid>
                 <div className={classes.seeMoreBtn}>
                     <Button variant="outlined" color="secondary" onClick={() => loadMore()}>
-                        See More {props.category}
+                        {t('eventList.seeMore')} {props.category}
                     </Button>
                 </div>
                 <hr className={classes.horizontalLine} />

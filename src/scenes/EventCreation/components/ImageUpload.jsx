@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Source code: https://codesandbox.io/s/vj1q68zm25
 // imports the React Javascript Library
 import React from 'react';
@@ -137,7 +138,7 @@ class ImageUploadCard extends React.Component {
         const { classes } = this.props;
 
         return (
-            <React.Fragment>
+            <>
                 <CardContent>
                     <Grid container justify="center" alignItems="center">
                         <input
@@ -161,7 +162,7 @@ class ImageUploadCard extends React.Component {
                         </Fab>
                     </Grid>
                 </CardContent>
-            </React.Fragment>
+            </>
         );
     }
 

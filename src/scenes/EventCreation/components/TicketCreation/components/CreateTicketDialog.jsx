@@ -4,15 +4,16 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
     Grid,
     InputAdornment,
     makeStyles,
     TextField,
     useMediaQuery,
     useTheme,
+    Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import ImageUploader from 'react-images-upload';
@@ -46,16 +47,24 @@ const DEFAULT_TICKET_DATE = {
     error: false,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     createTicketDialogActionsContainer: {
         padding: '16px 24px',
     },
     datePickersContainer: {
         maxWidth: 'none',
     },
-});
+    button: {
+        backgroundColor: `${theme.palette.primary.main} !important`,
+        borderRadius: '3px !important',
+    },
+    title: {
+        padding: '16px 24px 0 24px',
+    },
+}));
 
 const CreateTicketDialog = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const { isOpen, onClose, onSubmit } = props;
 
@@ -169,7 +178,9 @@ const CreateTicketDialog = (props) => {
 
     return (
         <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
-            <DialogTitle onClose={handleClose}>Create a ticket</DialogTitle>
+            <Typography variant="h4" className={classes.title}>
+                {t('createEvent.tickets.createTicket')}
+            </Typography>
             <DialogContent dividers>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -177,17 +188,23 @@ const CreateTicketDialog = (props) => {
                             withIcon
                             singleImage
                             withPreview
-                            buttonText="Choose Image"
+                            withLabel={false}
+                            buttonText={t('createEvent.tickets.image')}
                             onChange={handleImageUpload}
-                            imgExtension={['.jpg', '.gif', '.png']}
-                            maxFileSize={5242880}
+                            buttonClassName={classes.button}
+                            fileContainerStyle={{
+                                boxShadow: 'none',
+                                borderRadius: '3px',
+                                border: '1px solid #cacaca',
+                                marginTop: 16,
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
                             required
-                            label="Ticket Name"
+                            label={t('createEvent.tickets.ticketName')}
                             variant="outlined"
                             name="name"
                             value={form.name.value}
@@ -201,7 +218,7 @@ const CreateTicketDialog = (props) => {
                             required
                             multiline
                             rows={4}
-                            label="Ticket Description"
+                            label={t('createEvent.tickets.ticketDescription')}
                             variant="outlined"
                             name="description"
                             value={form.description.value}
@@ -213,7 +230,7 @@ const CreateTicketDialog = (props) => {
                         <TextField
                             fullWidth
                             required
-                            label="Quantity"
+                            label={t('createEvent.tickets.quantity')}
                             variant="outlined"
                             type="number"
                             name="quantity"
@@ -226,7 +243,7 @@ const CreateTicketDialog = (props) => {
                         <TextField
                             fullWidth
                             required
-                            label="Unit price"
+                            label={t('createEvent.tickets.unitPrice')}
                             variant="outlined"
                             type="number"
                             InputProps={{
@@ -246,7 +263,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="Start Date"
+                                        label={t('createEvent.date.startDate')}
                                         format="MM/dd/yyyy"
                                         name="startDate"
                                         value={date.start}
@@ -254,6 +271,7 @@ const CreateTicketDialog = (props) => {
                                         onChange={(value) => handleDateChange('start', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
+                                            color: 'primary',
                                         }}
                                     />
                                 </Grid>
@@ -262,13 +280,14 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="Start Time"
+                                        label={t('createEvent.date.startTime')}
                                         name="startDate"
                                         value={date.start}
                                         error={date.error}
                                         onChange={(value) => handleDateChange('start', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change time',
+                                            color: 'primary',
                                         }}
                                     />
                                 </Grid>
@@ -279,7 +298,7 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="End Date"
+                                        label={t('createEvent.date.endDate')}
                                         format="MM/dd/yyyy"
                                         name="endDate"
                                         value={date.end}
@@ -287,6 +306,7 @@ const CreateTicketDialog = (props) => {
                                         onChange={(value) => handleDateChange('end', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
+                                            color: 'primary',
                                         }}
                                     />
                                 </Grid>
@@ -295,13 +315,14 @@ const CreateTicketDialog = (props) => {
                                         required
                                         margin="normal"
                                         inputVariant="outlined"
-                                        label="End Time"
+                                        label={t('createEvent.date.endTime')}
                                         name="endDate"
                                         value={date.end}
                                         error={date.error}
                                         onChange={(value) => handleDateChange('end', value)}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change time',
+                                            color: 'primary',
                                         }}
                                     />
                                 </Grid>
@@ -313,8 +334,8 @@ const CreateTicketDialog = (props) => {
             <DialogActions className={classes.createTicketDialogActionsContainer}>
                 <Grid container justify="space-between" spacing={3}>
                     <Grid item sm={3} xs={12}>
-                        <Button fullWidth variant="contained" color="default" onClick={handleClose}>
-                            Cancel
+                        <Button fullWidth variant="outlined" color="primary" onClick={handleClose}>
+                            {t('cancel')}
                         </Button>
                     </Grid>
                     <Grid item sm={3} xs={12}>
@@ -323,9 +344,10 @@ const CreateTicketDialog = (props) => {
                             variant="contained"
                             color="secondary"
                             type="submit"
+                            style={{ fontWeight: 900 }}
                             onClick={handleCreateTicket}
                         >
-                            Create
+                            {t('create')}
                         </Button>
                     </Grid>
                 </Grid>

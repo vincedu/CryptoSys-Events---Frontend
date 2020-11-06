@@ -1,7 +1,6 @@
 import NavBar from './NavBar';
-import SetUser from './SetUser';
+import Footer from './Footer';
 import TitledPaper from './TitledPaper';
-import Username from './Username';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import PageContainer from './PageContainer';
 import CenteredCircularProgress from './CenteredCircularProgress';
@@ -9,9 +8,8 @@ import TransactionProcessDialog from './TransactionProcessDialog';
 
 export {
     NavBar,
-    SetUser,
+    Footer,
     TitledPaper,
-    Username,
     AuthenticatedRoute,
     PageContainer,
     CenteredCircularProgress,

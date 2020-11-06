@@ -1,0 +1,159 @@
+{
+  "title": "EOS Event",
+  "next": "Next",
+  "back": "Back",
+  "language": "fr",
+  "languageFlag": "fr",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "create": "Create",
+  "customSearchBar": {
+    "paragraph": "The future of online ticketing. EOS Event is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
+    "search": "Search events",
+    "location": "Location"
+  },
+  "eventList": {
+    "seeMore": "See More"
+  },
+  "eventPage": {
+    "tickets": "Tickets"
+  },
+  "navBar": {
+    "help": "Help",
+    "search": "Search",
+    "create": "Create Event",
+    "helpCenter": "Help Center",
+    "howItWorks": "How it Works",
+    "signIn": "Sign In"
+  },
+  "footer": {
+    "contactUs": "Contact Us"
+  },
+  "profileMenu": {
+    "profile": "Profile",
+    "manage": "Manage Events",
+    "settings": "Account Settings",
+    "signOut": "Sign Out"
+  },
+  "accountSetup": {
+    "title": "Setup your Account",
+    "description": "Before you get started with your account, we will need a little more information about you",
+    "displayName": "Display Name",
+    "userInfo": "User Information",
+    "wallet": "Wallet",
+    "linkWallet": "Link Account to a Wallet",
+    "submit": "Submit",
+    "error": "*You need to link a wallet to your account"
+  },
+  "createEvent": {
+    "title": "Create Event",
+    "stepper": {
+      "step1": "Information",
+      "step2": "Tickets",
+      "step3": "Review"
+    },
+    "generalInfo": {
+      "eventName": "Event Name",
+      "title": "General Information",
+      "description": "Name your event and explain to the prospect why they really need to attend the event. Add information underlining the uniqueness of your event",
+      "languages": "Languages",
+      "category": "Category",
+      "eventDescription": "Description",
+      "tagDescription": "Improve discoverability of your event by adding tags relevant to the subject matter",
+      "image": "Choose Image"
+    },
+    "location": {
+      "title": "Location",
+      "description": "Share your event with locals and let them know where it's going to be",
+      "search": "Search for a venue or address"
+    },
+    "date": {
+      "title": "Date & Hour",
+      "description": "Let potential attendees know when your event starts and ends so that they can plan their visit",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "startTime": "Start Time",
+      "endTime": "End Time"
+    },
+    "tickets": {
+      "title": "Tickets",
+      "description": "Create tickets for your event. You can create multiple types of tickets if you want to offerdifferent experiences for your attendees",
+      "createTickets": "Create Tickets",
+      "createTicket": "Create a Ticket",
+      "image": "Choose Image",
+      "ticketName": "Ticket Name",
+      "ticketDescription": "Ticket Description",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price"
+    },
+    "confirm": {
+      "title": "Confirm",
+      "description": "Confirm your Event",
+      "createEvent": "Create Event"
+    }
+  },
+
+  "venue": "Venue",
+  "online": "Online event",
+  "tbd": "To be announced",
+
+  "Appearance or Signing": "Appearance or Signing",
+  "Attraction": "Attraction",
+  "Camp, Trip or Retreat": "Camp, Trip or Retreat",
+  "Class, Training or Workshop": "Class, Training or Workshop",
+  "Concert or Performance": "Concert or Performance",
+  "Conference": "Conference",
+  "Convention": "Convention",
+  "Dinner or Gala": "Dinner or Gala",
+  "Festival or Fair": "Festival or Fair",
+  "Game or Competition": "Game or Competition",
+  "Meeting or Networking Event": "Meeting or Networking Event",
+  "Other": "Other",
+  "Party or Social Gathering": "Party or Social Gathering",
+  "Race or Endurance Event": "Race or Endurance Event",
+  "Rally": "Rally",
+  "Screening": "Screening",
+  "Seminar or Talk": "Seminar or Talk",
+  "Tour": "Tour",
+  "Tournament": "Tournament",
+  "Tradeshow, Consumer Show or Expo": "Tradeshow, Consumer Show or Expo",
+
+  "Auto, Boat & Air": "Auto, Boat & Air",
+  "Business & Professional": "Business & Professional",
+  "Charity & Causes": "Charity & Causes",
+  "Community & Culture": "Community & Culture",
+  "Family & Education": "Family & Education",
+  "Fashion & Beauty": "Fashion & Beauty",
+  "Film, Media & Entertainment": "Film, Media & Entertainment",
+  "Food & Drink": "Food & Drink",
+  "Government & Politics": "Government & Politics",
+  "Health & Wellness": "Health & Wellness",
+  "Hobbies & Special Interest": "Hobbies & Special Interest",
+  "Home & Lifestyle": "Home & Lifestyle",
+  "Music": "Music",
+  "Performing & Visual Arts": "Performing & Visual Arts",
+  "Religion & Spirituality": "Religion & Spirituality",
+  "School Activities": "School Activities",
+  "Science & Technology": "Science & Technology",
+  "Seasonal & Holiday": "Seasonal & Holiday",
+  "Sports & Fitness": "Sports & Fitness",
+  "Travel & Outdoor": "Travel & Outdoor",
+
+  "Bengali": "Bengali",
+  "English": "English",
+  "French": "French",
+  "German": "German",
+  "Hindi": "Hindi",
+  "Japanese": "Japanese",
+  "Korean": "Korean",
+  "Mandarin Chinese": "Mandarin Chinese",
+  "Marathi": "Marathi",
+  "Spanish": "Spanish",
+  "Portuguese": "Portuguese",
+  "Punjabi": "Punjabi",
+  "Russian": "Russian",
+  "Telugu": "Telugu",
+  "Turkish": "Turkish",
+  "Vietnamese": "Vietnamese",
+  "Wu Chinese": "Wu Chinese"
+}
