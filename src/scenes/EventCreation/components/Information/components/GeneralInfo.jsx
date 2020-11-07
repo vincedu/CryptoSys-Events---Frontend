@@ -1,13 +1,12 @@
 import React from 'react';
-import { Grid, TextField, Chip, Box, Typography, makeStyles } from '@material-ui/core';
+import { Grid, TextField, Chip, Typography, makeStyles } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { Autocomplete } from '@material-ui/lab';
 import ChipInput from 'material-ui-chip-input';
 import PropTypes from 'prop-types';
-import ImageUploader from 'react-images-upload';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { TitledPaper } from '@components';
+import { TitledPaper, ImageUpload } from '@components';
 import { TYPES, CATEGORIES, LANGUAGES } from '../../../lists';
 
 const GeneralInfo = (props) => {
@@ -108,26 +107,15 @@ const GeneralInfo = (props) => {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <ImageUploader
-                        withIcon
-                        singleImage
-                        withPreview
-                        withLabel={false}
-                        buttonText={t('createEvent.generalInfo.image')}
-                        onChange={(images) => props.onChange('imageFile', images[0])}
-                        buttonClassName={classes.button}
-                        fileContainerStyle={{
-                            boxShadow: 'none',
-                            borderRadius: '3px',
-                            border: '1px solid #cacaca',
-                            margin: '16px 0 8px 0',
-                            padding: '18px 0',
-                        }}
+                    <ImageUpload
+                        value={props.value.imageFile.value}
+                        error={
+                            props.value.imageFile.error
+                                ? t('createEvent.generalInfo.image.missingImageError')
+                                : undefined
+                        }
+                        onChange={(image) => props.onChange('imageFile', image)}
                     />
-                    <Box hidden={!props.value.imageFile.error}>
-                        <Typography color="error">*Missing image</Typography>
-                    </Box>
-                    {/* <ImageUpload cardName='Input Image' imageGallery={galleryImageList} /> */}
                     <Autocomplete
                         name="type"
                         options={TYPES}
