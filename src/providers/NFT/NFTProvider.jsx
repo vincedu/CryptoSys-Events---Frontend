@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { TransactionProcessDialog } from '@components';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
+import { COLLECTIONS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+import { ApolloClient, ApolloConsumer } from '@apollo/client';
 import {
     createCollectionAction,
     createSchemaAction,
@@ -56,8 +58,19 @@ class NFTProvider extends React.Component {
     }
 
     createTicketNFTs = async (tickets) => {
-        const collectionAction = createCollectionAction(TEMP_COLLECTION_NAME, this.getWalletAccountName());
-        const schemaAction = createSchemaAction(TEMP_SCHEMA_NAME, TEMP_COLLECTION_NAME, this.getWalletAccountName());
+        const isFirstEventCreationBool = await this.isFirstEventCreation();
+        console.log(isFirstEventCreationBool);
+        let collectionAction;
+        let schemaAction;
+        let transaction;
+        if (isFirstEventCreationBool === true) {
+            collectionAction = createCollectionAction(this.getWalletAccountName(), this.getWalletAccountName());
+            schemaAction = createSchemaAction(
+                TEMP_SCHEMA_NAME,
+                this.getWalletAccountName(),
+                this.getWalletAccountName(),
+            );
+        }
         const templateActions = tickets.map((template) =>
             createTemplateAction(
                 TEMP_SCHEMA_NAME,
@@ -67,8 +80,11 @@ class NFTProvider extends React.Component {
                 this.getWalletAccountName(),
             ),
         );
-
-        const transaction = this.createTransactionFromActions([collectionAction, schemaAction, ...templateActions]);
+        if (isFirstEventCreationBool === true) {
+            transaction = this.createTransactionFromActions([collectionAction, schemaAction, ...templateActions]);
+        } else {
+            transaction = this.createTransactionFromActions([...templateActions]);
+        }
 
         const transactionResult = await this.transact(transaction);
 
@@ -267,6 +283,21 @@ class NFTProvider extends React.Component {
         }
     };
 
+    async isFirstEventCreation() {
+        console.log(this.getWalletAccountName());
+        return this.props.apolloClient
+            .query({
+                query: COLLECTIONS_BY_ACCOUNT_NAME_QUERY,
+                variables: { accountName: this.getWalletAccountName() },
+            })
+            .then((result) => {
+                if (result.data.collectionsByAccountName.length === 0) {
+                    return true;
+                }
+                return false;
+            });
+    }
+
     render() {
         const { children } = this.props;
         const { createTicketNFTs, sellTicket, isLoading } = this.state;
@@ -283,17 +314,22 @@ NFTProvider.propTypes = {
     children: PropTypes.node.isRequired,
     auth: PropTypes.object.isRequired,
     ual: PropTypes.object.isRequired,
+    apolloClient: PropTypes.instanceOf(ApolloClient).isRequired,
 };
 
 const NFTProviderWithAuth = (props) => {
     return (
-        <AuthContext.Consumer>
-            {(context) => (
-                <NFTProvider ual={props.ual} auth={context}>
-                    {props.children}
-                </NFTProvider>
+        <ApolloConsumer>
+            {(client) => (
+                <AuthContext.Consumer>
+                    {(context) => (
+                        <NFTProvider ual={props.ual} auth={context} apolloClient={client}>
+                            {props.children}
+                        </NFTProvider>
+                    )}
+                </AuthContext.Consumer>
             )}
-        </AuthContext.Consumer>
+        </ApolloConsumer>
     );
 };
 
