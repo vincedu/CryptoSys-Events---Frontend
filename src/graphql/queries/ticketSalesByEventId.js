@@ -22,8 +22,6 @@ const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
                     }
                     ticket {
                         assetId
-                        owner
-                        templateId
                     }
                 }
             }
@@ -46,8 +44,6 @@ const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
                     }
                     ticket {
                         assetId
-                        owner
-                        templateId
                     }
                 }
             }

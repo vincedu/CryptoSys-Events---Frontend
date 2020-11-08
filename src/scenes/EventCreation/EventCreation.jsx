@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import {
     CREATE_EVENT_MUTATION,
     PIN_TICKET_IMAGE_TO_IPFS_MUTATION,
-    LINK_NFT_TO_EVENT_MUTATION,
+    LINK_NFT_TEMPLATES_TO_EVENT_MUTATION,
 } from '@graphql/mutations';
 import { PageContainer } from '@components';
 import { NFTContext } from '@providers';
@@ -99,7 +99,7 @@ const EventCreation = (props) => {
     const [tickets, setTickets] = useState([]);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
-    const [linkNftToEvent] = useMutation(LINK_NFT_TO_EVENT_MUTATION);
+    const [linkNftTemplatesToEvent] = useMutation(LINK_NFT_TEMPLATES_TO_EVENT_MUTATION);
     const { t } = useTranslation();
 
     const PROGRESSION_STEPS = t('createEvent.stepper', { returnObjects: true });
@@ -231,8 +231,8 @@ const EventCreation = (props) => {
             }),
         );
 
-        const { collectionName, schemaName } = await createTicketNFTs(ticketNFTs);
-        await linkNftToEvent({ variables: { eventId, collectionName, schemaName } });
+        const { templateIds } = await createTicketNFTs(ticketNFTs);
+        await linkNftTemplatesToEvent({ variables: { eventId, templateIds } });
         props.history.push('/');
     };
 
