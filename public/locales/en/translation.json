@@ -13,7 +13,8 @@
     "location": "Location"
   },
   "eventList": {
-    "seeMore": "See More"
+    "seeMore": "See More",
+    "noEvent": "No Event"
   },
   "eventPage": {
     "tickets": "Tickets"

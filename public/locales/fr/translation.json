@@ -13,7 +13,8 @@
     "location": "Emplacement"
   },
   "eventList": {
-    "seeMore": "Voir plus de"
+    "seeMore": "Voir plus de",
+    "noEvent": "Aucun événement"
   },
   "eventPage": {
     "tickets": "Billets"

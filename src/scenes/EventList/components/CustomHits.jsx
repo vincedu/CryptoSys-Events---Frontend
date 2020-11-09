@@ -3,6 +3,7 @@ import { Typography, makeStyles, Card, CardMedia, CardContent, CardHeader, Poppe
 import { connectHits } from 'react-instantsearch-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -36,7 +37,7 @@ const CustomHits = (props) => {
     };
 
     const classes = useStyles();
-
+    const { t } = useTranslation();
     const { history, searchBarRef, open } = props;
 
     const CustomSearchHits = connectHits(({ hits }) => (
@@ -49,40 +50,48 @@ const CustomHits = (props) => {
                     style={{ width: searchBarRef.current.offsetWidth, maxHeight: 0, backgroundColor: 'white' }}
                 >
                     <Grid container spacing={1} className={classes.popper}>
-                        {hits.map((hit) => (
-                            <Grid item xs={12} key={hit.objectID}>
-                                <Card
-                                    className={classes.root}
-                                    onClick={() =>
-                                        history.push({
-                                            pathname: `/event/${hit.objectID}`,
-                                            state: { id: hit.objectID },
-                                        })
-                                    }
-                                >
-                                    <Grid container direction="row">
-                                        <Grid item xs={12} sm={6}>
-                                            <CardMedia className={classes.media} image={hit.image} title={hit.name} />
+                        {hits.length ? (
+                            hits.map((hit) => (
+                                <Grid item xs={12} key={hit.objectID}>
+                                    <Card
+                                        className={classes.root}
+                                        onClick={() =>
+                                            history.push({
+                                                pathname: `/event/${hit.objectID}`,
+                                                state: { id: hit.objectID },
+                                            })
+                                        }
+                                    >
+                                        <Grid container direction="row">
+                                            <Grid item xs={12} sm={6}>
+                                                <CardMedia
+                                                    className={classes.media}
+                                                    image={hit.image}
+                                                    title={hit.name}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
+                                                <CardHeader titleTypographyProps={{ variant: 'h6' }} title={hit.name} />
+                                                <CardContent>
+                                                    <Typography
+                                                        variant="body2"
+                                                        color="textSecondary"
+                                                        component="p"
+                                                        maxLength={10}
+                                                    >
+                                                        {hit.description.length < 50
+                                                            ? hit.description
+                                                            : `${hit.description.substring(0, 50)}...`}
+                                                    </Typography>
+                                                </CardContent>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
-                                            <CardHeader titleTypographyProps={{ variant: 'h6' }} title={hit.name} />
-                                            <CardContent>
-                                                <Typography
-                                                    variant="body2"
-                                                    color="textSecondary"
-                                                    component="p"
-                                                    maxLength={10}
-                                                >
-                                                    {hit.description.length < 50
-                                                        ? hit.description
-                                                        : `${hit.description.substring(0, 50)}...`}
-                                                </Typography>
-                                            </CardContent>
-                                        </Grid>
-                                    </Grid>
-                                </Card>
-                            </Grid>
-                        ))}
+                                    </Card>
+                                </Grid>
+                            ))
+                        ) : (
+                            <Typography variant="body1">{t('eventList.noEvent')}</Typography>
+                        )}
                     </Grid>
                 </Popper>
             ) : null}
