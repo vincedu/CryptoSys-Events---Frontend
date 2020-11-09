@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import ImageUploader from 'react-images-upload';
+import { ImageUpload } from '@components';
 
 const DEFAULT_TICKET_FORM = {
     name: {
@@ -166,11 +166,11 @@ const CreateTicketDialog = (props) => {
         setDate({ ...date, [field]: value, error });
     };
 
-    const handleImageUpload = async (images) => {
+    const handleImageUpload = (image) => {
         setForm({
             ...form,
             image: {
-                value: images[0],
+                value: image,
                 error: form.image.error,
             },
         });
@@ -184,21 +184,7 @@ const CreateTicketDialog = (props) => {
             <DialogContent dividers>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <ImageUploader
-                            withIcon
-                            singleImage
-                            withPreview
-                            withLabel={false}
-                            buttonText={t('createEvent.tickets.image')}
-                            onChange={handleImageUpload}
-                            buttonClassName={classes.button}
-                            fileContainerStyle={{
-                                boxShadow: 'none',
-                                borderRadius: '3px',
-                                border: '1px solid #cacaca',
-                                marginTop: 16,
-                            }}
-                        />
+                        <ImageUpload value={form.image.value} onChange={handleImageUpload} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField

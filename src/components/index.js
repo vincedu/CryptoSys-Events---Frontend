@@ -5,6 +5,7 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import PageContainer from './PageContainer';
 import CenteredCircularProgress from './CenteredCircularProgress';
 import TransactionProcessDialog from './TransactionProcessDialog';
+import ImageUpload from './ImageUpload';
 
 export {
     NavBar,
@@ -14,4 +15,5 @@ export {
     PageContainer,
     CenteredCircularProgress,
     TransactionProcessDialog,
+    ImageUpload,
 };

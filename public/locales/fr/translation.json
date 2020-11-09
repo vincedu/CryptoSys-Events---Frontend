@@ -60,7 +60,12 @@
       "category": "Categorie",
       "eventDescription": "Description",
       "tagDescription": "Améliorez la visibilité de votre événement en ajoutant les balises pertinentes au sujet",
-      "image": "Choisir image"
+      "image": {
+        "buttonLabel": "Choisir image",
+        "missingImageError": "Image manquante",
+        "invalidTypeError": "Type de fichier invalide",
+        "fileTooLargeError": "Fichier sélectionné trop large"
+      }
     },
     "location": {
       "title": "Emplacement",

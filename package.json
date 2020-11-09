@@ -32,7 +32,6 @@
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
     "react-i18next": "^11.7.3",
-    "react-images-upload": "^1.2.8",
     "react-load-script": "0.0.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
