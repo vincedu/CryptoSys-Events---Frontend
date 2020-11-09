@@ -49,7 +49,7 @@ const EventItem = (props) => {
             position: 'absolute',
             top: 30,
             right: 0,
-            zIndex: 3,
+            zIndex: 1,
             boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
         },
         bannerContent: {

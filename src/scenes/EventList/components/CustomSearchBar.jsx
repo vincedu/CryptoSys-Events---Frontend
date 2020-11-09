@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Grid, InputBase, Paper, Divider, Typography, Hidden, IconButton } from '@material-ui/core';
-import { LocationOn, Search, Event } from '@material-ui/icons';
+import { LocationOn, Event } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
+import Autocomplete from './Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     // Header
@@ -61,6 +62,7 @@ const CustomSearchBar = (props) => {
     const date = new Date();
     const locationRef = useRef();
     const searchRef = useRef();
+    const searchBarRef = useRef();
 
     const handleDateChange = (selectedDate) => {
         history.push({
@@ -114,7 +116,7 @@ const CustomSearchBar = (props) => {
                         </Typography>
                     </div>
                 </div>
-                <Paper className={classes.searchBar}>
+                <Paper className={classes.searchBar} ref={searchBarRef}>
                     <Hidden smDown>
                         <InputBase
                             inputRef={locationRef}
@@ -123,12 +125,7 @@ const CustomSearchBar = (props) => {
                             placeholder={t('customSearchBar.location')}
                             onKeyDown={(e) => checkEnterKey(e, 'location')}
                         />
-                        <IconButton
-                            onClick={handleLocation}
-                            color="primary"
-                            className={classes.iconButton}
-                            aria-label="directions"
-                        >
+                        <IconButton onClick={handleLocation} color="primary">
                             <LocationOn />
                         </IconButton>
                         <Divider className={classes.divider} orientation="vertical" />
@@ -142,7 +139,7 @@ const CustomSearchBar = (props) => {
                                         root: classes.underline,
                                         focused: classes.underline,
                                     },
-                                    endAdornment: <Event color="primary" className={classes.iconButton} />,
+                                    endAdornment: <Event color="primary" />,
                                 }}
                                 className={classes.input}
                                 style={{ flex: 2 }}
@@ -151,21 +148,9 @@ const CustomSearchBar = (props) => {
                         </MuiPickersUtilsProvider>
                         <Divider className={classes.divider} orientation="vertical" />
                     </Hidden>
-                    <InputBase
-                        inputRef={searchRef}
-                        className={classes.input}
-                        style={{ flex: 4 }}
-                        placeholder={t('customSearchBar.search')}
-                        onKeyDown={(e) => checkEnterKey(e, 'search')}
-                    />
-                    <IconButton
-                        onClick={handleSearch}
-                        color="primary"
-                        className={classes.iconButton}
-                        aria-label="directions"
-                    >
-                        <Search className={classes.iconButton} />
-                    </IconButton>
+                    <div style={{ flex: 4 }}>
+                        <Autocomplete searchBarRef={searchBarRef} />
+                    </div>
                 </Paper>
             </Grid>
         </Grid>
