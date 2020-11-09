@@ -1,40 +1,47 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { PageContainer, TitledPaper } from '@components';
-import { Grid } from '@material-ui/core';
-import TicketCard from '../../EventCreation/components/TicketCreation/components/TicketCard';
-import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '../../EventCreation/components/TicketCreation/index';
+import { CircularProgress } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
+import { TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+import { AuthContext } from '@providers';
+import TicketEvent from './TicketEvent';
 
 export default function TicketList() {
-    const mockTicket = {
-        name: 'Electronic music',
-        description: 'Lorem ipsum dolor sit amet',
-        startDate: new Date(1995, 11, 17),
-        endDate: new Date(1995, 12, 17),
-        soldQuantity: 10,
-        quantity: 20,
-        price: 2,
-    };
+    const { userData } = useContext(AuthContext);
+    const eventsTickets = useQuery(TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY, {
+        variables: { accountName: userData.walletAccountName },
+    });
+    let upcomingEventsTickets;
+    let pastEventsTickets;
+    if (eventsTickets.data) {
+        upcomingEventsTickets = eventsTickets.data.ticketsForEventsByAccountName.upcoming;
+        pastEventsTickets = eventsTickets.data.ticketsForEventsByAccountName.past;
+    }
 
     return (
         <PageContainer title="My Tickets">
-            <Grid container spacing={3} direction="column" justify="flex-start">
-                <Grid item xs={12}>
-                    <TitledPaper title="Tickets">
-                        <div>
-                            <TicketCard
-                                key={mockTicket.name}
-                                ticket={mockTicket}
-                                defaultTicketImageUrl={`https://ipfs.io/ipfs/${DEFAULT_TICKET_IMAGE_IPFS_HASH}`}
-                            />
-                        </div>
-                    </TitledPaper>
-                </Grid>
-                <Grid item xs={12}>
-                    <TitledPaper title="Past Tickets">
-                        <div>no past tickets</div>
-                    </TitledPaper>
-                </Grid>
-            </Grid>
+            <TitledPaper title="Upcoming Tickets">
+                <div>
+                    {eventsTickets.loading ? (
+                        <CircularProgress />
+                    ) : (
+                        upcomingEventsTickets.map((upcomingEventTickets) => (
+                            <TicketEvent key={upcomingEventTickets.event.name} eventTickets={upcomingEventTickets} />
+                        ))
+                    )}
+                </div>
+            </TitledPaper>
+            <TitledPaper title="Past Tickets">
+                <div>
+                    {eventsTickets.loading ? (
+                        <CircularProgress />
+                    ) : (
+                        pastEventsTickets.map((pastEventTickets) => (
+                            <TicketEvent key={pastEventTickets.event.name} eventTickets={pastEventTickets} />
+                        ))
+                    )}
+                </div>
+            </TitledPaper>
         </PageContainer>
     );
 }
