@@ -9,7 +9,7 @@ const purchaseSaleAction = (buyer, saleId, marketplaceNAme) => {
         taker_marketplace: marketplaceNAme,
     };
 
-    return atomicMarketAction('purchasesale', actionData);
+    return atomicMarketAction('purchasesale', actionData, buyer);
 };
 
 export default purchaseSaleAction;

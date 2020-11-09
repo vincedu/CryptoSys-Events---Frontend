@@ -10,7 +10,7 @@ const depositTokenAction = (from, quantity) => {
         memo: DEPOSIT_STRING,
     };
 
-    return eosioTokenAction('transfer', actionData);
+    return eosioTokenAction('transfer', actionData, from);
 };
 
 export default depositTokenAction;

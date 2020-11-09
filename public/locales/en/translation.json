@@ -15,9 +15,6 @@
   "eventList": {
     "seeMore": "See More"
   },
-  "eventPage": {
-    "tickets": "Tickets"
-  },
   "navBar": {
     "help": "Help",
     "search": "Search",
@@ -91,6 +88,15 @@
       "description": "Confirm your Event",
       "createEvent": "Create Event"
     }
+  },
+  "buyTickets": {
+    "tickets": "Tickets",
+    "newTickets": "New Tickets",
+    "otherVendors": "Other Vendors",
+    "soldOut": "SOLD OUT",
+    "orderSummary": "Order Summary",
+    "total": "Total",
+    "checkout": "Checkout"
   },
 
   "venue": "Venue",

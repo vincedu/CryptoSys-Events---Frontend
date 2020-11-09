@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { EVENT_BY_ID_QUERY } from '@graphql/queries';
+import { EVENT_BY_ID_QUERY, TICKET_SALES_BY_EVENT_ID_QUERY } from '@graphql/queries';
+import { NFTContext } from '@providers';
 import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -32,28 +33,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DEFAULT_TICKETS = {
-    1: {
-        id: 1,
-        name: 'General',
-        description: 'General admission',
-        quantity: 20,
-        price: 15,
-        number: 0,
-    },
-    2: {
-        id: 2,
-        name: 'VIP',
-        description: 'Access to backstage',
-        quantity: 4,
-        price: 150,
-        number: 0,
-    },
-};
-
 const EventPage = (props) => {
     const { t } = useTranslation();
+    const { buyTicketNFTs } = useContext(NFTContext);
+
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+    // Query Item by ID
+    const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id: props.location.state.id } });
+    const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_ID_QUERY, {
+        variables: { eventId: props.location.state.id },
+    });
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
     };
@@ -62,8 +51,8 @@ const EventPage = (props) => {
         setIsTicketDialogOpen(false);
     };
 
-    const handleBuyTicket = async (ticket) => {
-        console.log('BUYING', ticket);
+    const handleBuyTicket = async (newTickets, otherTickets, total) => {
+        await buyTicketNFTs(newTickets, otherTickets, total);
     };
 
     EventPage.propTypes = {
@@ -86,14 +75,23 @@ const EventPage = (props) => {
 
     const classes = useStyles();
 
-    // Query Item by ID
-    const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id: props.location.state.id } });
-
-    if (loading) {
+    if (loading || ticketsQuery.loading) {
         return <CircularProgress />;
     }
 
     if (data !== undefined) {
+        const newTickets = {};
+        ticketsQuery.data.ticketSalesByEventId.original.forEach((originalTicket) => {
+            newTickets[originalTicket.template.templateId] = {
+                id: originalTicket.template.templateId,
+                name: originalTicket.template.name,
+                description: originalTicket.template.description,
+                quantity: originalTicket.sales.length,
+                price: originalTicket.sales.length > 0 ? originalTicket.sales[0].price.amount : undefined,
+                image: originalTicket.template.image,
+                saleIds: originalTicket.sales.map((sale) => sale.saleId),
+            };
+        });
         return (
             <div style={{ padding: 20 }}>
                 <Grid container direction="row" justify="center">
@@ -117,7 +115,7 @@ const EventPage = (props) => {
                             style={{ float: 'right', margin: 20 }}
                             onClick={handleOpenTicketDialog}
                         >
-                            {t('eventPage.tickets')}
+                            {t('buyTickets.tickets')}
                         </Button>
                     </Grid>
                 </Grid>
@@ -125,9 +123,9 @@ const EventPage = (props) => {
                     isOpen={isTicketDialogOpen}
                     onSubmit={handleBuyTicket}
                     onClose={handleCloseTicketDialog}
-                    newTickets={DEFAULT_TICKETS}
+                    newTickets={newTickets}
                     otherTickets={{}}
-                    event={{ name: 'Default Event', image: data.eventById.image }}
+                    event={data.eventById}
                 />
             </div>
         );
