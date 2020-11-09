@@ -17,7 +17,6 @@ export default function TicketList() {
         upcomingEventsTickets = eventsTickets.data.ticketsForEventsByAccountName.upcoming;
         pastEventsTickets = eventsTickets.data.ticketsForEventsByAccountName.past;
     }
-
     return (
         <PageContainer title="My Tickets">
             <TitledPaper title="Upcoming Tickets">

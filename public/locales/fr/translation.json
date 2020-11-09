@@ -97,6 +97,10 @@
       "createEvent": "Créer l'événement"
     }
   },
+  "resale": {
+    "boughtAt": "Acheté à",
+    "resalePrice": "Prix de revente"
+  },
 
   "venue": "Lieu",
   "online": "Événement en ligne",
