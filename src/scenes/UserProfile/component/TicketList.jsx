@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { PageContainer, TitledPaper } from '@components';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
 import { AuthContext } from '@providers';
@@ -25,9 +25,18 @@ export default function TicketList() {
                     {eventsTickets.loading ? (
                         <CircularProgress />
                     ) : (
-                        upcomingEventsTickets.map((upcomingEventTickets) => (
-                            <TicketEvent key={upcomingEventTickets.event.name} eventTickets={upcomingEventTickets} />
-                        ))
+                        <div>
+                            {upcomingEventsTickets === undefined ? (
+                                <Typography variant="h5">No Upcoming Tickets</Typography>
+                            ) : (
+                                upcomingEventsTickets.map((upcomingEventTickets) => (
+                                    <TicketEvent
+                                        key={upcomingEventTickets.event.name}
+                                        eventTickets={upcomingEventTickets}
+                                    />
+                                ))
+                            )}
+                        </div>
                     )}
                 </div>
             </TitledPaper>
@@ -36,9 +45,15 @@ export default function TicketList() {
                     {eventsTickets.loading ? (
                         <CircularProgress />
                     ) : (
-                        pastEventsTickets.map((pastEventTickets) => (
-                            <TicketEvent key={pastEventTickets.event.name} eventTickets={pastEventTickets} />
-                        ))
+                        <div>
+                            {pastEventsTickets === undefined ? (
+                                <Typography variant="h5">No Past Tickets</Typography>
+                            ) : (
+                                pastEventsTickets.map((pastEventTickets) => (
+                                    <TicketEvent key={pastEventTickets.event.name} eventTickets={pastEventTickets} />
+                                ))
+                            )}
+                        </div>
                     )}
                 </div>
             </TitledPaper>
