@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountSettings from './component/AccountSettings';
-import TicketList from './component/TicketList';
-import SideBar from './component/SideBar';
+import AccountSettings from './components/AccountSettings';
+import TicketList from './components/TicketList';
+import SideBar from './components/SideBar';
 
 const drawerWidth = 240;
 
