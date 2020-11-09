@@ -12,6 +12,8 @@ import {
     mintAssetAction,
     announceSaleAction,
     createOfferAction,
+    purchaseSaleAction,
+    depositTokenAction,
 } from './actions';
 
 const defaultNFTContext = {
@@ -45,6 +47,9 @@ class NFTProvider extends React.Component {
                         price,
                     },
                 ]);
+            },
+            buyTicketNFTs: async (newTickets, otherTickets, total) => {
+                return this.buyTicketNFTs(newTickets, otherTickets, total);
             },
         });
     }
@@ -142,6 +147,20 @@ class NFTProvider extends React.Component {
             );
             const createOffer = createOfferAction(this.getWalletAccountName(), [asset.assetId]);
             return [announceSale, createOffer];
+        });
+        const transaction = this.createTransactionFromActions(actions);
+        return this.transact(transaction);
+    };
+
+    buyTicketNFTs = async (newTickets, otherTickets, total) => {
+        const walletAccount = this.getWalletAccountName();
+        console.log('TOTAL:', total);
+        const actions = [depositTokenAction(walletAccount, `${total.toFixed(8)} WAX`)];
+        Object.values(newTickets).forEach((ticket) => {
+            for (let i = 0; i < ticket.number; i += 1) {
+                const purchaseSale = purchaseSaleAction(walletAccount, ticket.saleIds[i], TEMP_MARKETPLACE_NAME);
+                actions.push(purchaseSale);
+            }
         });
         const transaction = this.createTransactionFromActions(actions);
         return this.transact(transaction);
@@ -266,9 +285,9 @@ class NFTProvider extends React.Component {
 
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, sellTicket, isLoading } = this.state;
+        const { createTicketNFTs, sellTicket, buyTicketNFTs, isLoading } = this.state;
         return (
-            <NFTContext.Provider value={{ createTicketNFTs, sellTicket }}>
+            <NFTContext.Provider value={{ createTicketNFTs, sellTicket, buyTicketNFTs }}>
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
             </NFTContext.Provider>

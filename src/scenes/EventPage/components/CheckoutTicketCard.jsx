@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardMedia, Grid, MenuItem, makeStyles, Select, Typography } from '@material-ui/core';
+import { Card, CardMedia, FormControl, Grid, MenuItem, makeStyles, Select, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
@@ -24,35 +25,41 @@ const useStyles = makeStyles({
     },
 });
 
-const TicketCard = (props) => {
+const CheckoutTicketCard = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
+
     const { ticket } = props;
     return (
         <Card className={classes.ticketCard}>
             <Grid container>
                 <Grid item container xs={4}>
-                    <CardMedia className={classes.ticketImage} image={ticket.image} />
+                    <CardMedia className={classes.ticketImage} image={`https://ipfs.io/ipfs/${ticket.image}`} />
                 </Grid>
                 <Grid item container direction="row" xs={8}>
                     <Grid item sm={9} xs={12} className={classes.ticketMainContent}>
                         <Typography variant="h6">{ticket.name}</Typography>
-                        <Typography variant="body1">${ticket.price}</Typography>
+                        <Typography variant="body1">
+                            {ticket.quantity > 0 ? `WAX ${ticket.price}` : t('buyTickets.soldOut')}
+                        </Typography>
                         <Typography variant="body2">{ticket.description}</Typography>
                     </Grid>
                     <Grid item container alignContent="center" justify="center" sm={3} xs={4}>
-                        <Select
-                            variant="outlined"
-                            value={ticket.number}
-                            onChange={(event) => props.onUpdate(props.ticket.id, event.target.value)}
-                        >
-                            {[...Array(props.ticket.quantity + 1).keys()].map((number) => {
-                                return (
-                                    <MenuItem key={number} value={number}>
-                                        {number}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
+                        <FormControl disabled={ticket.quantity === 0}>
+                            <Select
+                                variant="outlined"
+                                value={ticket.number}
+                                onChange={(event) => props.onUpdate(ticket.id, event.target.value)}
+                            >
+                                {[...Array(ticket.quantity + 1).keys()].map((number) => {
+                                    return (
+                                        <MenuItem key={number} value={number}>
+                                            {number}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
                     </Grid>
                 </Grid>
             </Grid>
@@ -60,18 +67,17 @@ const TicketCard = (props) => {
     );
 };
 
-TicketCard.propTypes = {
+CheckoutTicketCard.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     ticket: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        // soldQuantity: PropTypes.number,
         quantity: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
+        price: PropTypes.number,
         number: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
     }).isRequired,
 };
 
-export default TicketCard;
+export default CheckoutTicketCard;

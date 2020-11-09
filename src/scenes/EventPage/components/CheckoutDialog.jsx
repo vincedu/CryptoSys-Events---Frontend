@@ -14,6 +14,7 @@ import {
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TabPanel from '@components/TabPanel';
 import CheckoutTicketCard from './CheckoutTicketCard';
@@ -47,6 +48,7 @@ const CheckoutDialog = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const isFullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const { t } = useTranslation();
 
     const { isOpen, onClose, onSubmit, newTickets, otherTickets } = props;
     const [tab, setTab] = React.useState(0);
@@ -86,7 +88,7 @@ const CheckoutDialog = (props) => {
     };
 
     const handleCheckout = () => {
-        onSubmit(_newTickets, _otherTickets);
+        onSubmit(_newTickets, _otherTickets, bill.total);
         handleClose();
     };
 
@@ -106,8 +108,11 @@ const CheckoutDialog = (props) => {
                             textColor="secondary"
                             className={classes.checkoutTotal}
                         >
-                            <Tab label="New Tickets" />
-                            <Tab label="Other Vendors" disabled={Object.values(_otherTickets).length === 0} />
+                            <Tab label={t('buyTickets.newTickets')} />
+                            <Tab
+                                label={t('buyTickets.otherVendors')}
+                                disabled={Object.values(_otherTickets).length === 0}
+                            />
                         </Tabs>
                         <TabPanel value={tab} index={0}>
                             {Object.values(_newTickets).map((ticket) => {
@@ -137,7 +142,7 @@ const CheckoutDialog = (props) => {
                         <div className={classes.checkoutTotal}>
                             <Grid container direction="column" justify="space-between" alignItems="stretch" spacing={2}>
                                 <Grid item>
-                                    <Typography variant="h6">Order Summary</Typography>
+                                    <Typography variant="h6">{t('buyTickets.orderSummary')}</Typography>
                                 </Grid>
                                 <Grid item>
                                     {bill.tickets.map((ticket) => {
@@ -150,7 +155,7 @@ const CheckoutDialog = (props) => {
                                                 </Grid>
                                                 <Grid item xs={3}>
                                                     <Typography key={ticket.id} variant="body2" align="right">
-                                                        ${(ticket.number * ticket.price).toFixed(2)}
+                                                        WAX {(ticket.number * ticket.price).toFixed(2)}
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
@@ -161,12 +166,12 @@ const CheckoutDialog = (props) => {
                                     <Grid container spacing={0}>
                                         <Grid item xs={9}>
                                             <Typography key="ticket.name" variant="body1">
-                                                Total:
+                                                {t('buyTickets.total')}
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={3}>
                                             <Typography key="ticket.name" variant="body1" align="right">
-                                                ${bill.total.toFixed(2)}
+                                                WAX {bill.total.toFixed(2)}
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -180,7 +185,7 @@ const CheckoutDialog = (props) => {
                 <Grid container justify="space-between" spacing={3}>
                     <Grid item md={3} sm={4} xs={6}>
                         <Button fullWidth variant="contained" color="default" onClick={handleClose}>
-                            Cancel
+                            {t('cancel')}
                         </Button>
                     </Grid>
                     <Grid item md={3} sm={4} xs={6}>
@@ -192,7 +197,7 @@ const CheckoutDialog = (props) => {
                             onClick={handleCheckout}
                             disabled={bill.tickets.length === 0}
                         >
-                            Checkout
+                            {t('buyTickets.checkout')}
                         </Button>
                     </Grid>
                 </Grid>
@@ -208,7 +213,6 @@ CheckoutDialog.propTypes = {
     newTickets: PropTypes.shape({
         name: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        // soldQuantity: PropTypes.number,
         quantity: PropTypes.number.isRequired,
         price: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
@@ -216,7 +220,6 @@ CheckoutDialog.propTypes = {
     otherTickets: PropTypes.shape({
         name: PropTypes.string,
         description: PropTypes.string,
-        // soldQuantity: PropTypes.number,
         quantity: PropTypes.number,
         price: PropTypes.number,
     }).isRequired,
