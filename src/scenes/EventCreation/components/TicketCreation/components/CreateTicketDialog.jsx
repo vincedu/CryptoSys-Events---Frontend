@@ -14,8 +14,6 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { ImageUpload } from '@components';
 
 const DEFAULT_TICKET_FORM = {
@@ -159,14 +157,7 @@ const CreateTicketDialog = (props) => {
         });
     };
 
-    const handleDateChange = (field, value) => {
-        let error;
-        if (field === 'start') error = value > date.end;
-        else error = value < date.start;
-        setDate({ ...date, [field]: value, error });
-    };
-
-    const handleImageUpload = (image) => {
+    const handleImageUpload = async (images) => {
         setForm({
             ...form,
             image: {
@@ -240,80 +231,6 @@ const CreateTicketDialog = (props) => {
                             error={form.price.error}
                             onChange={handleFormChange}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container spacing={3} className={classes.datePickersContainer}>
-                                <Grid item xs={6}>
-                                    <KeyboardDatePicker
-                                        required
-                                        margin="normal"
-                                        inputVariant="outlined"
-                                        label={t('createEvent.date.startDate')}
-                                        format="MM/dd/yyyy"
-                                        name="startDate"
-                                        value={date.start}
-                                        error={date.error}
-                                        onChange={(value) => handleDateChange('start', value)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                            color: 'primary',
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <KeyboardTimePicker
-                                        required
-                                        margin="normal"
-                                        inputVariant="outlined"
-                                        label={t('createEvent.date.startTime')}
-                                        name="startDate"
-                                        value={date.start}
-                                        error={date.error}
-                                        onChange={(value) => handleDateChange('start', value)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
-                                            color: 'primary',
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={3} className={classes.datePickersContainer}>
-                                <Grid item xs={6}>
-                                    <KeyboardDatePicker
-                                        required
-                                        margin="normal"
-                                        inputVariant="outlined"
-                                        label={t('createEvent.date.endDate')}
-                                        format="MM/dd/yyyy"
-                                        name="endDate"
-                                        value={date.end}
-                                        error={date.error}
-                                        onChange={(value) => handleDateChange('end', value)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                            color: 'primary',
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <KeyboardTimePicker
-                                        required
-                                        margin="normal"
-                                        inputVariant="outlined"
-                                        label={t('createEvent.date.endTime')}
-                                        name="endDate"
-                                        value={date.end}
-                                        error={date.error}
-                                        onChange={(value) => handleDateChange('end', value)}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
-                                            color: 'primary',
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </MuiPickersUtilsProvider>
                     </Grid>
                 </Grid>
             </DialogContent>
