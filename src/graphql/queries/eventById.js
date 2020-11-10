@@ -10,6 +10,13 @@ const EVENT_BY_ID_QUERY = gql`
             category
             image
             startDate
+            category
+            languages
+            tags
+            location {
+                type
+                location
+            }
         }
     }
 `;
