@@ -162,6 +162,12 @@ class NFTProvider extends React.Component {
                 actions.push(purchaseSale);
             }
         });
+        Object.values(otherTickets).forEach((ticket) => {
+            if (ticket.number === 1) {
+                const purchaseSale = purchaseSaleAction(walletAccount, ticket.id, TEMP_MARKETPLACE_NAME);
+                actions.push(purchaseSale);
+            }
+        });
         const transaction = this.createTransactionFromActions(actions);
         return this.transact(transaction);
     };

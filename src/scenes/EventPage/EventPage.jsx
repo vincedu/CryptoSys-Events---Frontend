@@ -81,6 +81,7 @@ const EventPage = (props) => {
 
     if (data !== undefined) {
         const newTickets = {};
+        const otherTickets = {};
         ticketsQuery.data.ticketSalesByEventId.original.forEach((originalTicket) => {
             newTickets[originalTicket.template.templateId] = {
                 id: originalTicket.template.templateId,
@@ -92,6 +93,19 @@ const EventPage = (props) => {
                 saleIds: originalTicket.sales.map((sale) => sale.saleId),
             };
         });
+        ticketsQuery.data.ticketSalesByEventId.resale.forEach((resaleTicket) => {
+            resaleTicket.sales.forEach((sale) => {
+                otherTickets[sale.saleId] = {
+                    id: sale.saleId,
+                    name: resaleTicket.template.name,
+                    description: resaleTicket.template.description,
+                    quantity: 1,
+                    price: sale.price.amount,
+                    image: resaleTicket.template.image,
+                };
+            });
+        });
+        console.log('RESALE TICKETS', otherTickets);
         return (
             <div style={{ padding: 20 }}>
                 <Grid container direction="row" justify="center">
@@ -124,7 +138,7 @@ const EventPage = (props) => {
                     onSubmit={handleBuyTicket}
                     onClose={handleCloseTicketDialog}
                     newTickets={newTickets}
-                    otherTickets={{}}
+                    otherTickets={otherTickets}
                     event={data.eventById}
                 />
             </div>
