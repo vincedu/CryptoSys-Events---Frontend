@@ -51,7 +51,7 @@ const EventList = (props) => {
         return (
             <div>
                 <Typography className={classes.categoryTitle} variant="h3">
-                    {props.category}
+                    {t(props.category)}
                 </Typography>
                 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="stretch">
                     {query.data.eventsByParam.map((event) => (
@@ -69,7 +69,7 @@ const EventList = (props) => {
                 </Grid>
                 <div className={classes.seeMoreBtn}>
                     <Button variant="outlined" color="secondary" onClick={() => loadMore()}>
-                        {t('eventList.seeMore')} {props.category}
+                        {t('eventList.seeMore')} {t(props.category)}
                     </Button>
                 </div>
                 <hr className={classes.horizontalLine} />

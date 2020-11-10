@@ -31,6 +31,7 @@ const EventItem = (props) => {
             ...props.style,
             position: 'relative',
             [theme.breakpoints.up('md')]: confirmPageStyle,
+            zIndex: 0,
         },
         media: {
             height: 0,
@@ -50,7 +51,7 @@ const EventItem = (props) => {
             top: 30,
             right: 0,
             boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-            '&:hover': props.hoverZoom ? { zIndex: 1 } : {},
+            zIndex: 1,
         },
         bannerContent: {
             backgroundColor: theme.palette.secondary.main,
