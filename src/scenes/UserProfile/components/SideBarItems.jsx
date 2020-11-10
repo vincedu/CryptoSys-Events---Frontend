@@ -92,8 +92,8 @@ const SidebarItems = () => {
                 </List>
             </Collapse>
 
-            <Link to="/userProfile/manageEvents" className={classes.link} selected={sideBarTab === 3}>
-                <ListItem button>
+            <Link to="/userProfile/manageEvents" className={classes.link}>
+                <ListItem button selected={sideBarTab === 3}>
                     <ListItemIcon>
                         <EventIcon style={{ color: '#FFF' }} />
                     </ListItemIcon>

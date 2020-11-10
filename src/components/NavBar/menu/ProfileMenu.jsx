@@ -57,10 +57,16 @@ const ProfileMenu = (props) => {
                 />
             </MenuItem>
             <hr />
-            <MenuItem onClick={handleMenuClose}>{t('profileMenu.profile')}</MenuItem>
-            <MenuItem onClick={handleMenuClose}>{t('profileMenu.manage')}</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
+                {t('profileMenu.profile')}
+            </MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/userProfile/manageEvents')}>
+                {t('profileMenu.manage')}
+            </MenuItem>
             <hr />
-            <MenuItem onClick={handleMenuClose}>{t('profileMenu.settings')}</MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
+                {t('profileMenu.settings')}
+            </MenuItem>
             <MenuItem onClick={handleSignOut}>{t('profileMenu.signOut')}</MenuItem>
         </Menu>
     );
