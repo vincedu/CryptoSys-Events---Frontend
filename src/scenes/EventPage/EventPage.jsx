@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const EOS_ORANGE = 'rgba(209, 130, 55, 1)';
+
 const EventPage = (props) => {
     const { t } = useTranslation();
     const { buyTicketNFTs } = useContext(NFTContext);
@@ -104,7 +106,7 @@ const EventPage = (props) => {
         });
         return (
             <div style={{ padding: 20 }}>
-                <Grid container direction="row" justify="center" style={{ backgroundColor: 'rgba(209, 130, 55, 1)' }}>
+                <Grid container direction="row" justify="center" style={{ backgroundColor: EOS_ORANGE }}>
                     <div style={{ height: '100%' }}>
                         <div
                             className={classes.media}
