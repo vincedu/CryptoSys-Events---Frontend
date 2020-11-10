@@ -219,14 +219,11 @@ const EventCreation = (props) => {
                     ticketData: {
                         name: ticket.name,
                         description: ticket.description,
-                        price: ticket.price,
-                        startDate: ticket.startDate.toString(),
-                        endDate: ticket.endDate.toString(),
                         eventId,
-                        eventName,
                         image: ticketImageIpfsHash,
                     },
                     maxSupply: ticket.quantity,
+                    price: ticket.price,
                 };
             }),
         );
