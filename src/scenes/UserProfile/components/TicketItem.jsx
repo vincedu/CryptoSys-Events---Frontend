@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { NFTContext } from '@providers';
 import PropTypes from 'prop-types';
 import TicketInfoDialog from './TicketInfoDialog';
+import ResaleDialog from './ResaleDialog';
 
 const useStyles = makeStyles({
     ticketCard: {
@@ -36,9 +38,11 @@ const useStyles = makeStyles({
 
 const TicketItem = (props) => {
     const classes = useStyles();
+    const { sellTicket } = useContext(NFTContext);
     const { name, description, image, templateId, assetId } = props;
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [infoDialogOpen, setiInfoDialogOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [infoDialogOpen, setiInfoDialogOpen] = useState(false);
+    const [resaleDialogOpen, setResaleDialogOpen] = useState(false);
 
     const handleInfoDialogOpen = () => {
         setiInfoDialogOpen(true);
@@ -47,6 +51,20 @@ const TicketItem = (props) => {
 
     const handleInfoDialogClose = () => {
         setiInfoDialogOpen(false);
+    };
+
+    const handleResaleDialogOpen = () => {
+        setResaleDialogOpen(true);
+        setAnchorEl(null);
+    };
+
+    const handleResaleDialogClose = () => {
+        setResaleDialogOpen(false);
+    };
+
+    const handleResellTicket = async (price) => {
+        console.log('RESELLING', assetId, 'FOR', price);
+        await sellTicket(assetId, price);
     };
 
     const handleClick = (e) => {
@@ -61,7 +79,7 @@ const TicketItem = (props) => {
     const renderShowMoreMenu = (
         <Menu anchorEl={anchorEl} id={menuId} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
             <MenuItem onClick={handleInfoDialogOpen}>Ticket Info</MenuItem>
-            <MenuItem onClick={handleClose}>Resell Ticket</MenuItem>
+            <MenuItem onClick={handleResaleDialogOpen}>Resell Ticket</MenuItem>
             <TicketInfoDialog
                 open={infoDialogOpen}
                 onClose={handleInfoDialogClose}
@@ -70,6 +88,12 @@ const TicketItem = (props) => {
                 image={image}
                 templateId={templateId}
                 assetId={assetId}
+            />
+            <ResaleDialog
+                isOpen={resaleDialogOpen}
+                onSubmit={handleResellTicket}
+                onClose={handleResaleDialogClose}
+                ticket={{ name, description, image }}
             />
         </Menu>
     );

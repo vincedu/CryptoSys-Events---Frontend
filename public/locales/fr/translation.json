@@ -104,6 +104,10 @@
     "total": "Total",
     "checkout": "Passer à la caisse"
   },
+  "resale": {
+    "boughtAt": "Acheté à",
+    "resalePrice": "Prix de revente"
+  },
 
   "venue": "Lieu",
   "online": "Événement en ligne",
