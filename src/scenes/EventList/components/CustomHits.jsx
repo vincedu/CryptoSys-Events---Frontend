@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, makeStyles, Card, CardMedia, CardContent, CardHeader, Popper, Grid } from '@material-ui/core';
-import { connectHits } from 'react-instantsearch-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -33,18 +32,19 @@ const CustomHits = (props) => {
     CustomHits.propTypes = {
         history: PropTypes.object.isRequired,
         searchBarRef: PropTypes.object.isRequired,
-        open: PropTypes.bool.isRequired,
+        currentRefinement: PropTypes.bool.isRequired,
+        hits: PropTypes.array.isRequired,
     };
 
     const classes = useStyles();
     const { t } = useTranslation();
-    const { history, searchBarRef, open } = props;
+    const { history, searchBarRef, currentRefinement, hits } = props;
 
-    const CustomSearchHits = connectHits(({ hits }) => (
+    const CustomSearchHits = () => (
         <div>
-            {open ? (
+            {currentRefinement ? (
                 <Popper
-                    open={open}
+                    open
                     anchorEl={searchBarRef.current}
                     placement="bottom-end"
                     style={{ width: searchBarRef.current.offsetWidth, maxHeight: 0, backgroundColor: 'white' }}
@@ -96,8 +96,8 @@ const CustomHits = (props) => {
                 </Popper>
             ) : null}
         </div>
-    ));
+    );
 
-    return <CustomSearchHits open={open} />;
+    return <CustomSearchHits />;
 };
 export default withRouter(CustomHits);

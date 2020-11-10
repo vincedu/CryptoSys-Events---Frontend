@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, InputBase, IconButton, Paper } from '@material-ui/core';
-import { InstantSearch, connectSearchBox } from 'react-instantsearch-dom';
+import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom';
 import { Search } from '@material-ui/icons';
 import algoliasearch from 'algoliasearch/lite';
 import { useTranslation } from 'react-i18next';
@@ -44,9 +44,8 @@ const Autocomplete = (props) => {
 
     const { t } = useTranslation();
     const { searchBarRef } = props;
-    const [open, setOpen] = useState(false);
 
-    const CustomSearchBox = connectSearchBox(({ refine }) => (
+    const CustomSearchBox = connectAutoComplete(({ refine, hits, currentRefinement }) => (
         <Paper className={classes.searchBar}>
             <InputBase
                 type="search"
@@ -55,13 +54,13 @@ const Autocomplete = (props) => {
                 onChange={(event) => {
                     refine(event.currentTarget.value);
                 }}
-                onFocus={() => setOpen(true)}
-                onBlur={() => setOpen(false)}
+                value={currentRefinement}
                 style={{ flex: 4 }}
             />
             <IconButton color="primary" className={classes.iconButton}>
                 <Search className={classes.iconButton} />
             </IconButton>
+            <CustomHits searchBarRef={searchBarRef} hits={hits} currentRefinement={currentRefinement} />
         </Paper>
     ));
 
@@ -69,7 +68,6 @@ const Autocomplete = (props) => {
         <div>
             <InstantSearch searchClient={searchClient} indexName="events">
                 <CustomSearchBox />
-                <CustomHits open={open} searchBarRef={searchBarRef} />
             </InstantSearch>
         </div>
     );
