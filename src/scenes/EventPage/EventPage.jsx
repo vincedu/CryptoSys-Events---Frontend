@@ -55,6 +55,16 @@ const EventPage = (props) => {
         await buyTicketNFTs(newTickets, otherTickets, total);
     };
 
+    const displayVenue = () => {
+        if (data.eventById.location.type === 'venue') {
+            return data.eventById.location.location;
+        }
+        if (data.eventById.location.type === 'tbd') {
+            return 'To be announced';
+        }
+        return data.eventById.location.type;
+    };
+
     EventPage.propTypes = {
         location: PropTypes.shape({
             pathname: PropTypes.string.isRequired,
@@ -94,7 +104,14 @@ const EventPage = (props) => {
         });
         return (
             <div style={{ padding: 20 }}>
-                <Grid container direction="row" justify="center">
+                <Grid container direction="row" justify="center" style={{ backgroundColor: 'rgba(209, 130, 55, 1)' }}>
+                    <div style={{ height: '100%' }}>
+                        <div
+                            className={classes.media}
+                            style={{ backgroundImage: `url('${data.eventById.image}'` }}
+                            alt="Event"
+                        />
+                    </div>
                     <Grid item xs={11} md={6} style={{ paddingRight: 25 }}>
                         <div style={{ height: '100%' }}>
                             <div
@@ -103,12 +120,16 @@ const EventPage = (props) => {
                                 alt="Event"
                             />
                         </div>
-                    </Grid>
-                    <Grid item xs={11} md={5}>
-                        <Typography variant="h2">{data.eventById.name}</Typography>
-                        <Typography variant="subtitle1">{data.eventById.startDate.substring(0, 10)}</Typography>
+                        <Typography variant="h2" style={{ paddingTop: 25 }}>
+                            {data.eventById.name}
+                        </Typography>
                         <br />
-                        <Typography variant="subtitle1">{data.eventById.description}</Typography>
+                        <Typography variant="subtitle1">Date: {data.eventById.startDate.substring(0, 10)}</Typography>
+                        <Typography variant="subtitle1">Description : {data.eventById.description}</Typography>
+                        <Typography variant="subtitle1">Venue : {displayVenue()}</Typography>
+                        <Typography variant="subtitle1">Tags : {data.eventById.category}</Typography>
+                        <Typography variant="subtitle1">Languages : {data.eventById.languages}</Typography>
+                        <Typography variant="subtitle1">Tags : {data.eventById.tags}</Typography>
                         <Button
                             variant="outlined"
                             color="secondary"
