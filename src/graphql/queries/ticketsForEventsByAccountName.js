@@ -10,6 +10,7 @@ const TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY = gql`
                     description
                     startDate
                     endDate
+                    image
                 }
                 tickets {
                     template {
@@ -32,6 +33,7 @@ const TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY = gql`
                     description
                     startDate
                     endDate
+                    image
                 }
                 tickets {
                     template {

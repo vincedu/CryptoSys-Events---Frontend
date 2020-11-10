@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, AccountSetup, PostAuth, EventPage } from '@scenes';
+import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, AccountSetup, PostAuth, EventPage, UserProfile } from '@scenes';
 import { NavBar, AuthenticatedRoute, Footer } from '@components';
 import { TicketCreation } from '@scenes/EventCreation/components/TicketCreation';
 import { Confirm } from '@scenes/EventCreation/components/Confirm';
@@ -28,6 +28,7 @@ const App = () => {
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />
                         <AuthenticatedRoute exact path="/setupAccount" component={AccountSetup} />
                         <AuthenticatedRoute exact path="/postAuth" component={PostAuth} />
+                        <AuthenticatedRoute path="/userProfile" component={UserProfile} />
                     </Switch>
                     <Footer />
                 </NFTProvider>

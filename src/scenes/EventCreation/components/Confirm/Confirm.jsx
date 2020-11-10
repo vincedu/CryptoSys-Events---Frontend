@@ -56,17 +56,13 @@ export const Confirm = (props) => {
     Confirm.propTypes = {
         handleBackStep: PropTypes.func.isRequired,
         handleSubmit: PropTypes.func.isRequired,
-        variables: PropTypes.shape({
-            name: PropTypes.string,
-            description: PropTypes.string,
-            startDate: PropTypes.instanceOf(Date),
-            type: PropTypes.string,
-        }),
+        variables: PropTypes.object.isRequired,
     };
 
-    Confirm.defaultProps = {
-        variables: {},
-    };
+    const imageUrl =
+        props.variables.imageFile && props.variables.imageFile.value
+            ? URL.createObjectURL(props.variables.imageFile.value)
+            : 'https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png';
 
     const { t } = useTranslation();
     const classes = useStyles();
@@ -106,7 +102,7 @@ export const Confirm = (props) => {
                                     : event.description
                             }
                             date={props.variables.startDate?.value ? props.variables.startDate.value : event.startDate}
-                            image="https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png"
+                            image={imageUrl}
                             type={props.variables.type?.value ? props.variables.type.value : event.type}
                             confirmPage
                             clickeable={false}

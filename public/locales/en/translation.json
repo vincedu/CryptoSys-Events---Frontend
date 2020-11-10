@@ -13,7 +13,8 @@
     "location": "Location"
   },
   "eventList": {
-    "seeMore": "See More"
+    "seeMore": "See More",
+    "noEvent": "No Event"
   },
   "navBar": {
     "help": "Help",
@@ -57,7 +58,12 @@
       "category": "Category",
       "eventDescription": "Description",
       "tagDescription": "Improve discoverability of your event by adding tags relevant to the subject matter",
-      "image": "Choose Image"
+      "image": {
+        "buttonLabel": "Choose image",
+        "missingImageError": "Missing image",
+        "invalidTypeError": "Invalid file type",
+        "fileTooLargeError": "Selected file is too large"
+      }
     },
     "location": {
       "title": "Location",
