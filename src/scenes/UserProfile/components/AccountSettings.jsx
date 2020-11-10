@@ -14,12 +14,12 @@ const AccountSettings = () => {
             <TitledPaper>
                 <Typography variant="h5">{t('accountSettings.name')}</Typography>
                 {userData && userData.displayName ? (
-                    <Typography variant="body">{userData.displayName}</Typography>
+                    <Typography variant="body1">{userData.displayName}</Typography>
                 ) : null}
             </TitledPaper>
             <TitledPaper>
                 <Typography variant="h5">{t('accountSettings.email')}</Typography>
-                {user && user.email ? <Typography variant="body">{user.email}</Typography> : null}
+                {user && user.email ? <Typography variant="body1">{user.email}</Typography> : null}
             </TitledPaper>
             <TitledPaper>
                 <Typography variant="h5">{t('accountSettings.photo')}</Typography>
@@ -33,13 +33,13 @@ const AccountSettings = () => {
             <TitledPaper>
                 <Typography variant="h5">{t('accountSettings.creation')}</Typography>
                 {user && user.metadata.creationTime ? (
-                    <Typography variant="body">{user.metadata.creationTime}</Typography>
+                    <Typography variant="body1">{user.metadata.creationTime}</Typography>
                 ) : null}
             </TitledPaper>
             <TitledPaper>
                 <Typography variant="h5">{t('accountSettings.wallet')}</Typography>
                 {userData && userData.walletAccountName ? (
-                    <Typography variant="body">{userData.walletAccountName}</Typography>
+                    <Typography variant="body1">{userData.walletAccountName}</Typography>
                 ) : null}
             </TitledPaper>
         </PageContainer>

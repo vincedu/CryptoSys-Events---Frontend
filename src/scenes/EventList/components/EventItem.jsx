@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, Card, CardHeader, CardMedia, CardContent, Typography, Grid, Paper } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
@@ -63,6 +64,7 @@ const EventItem = (props) => {
         },
     }));
     const classes = useStyles();
+    const { t } = useTranslation();
 
     const { history } = props;
 
@@ -81,7 +83,7 @@ const EventItem = (props) => {
             {props.withBanner ? (
                 <div className={classes.banner}>
                     <Paper className={classes.bannerContent}>
-                        <p style={{ margin: 'auto' }}>{props.type}</p>
+                        <p style={{ margin: 'auto' }}>{t(props.type)}</p>
                     </Paper>
                 </div>
             ) : null}
