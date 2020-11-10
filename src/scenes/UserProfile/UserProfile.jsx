@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './components/AccountSettings';
 import TicketList from './components/TicketList';
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const UserProfile = () => {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const { t } = useTranslation();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -98,8 +100,8 @@ const UserProfile = () => {
                 <Switch>
                     <Route path="/userProfile/accountSettings" component={AccountSettings} />
                     <Route path="/userProfile/myTickets" component={TicketList} />
-                    <Route path="/userProfile/sellTickets" render={() => <div> Sell Tickets </div>} />
-                    <Route path="/userProfile/manageEvents" render={() => <div> Manage Events </div>} />
+                    <Route path="/userProfile/sellTickets" render={() => <div>{t('sideBar.sellTickets')}</div>} />
+                    <Route path="/userProfile/manageEvents" render={() => <div>{t('sideBar.manage')}</div>} />
                 </Switch>
             </main>
         </div>

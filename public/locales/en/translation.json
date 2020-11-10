@@ -33,6 +33,22 @@
     "settings": "Account Settings",
     "signOut": "Sign Out"
   },
+  "sideBar": {
+    "profile": "Profile",
+    "manage": "Manage Events",
+    "accountSettings": "Account Settings",
+    "tickets": "Tickets",
+    "myTickets": "My Tickets",
+    "sellTickets": "Sell Tickets"
+  },
+  "accountSettings": {
+    "information": "Account Informations",
+    "name": "Account Name",
+    "email": "Account Email Address",
+    "photo": "Profile Photo",
+    "creation": "Account Creation Time",
+    "wallet": "Linked Wallet Account"
+  },
   "accountSetup": {
     "title": "Setup your Account",
     "description": "Before you get started with your account, we will need a little more information about you",
