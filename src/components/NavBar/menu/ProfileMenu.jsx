@@ -29,7 +29,7 @@ const ProfileMenu = (props) => {
         handleMenuClose();
         firebase.auth().signOut();
         ual.logout();
-        history.push('./signIn');
+        history.push('/signIn');
     };
 
     const handleButtonClick = (pageURL) => {
