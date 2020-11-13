@@ -1,6 +1,16 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { HowItWorks, HelpCenter, EventCreation, EventList, SignIn, AccountSetup, PostAuth, EventPage, UserProfile } from '@scenes';
+import {
+    HowItWorks,
+    HelpCenter,
+    EventCreation,
+    EventList,
+    SignIn,
+    AccountSetup,
+    PostAuth,
+    EventPage,
+    UserProfile,
+} from '@scenes';
 import { NavBar, AuthenticatedRoute, Footer } from '@components';
 import { TicketCreation } from '@scenes/EventCreation/components/TicketCreation';
 import { Confirm } from '@scenes/EventCreation/components/Confirm';
@@ -16,7 +26,7 @@ const App = () => {
                     <NavBar />
                     <Switch>
                         <Route exact path="/" component={EventList} />
-                        <Route path="/event" component={EventPage} />
+                        <Route path="/event/:id" component={EventPage} />
                         <Route exact path="/signIn" component={SignIn} />
                         <Route exact path="/howItWorks" component={HowItWorks} />
                         <Route exact path="/helpCenter" component={HelpCenter} />

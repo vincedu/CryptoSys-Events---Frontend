@@ -5,6 +5,7 @@ import { NFTContext } from '@providers';
 import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import CheckoutDialog from './components/CheckoutDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,16 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 const EOS_ORANGE = 'rgba(209, 130, 55, 1)';
 
-const EventPage = (props) => {
+const EventPage = () => {
+    const { id } = useParams();
     const { t } = useTranslation();
     const { buyTicketNFTs } = useContext(NFTContext);
 
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     // Query Item by ID
-    const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id: props.location.state.id } });
+    const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id } });
     const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_ID_QUERY, {
-        variables: { eventId: props.location.state.id },
+        variables: { eventId: id },
     });
+
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
     };
