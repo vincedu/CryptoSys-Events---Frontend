@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
 import { makeStyles, Grid, Typography, Button, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 import EventItem from './EventItem';
 
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EventList = (props) => {
     const { t } = useTranslation();
+    const { userData } = useContext(AuthContext);
     const classes = useStyles();
     const offset = 0;
     const limit = 4;
@@ -63,7 +65,7 @@ const EventList = (props) => {
                             date={event.startDate}
                             image={event.image}
                             type={event.type}
-                            withBanner
+                            liked={userData.liked?.includes(event.id)}
                         />
                     ))}
                 </Grid>

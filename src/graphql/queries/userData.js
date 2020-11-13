@@ -6,6 +6,7 @@ const USER_DATA_QUERY = gql`
             displayName
             walletAccountName
             walletAuthType
+            liked
         }
     }
 `;

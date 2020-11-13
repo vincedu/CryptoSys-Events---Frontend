@@ -31,7 +31,8 @@
     "profile": "Profil",
     "manage": "Gérer les événements",
     "settings": "Réglages du compte",
-    "signOut": "Déconnexion"
+    "signOut": "Déconnexion",
+    "liked": "Aimés"
   },
   "sideBar": {
     "profile": "Profil",
@@ -39,7 +40,8 @@
     "accountSettings": "Réglages du compte",
     "tickets": "Billets",
     "myTickets": "Mes Billets",
-    "sellTickets": "Vendre Billets"
+    "sellTickets": "Vendre Billets",
+    "liked": "Aimés"
   },
   "accountSettings": {
     "information": "Informations du compte",
@@ -48,6 +50,10 @@
     "photo": "Photo de profil",
     "creation": "Date de création du compte",
     "wallet": "Portefeuille associé"
+  },
+  "liked": {
+    "title": "Événements aimés",
+    "noEvent": "Aucun événement aimé"
   },
   "accountSetup": {
     "title": "Configurez votre compte",

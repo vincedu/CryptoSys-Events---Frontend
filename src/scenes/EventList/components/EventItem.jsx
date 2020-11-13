@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Card, CardHeader, CardMedia, CardContent, Typography, Grid, Paper } from '@material-ui/core';
+import { useMutation } from '@apollo/client';
+import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
+import {
+    makeStyles,
+    Card,
+    CardHeader,
+    CardMedia,
+    CardContent,
+    Typography,
+    Grid,
+    Paper,
+    IconButton,
+} from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
 
 const EventItem = (props) => {
     EventItem.propTypes = {
@@ -18,6 +31,7 @@ const EventItem = (props) => {
         clickeable: PropTypes.bool,
         style: PropTypes.object,
         confirmPage: PropTypes.bool,
+        liked: PropTypes.bool,
     };
     EventItem.defaultProps = {
         withBanner: false,
@@ -25,6 +39,7 @@ const EventItem = (props) => {
         style: {},
         clickeable: true,
         confirmPage: false,
+        liked: false,
     };
     const confirmPageStyle = props.confirmPage ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%' } : {};
     const useStyles = makeStyles((theme) => ({
@@ -65,10 +80,9 @@ const EventItem = (props) => {
     }));
     const classes = useStyles();
     const { t } = useTranslation();
+    const { history, liked } = props;
+    const [isLiked, setIsLiked] = useState(liked);
 
-    const { history } = props;
-
-    // TODO change pathname to something else than ID?
     const handleButtonClick = () => {
         history.push({
             pathname: `/event/${props.id}`,
@@ -78,6 +92,17 @@ const EventItem = (props) => {
         });
     };
 
+    const [likeEvent] = useMutation(LIKE_EVENT_MUTATION);
+    const [unlikeEvent] = useMutation(UNLIKE_EVENT_MUTATION);
+
+    const handleLike = async (event) => {
+        event.stopPropagation();
+        if (isLiked) {
+            unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
+        } else {
+            likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
+        }
+    };
     return (
         <Grid item xs={12} sm={6} md={3} className={classes.root}>
             {props.withBanner ? (
@@ -90,12 +115,15 @@ const EventItem = (props) => {
             <Card onClick={props.clickeable ? handleButtonClick : null} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
                 <CardHeader title={props.name} subheader={props.date.substring(0, 10)} />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p" maxLength={10}>
+                <CardContent style={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="body2" color="textSecondary" style={{ flex: 1 }}>
                         {props.description.length < 100
                             ? props.description
                             : `${props.description.substring(0, 100)}...`}
                     </Typography>
+                    <IconButton aria-label="add to favorites" onClick={handleLike}>
+                        {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                    </IconButton>
                 </CardContent>
             </Card>
         </Grid>

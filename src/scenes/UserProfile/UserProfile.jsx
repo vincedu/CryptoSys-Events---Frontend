@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './components/AccountSettings';
+import Liked from './components/Liked';
 import TicketList from './components/TicketList';
 import SideBar from './components/SideBar';
 
@@ -102,6 +103,7 @@ const UserProfile = () => {
                     <Route path="/userProfile/myTickets" component={TicketList} />
                     <Route path="/userProfile/sellTickets" render={() => <div>{t('sideBar.sellTickets')}</div>} />
                     <Route path="/userProfile/manageEvents" render={() => <div>{t('sideBar.manage')}</div>} />
+                    <Route path="/userProfile/liked" component={Liked} />
                 </Switch>
             </main>
         </div>

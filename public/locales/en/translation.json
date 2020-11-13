@@ -31,7 +31,8 @@
     "profile": "Profile",
     "manage": "Manage Events",
     "settings": "Account Settings",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "liked": "Liked"
   },
   "sideBar": {
     "profile": "Profile",
@@ -39,7 +40,8 @@
     "accountSettings": "Account Settings",
     "tickets": "Tickets",
     "myTickets": "My Tickets",
-    "sellTickets": "Sell Tickets"
+    "sellTickets": "Sell Tickets",
+    "liked": "Liked"
   },
   "accountSettings": {
     "information": "Account Informations",
@@ -48,6 +50,10 @@
     "photo": "Profile Photo",
     "creation": "Account Creation Time",
     "wallet": "Linked Wallet Account"
+  },
+  "liked": {
+    "title": "Liked Events",
+    "noEvent": "No Liked Events"
   },
   "accountSetup": {
     "title": "Setup your Account",

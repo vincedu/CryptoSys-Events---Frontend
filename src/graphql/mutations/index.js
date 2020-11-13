@@ -2,10 +2,14 @@ import CREATE_EVENT_MUTATION from './createEvent';
 import PIN_TICKET_IMAGE_TO_IPFS_MUTATION from './pinTicketImageToIpfs';
 import SET_USER_DATA_MUTATION from './setUserData';
 import LINK_NFT_TEMPLATES_TO_EVENT_MUTATION from './linkNftTemplatesToEvent';
+import LIKE_EVENT_MUTATION from './likeEvent';
+import UNLIKE_EVENT_MUTATION from './unlikeEvent';
 
 export {
     CREATE_EVENT_MUTATION,
     PIN_TICKET_IMAGE_TO_IPFS_MUTATION,
     SET_USER_DATA_MUTATION,
     LINK_NFT_TEMPLATES_TO_EVENT_MUTATION,
+    LIKE_EVENT_MUTATION,
+    UNLIKE_EVENT_MUTATION,
 };

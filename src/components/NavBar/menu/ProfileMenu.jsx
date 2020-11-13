@@ -67,6 +67,9 @@ const ProfileMenu = (props) => {
             <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
                 {t('profileMenu.settings')}
             </MenuItem>
+            <MenuItem onClick={() => handleButtonClick('/userProfile/liked')}>
+                {`${t('profileMenu.liked')} (${userData.liked ? userData.liked.length : 0})`}
+            </MenuItem>
             <MenuItem onClick={handleSignOut}>{t('profileMenu.signOut')}</MenuItem>
         </Menu>
     );

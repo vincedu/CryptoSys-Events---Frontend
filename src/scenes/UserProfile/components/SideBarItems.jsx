@@ -4,6 +4,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useTranslation } from 'react-i18next';
 import EventIcon from '@material-ui/icons/Event';
 import { Link } from 'react-router-dom';
@@ -39,6 +41,11 @@ const SidebarItems = () => {
         case '/userProfile/manageEvents':
             if (sideBarTab !== 3) {
                 setSideBarTab(3);
+            }
+            break;
+        case '/userProfile/liked':
+            if (sideBarTab !== 4) {
+                setSideBarTab(4);
             }
             break;
         default:
@@ -84,7 +91,7 @@ const SidebarItems = () => {
                     <Link to="/userProfile/sellTickets" className={classes.link}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 2}>
                             <ListItemIcon>
-                                <ConfirmationNumberIcon style={{ color: '#FFF' }} />
+                                <LocalAtmIcon style={{ color: '#FFF' }} />
                             </ListItemIcon>
                             <ListItemText primary={t('sideBar.sellTickets')} />
                         </ListItem>
@@ -98,6 +105,14 @@ const SidebarItems = () => {
                         <EventIcon style={{ color: '#FFF' }} />
                     </ListItemIcon>
                     <ListItemText primary={t('sideBar.manage')} />
+                </ListItem>
+            </Link>
+            <Link to="/userProfile/liked" className={classes.link}>
+                <ListItem button selected={sideBarTab === 4}>
+                    <ListItemIcon>
+                        <FavoriteIcon style={{ color: '#FFF' }} />
+                    </ListItemIcon>
+                    <ListItemText primary={t('sideBar.liked')} />
                 </ListItem>
             </Link>
         </List>

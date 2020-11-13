@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         width: '100%',
         borderRadius: 3,
-        marginTop: -4,
+        marginTop: -5,
     },
 }));
 
