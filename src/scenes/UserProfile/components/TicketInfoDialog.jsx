@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, Dialog, Grid, Typography } from '@material-ui/core';
 import { TitledPaper } from '@components';
 
@@ -14,7 +15,8 @@ const useStyles = makeStyles({
 
 const TicketInfoDialog = (props) => {
     const classes = useStyles();
-    const { open, onClose, name, description, image, templateId, assetId } = props;
+    const { t } = useTranslation();
+    const { open, onClose, name, description, image, templateId, assetId, price } = props;
 
     const handleClose = () => {
         onClose();
@@ -22,7 +24,7 @@ const TicketInfoDialog = (props) => {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <TitledPaper title="NFT Ticket Info">
+            <TitledPaper title={t('ticketList.nftTicketInfo')}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img className={classes.ticketImage} alt="complex" src={`https://ipfs.io/ipfs/${image}`} />
@@ -45,7 +47,9 @@ const TicketInfoDialog = (props) => {
                             </Grid>
                         </Grid>
                         <Grid item>
-                            <Typography variant="subtitle1">$19.00</Typography>
+                            <Typography variant="subtitle1">
+                                {price.currency} {price.amount}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -60,8 +64,18 @@ TicketInfoDialog.propTypes = {
     templateId: PropTypes.string.isRequired,
     assetId: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    price: PropTypes.shape({
+        amount: PropTypes.number,
+        currency: PropTypes.string,
+    }),
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+};
+TicketInfoDialog.defaultProps = {
+    price: {
+        amount: 10,
+        currency: 'WAX',
+    },
 };
 
 export default TicketInfoDialog;

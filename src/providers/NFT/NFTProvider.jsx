@@ -6,6 +6,7 @@ import { AuthContext } from '@providers';
 import { COLLECTIONS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
 import { ApolloClient, ApolloConsumer } from '@apollo/client';
 import {
+    cancelSaleAction,
     createCollectionAction,
     createSchemaAction,
     createTemplateAction,
@@ -51,6 +52,9 @@ class NFTProvider extends React.Component {
             buyTicketNFTs: async (newTickets, otherTickets, total) => {
                 return this.buyTicketNFTs(newTickets, otherTickets, total);
             },
+            cancelTicketSale: async (saleId) => {
+                return this.cancelTicketSale(saleId);
+            },
         });
     }
 
@@ -60,6 +64,12 @@ class NFTProvider extends React.Component {
             this.signTransaction(nextTransaction);
         }
     }
+
+    cancelTicketSale = (saleId) => {
+        const actions = [cancelSaleAction(this.getWalletAccountName(), saleId)];
+        const transaction = this.createTransactionFromActions(actions);
+        return this.transact(transaction);
+    };
 
     createTicketNFTs = async (tickets) => {
         const isFirstEventCreationBool = await this.isFirstEventCreation();
@@ -291,9 +301,9 @@ class NFTProvider extends React.Component {
 
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, sellTicket, buyTicketNFTs, isLoading } = this.state;
+        const { createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, isLoading } = this.state;
         return (
-            <NFTContext.Provider value={{ createTicketNFTs, sellTicket, buyTicketNFTs }}>
+            <NFTContext.Provider value={{ createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale }}>
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
             </NFTContext.Provider>

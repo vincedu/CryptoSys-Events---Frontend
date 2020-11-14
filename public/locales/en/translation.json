@@ -124,6 +124,20 @@
     "boughtAt": "Bought at",
     "resalePrice": "Resale price"
   },
+  "ticketList": {
+    "myTickets": "My Tickets",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "myTicketsForSale": "My Tickets For Sale",
+    "noTickets": "No tickets",
+    "ticket": "ticket",
+    "tickets": "tickets",
+    "nftTicketInfo": "NFT Ticket Info",
+    "ticketInfo": "Ticket Info",
+    "resellTicket": "Resell Ticket",
+    "stopSelling": "Stop Selling",
+    "transferTicket": "Transfer Ticket"
+  },
 
   "venue": "Venue",
   "online": "Online event",

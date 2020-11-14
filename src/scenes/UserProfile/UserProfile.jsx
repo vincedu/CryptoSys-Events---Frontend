@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
+import { TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+import { AuthContext } from '@providers';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Dashboard } from '@scenes/';
 import AccountSettings from './components/AccountSettings';
-import TicketList from './components/TicketList';
+import MyTicketList from './components/MyTicketList';
+import SellTicketList from './components/SellTicketList';
 import SideBar from './components/SideBar';
 
 const drawerWidth = 240;
@@ -48,9 +51,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserProfile = () => {
+    const { userData } = useContext(AuthContext);
+    const eventsTickets = useQuery(TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY, {
+        variables: { accountName: userData.walletAccountName },
+    });
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const { t } = useTranslation();
+
+    let myTickets;
+    let sellTickets;
+    if (eventsTickets.data) {
+        myTickets = eventsTickets.data.ticketsForEventsByAccountName.myTickets;
+        sellTickets = eventsTickets.data.ticketsForEventsByAccountName.sellTickets;
+    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -100,8 +113,18 @@ const UserProfile = () => {
                 </IconButton>
                 <Switch>
                     <Route path="/userProfile/accountSettings" component={AccountSettings} />
-                    <Route path="/userProfile/myTickets" component={TicketList} />
-                    <Route path="/userProfile/sellTickets" render={() => <div>{t('sideBar.sellTickets')}</div>} />
+                    <Route
+                        path="/userProfile/myTickets"
+                        render={(props) => (
+                            <MyTicketList {...props} loading={eventsTickets.loading} tickets={myTickets} myTickets />
+                        )}
+                    />
+                    <Route
+                        path="/userProfile/sellTickets"
+                        render={(props) => (
+                            <SellTicketList {...props} loading={eventsTickets.loading} tickets={sellTickets} />
+                        )}
+                    />
                     <Route path="/userProfile/manageEvents" component={Dashboard} />
                 </Switch>
             </main>

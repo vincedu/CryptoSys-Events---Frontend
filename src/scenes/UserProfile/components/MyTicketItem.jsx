@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -36,8 +37,9 @@ const useStyles = makeStyles({
     },
 });
 
-const TicketItem = (props) => {
+const MyTicketItem = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { sellTicket } = useContext(NFTContext);
     const { name, description, image, templateId, assetId } = props;
     const [anchorEl, setAnchorEl] = useState(null);
@@ -63,7 +65,6 @@ const TicketItem = (props) => {
     };
 
     const handleResellTicket = async (price) => {
-        console.log('RESELLING', assetId, 'FOR', price);
         await sellTicket(assetId, price);
     };
 
@@ -78,8 +79,8 @@ const TicketItem = (props) => {
     const menuId = 'showMore';
     const renderShowMoreMenu = (
         <Menu anchorEl={anchorEl} id={menuId} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-            <MenuItem onClick={handleInfoDialogOpen}>Ticket Info</MenuItem>
-            <MenuItem onClick={handleResaleDialogOpen}>Resell Ticket</MenuItem>
+            <MenuItem onClick={handleInfoDialogOpen}>{t('ticketList.ticketInfo')}</MenuItem>
+            <MenuItem onClick={handleResaleDialogOpen}>{t('ticketList.resellTicket')}</MenuItem>
             <TicketInfoDialog
                 open={infoDialogOpen}
                 onClose={handleInfoDialogClose}
@@ -132,7 +133,7 @@ const TicketItem = (props) => {
     );
 };
 
-TicketItem.propTypes = {
+MyTicketItem.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     templateId: PropTypes.string.isRequired,
@@ -140,4 +141,4 @@ TicketItem.propTypes = {
     image: PropTypes.string.isRequired,
 };
 
-export default TicketItem;
+export default MyTicketItem;

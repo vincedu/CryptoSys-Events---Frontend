@@ -124,6 +124,20 @@
     "boughtAt": "Acheté à",
     "resalePrice": "Prix de revente"
   },
+  "ticketList": {
+    "myTickets": "Mes billets",
+    "upcoming": "Événements futurs",
+    "past": "Événements passés",
+    "myTicketsForSale": "Mes billets à vendre",
+    "noTickets": "Pas de billets",
+    "ticket": "billet",
+    "tickets": "billets",
+    "nftTicketInfo": "Infos du billet NFT",
+    "ticketInfo": "Infos sur billet",
+    "resellTicket": "Revendre billet",
+    "stopSelling": "Annuler la vente",
+    "transferTicket": "Transférer le billet"
+  },
 
   "venue": "Lieu",
   "online": "Événement en ligne",
