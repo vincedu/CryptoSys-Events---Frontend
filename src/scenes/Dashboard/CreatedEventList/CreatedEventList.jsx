@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { TICKETS_SALES_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -125,7 +126,7 @@ const CreatedEventList = () => {
                                     <image src={`url('${event.image}'`} style={{ height: '100%', width: '100%' }} />
 
                                     <TableCell align="left">{event.name}</TableCell>
-                                    <TableCell align="left">{event.startDate}</TableCell>
+                                    <TableCell align="left">{moment(event.startDate).format('LLLL')}</TableCell>
                                     <TableCell align="left">{displayVenue(event.location)}</TableCell>
                                     <TableCell align="left">{displaySoldTickets(event.tickets)}</TableCell>
                                     <TableCell align="left">{displayResaleTickets(event.tickets)}</TableCell>
