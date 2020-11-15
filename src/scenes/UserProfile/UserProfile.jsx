@@ -3,6 +3,7 @@ import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-u
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Dashboard } from '@scenes/';
 import AccountSettings from './components/AccountSettings';
 import TicketList from './components/TicketList';
 import SideBar from './components/SideBar';
@@ -101,7 +102,7 @@ const UserProfile = () => {
                     <Route path="/userProfile/accountSettings" component={AccountSettings} />
                     <Route path="/userProfile/myTickets" component={TicketList} />
                     <Route path="/userProfile/sellTickets" render={() => <div>{t('sideBar.sellTickets')}</div>} />
-                    <Route path="/userProfile/manageEvents" render={() => <div>{t('sideBar.manage')}</div>} />
+                    <Route path="/userProfile/manageEvents" component={Dashboard} />
                 </Switch>
             </main>
         </div>

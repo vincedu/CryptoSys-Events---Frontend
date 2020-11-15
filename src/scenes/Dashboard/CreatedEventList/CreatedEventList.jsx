@@ -97,7 +97,7 @@ const CreatedEventList = () => {
         return `${amountResaleTickets} / ${maxTicket}`;
     };
     const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, {
-        variables: { createdBy: '52U8FXuTaGZiYgucpth07aeKjEx2' },
+        variables: { createdBy: 'TODO enlever le param' },
     });
 
     const classes = useStyles();
