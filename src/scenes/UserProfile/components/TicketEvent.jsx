@@ -112,6 +112,8 @@ const TicketEvent = (props) => {
                                     image={eventTicketsType.template.image}
                                     templateId={eventTicketsType.template.templateId}
                                     assetId={ticket.assetId}
+                                    opened={ticket.opened}
+                                    used={ticket.used}
                                 />
                             ),
                         ),

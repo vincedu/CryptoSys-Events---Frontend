@@ -136,7 +136,12 @@
     "ticketInfo": "Ticket Info",
     "resellTicket": "Resell Ticket",
     "stopSelling": "Stop Selling",
-    "transferTicket": "Transfer Ticket"
+    "transferTicket": "Transfer Ticket",
+    "openTicket": "Open Ticket"
+  },
+  "ticketOpening": {
+    "openButtonLabel": "Open",
+    "closeButtonLabel": "Close"
   },
 
   "venue": "Venue",

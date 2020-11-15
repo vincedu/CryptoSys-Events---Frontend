@@ -8,7 +8,10 @@ const mintAssetAction = (schemaName, collectionName, templateId, accountName) =>
         template_id: templateId,
         new_asset_owner: accountName,
         immutable_data: [],
-        mutable_data: [],
+        mutable_data: [
+            { key: 'opened', value: ['uint8', 0] },
+            { key: 'used', value: ['uint8', 0] },
+        ],
         tokens_to_back: [],
     };
 

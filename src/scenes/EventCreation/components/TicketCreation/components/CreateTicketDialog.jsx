@@ -157,7 +157,7 @@ const CreateTicketDialog = (props) => {
         });
     };
 
-    const handleImageUpload = async (images) => {
+    const handleImageUpload = async (image) => {
         setForm({
             ...form,
             image: {
