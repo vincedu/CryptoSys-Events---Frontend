@@ -26,6 +26,14 @@ const createSchemaAction = (schemaName, collectionName, accountName) => {
                 name: 'img',
                 type: 'image',
             },
+            {
+                name: 'opened',
+                type: 'bool',
+            },
+            {
+                name: 'used',
+                type: 'bool',
+            },
         ],
     };
 

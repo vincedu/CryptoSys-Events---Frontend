@@ -136,7 +136,12 @@
     "ticketInfo": "Infos sur billet",
     "resellTicket": "Revendre billet",
     "stopSelling": "Annuler la vente",
-    "transferTicket": "Transférer le billet"
+    "transferTicket": "Transférer le billet",
+    "openTicket": "Désemballer le billet"
+  },
+  "ticketOpening": {
+    "openButtonLabel": "Désemballer",
+    "closeButtonLabel": "Fermer"
   },
 
   "venue": "Lieu",

@@ -24,6 +24,8 @@ const TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY = gql`
                         }
                         tickets {
                             assetId
+                            opened
+                            used
                         }
                     }
                 }
@@ -47,6 +49,8 @@ const TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY = gql`
                         }
                         tickets {
                             assetId
+                            opened
+                            used
                         }
                     }
                 }

@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { TransactionProcessDialog } from '@components';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
-import { COLLECTIONS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+import {
+    COLLECTIONS_BY_ACCOUNT_NAME_QUERY,
+    TICKET_SCHEMAS_BY_ACCOUNT_NAME_AND_COLLECTION_NAME_QUERY,
+} from '@graphql/queries';
 import { ApolloClient, ApolloConsumer } from '@apollo/client';
 import {
     cancelSaleAction,
@@ -15,6 +18,7 @@ import {
     createOfferAction,
     purchaseSaleAction,
     depositTokenAction,
+    setAssetDataAction,
 } from './actions';
 
 const defaultNFTContext = {
@@ -27,8 +31,8 @@ export const NFTContext = React.createContext(defaultNFTContext);
 
 const DEFAULT_TRANSACTION_CONFIG = { broadcast: true, blocksBehind: 3, expireSeconds: 30 };
 
-const SCHEMA_NAME = 'eosticketsv1';
-const MARKETPLACE_NAME = 'eoseventsv01';
+const MARKETPLACE_NAME = 'testmarket11'; // TODO: Change marketplace name
+const SCHEMA_NAME = 'eosticket.v1';
 
 class NFTProvider extends React.Component {
     constructor() {
@@ -55,6 +59,9 @@ class NFTProvider extends React.Component {
             cancelTicketSale: async (saleId) => {
                 return this.cancelTicketSale(saleId);
             },
+            setTicketData: async (assetId, newMutableTicketData) => {
+                return this.setTicketData(assetId, newMutableTicketData);
+            },
         });
     }
 
@@ -72,13 +79,24 @@ class NFTProvider extends React.Component {
     };
 
     createTicketNFTs = async (tickets) => {
-        const isFirstEventCreationBool = await this.isFirstEventCreation();
-        let collectionAction;
-        let schemaAction;
-        let transaction;
-        if (isFirstEventCreationBool === true) {
-            collectionAction = createCollectionAction(this.getWalletAccountName(), this.getWalletAccountName());
-            schemaAction = createSchemaAction(SCHEMA_NAME, this.getWalletAccountName(), this.getWalletAccountName());
+        const collectionAndSchemaActions = [];
+
+        const isCollectionExisting = await this.isCollectionExisting();
+        let isSchemaExisting = false;
+        if (!isCollectionExisting) {
+            const collectionAction = createCollectionAction(this.getWalletAccountName(), this.getWalletAccountName());
+            collectionAndSchemaActions.push(collectionAction);
+        } else {
+            isSchemaExisting = await this.isSchemaExisting();
+        }
+
+        if (!isSchemaExisting) {
+            const schemaAction = createSchemaAction(
+                SCHEMA_NAME,
+                this.getWalletAccountName(),
+                this.getWalletAccountName(),
+            );
+            collectionAndSchemaActions.push(schemaAction);
         }
 
         const templateActions = [];
@@ -97,12 +115,7 @@ class NFTProvider extends React.Component {
             templatePriceMap[template.ticketData.name] = template.price;
         });
 
-        if (isFirstEventCreationBool === true) {
-            transaction = this.createTransactionFromActions([collectionAction, schemaAction, ...templateActions]);
-        } else {
-            transaction = this.createTransactionFromActions([...templateActions]);
-        }
-
+        const transaction = this.createTransactionFromActions([...collectionAndSchemaActions, ...templateActions]);
         const transactionResult = await this.transact(transaction);
 
         const createTemplateActionTraces = transactionResult.transaction.processed.action_traces.filter(
@@ -172,17 +185,23 @@ class NFTProvider extends React.Component {
         const actions = [depositTokenAction(walletAccount, `${total.toFixed(8)} WAX`)];
         Object.values(newTickets).forEach((ticket) => {
             for (let i = 0; i < ticket.number; i += 1) {
-                const purchaseSale = purchaseSaleAction(walletAccount, ticket.saleIds[i], TEMP_MARKETPLACE_NAME);
+                const purchaseSale = purchaseSaleAction(walletAccount, ticket.saleIds[i], MARKETPLACE_NAME);
                 actions.push(purchaseSale);
             }
         });
         Object.values(otherTickets).forEach((ticket) => {
             if (ticket.number === 1) {
-                const purchaseSale = purchaseSaleAction(walletAccount, ticket.id, TEMP_MARKETPLACE_NAME);
+                const purchaseSale = purchaseSaleAction(walletAccount, ticket.id, MARKETPLACE_NAME);
                 actions.push(purchaseSale);
             }
         });
         const transaction = this.createTransactionFromActions(actions);
+        return this.transact(transaction);
+    };
+
+    setTicketData = async (assedId, newMutableTicketData) => {
+        const action = setAssetDataAction(assedId, newMutableTicketData, this.getWalletAccountName());
+        const transaction = this.createTransactionFromActions([action]);
         return this.transact(transaction);
     };
 
@@ -289,25 +308,43 @@ class NFTProvider extends React.Component {
         }
     };
 
-    async isFirstEventCreation() {
+    async isCollectionExisting() {
         return this.props.apolloClient
             .query({
                 query: COLLECTIONS_BY_ACCOUNT_NAME_QUERY,
                 variables: { accountName: this.getWalletAccountName() },
             })
             .then((result) => {
-                if (result.data.collectionsByAccountName.length === 0) {
+                if (result.data.collectionsByAccountName.length > 0) {
                     return true;
                 }
                 return false;
             });
     }
 
+    async isSchemaExisting() {
+        return this.props.apolloClient
+            .query({
+                query: TICKET_SCHEMAS_BY_ACCOUNT_NAME_AND_COLLECTION_NAME_QUERY,
+                variables: { accountName: this.getWalletAccountName(), collectionName: this.getWalletAccountName() },
+            })
+            .then((result) => {
+                if (result.data.ticketSchemasByAccountNameAndCollectionName.length > 0) {
+                    console.log('schema exists');
+                    return true;
+                }
+                console.log('schema doesnt exist');
+                return false;
+            });
+    }
+
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, isLoading } = this.state;
+        const { createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, setTicketData, isLoading } = this.state;
         return (
-            <NFTContext.Provider value={{ createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale }}>
+            <NFTContext.Provider
+                value={{ createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, setTicketData }}
+            >
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
             </NFTContext.Provider>
