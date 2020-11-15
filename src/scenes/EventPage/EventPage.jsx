@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { EVENT_BY_ID_QUERY, TICKET_SALES_BY_EVENT_ID_QUERY } from '@graphql/queries';
+import { EVENT_BY_ID_QUERY, TICKET_SALES_BY_EVENT_IDS_QUERY } from '@graphql/queries';
 import { NFTContext } from '@providers';
 import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -44,8 +44,8 @@ const EventPage = () => {
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     // Query Item by ID
     const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id } });
-    const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_ID_QUERY, {
-        variables: { eventId: id },
+    const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_IDS_QUERY, {
+        variables: { eventIds: [id] },
     });
 
     const handleOpenTicketDialog = () => {
@@ -97,7 +97,7 @@ const EventPage = () => {
     if (data !== undefined) {
         const newTickets = {};
         const otherTickets = {};
-        ticketsQuery.data.ticketSalesByEventId.original.forEach((originalTicket) => {
+        ticketsQuery.data.ticketSalesByEventIds[0].original.forEach((originalTicket) => {
             newTickets[originalTicket.template.templateId] = {
                 id: originalTicket.template.templateId,
                 name: originalTicket.template.name,
@@ -108,7 +108,7 @@ const EventPage = () => {
                 saleIds: originalTicket.sales.map((sale) => sale.saleId),
             };
         });
-        ticketsQuery.data.ticketSalesByEventId.resale.forEach((resaleTicket) => {
+        ticketsQuery.data.ticketSalesByEventIds[0].resale.forEach((resaleTicket) => {
             resaleTicket.sales.forEach((sale) => {
                 otherTickets[sale.saleId] = {
                     id: sale.saleId,
