@@ -38,8 +38,8 @@
     "manage": "Gérer les événements",
     "accountSettings": "Réglages du compte",
     "tickets": "Billets",
-    "myTickets": "Mes Billets",
-    "sellTickets": "Vendre Billets"
+    "myTickets": "Mes billets",
+    "sellTickets": "À vendre"
   },
   "accountSettings": {
     "information": "Informations du compte",
