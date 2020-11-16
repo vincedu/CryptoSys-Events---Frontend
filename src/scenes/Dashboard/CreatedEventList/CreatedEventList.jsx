@@ -10,6 +10,7 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Avatar,
 } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { TICKETS_SALES_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
@@ -111,10 +112,10 @@ const CreatedEventList = () => {
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Image </TableCell>
+                                <TableCell> </TableCell>
                                 <TableCell align="left">Name</TableCell>
                                 <TableCell align="left">Date</TableCell>
-                                <TableCell align="left">Venue</TableCell>
+                                <TableCell align="left">Location</TableCell>
                                 <TableCell align="left">Sold Tickets</TableCell>
                                 <TableCell align="left">Resale Tickets</TableCell>
                                 <TableCell align="left">Gross</TableCell>
@@ -123,8 +124,9 @@ const CreatedEventList = () => {
                         <TableBody>
                             {events.data.ticketsSalesByAccountName.map((event) => (
                                 <TableRow key={event.name}>
-                                    <image src={`url('${event.image}'`} style={{ height: '100%', width: '100%' }} />
-
+                                    <TableCell>
+                                        <Avatar src={`${event.image}`} className={classes.large} />
+                                    </TableCell>
                                     <TableCell align="left">{event.name}</TableCell>
                                     <TableCell align="left">{moment(event.startDate).format('LLLL')}</TableCell>
                                     <TableCell align="left">{displayVenue(event.location)}</TableCell>
