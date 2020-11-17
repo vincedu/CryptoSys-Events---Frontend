@@ -136,7 +136,8 @@
     "ticketInfo": "Ticket Info",
     "resellTicket": "Resell Ticket",
     "stopSelling": "Stop Selling",
-    "transferTicket": "Transfer Ticket"
+    "transferTicket": "Transfer Ticket",
+    "transferRecipient": "Recipient (wallet account name)"
   },
 
   "venue": "Venue",

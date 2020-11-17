@@ -136,7 +136,8 @@
     "ticketInfo": "Infos sur billet",
     "resellTicket": "Revendre billet",
     "stopSelling": "Annuler la vente",
-    "transferTicket": "Transférer le billet"
+    "transferTicket": "Transférer le billet",
+    "transferRecipient": "Destinataire (nom du portefeuille)"
   },
 
   "venue": "Lieu",

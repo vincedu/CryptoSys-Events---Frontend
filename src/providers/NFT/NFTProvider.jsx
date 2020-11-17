@@ -15,6 +15,7 @@ import {
     createOfferAction,
     purchaseSaleAction,
     depositTokenAction,
+    transferAssetsAction,
 } from './actions';
 
 const defaultNFTContext = {
@@ -52,6 +53,9 @@ class NFTProvider extends React.Component {
             buyTicketNFTs: async (newTickets, otherTickets, total) => {
                 return this.buyTicketNFTs(newTickets, otherTickets, total);
             },
+            transferTicketNFTs: async (recipient, assetId) => {
+                return this.transferTicketNFTs(recipient, assetId);
+            },
             cancelTicketSale: async (saleId) => {
                 return this.cancelTicketSale(saleId);
             },
@@ -64,6 +68,12 @@ class NFTProvider extends React.Component {
             this.signTransaction(nextTransaction);
         }
     }
+
+    transferTicketNFTs = (recipient, assetId) => {
+        const actions = [transferAssetsAction(this.getWalletAccountName(), recipient, [assetId])];
+        const transaction = this.createTransactionFromActions(actions);
+        return this.transact(transaction);
+    };
 
     cancelTicketSale = (saleId) => {
         const actions = [cancelSaleAction(this.getWalletAccountName(), saleId)];
@@ -301,9 +311,18 @@ class NFTProvider extends React.Component {
 
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, isLoading } = this.state;
+        const {
+            createTicketNFTs,
+            sellTicket,
+            buyTicketNFTs,
+            cancelTicketSale,
+            transferTicketNFTs,
+            isLoading,
+        } = this.state;
         return (
-            <NFTContext.Provider value={{ createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale }}>
+            <NFTContext.Provider
+                value={{ createTicketNFTs, sellTicket, buyTicketNFTs, transferTicketNFTs, cancelTicketSale }}
+            >
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
             </NFTContext.Provider>
