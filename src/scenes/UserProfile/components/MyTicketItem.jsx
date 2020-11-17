@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import TicketInfoDialog from './TicketInfoDialog';
 import ResaleDialog from './ResaleDialog';
 import TicketOpeningDialog from './TicketOpeningDialog';
+import TransferDialog from './TransferDialog';
 
 const useStyles = makeStyles({
     ticketCard: {
@@ -41,13 +42,14 @@ const useStyles = makeStyles({
 const MyTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { sellTicket } = useContext(NFTContext);
     const { name, description, image, templateId, assetId, opened, used } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setiInfoDialogOpen] = useState(false);
     const [resaleDialogOpen, setResaleDialogOpen] = useState(false);
+    const [transferDialogOpen, setTransferDialogOpen] = useState(false);
     const [isTicketOpeningDialogOpen, setIsTicketOpeningDialogOpen] = useState(false);
     const [wasTicketRecentlyOpened, setWasTicketRecentlyOpened] = useState(false);
+    const { sellTicket, transferTicketNFTs } = useContext(NFTContext);
 
     const handleInfoDialogOpen = () => {
         setiInfoDialogOpen(true);
@@ -76,8 +78,21 @@ const MyTicketItem = (props) => {
         setIsTicketOpeningDialogOpen(false);
     };
 
+    const handleTransferDialogOpen = () => {
+        setTransferDialogOpen(true);
+        setAnchorEl(null);
+    };
+
+    const handleTransferDialogClose = () => {
+        setTransferDialogOpen(false);
+    };
+
     const handleResellTicket = async (price) => {
         await sellTicket(assetId, price);
+    };
+
+    const handleTransferTicket = async (recipient) => {
+        await transferTicketNFTs(recipient, assetId);
     };
 
     const handleClick = (e) => {
@@ -96,6 +111,7 @@ const MyTicketItem = (props) => {
             {!opened && !wasTicketRecentlyOpened ? (
                 <MenuItem onClick={handleTicketOpeningDialogOpen}>{t('ticketList.openTicket')}</MenuItem>
             ) : null}
+            <MenuItem onClick={handleTransferDialogOpen}>{t('ticketList.transferTicket')}</MenuItem>
             <TicketInfoDialog
                 open={infoDialogOpen}
                 onClose={handleInfoDialogClose}
@@ -116,6 +132,12 @@ const MyTicketItem = (props) => {
                 onClose={handleTicketOpeningDialogClose}
                 onTicketOpen={() => setWasTicketRecentlyOpened(true)}
                 ticket={{ assetId, image, opened, used }}
+            />
+            <TransferDialog
+                isOpen={transferDialogOpen}
+                onSubmit={handleTransferTicket}
+                onClose={handleTransferDialogClose}
+                ticket={{ name, description, image }}
             />
         </Menu>
     );

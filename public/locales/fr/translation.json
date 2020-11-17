@@ -137,6 +137,7 @@
     "resellTicket": "Revendre billet",
     "stopSelling": "Annuler la vente",
     "transferTicket": "Transférer le billet",
+    "transferRecipient": "Destinataire (nom du portefeuille)",
     "openTicket": "Déballer le billet"
   },
   "ticketOpening": {

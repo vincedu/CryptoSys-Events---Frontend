@@ -137,6 +137,7 @@
     "resellTicket": "Resell Ticket",
     "stopSelling": "Stop Selling",
     "transferTicket": "Transfer Ticket",
+    "transferRecipient": "Recipient (wallet account name)",
     "openTicket": "Open Ticket"
   },
   "ticketOpening": {

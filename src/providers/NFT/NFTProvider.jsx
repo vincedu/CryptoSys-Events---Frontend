@@ -19,6 +19,7 @@ import {
     purchaseSaleAction,
     depositTokenAction,
     setAssetDataAction,
+    transferAssetsAction,
 } from './actions';
 
 const defaultNFTContext = {
@@ -56,6 +57,9 @@ class NFTProvider extends React.Component {
             buyTicketNFTs: async (newTickets, otherTickets, total) => {
                 return this.buyTicketNFTs(newTickets, otherTickets, total);
             },
+            transferTicketNFTs: async (recipient, assetId) => {
+                return this.transferTicketNFTs(recipient, assetId);
+            },
             cancelTicketSale: async (saleId) => {
                 return this.cancelTicketSale(saleId);
             },
@@ -71,6 +75,12 @@ class NFTProvider extends React.Component {
             this.signTransaction(nextTransaction);
         }
     }
+
+    transferTicketNFTs = (recipient, assetId) => {
+        const actions = [transferAssetsAction(this.getWalletAccountName(), recipient, [assetId])];
+        const transaction = this.createTransactionFromActions(actions);
+        return this.transact(transaction);
+    };
 
     cancelTicketSale = (saleId) => {
         const actions = [cancelSaleAction(this.getWalletAccountName(), saleId)];
@@ -340,10 +350,25 @@ class NFTProvider extends React.Component {
 
     render() {
         const { children } = this.props;
-        const { createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, setTicketData, isLoading } = this.state;
+        const {
+            createTicketNFTs,
+            sellTicket,
+            buyTicketNFTs,
+            cancelTicketSale,
+            transferTicketNFTs,
+            setTicketData,
+            isLoading,
+        } = this.state;
         return (
             <NFTContext.Provider
-                value={{ createTicketNFTs, sellTicket, buyTicketNFTs, cancelTicketSale, setTicketData }}
+                value={{
+                    createTicketNFTs,
+                    sellTicket,
+                    buyTicketNFTs,
+                    cancelTicketSale,
+                    transferTicketNFTs,
+                    setTicketData,
+                }}
             >
                 {children}
                 <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
