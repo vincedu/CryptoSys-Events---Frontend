@@ -43,13 +43,13 @@ const MyTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
     const { name, description, image, templateId, assetId, opened, used } = props;
+    const { sellTicket, transferTicketNFTs } = useContext(NFTContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setiInfoDialogOpen] = useState(false);
     const [resaleDialogOpen, setResaleDialogOpen] = useState(false);
     const [transferDialogOpen, setTransferDialogOpen] = useState(false);
     const [isTicketOpeningDialogOpen, setIsTicketOpeningDialogOpen] = useState(false);
     const [wasTicketRecentlyOpened, setWasTicketRecentlyOpened] = useState(false);
-    const { sellTicket, transferTicketNFTs } = useContext(NFTContext);
 
     const handleInfoDialogOpen = () => {
         setiInfoDialogOpen(true);
