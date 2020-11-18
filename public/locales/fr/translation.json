@@ -137,10 +137,10 @@
     "resellTicket": "Revendre billet",
     "stopSelling": "Annuler la vente",
     "transferTicket": "Transférer le billet",
-    "openTicket": "Désemballer le billet"
+    "openTicket": "Déballer le billet"
   },
   "ticketOpening": {
-    "openButtonLabel": "Désemballer",
+    "openButtonLabel": "Déballer",
     "closeButtonLabel": "Fermer"
   },
 
