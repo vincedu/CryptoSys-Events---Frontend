@@ -8,6 +8,9 @@ i18n.use(Backend)
         fallbackLng: 'en',
         otherLanguages: ['fr'],
         lng: 'en',
+        react: {
+            useSuspense: false,
+        },
     });
 
 export default i18n;

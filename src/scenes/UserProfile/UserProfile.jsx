@@ -1,10 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
-<<<<<<< HEAD
-=======
-import { useTranslation } from 'react-i18next';
->>>>>>> Diviser billets entre a vendre ou pas
 import { useQuery } from '@apollo/client';
 import { TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
 import { AuthContext } from '@providers';
@@ -61,13 +57,6 @@ const UserProfile = () => {
     });
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-
-    let myTickets;
-    let sellTickets;
-    if (eventsTickets.data) {
-        myTickets = eventsTickets.data.ticketsForEventsByAccountName.myTickets;
-        sellTickets = eventsTickets.data.ticketsForEventsByAccountName.sellTickets;
-    }
 
     let myTickets;
     let sellTickets;
@@ -136,11 +125,7 @@ const UserProfile = () => {
                             <SellTicketList {...props} loading={eventsTickets.loading} tickets={sellTickets} />
                         )}
                     />
-<<<<<<< HEAD
                     <Route path="/userProfile/manageEvents" component={Dashboard} />
-=======
-                    <Route path="/userProfile/manageEvents" render={() => <div>{t('sideBar.manage')}</div>} />
->>>>>>> Diviser billets entre a vendre ou pas
                 </Switch>
             </main>
         </div>
