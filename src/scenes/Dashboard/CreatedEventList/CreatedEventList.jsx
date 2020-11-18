@@ -49,9 +49,21 @@ const CreatedEventList = () => {
     const computeGross = (tickets) => {
         let totalGross = 0;
         tickets.original.forEach((ticketType) => {
-            const totalTicketsInSale = parseInt(ticketType.sales.length);
-            const price = parseInt(ticketType.sales[0].price.amount);
-            totalGross += totalTicketsInSale * price;
+            const totalTicketsSold = parseInt(ticketType.sales.length);
+            if (ticketType.sales.length > 0) {
+                const price = parseInt(ticketType.sales[0].price.amount);
+                totalGross += totalTicketsSold * price;
+            }
+        });
+
+        tickets.resale.forEach((ticketType) => {
+            const totalTicketsSold = parseInt(ticketType.sales.length);
+            if (ticketType.sales.length > 0) {
+                ticketType.sales.forEach((sale) => {
+                    const price = parseInt(sale.price.amount);
+                    totalGross += totalTicketsSold * price * 0.03; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
+                });
+            }
         });
         return totalGross;
     };
@@ -95,8 +107,7 @@ const CreatedEventList = () => {
     const displayResaleTickets = (tickets) => {
         console.log(tickets);
         const amountResaleTickets = computeResaleTickets(tickets);
-        const maxTicket = computeMaxTickets(tickets);
-        return `${amountResaleTickets} / ${maxTicket}`;
+        return `${amountResaleTickets}`;
     };
     const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, {
         variables: { createdBy: 'TODO enlever le param' },
@@ -117,7 +128,8 @@ const CreatedEventList = () => {
                                 <TableCell align="left">Date</TableCell>
                                 <TableCell align="left">Location</TableCell>
                                 <TableCell align="left">Sold Tickets</TableCell>
-                                <TableCell align="left">Resale Tickets</TableCell>
+                                <TableCell align="left">Listed Resale Tickets</TableCell>
+                                <TableCell align="left">Sold Resale Tickets</TableCell>
                                 <TableCell align="left">Gross</TableCell>
                             </TableRow>
                         </TableHead>
@@ -130,9 +142,10 @@ const CreatedEventList = () => {
                                     <TableCell align="left">{event.name}</TableCell>
                                     <TableCell align="left">{moment(event.startDate).format('LLLL')}</TableCell>
                                     <TableCell align="left">{displayVenue(event.location)}</TableCell>
-                                    <TableCell align="left">{displaySoldTickets(event.tickets)}</TableCell>
-                                    <TableCell align="left">{displayResaleTickets(event.tickets)}</TableCell>
-                                    <TableCell align="left">{displayGross(event.tickets)}</TableCell>
+                                    <TableCell align="left">{displaySoldTickets(event.ticketsListedSale)}</TableCell>
+                                    <TableCell align="left">{displayResaleTickets(event.ticketsListedSale)}</TableCell>
+                                    <TableCell align="left">{displayResaleTickets(event.ticketsSoldSale)}</TableCell>
+                                    <TableCell align="left">{displayGross(event.ticketsSoldSale)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
