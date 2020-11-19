@@ -2,10 +2,27 @@ import React, { useState, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY, TICKET_SALES_BY_EVENT_IDS_QUERY } from '@graphql/queries';
 import { NFTContext } from '@providers';
-import { Button, makeStyles, Typography, CircularProgress, Grid } from '@material-ui/core';
+import {
+    Button,
+    makeStyles,
+    Typography,
+    CircularProgress,
+    Grid,
+    ListItemText,
+    Avatar,
+    ListItem,
+    ListItemAvatar,
+} from '@material-ui/core';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EventIcon from '@material-ui/icons/Event';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import LanguageIcon from '@material-ui/icons/Language';
+import DescriptionIcon from '@material-ui/icons/Description';
+import ClassIcon from '@material-ui/icons/Class';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import CheckoutDialog from './components/CheckoutDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -123,15 +140,20 @@ const EventPage = () => {
         console.log('RESALE TICKETS', otherTickets);
         return (
             <div style={{ padding: 20 }}>
-                <Grid container direction="row" justify="center" style={{ backgroundColor: EOS_ORANGE }}>
-                    <div style={{ height: '100%' }}>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    style={{ backgroundColor: EOS_ORANGE, height: '400px' }}
+                >
+                    <div style={{ height: '50px' }}>
                         <div
                             className={classes.media}
-                            style={{ backgroundImage: `url('${data.eventById.image}'` }}
+                            style={{ backgroundImage: `url('${data.eventById.image}'`, height: '50px' }}
                             alt="Event"
                         />
                     </div>
-                    <Grid item xs={11} md={6} style={{ paddingRight: 25 }}>
+                    <Grid item xs={11} md={6} style={{ paddingRight: 25, height: '400px' }}>
                         <div style={{ height: '100%' }}>
                             <div
                                 className={classes.media}
@@ -143,12 +165,78 @@ const EventPage = () => {
                             {data.eventById.name}
                         </Typography>
                         <br />
-                        <Typography variant="subtitle1">Date: {data.eventById.startDate.substring(0, 10)}</Typography>
-                        <Typography variant="subtitle1">Description : {data.eventById.description}</Typography>
-                        <Typography variant="subtitle1">Venue : {displayVenue()}</Typography>
-                        <Typography variant="subtitle1">Tags : {data.eventById.category}</Typography>
-                        <Typography variant="subtitle1">Languages : {data.eventById.languages}</Typography>
-                        <Typography variant="subtitle1">Tags : {data.eventById.tags}</Typography>
+
+                        <div className={classes.root}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <DescriptionIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Description" secondary={data.eventById.description} />
+                                    </ListItem>
+                                </Grid>
+                                <Grid item xs style={{ marginTop: '10px' }}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <EventIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="Date"
+                                            secondary={moment(data.eventById.startDate).format('LLLL')}
+                                        />
+                                    </ListItem>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <LocationOnIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Location" secondary={displayVenue()} />
+                                    </ListItem>
+                                </Grid>
+                                <Grid item xs style={{ marginTop: '10px' }}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <ClassIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Category" secondary={data.eventById.category} />
+                                    </ListItem>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <LanguageIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Languages" secondary={data.eventById.languages} />
+                                    </ListItem>
+                                </Grid>
+                                <Grid item xs>
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <LocalOfferIcon />
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary="Tags" secondary={data.eventById.tags} />
+                                    </ListItem>
+                                </Grid>
+                            </Grid>
+                        </div>
                         <Button
                             variant="outlined"
                             color="secondary"
