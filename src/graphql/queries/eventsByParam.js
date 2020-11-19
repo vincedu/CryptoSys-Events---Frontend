@@ -26,6 +26,8 @@ const EVENTS_BY_PARAM_QUERY = gql`
             category
             image
             startDate
+            tags
+            languages
         }
     }
 `;

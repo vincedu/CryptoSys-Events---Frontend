@@ -4,6 +4,7 @@ import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom';
 import { Search } from '@material-ui/icons';
 import algoliasearch from 'algoliasearch/lite';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CustomHits from './CustomHits';
 
@@ -38,31 +39,49 @@ const searchClient = algoliasearch('VCNEJZ733V', '34110b7a7dda814d41a2851e341a2f
 const Autocomplete = (props) => {
     Autocomplete.propTypes = {
         searchBarRef: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
     };
 
     const classes = useStyles();
 
     const { t } = useTranslation();
-    const { searchBarRef } = props;
+    const { searchBarRef, history } = props;
 
-    const CustomSearchBox = connectAutoComplete(({ refine, hits, currentRefinement }) => (
-        <Paper className={classes.searchBar}>
-            <InputBase
-                type="search"
-                className={classes.input}
-                placeholder={t('customSearchBar.search')}
-                onChange={(event) => {
-                    refine(event.currentTarget.value);
-                }}
-                value={currentRefinement}
-                style={{ flex: 4 }}
-            />
-            <IconButton color="primary" className={classes.iconButton}>
-                <Search className={classes.iconButton} />
-            </IconButton>
-            <CustomHits searchBarRef={searchBarRef} hits={hits} currentRefinement={currentRefinement} />
-        </Paper>
-    ));
+    const CustomSearchBox = connectAutoComplete(({ refine, hits, currentRefinement }) => {
+        const handleSearch = () => {
+            if (currentRefinement) {
+                history.push({
+                    pathname: `/search/${currentRefinement}`,
+                    state: {
+                        search: currentRefinement,
+                    },
+                });
+            }
+        };
+
+        const checkEnterKey = (key) => {
+            if (key.keyCode === 13) handleSearch();
+        };
+        return (
+            <Paper className={classes.searchBar}>
+                <InputBase
+                    type="search"
+                    className={classes.input}
+                    placeholder={t('customSearchBar.search')}
+                    onChange={(event) => {
+                        refine(event.currentTarget.value);
+                    }}
+                    value={currentRefinement}
+                    style={{ flex: 4 }}
+                    onKeyDown={checkEnterKey}
+                />
+                <IconButton color="primary" className={classes.iconButton} onClick={handleSearch}>
+                    <Search className={classes.iconButton} />
+                </IconButton>
+                <CustomHits searchBarRef={searchBarRef} hits={hits} currentRefinement={currentRefinement} />
+            </Paper>
+        );
+    });
 
     return (
         <div>
@@ -72,4 +91,4 @@ const Autocomplete = (props) => {
         </div>
     );
 };
-export default Autocomplete;
+export default withRouter(Autocomplete);

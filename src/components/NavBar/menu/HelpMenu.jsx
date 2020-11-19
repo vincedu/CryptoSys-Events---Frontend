@@ -1,14 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+    Button,
+    Popper,
+    Paper,
+    ClickAwayListener,
+    MenuItem,
+    makeStyles,
+    MenuList,
+    Grow,
+    Hidden,
+    IconButton,
+} from '@material-ui/core';
+import { MoreVert } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
+        [theme.breakpoints.down('xs')]: {
+            marginRight: 0,
+        },
+    },
+    horizontalLine: {
+        margin: 0,
+        border: 0,
+        height: 1,
+        backgroundColor: 'lightgray',
+    },
+    menuItem: {
+        padding: '12px 25px',
     },
 }));
 
@@ -18,9 +39,7 @@ const HelpMenu = (props) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const { history } = props;
-
-    const isMenuOpen = Boolean(anchorEl);
+    const { history, handleCreateEventButtonClick } = props;
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -31,36 +50,55 @@ const HelpMenu = (props) => {
     };
 
     const handleButtonClick = (pageURL) => {
+        setAnchorEl(null);
         history.push(pageURL);
     };
 
-    const menuId = 'help-menu';
     const renderHelpMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={() => handleButtonClick('/howItWorks')}>{t('navBar.howItWorks')}</MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/helpCenter')}>{t('navBar.helpCenter')}</MenuItem>
-        </Menu>
+        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="bottom-end" disablePortal transition>
+            {({ TransitionProps, placement }) => (
+                <Grow
+                    {...TransitionProps}
+                    style={{ transformOrigin: placement === 'bottom' ? 'right bottom' : 'right top' }}
+                >
+                    <Paper style={{ borderRadius: 3 }}>
+                        <ClickAwayListener onClickAway={handleMenuClose}>
+                            <MenuList style={{ padding: 0 }}>
+                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/search')}>
+                                    {t('profileMenu.browse')}
+                                </MenuItem>
+                                <Hidden smUp>
+                                    <MenuItem className={classes.menuItem} onClick={handleCreateEventButtonClick}>
+                                        {t('navBar.create')}
+                                    </MenuItem>
+                                </Hidden>
+                                <hr className={classes.horizontalLine} />
+                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/howItWorks')}>
+                                    {t('navBar.howItWorks')}
+                                </MenuItem>
+                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/helpCenter')}>
+                                    {t('navBar.helpCenter')}
+                                </MenuItem>
+                            </MenuList>
+                        </ClickAwayListener>
+                    </Paper>
+                </Grow>
+            )}
+        </Popper>
     );
 
     return (
         <div className={classes.menuButton}>
-            <Button
-                aria-label="help menu"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleMenuOpen}
-                color="inherit"
-            >
-                {t('navBar.help')}
-            </Button>
+            <Hidden xsDown>
+                <Button onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
+                    {t('navBar.help')}
+                </Button>
+            </Hidden>
+            <Hidden smUp>
+                <IconButton onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
+                    <MoreVert />
+                </IconButton>
+            </Hidden>
             {renderHelpMenu}
         </div>
     );
@@ -68,6 +106,7 @@ const HelpMenu = (props) => {
 
 HelpMenu.propTypes = {
     history: PropTypes.object.isRequired,
+    handleCreateEventButtonClick: PropTypes.func.isRequired,
 };
 
 export default HelpMenu;

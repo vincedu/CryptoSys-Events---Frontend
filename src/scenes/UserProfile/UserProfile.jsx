@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, CssBaseline, Hidden, Drawer, IconButton } from '@material-ui/core';
+import { makeStyles, Hidden, Drawer, IconButton } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -34,12 +34,12 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
-    // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
         background: theme.palette.primary.main,
-        top: 60,
+        borderRight: 0,
+        top: 'auto',
     },
     content: {
         flexGrow: 1,
@@ -58,7 +58,6 @@ const UserProfile = () => {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
             <nav className={classes.drawer} aria-label="sidebar">
                 <Hidden smUp>
                     <Drawer
@@ -73,7 +72,7 @@ const UserProfile = () => {
                             keepMounted: true, // Better open performance on mobile.
                         }}
                     >
-                        <SideBar />
+                        <SideBar handleDrawerToggle={handleDrawerToggle} />
                     </Drawer>
                 </Hidden>
                 <Hidden xsDown>

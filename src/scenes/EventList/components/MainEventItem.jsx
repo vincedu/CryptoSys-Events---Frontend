@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Grid, Card, Typography, CardContent, CardMedia, CardHeader } from '@material-ui/core';
+import { useMutation } from '@apollo/client';
+import {
+    makeStyles,
+    Grid,
+    Card,
+    Typography,
+    CardContent,
+    CardMedia,
+    CardHeader,
+    Chip,
+    IconButton,
+    Paper,
+} from '@material-ui/core';
+import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -31,24 +46,47 @@ const useStyles = makeStyles((theme) => ({
         height: 1,
         backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
     },
+    banner: {
+        minWidth: 40,
+        height: 35,
+        borderRadius: 2,
+        position: 'absolute',
+        top: 15,
+        right: -15,
+        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
+        zIndex: 1,
+    },
+    bannerContent: {
+        backgroundColor: theme.palette.secondary.main,
+        opacity: 0.95,
+        textAlign: 'center',
+        padding: 10,
+        color: '#fff',
+        fontWeight: 500,
+    },
 }));
 
 const MainEventItem = (props) => {
     const classes = useStyles();
 
-    // TODO Fix some props type
     MainEventItem.propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
+        tags: PropTypes.array.isRequired,
+        languages: PropTypes.array.isRequired,
         history: PropTypes.object.isRequired,
+        liked: PropTypes.bool,
+    };
+    MainEventItem.defaultProps = {
+        liked: false,
     };
 
     const { history } = props;
+    const { t } = useTranslation();
 
-    // TODO change pathname to something else than ID?
     const handleButtonClick = (pageURL) => {
         history.push({
             pathname: pageURL,
@@ -57,13 +95,32 @@ const MainEventItem = (props) => {
             },
         });
     };
+    const [isLiked, setIsLiked] = useState(props.liked);
+    const [likeEvent] = useMutation(LIKE_EVENT_MUTATION);
+    const [unlikeEvent] = useMutation(UNLIKE_EVENT_MUTATION);
+
+    const handleLike = async (event) => {
+        event.stopPropagation();
+        if (isLiked) {
+            unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
+        } else {
+            likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
+        }
+    };
 
     return (
         <div>
             <Typography className={classes.categoryTitle} variant="h3">
                 Main Event
             </Typography>
-            <Grid item sm={12} md={8}>
+            <Grid item sm={12} md={8} style={{ position: 'relative' }}>
+                {props.tags?.includes('free') ? (
+                    <div className={classes.banner}>
+                        <Paper className={classes.bannerContent}>
+                            <p style={{ margin: 'auto' }}>{t('eventList.free')}</p>
+                        </Paper>
+                    </div>
+                ) : null}
                 <Card className={classes.root} onClick={() => handleButtonClick(`/event/${props.id}`)}>
                     <Grid container direction="row">
                         <Grid item xs={12} sm={6}>
@@ -74,13 +131,44 @@ const MainEventItem = (props) => {
                                 titleTypographyProps={{ variant: 'h4' }}
                                 title={props.name}
                                 subheader={props.date.substring(0, 10)}
+                                style={{ paddingBottom: 0 }}
                             />
-                            <CardContent>
-                                <Typography variant="body2" color="textSecondary" component="p" maxLength={10}>
+                            <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <div>
+                                        {props.tags?.length
+                                            ? props.tags
+                                                  .slice(0, 3)
+                                                  .map((tag) => (
+                                                      <Chip
+                                                          key={tag}
+                                                          style={{ fontSize: '0.8em', height: 28, marginRight: 5 }}
+                                                          label={`#${tag}`}
+                                                          variant="outlined"
+                                                          color="primary"
+                                                      />
+                                                  ))
+                                            : null}
+                                    </div>
+                                    <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
+                                        {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                                    </IconButton>
+                                </div>
+                                <Typography variant="body2" color="textSecondary">
                                     {props.description.length < 100
                                         ? props.description
-                                        : `${props.description.substring(0, 200)}...`}
+                                        : `${props.description.substring(0, 100)}...`}
                                 </Typography>
+                                {props.languages?.length ? (
+                                    <div style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
+                                        <Translate
+                                            style={{ fontSize: '1rem', padding: '0 5px', color: 'rgba(0, 0, 0, 0.54)' }}
+                                        />
+                                        <Typography variant="body2" color="textSecondary">
+                                            {props.languages.map((language) => t(language)).join(', ')}
+                                        </Typography>
+                                    </div>
+                                ) : null}
                             </CardContent>
                         </Grid>
                     </Grid>

@@ -69,13 +69,13 @@ const Footer = () => {
                 </Hidden>
             </Grid>
             <Grid item xs={2} className={classes.footerItems} style={{ justifyContent: 'flex-end' }}>
-                <Button onClick={() => i18n.changeLanguage(t('language'))} className={classes.links}>
+                <Button onClick={() => i18n.changeLanguage(t('translation'))} className={classes.links}>
                     <img
                         src={`https://www.countryflags.io/${t('languageFlag')}/flat/16.png`}
                         style={{ paddingRight: 5 }}
                         alt=""
                     />
-                    {t('language')}
+                    {t('translation')}
                 </Button>
             </Grid>
         </Grid>

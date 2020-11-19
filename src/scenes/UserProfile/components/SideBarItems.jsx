@@ -7,6 +7,7 @@ import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import EventIcon from '@material-ui/icons/Event';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SidebarItems = () => {
+const SidebarItems = (props) => {
+    const [open, setOpen] = React.useState(false);
     const [sideBarTab, setSideBarTab] = useState(0);
     switch (window.location.pathname) {
         case '/userProfile/accountSettings':
@@ -31,11 +33,13 @@ const SidebarItems = () => {
         case '/userProfile/myTickets':
             if (sideBarTab !== 1) {
                 setSideBarTab(1);
+                if (!open) setOpen(true);
             }
             break;
         case '/userProfile/sellTickets':
             if (sideBarTab !== 2) {
                 setSideBarTab(2);
+                if (!open) setOpen(true);
             }
             break;
         case '/userProfile/manageEvents':
@@ -52,15 +56,14 @@ const SidebarItems = () => {
     }
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
     const { t } = useTranslation();
 
     const handleClick = () => {
         setOpen(!open);
     };
     return (
-        <List>
-            <Link to="/userProfile/accountSettings" className={classes.link}>
+        <List style={{ paddingTop: 0 }}>
+            <Link to="/userProfile/accountSettings" className={classes.link} onClick={props.handleDrawerToggle}>
                 <ListItem button selected={sideBarTab === 0}>
                     <ListItemIcon>
                         <SettingsIcon style={{ color: '#FFF' }} />
@@ -79,7 +82,7 @@ const SidebarItems = () => {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
-                    <Link to="/userProfile/myTickets" className={classes.link}>
+                    <Link to="/userProfile/myTickets" className={classes.link} onClick={props.handleDrawerToggle}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 1}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon style={{ color: '#FFF' }} />
@@ -88,7 +91,7 @@ const SidebarItems = () => {
                         </ListItem>
                     </Link>
 
-                    <Link to="/userProfile/sellTickets" className={classes.link}>
+                    <Link to="/userProfile/sellTickets" className={classes.link} onClick={props.handleDrawerToggle}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 2}>
                             <ListItemIcon>
                                 <LocalAtmIcon style={{ color: '#FFF' }} />
@@ -99,7 +102,7 @@ const SidebarItems = () => {
                 </List>
             </Collapse>
 
-            <Link to="/userProfile/manageEvents" className={classes.link}>
+            <Link to="/userProfile/manageEvents" className={classes.link} onClick={props.handleDrawerToggle}>
                 <ListItem button selected={sideBarTab === 3}>
                     <ListItemIcon>
                         <EventIcon style={{ color: '#FFF' }} />
@@ -107,7 +110,7 @@ const SidebarItems = () => {
                     <ListItemText primary={t('sideBar.manage')} />
                 </ListItem>
             </Link>
-            <Link to="/userProfile/liked" className={classes.link}>
+            <Link to="/userProfile/liked" className={classes.link} onClick={props.handleDrawerToggle}>
                 <ListItem button selected={sideBarTab === 4}>
                     <ListItemIcon>
                         <FavoriteIcon style={{ color: '#FFF' }} />
@@ -117,6 +120,10 @@ const SidebarItems = () => {
             </Link>
         </List>
     );
+};
+
+SidebarItems.propTypes = {
+    handleDrawerToggle: PropTypes.func.isRequired,
 };
 
 export default SidebarItems;

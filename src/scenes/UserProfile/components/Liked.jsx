@@ -10,20 +10,17 @@ import EventItem from '../../EventList/components/EventItem';
 const Liked = () => {
     const { userData } = useContext(AuthContext);
     const { t } = useTranslation();
-    console.log(userData);
-
     const { data, loading } = useQuery(EVENTS_BY_IDS_QUERY, { variables: { ids: userData.liked } });
 
     if (loading) {
         return <CircularProgress />;
     }
 
-    console.log(data);
     return (
         <PageContainer title={t('liked.title')}>
             <TitledPaper>
                 {data.eventsByIds.length ? (
-                    <Grid container spacing={3} direction="row" justify="flex-start" alignItems="stretch">
+                    <Grid container spacing={3} justify="flex-start" alignItems="stretch">
                         {data.eventsByIds.map((event) => (
                             <EventItem
                                 key={event.id}

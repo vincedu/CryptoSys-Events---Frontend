@@ -6,6 +6,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
+import frLocale from 'date-fns/locale/fr';
 import Autocomplete from './Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'grey',
     },
     underline: {
+        cursor: 'pointer',
         '&::before': {
             borderBottom: 'none!important',
         },
@@ -61,14 +63,13 @@ const CustomSearchBar = (props) => {
     const { history } = props;
     const date = new Date();
     const locationRef = useRef();
-    const searchRef = useRef();
     const searchBarRef = useRef();
 
     const handleDateChange = (selectedDate) => {
         history.push({
-            pathname: `/date/${selectedDate}`,
+            pathname: `/search/${+selectedDate}`,
             state: {
-                date: selectedDate,
+                date: +selectedDate,
             },
         });
     };
@@ -76,28 +77,15 @@ const CustomSearchBar = (props) => {
     const handleLocation = () => {
         if (locationRef.current.value === '') return;
         history.push({
-            pathname: `/location/${locationRef.current.value}`,
+            pathname: `/search/${locationRef.current.value}`,
             state: {
                 location: locationRef.current.value,
             },
         });
     };
 
-    const handleSearch = () => {
-        if (searchRef.current.value === '') return;
-        history.push({
-            pathname: `/search/${searchRef.current.value}`,
-            state: {
-                search: searchRef.current.value,
-            },
-        });
-    };
-
-    const checkEnterKey = (key, field) => {
-        if (key.keyCode === 13) {
-            if (field === 'search') handleSearch();
-            if (field === 'location') handleLocation();
-        }
+    const checkEnterKey = (key) => {
+        if (key.keyCode === 13) handleLocation();
     };
 
     return (
@@ -121,15 +109,19 @@ const CustomSearchBar = (props) => {
                         <InputBase
                             inputRef={locationRef}
                             className={classes.input}
+                            inputProps={{ style: { textOverflow: 'ellipsis', overflow: 'hidden' } }}
                             style={{ flex: 1 }}
                             placeholder={t('customSearchBar.location')}
-                            onKeyDown={(e) => checkEnterKey(e, 'location')}
+                            onKeyDown={checkEnterKey}
                         />
                         <IconButton onClick={handleLocation} color="primary">
                             <LocationOn />
                         </IconButton>
                         <Divider className={classes.divider} orientation="vertical" />
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <MuiPickersUtilsProvider
+                            {...(t('language') === 'fr' && { locale: frLocale })}
+                            utils={DateFnsUtils}
+                        >
                             <DatePicker
                                 variant="inline"
                                 onChange={(selectedDate) => handleDateChange(selectedDate)}
@@ -138,6 +130,7 @@ const CustomSearchBar = (props) => {
                                     classes: {
                                         root: classes.underline,
                                         focused: classes.underline,
+                                        input: classes.underline,
                                     },
                                     endAdornment: <Event color="primary" />,
                                 }}

@@ -5,6 +5,7 @@ import { TitledPaper } from '@components';
 import { useTranslation } from 'react-i18next';
 import { PlaylistAddCheck } from '@material-ui/icons';
 import EventItem from '../../../EventList/components/EventItem';
+import CustomEventItem from '../../../SearchPage/components/CustomEventItem';
 
 const useStyles = makeStyles((theme) => ({
     submit: {
@@ -49,7 +50,9 @@ const event = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec porttitor dolor. Aliquam ac posuere ipsum. Phasellus ac augue a nulla pharetra.',
     startDate: new Date().toISOString(),
     image: 'https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png',
-    type: 'Free',
+    type: 'Test Type',
+    tags: ['test', 'tags'],
+    languages: ['English', 'French'],
 };
 
 export const Confirm = (props) => {
@@ -86,6 +89,8 @@ export const Confirm = (props) => {
                                 description={event.description}
                                 date={event.startDate}
                                 image={event.image}
+                                tags={event.tags}
+                                languages={event.languages}
                                 type={event.type}
                                 clickeable={false}
                                 style={{ opacity: 0.5, filter: 'blur(1px)' }}
@@ -104,6 +109,10 @@ export const Confirm = (props) => {
                             date={props.variables.startDate?.value ? props.variables.startDate.value : event.startDate}
                             image={imageUrl}
                             type={props.variables.type?.value ? props.variables.type.value : event.type}
+                            tags={props.variables.tags?.value ? props.variables.tags.value : event.tags}
+                            languages={
+                                props.variables.languages?.value ? props.variables.languages.value : event.languages
+                            }
                             confirmPage
                             clickeable={false}
                         />
@@ -115,6 +124,8 @@ export const Confirm = (props) => {
                                 description={event.description}
                                 date={event.startDate}
                                 image={event.image}
+                                tags={event.tags}
+                                languages={event.languages}
                                 type={event.type}
                                 style={{ opacity: 0.5, filter: 'blur(1px)' }}
                                 hoverZoom={false}
@@ -122,6 +133,27 @@ export const Confirm = (props) => {
                             />
                         </Hidden>
                     </Grid>
+                    <CustomEventItem
+                        id={event.objectID}
+                        name={event.name}
+                        description={event.description}
+                        image={event.image}
+                        date={event.date ? new Date(event.date).toISOString() : ''}
+                        type={event.type}
+                        tags={event.tags}
+                        languages={event.languages}
+                    />
+                    <CustomEventItem
+                        id={event.objectID}
+                        name={event.name}
+                        description={event.description}
+                        image={event.image}
+                        date={event.date ? new Date(event.date).toISOString() : ''}
+                        type={event.type}
+                        tags={event.tags}
+                        languages={event.languages}
+                        fake
+                    />
                     <Grid container justify="space-between" className={classes.submit}>
                         <Button
                             variant="outlined"

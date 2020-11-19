@@ -1,5 +1,15 @@
 import React from 'react';
-import { Typography, makeStyles, Card, CardMedia, CardContent, CardHeader, Popper, Grid } from '@material-ui/core';
+import {
+    Typography,
+    makeStyles,
+    Card,
+    CardMedia,
+    CardContent,
+    CardHeader,
+    Popper,
+    Grid,
+    Chip,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -78,14 +88,23 @@ const CustomHits = (props) => {
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
-                                                <CardHeader titleTypographyProps={{ variant: 'h6' }} title={hit.name} />
+                                                <CardHeader
+                                                    titleTypographyProps={{ variant: 'h6' }}
+                                                    title={hit.name}
+                                                    subheader={
+                                                        hit.date ? new Date(hit.date).toISOString().substr(0, 10) : ''
+                                                    }
+                                                />
                                                 <CardContent>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        maxLength={10}
-                                                    >
+                                                    {hit.tags.length
+                                                        ? hit.tags.map((tag) => (
+                                                              <Chip
+                                                                  style={{ fontSize: '0.8em', height: 28 }}
+                                                                  label={tag}
+                                                              />
+                                                          ))
+                                                        : null}
+                                                    <Typography variant="body2" color="textSecondary" component="p">
                                                         {hit.description.length < 50
                                                             ? hit.description
                                                             : `${hit.description.substring(0, 50)}...`}

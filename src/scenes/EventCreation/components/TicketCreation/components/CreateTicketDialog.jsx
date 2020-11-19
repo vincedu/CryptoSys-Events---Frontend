@@ -15,6 +15,7 @@ import {
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import frLocale from 'date-fns/locale/fr';
 import DateFnsUtils from '@date-io/date-fns';
 import { ImageUpload } from '@components';
 
@@ -242,7 +243,10 @@ const CreateTicketDialog = (props) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <MuiPickersUtilsProvider
+                            {...(t('language') === 'fr' && { locale: frLocale })}
+                            utils={DateFnsUtils}
+                        >
                             <Grid container spacing={3} className={classes.datePickersContainer}>
                                 <Grid item xs={6}>
                                     <KeyboardDatePicker

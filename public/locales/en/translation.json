@@ -2,7 +2,8 @@
   "title": "EOS Event",
   "next": "Next",
   "back": "Back",
-  "language": "fr",
+  "language": "en",
+  "translation": "fr",
   "languageFlag": "fr",
   "submit": "Submit",
   "cancel": "Cancel",
@@ -14,7 +15,24 @@
   },
   "eventList": {
     "seeMore": "See More",
-    "noEvent": "No Event"
+    "noEvent": "No Event",
+    "free": "Free",
+    "type": "Type"
+  },
+  "searchPage": {
+    "more": "More",
+    "category": "Categories",
+    "type": "Types",
+    "filterDate": "Filter by Date",
+    "languages": "Languages",
+    "tags": "Tags",
+    "date": "Date",
+    "noEvent": "No Event",
+    "customSearch": "Advanced Search",
+    "featured": "Featured",
+    "asc": "Soon",
+    "desc": "In a While",
+    "sortDate": "Sort by Date"
   },
   "navBar": {
     "help": "Help",
@@ -32,7 +50,10 @@
     "manage": "Manage Events",
     "settings": "Account Settings",
     "signOut": "Sign Out",
-    "liked": "Liked"
+    "liked": "Liked",
+    "browse": "Browse Events",
+    "tickets": "Tickets",
+    "create": "Create Event"
   },
   "sideBar": {
     "profile": "Profile",
@@ -129,6 +150,19 @@
   "resale": {
     "boughtAt": "Bought at",
     "resalePrice": "Resale price"
+  },
+  "helpCenter": {
+    "title": "Help Center",
+    "why": "Why choose EOS Event?",
+    "whyDesc": "EOS Event is a decentralized ticket sale plateform. With the power of EOS IO's blockchain, all tickets are unique and cannot be revoke by the seller.",
+    "nft": "Non-Fungible Tokens",
+    "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scares good such as pieces of art or collectibles EOS Event takes advantage of this by creating NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
+    "safe": "Safe",
+    "safeDesc": "NFT is safer than traditional ticket systems",
+    "fast": "Fast",
+    "fastDesc": "EOS.IO is one of the fastest blockchain",
+    "eos": "EOS",
+    "eosDesc": "Built on EOS.IO blockchain"
   },
 
   "venue": "Venue",

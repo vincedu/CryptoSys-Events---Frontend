@@ -5,6 +5,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
 import { TitledPaper } from '@components';
+import frLocale from 'date-fns/locale/fr';
 
 const DateTime = (props) => {
     const handleChange = (name, value) => {
@@ -18,7 +19,7 @@ const DateTime = (props) => {
                 {t('createEvent.date.description')}
             </Typography>
             <Grid container spacing={3}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider {...(t('language') === 'fr' && { locale: frLocale })} utils={DateFnsUtils}>
                     <Grid item xs={12} sm={5}>
                         <KeyboardDatePicker
                             required

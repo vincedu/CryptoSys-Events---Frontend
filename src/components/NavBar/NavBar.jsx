@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
-import MobileMenu from './menu/MobileMenu';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -190,19 +189,16 @@ const NavBar = (props) => {
 
                 <div style={{ flexGrow: 1 }} />
 
+                <HelpMenu history={history} handleCreateEventButtonClick={handleCreateEventButtonClick} />
                 <Hidden xsDown>
-                    <HelpMenu history={history} />
-                    <Button color="inherit" onClick={() => handleCreateEventButtonClick()}>
+                    <Button color="inherit" onClick={handleCreateEventButtonClick}>
                         {t('navBar.create')}
                     </Button>
-                </Hidden>
-                <Hidden smUp>
-                    <MobileMenu history={history} />
                 </Hidden>
                 {isSignIn ? (
                     <ProfileMenu history={history} />
                 ) : (
-                    <Button color="inherit" onClick={() => handleButtonClick('/signIn')}>
+                    <Button color="inherit" onClick={() => handleButtonClick('/signIn')} style={{ marginLeft: 16 }}>
                         {t('navBar.signIn')}
                     </Button>
                 )}

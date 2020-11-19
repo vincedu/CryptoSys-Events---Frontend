@@ -2,7 +2,8 @@
   "title": "EOS Event",
   "next": "Suivant",
   "back": "Retour",
-  "language": "en",
+  "language": "fr",
+  "translation": "en",
   "languageFlag": "us",
   "submit": "Soumettre",
   "cancel": "Annuler",
@@ -14,7 +15,24 @@
   },
   "eventList": {
     "seeMore": "Voir plus de",
-    "noEvent": "Aucun événement"
+    "noEvent": "Aucun événement",
+    "free": "Gratuit",
+    "type": "Type"
+  },
+  "searchPage": {
+    "more": "Plus de",
+    "category": "Categories",
+    "type": "Types",
+    "filterDate": "Filtrer par date",
+    "languages": "Langages",
+    "tags": "Tags",
+    "date": "Date",
+    "noEvent": "Aucun Événement",
+    "customSearch": "Recherche Avancée",
+    "featured": "En vedette",
+    "asc": "Bientôt",
+    "desc": "Dans longtemps",
+    "sortDate": "Trier par date"
   },
   "navBar": {
     "help": "Aide",
@@ -32,7 +50,10 @@
     "manage": "Gérer les événements",
     "settings": "Réglages du compte",
     "signOut": "Déconnexion",
-    "liked": "Aimés"
+    "liked": "Aimés",
+    "browse": "Parcourir les événements",
+    "tickets": "Billets",
+    "create": "Créer un événement"
   },
   "sideBar": {
     "profile": "Profil",
@@ -129,6 +150,19 @@
   "resale": {
     "boughtAt": "Acheté à",
     "resalePrice": "Prix de revente"
+  },
+  "helpCenter": {
+    "title": "Centre d'aide",
+    "why": "Pourquoi choisir EOS Event?",
+    "whyDesc": "EOS Event est une billeterie décentralisée. Avec la puissance de la blockchain EOS, tout les billets sont uniques et vérifiables.",
+    "nft": "Jetons non fongibles",
+    "nftDesc": "Les jetons non fongibles sont un type spécial de cryptographie qui permet de représenter quelque chose d'unique. Les jetons permettent de représenter la possession d'un bien électronique comme des pièces d'art ou des objets de collections. EOS Event prend avantage de cette technologie pour offrir un service de billeterie en ligne.",
+    "safe": "Sécuritaire",
+    "safeDesc": "Les NFT sont plus sécuritaires que les billets traditionnels",
+    "fast": "Rapide",
+    "fastDesc": "EOS.IO est l'une des chaine de blocs la plus rapide",
+    "eos": "EOS",
+    "eosDesc": "Supporté par la chaine de blocs EOS"
   },
 
   "venue": "Lieu",

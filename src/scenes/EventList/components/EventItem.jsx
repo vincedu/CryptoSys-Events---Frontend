@@ -13,9 +13,10 @@ import {
     Grid,
     Paper,
     IconButton,
+    Chip,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
-import { Favorite, FavoriteBorder } from '@material-ui/icons';
+import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
 
 const EventItem = (props) => {
     EventItem.propTypes = {
@@ -23,8 +24,9 @@ const EventItem = (props) => {
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
+        tags: PropTypes.array.isRequired,
+        languages: PropTypes.array.isRequired,
         history: PropTypes.object.isRequired,
         withBanner: PropTypes.bool,
         hoverZoom: PropTypes.bool,
@@ -105,25 +107,50 @@ const EventItem = (props) => {
     };
     return (
         <Grid item xs={12} sm={6} md={3} className={classes.root}>
-            {props.withBanner ? (
+            {props.withBanner || props.tags?.includes('free') ? (
                 <div className={classes.banner}>
                     <Paper className={classes.bannerContent}>
-                        <p style={{ margin: 'auto' }}>{t(props.type)}</p>
+                        <p style={{ margin: 'auto' }}>{t('eventList.free')}</p>
                     </Paper>
                 </div>
             ) : null}
             <Card onClick={props.clickeable ? handleButtonClick : null} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
-                <CardHeader title={props.name} subheader={props.date.substring(0, 10)} />
-                <CardContent style={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography variant="body2" color="textSecondary" style={{ flex: 1 }}>
+                <CardHeader title={props.name} subheader={props.date.substring(0, 10)} style={{ paddingBottom: 0 }} />
+                <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div>
+                            {props.tags?.length
+                                ? props.tags
+                                      .slice(0, 2)
+                                      .map((tag) => (
+                                          <Chip
+                                              key={tag}
+                                              style={{ fontSize: '0.8em', height: 28, marginRight: 5 }}
+                                              label={`#${tag}`}
+                                              variant="outlined"
+                                              color="primary"
+                                          />
+                                      ))
+                                : null}
+                        </div>
+                        <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
+                            {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                        </IconButton>
+                    </div>
+                    <Typography variant="body2" color="textSecondary">
                         {props.description.length < 100
                             ? props.description
                             : `${props.description.substring(0, 100)}...`}
                     </Typography>
-                    <IconButton aria-label="add to favorites" onClick={handleLike}>
-                        {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
-                    </IconButton>
+                    {props.languages?.length ? (
+                        <div style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
+                            <Translate style={{ fontSize: '1rem', padding: '0 5px', color: 'rgba(0, 0, 0, 0.54)' }} />
+                            <Typography variant="body2" color="textSecondary">
+                                {props.languages.map((language) => t(language)).join(', ')}
+                            </Typography>
+                        </div>
+                    ) : null}
                 </CardContent>
             </Card>
         </Grid>

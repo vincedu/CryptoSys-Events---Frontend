@@ -3,11 +3,12 @@ import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
 import { makeStyles, Grid, Typography, Button, CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 import EventItem from './EventItem';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     seeMoreBtn: {
         padding: 30,
         display: 'flex',
@@ -16,8 +17,11 @@ const useStyles = makeStyles((theme) => ({
     categoryTitle: {
         padding: 20,
         textAlign: 'left',
-        color: theme.palette.secondary.main,
+        width: 'fit-content',
         fontFamily: `'Bebas Neue', sans-serif`,
+        '&:hover': {
+            cursor: 'pointer',
+        },
     },
     horizontalLine: {
         margin: 30,
@@ -38,12 +42,25 @@ const EventList = (props) => {
     });
 
     function loadMore() {
-        query.fetchMore({
-            variables: {
-                offset: query.data.eventsByParam.length,
+        const pos = window.pageYOffset;
+        query
+            .fetchMore({
+                variables: {
+                    offset: query.data.eventsByParam.length,
+                },
+            })
+            .then(() => {
+                window.scrollTo(0, pos);
+            });
+    }
+    const handleCategory = (category) => {
+        props.history.push({
+            pathname: `/search/${category}`,
+            state: {
+                category,
             },
         });
-    }
+    };
 
     if (query.loading) {
         return <CircularProgress />;
@@ -51,8 +68,15 @@ const EventList = (props) => {
 
     if (query.data.eventsByParam && query.data.eventsByParam.length) {
         return (
-            <div>
-                <Typography className={classes.categoryTitle} variant="h3">
+            <div style={{ dilplay: 'flex', padding: 20 }}>
+                <Typography
+                    title={`${t('eventList.seeMore')} ${t(props.category)}`}
+                    className={classes.categoryTitle}
+                    color="secondary"
+                    value={props.category}
+                    variant="h3"
+                    onClick={() => handleCategory(props.category)}
+                >
                     {t(props.category)}
                 </Typography>
                 <Grid container spacing={3} direction="row" justify="flex-start" alignItems="stretch">
@@ -61,6 +85,8 @@ const EventList = (props) => {
                             key={event.id}
                             id={event.id}
                             name={event.name}
+                            tags={event.tags}
+                            languages={event.languages}
                             description={event.description}
                             date={event.startDate}
                             image={event.image}
@@ -78,15 +104,12 @@ const EventList = (props) => {
             </div>
         );
     }
-    return (
-        <div>
-            <Typography variant="h5">No event in category</Typography>
-        </div>
-    );
+    return null;
 };
 
 EventList.propTypes = {
     category: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired,
 };
 
-export default EventList;
+export default withRouter(EventList);

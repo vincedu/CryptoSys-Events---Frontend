@@ -1,18 +1,51 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Menu, ListItemIcon, IconButton, MenuItem, ListItemText } from '@material-ui/core';
+import {
+    Popper,
+    ListItemIcon,
+    IconButton,
+    MenuItem,
+    ListItemText,
+    makeStyles,
+    Paper,
+    ClickAwayListener,
+    MenuList,
+    Grow,
+} from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
 
+const useStyles = makeStyles((theme) => ({
+    primaryText: {
+        color: theme.palette.primary.dark,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+    },
+    secondaryText: {
+        fontSize: 'small',
+        color: theme.palette.primary.dark,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+    },
+    horizontalLine: {
+        margin: 0,
+        border: 0,
+        height: 1,
+        backgroundColor: 'lightgray',
+    },
+    menuItem: {
+        padding: '12px 25px',
+    },
+}));
+
 const ProfileMenu = (props) => {
+    const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { userData } = useContext(AuthContext);
     const user = firebase.auth().currentUser;
-
-    const isMenuOpen = Boolean(anchorEl);
 
     const { history, ual } = props;
     const { t } = useTranslation();
@@ -36,54 +69,86 @@ const ProfileMenu = (props) => {
         history.push(pageURL);
     };
 
-    const menuId = 'profile-menu';
     const renderProfileMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem style={{ width: '220px' }} onClick={() => handleButtonClick('/userProfile/accountSettings')}>
-                <ListItemIcon style={{ minWidth: '45px' }}>
-                    <AccountCircle fontSize="large" />
-                </ListItemIcon>
-                <ListItemText
-                    primary={userData && userData.displayName ? userData.displayName : null}
-                    secondary={user && user.email ? user.email : null}
-                />
-            </MenuItem>
-            <hr />
-            <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
-                {t('profileMenu.profile')}
-            </MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/userProfile/manageEvents')}>
-                {t('profileMenu.manage')}
-            </MenuItem>
-            <hr />
-            <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
-                {t('profileMenu.settings')}
-            </MenuItem>
-            <MenuItem onClick={() => handleButtonClick('/userProfile/liked')}>
-                {`${t('profileMenu.liked')} (${userData.liked ? userData.liked.length : 0})`}
-            </MenuItem>
-            <MenuItem onClick={handleSignOut}>{t('profileMenu.signOut')}</MenuItem>
-        </Menu>
+        <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="bottom-end" transition disablePortal>
+            {({ TransitionProps, placement }) => (
+                <Grow
+                    {...TransitionProps}
+                    style={{ transformOrigin: placement === 'bottom' ? 'right bottom' : 'right top' }}
+                >
+                    <Paper style={{ borderRadius: 3, maxWidth: 250 }}>
+                        <ClickAwayListener onClickAway={handleMenuClose}>
+                            <MenuList style={{ padding: 0 }}>
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    style={{ paddingLeft: 15 }}
+                                    onClick={() => handleButtonClick('/userProfile/accountSettings')}
+                                >
+                                    <ListItemIcon style={{ minWidth: 45 }}>
+                                        <AccountCircle fontSize="large" />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        classes={{ primary: classes.primaryText, secondary: classes.secondaryText }}
+                                        primary={userData && userData.displayName ? userData.displayName : null}
+                                        secondary={user && user.email ? user.email : null}
+                                    />
+                                </MenuItem>
+                                <hr className={classes.horizontalLine} />
+                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/search')}>
+                                    {t('profileMenu.browse')}
+                                </MenuItem>
+                                <hr className={classes.horizontalLine} />
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/userProfile/accountSettings')}
+                                >
+                                    {t('profileMenu.profile')}
+                                </MenuItem>
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/userProfile/myTickets')}
+                                >
+                                    {t('profileMenu.tickets')}
+                                </MenuItem>
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/userProfile/liked')}
+                                >
+                                    {`${t('profileMenu.liked')} (${userData.liked ? userData.liked.length : 0})`}
+                                </MenuItem>
+                                <hr className={classes.horizontalLine} />
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/createEvent/general')}
+                                >
+                                    {t('profileMenu.create')}
+                                </MenuItem>
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/userProfile/manageEvents')}
+                                >
+                                    {t('profileMenu.manage')}
+                                </MenuItem>
+                                <MenuItem
+                                    className={classes.menuItem}
+                                    onClick={() => handleButtonClick('/userProfile/accountSettings')}
+                                >
+                                    {t('profileMenu.settings')}
+                                </MenuItem>
+                                <MenuItem className={classes.menuItem} onClick={handleSignOut}>
+                                    {t('profileMenu.signOut')}
+                                </MenuItem>
+                            </MenuList>
+                        </ClickAwayListener>
+                    </Paper>
+                </Grow>
+            )}
+        </Popper>
     );
 
     return (
         <div>
-            <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleMenuOpen}
-                color="inherit"
-            >
+            <IconButton onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
                 <AccountCircle />
             </IconButton>
             {renderProfileMenu}

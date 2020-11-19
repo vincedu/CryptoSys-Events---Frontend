@@ -1,118 +1,143 @@
-import { PageContainer } from '@components/';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    '@keyframes float': {
+        '0%': {
+            transform: 'translatey(0px)',
+        },
+        '50%': {
+            transform: 'translatey(-5px)',
+        },
+        '100%': {
+            transform: 'translatey(0px)',
+        },
+    },
+
     media: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '56.25%',
     },
     img: {
         width: '100%',
         objectFit: 'contain',
+        animation: '$float 6s ease-in-out infinite',
     },
     caracteristic: {
-        padding: '40px',
+        padding: 30,
         textAlign: 'center',
         [theme.breakpoints.down('xs')]: {
             padding: '20px!important',
         },
     },
+    promotion: {
+        paddingBottom: 40,
+        background: 'linear-gradient(70deg, rgba(50,72,86,1) 0%, rgba(99,140,166,1) 100%)',
+        boxSizing: 'border-box!important',
+        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
+    },
+    categoryTitle: {
+        fontFamily: `'Bebas Neue', sans-serif`,
+    },
+    container: {
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+    },
+    backgroundBlue: {
+        position: 'absolute',
+        background: 'linear-gradient(190deg, #324856 50%, transparent 25%)',
+        height: '100vh',
+        width: '100%',
+        animation: '$float 5s ease-in-out infinite',
+    },
+    backgroundOrange: {
+        position: 'absolute',
+        background: 'linear-gradient(170deg, #d66c44 50%, transparent 25%)',
+        height: '95vh',
+        width: '100%',
+        animation: '$float 6s ease-in-out infinite',
+    },
 }));
-// const HelpCenter = () => {
-//     return <PageContainer>Help Center</PageContainer>;
-// };
 
 export default function HelpCenter() {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     return (
-        <PageContainer>
-            <Grid style={{ width: '100%' }} container direction="column" alignItems="center">
-                <Grid item xs={12} sm={10} md={9} style={{ padding: '40px' }}>
-                    <Grid container direction="row" alignItems="center">
-                        <Grid item xs={12}>
-                            <Typography variant="h3">Help Center</Typography>
-                            <hr />
-                        </Grid>
-                        <Grid item xs={12} sm={8} md={6}>
-                            <div className={classes.ticketText}>
-                                {/* NFT text */}
-                                <Typography variant="h4">Why choose EOS Event?</Typography>
-                                <br />
-                                <Typography variant="body1">
-                                    EOS Event is a decentralized ticket sale plateform. With the power of EOS IO&apos;s
-                                    blockchain, all tickets are unique and cannot be revoke by the seller.
-                                </Typography>
-                            </div>
-                        </Grid>
-                        <Grid item xs={10} sm={4} md={6}>
-                            <img
-                                src="eosHelp.png"
-                                alt="eos"
-                                className={classes.img}
-                                style={{ padding: '50px 30px 10px 0px' }}
-                            />
-                        </Grid>
-                        <Grid item xs={10} sm={5} md={6}>
-                            <img src="ticket.png" alt="ticket" className={classes.img} />
-                        </Grid>
-                        <Grid item xs={12} sm={7} md={6}>
-                            <div className={classes.ticketText}>
-                                {/* NFT text */}
-                                <Typography variant="h4">Non-Fungible Tokens</Typography>
-                                <br />
-                                <Typography variant="subtitle1">
-                                    NFT is a special type of cryptographic token which represents something unique. They
-                                    can represent ownership of digitally scares good such as pieces of art or
-                                    collectibles EOS Event takes advantage of this by creating NFT for each event&apos;s
-                                    tickets. That way, you know your ticket is original and cannot be copied or faked.
-                                </Typography>
-                            </div>
+        <Grid container justify="center">
+            <Grid item xs={11} sm={10} md={9}>
+                <Grid container alignItems="center" justify="center" spacing={2}>
+                    <Grid item xs={12} style={{ padding: 20 }}>
+                        <Typography className={classes.categoryTitle} variant="h1" color="secondary">
+                            {t('helpCenter.title')}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={8} md={6}>
+                        <div className={classes.ticketText}>
+                            <Typography color="primary" variant="h4">
+                                {t('helpCenter.why')}
+                            </Typography>
+                            <br />
+                            <Typography color="primary" variant="body1">
+                                {t('helpCenter.whyDesc')}
+                            </Typography>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <img src="eosHelp.png" alt="eos" className={classes.img} />
+                    </Grid>
+                    <Grid item xs={10} sm={5}>
+                        <img src="ticket.png" alt="ticket" className={classes.img} />
+                    </Grid>
+                    <Grid item xs={12} sm={7} md={6}>
+                        <div className={classes.ticketText}>
+                            <Typography color="primary" variant="h4">
+                                {t('helpCenter.nft')}
+                            </Typography>
+                            <br />
+                            <Typography color="primary" variant="subtitle1">
+                                {t('helpCenter.nftDesc')}
+                            </Typography>
+                        </div>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Grid container className={classes.caracteristic}>
+                            <Grid item xs={11}>
+                                <img src="safe.png" alt="safe" className={classes.img} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="h4">{t('helpCenter.safe')}</Typography>
+                                <Typography variant="subtitle1">{t('helpCenter.safeDesc')}</Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12} sm={9} md={7} style={{ width: '100%' }}>
-                    <Grid container direction="row" alignItems="stretch">
-                        <Grid item xs={4}>
-                            <Grid container className={classes.caracteristic}>
-                                <Grid item xs={11}>
-                                    <img src="safe.png" alt="safe" className={classes.img} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="h4">Safe</Typography>
-                                    <Typography variant="subtitle1">
-                                        NFT is safer than traditional ticket systems.
-                                    </Typography>
-                                </Grid>
+                    <Grid item xs={3}>
+                        <Grid container className={classes.caracteristic}>
+                            <Grid item xs={12}>
+                                <img src="fast.png" alt="safe" className={classes.img} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="h4">{t('helpCenter.fast')}</Typography>
+                                <Typography variant="body1">{t('helpCenter.fastDesc')}</Typography>
                             </Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                            <Grid container className={classes.caracteristic}>
-                                <Grid item xs={12}>
-                                    <img src="fast.png" alt="safe" className={classes.img} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="h4">Fast</Typography>
-                                    <Typography variant="body1">EOS.IO is one of the fastest blockchain.</Typography>
-                                </Grid>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Grid container className={classes.caracteristic}>
+                            <Grid item xs={12}>
+                                <img src="eosHelp.png" alt="safe" className={classes.img} />
                             </Grid>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Grid container className={classes.caracteristic}>
-                                <Grid item xs={12}>
-                                    <img src="eosHelp.png" alt="safe" className={classes.img} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="h4">EOS.IO</Typography>
-                                    <Typography variant="body1">Built on EOS.IO blockchain.</Typography>
-                                </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="h4">{t('helpCenter.eos')}</Typography>
+                                <Typography variant="body1">{t('helpCenter.eosDesc')}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </PageContainer>
+        </Grid>
     );
 }
