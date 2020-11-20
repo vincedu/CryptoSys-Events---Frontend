@@ -43,13 +43,13 @@ const CustomEventItem = (props) => {
     };
 
     return (
-        <Grid item sm={12} style={{ width: '100%' }} className={props.fake ? classes.fake : null}>
+        <Grid item sm={12} className={props.fake ? classes.fake : null}>
             <Card className={classes.root} onClick={() => handleButtonClick(`/event/${props.id}`)}>
                 <Grid container direction="row">
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={5}>
                         <CardMedia className={classes.media} image={props.image} title={props.name} />
                     </Grid>
-                    <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
+                    <Grid item xs={12} sm={7} style={{ margin: 'auto' }}>
                         <CardHeader
                             titleTypographyProps={{ variant: 'h4' }}
                             title={props.name}
@@ -60,21 +60,19 @@ const CustomEventItem = (props) => {
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div>
                                     {props.tags?.length
-                                        ? props.tags
-                                              .slice(0, 3)
-                                              .map((tag) => (
-                                                  <Chip
-                                                      key={tag}
-                                                      style={{
-                                                          fontSize: '0.8em',
-                                                          height: 28,
-                                                          margin: '5px 5px 10px 0',
-                                                      }}
-                                                      label={`#${tag}`}
-                                                      variant="outlined"
-                                                      color="primary"
-                                                  />
-                                              ))
+                                        ? props.tags.slice(0, 3).map((tag) => (
+                                              <Chip
+                                                  key={tag}
+                                                  style={{
+                                                      fontSize: '0.8em',
+                                                      height: 28,
+                                                      margin: '5px 5px 10px 0',
+                                                  }}
+                                                  label={`#${tag}`}
+                                                  variant="outlined"
+                                                  color="primary"
+                                              />
+                                          ))
                                         : null}
                                 </div>
                             </div>

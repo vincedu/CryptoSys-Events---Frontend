@@ -91,7 +91,7 @@ const EventList = (props) => {
                             date={event.startDate}
                             image={event.image}
                             type={event.type}
-                            liked={userData.liked?.includes(event.id)}
+                            liked={userData?.liked?.includes(event.id)}
                         />
                     ))}
                 </Grid>

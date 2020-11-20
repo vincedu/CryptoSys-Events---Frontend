@@ -32,7 +32,9 @@
     "featured": "Featured",
     "asc": "Soon",
     "desc": "In a While",
-    "sortDate": "Sort by Date"
+    "sortDate": "Sort by Date",
+    "from": "From",
+    "to": "To"
   },
   "navBar": {
     "help": "Help",
@@ -117,9 +119,7 @@
       "title": "Date & Hour",
       "description": "Let potential attendees know when your event starts and ends so that they can plan their visit",
       "startDate": "Start Date",
-      "endDate": "End Date",
-      "startTime": "Start Time",
-      "endTime": "End Time"
+      "endDate": "End Date"
     },
     "tickets": {
       "title": "Tickets",

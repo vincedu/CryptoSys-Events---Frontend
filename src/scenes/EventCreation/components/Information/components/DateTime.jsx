@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Grid, Typography } from '@material-ui/core';
+import { LocalizationProvider, DateTimePicker } from '@material-ui/pickers';
+import { Grid, Typography, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { TitledPaper } from '@components';
 import frLocale from 'date-fns/locale/fr';
 
@@ -19,82 +19,38 @@ const DateTime = (props) => {
                 {t('createEvent.date.description')}
             </Typography>
             <Grid container spacing={3}>
-                <MuiPickersUtilsProvider {...(t('language') === 'fr' && { locale: frLocale })} utils={DateFnsUtils}>
+                <LocalizationProvider {...(t('language') === 'fr' && { locale: frLocale })} dateAdapter={DateFnsUtils}>
                     <Grid item xs={12} sm={5}>
-                        <KeyboardDatePicker
+                        <DateTimePicker
+                            renderInput={(inputProps) => (
+                                <TextField variant="outlined" style={{ width: '100%' }} {...inputProps} />
+                            )}
                             required
-                            variant="inline"
                             disablePast
-                            margin="normal"
-                            inputVariant="outlined"
+                            OpenPickerButtonProps={{ color: 'primary', style: { marginRight: 0 } }}
                             label={t('createEvent.date.startDate')}
-                            format="MM/dd/yyyy"
-                            name="startDate"
                             value={props.value.start}
                             error={props.value.error}
                             onChange={(event) => handleChange('start', event)}
-                            KeyboardButtonProps={{
-                                color: 'primary',
-                            }}
                             style={{ width: '100%' }}
                         />
                     </Grid>
                     <Grid item xs={12} sm={5}>
-                        <KeyboardTimePicker
+                        <DateTimePicker
+                            renderInput={(inputProps) => (
+                                <TextField variant="outlined" style={{ width: '100%' }} {...inputProps} />
+                            )}
                             required
-                            variant="inline"
                             disablePast
-                            margin="normal"
-                            inputVariant="outlined"
-                            label={t('createEvent.date.startTime')}
-                            name="startDate"
-                            value={props.value.start}
-                            error={props.value.error}
-                            onChange={(event) => handleChange('start', event)}
-                            KeyboardButtonProps={{
-                                color: 'primary',
-                            }}
-                            style={{ width: '100%' }}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={5}>
-                        <KeyboardDatePicker
-                            required
-                            variant="inline"
-                            disablePast
-                            margin="normal"
-                            inputVariant="outlined"
+                            OpenPickerButtonProps={{ color: 'primary', style: { marginRight: 0 } }}
                             label={t('createEvent.date.endDate')}
-                            format="MM/dd/yyyy"
-                            name="endDate"
                             value={props.value.end}
                             error={props.value.error}
                             onChange={(event) => handleChange('end', event)}
-                            KeyboardButtonProps={{
-                                color: 'primary',
-                            }}
                             style={{ width: '100%' }}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={5}>
-                        <KeyboardTimePicker
-                            required
-                            variant="inline"
-                            disablePast
-                            margin="normal"
-                            inputVariant="outlined"
-                            label={t('createEvent.date.endTime')}
-                            name="endDate"
-                            value={props.value.end}
-                            error={props.value.error}
-                            onChange={(event) => handleChange('end', event)}
-                            KeyboardButtonProps={{
-                                color: 'primary',
-                            }}
-                            style={{ width: '100%' }}
-                        />
-                    </Grid>
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
             </Grid>
         </TitledPaper>
     );

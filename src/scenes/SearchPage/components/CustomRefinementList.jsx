@@ -90,28 +90,30 @@ const CustomRefinementList = (props) => {
 
     const RefinementList = connectRefinementList(({ items, refine, createURL }) => (
         <Grid container direction="column">
-            {items.map((item) => (
-                <Grid item key={item.label} className={classes.item}>
-                    <a
-                        href={createURL(item.label)}
-                        style={{ fontWeight: item.isRefined ? 'bold' : '', fontSize: '0.9em' }}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            refine(item.value);
-                        }}
-                        className={classes.text}
-                    >
-                        <Checkbox
-                            checked={item.isRefined}
-                            color="primary"
-                            style={{ padding: 4 }}
-                            checkedIcon={<CheckBox style={{ width: '0.7em', height: '0.7em' }} />}
-                            icon={<CheckBoxOutlineBlank style={{ width: '0.7em', height: '0.7em' }} />}
-                        />
-                        {`${t(item.label)} (${item.count})`}
-                    </a>
-                </Grid>
-            ))}
+            {items.map((item) => {
+                return (
+                    <Grid item key={item.label} className={classes.item}>
+                        <a
+                            href={createURL(item.label)}
+                            style={{ fontWeight: item.isRefined ? 'bold' : '', fontSize: '0.9em' }}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                refine(item.value);
+                            }}
+                            className={classes.text}
+                        >
+                            <Checkbox
+                                checked={item.isRefined}
+                                color="primary"
+                                style={{ padding: 4 }}
+                                checkedIcon={<CheckBox style={{ width: '0.7em', height: '0.7em' }} />}
+                                icon={<CheckBoxOutlineBlank style={{ width: '0.7em', height: '0.7em' }} />}
+                            />
+                            {`${t(item.label)} (${item.count})`}
+                        </a>
+                    </Grid>
+                );
+            })}
             <Grid item style={{ paddingTop: 15 }}>
                 <Button
                     variant="outlined"
@@ -145,7 +147,7 @@ const CustomRefinementList = (props) => {
     attribute.limit = showMore;
 
     return (
-        <CustomAccordion defaultExpanded={window.innerWidth > 600}>
+        <CustomAccordion defaultExpanded={window.innerWidth > 600 || attribute.defaultRefinement}>
             <CustomAccordionSummary expandIcon={<ExpandMore />}>
                 <Typography variant="h5" className={classes.title}>
                     {t(`searchPage.${props.attribute}`)}

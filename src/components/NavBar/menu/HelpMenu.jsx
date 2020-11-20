@@ -39,7 +39,7 @@ const HelpMenu = (props) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const { history, handleCreateEventButtonClick } = props;
+    const { history } = props;
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -68,7 +68,10 @@ const HelpMenu = (props) => {
                                     {t('profileMenu.browse')}
                                 </MenuItem>
                                 <Hidden smUp>
-                                    <MenuItem className={classes.menuItem} onClick={handleCreateEventButtonClick}>
+                                    <MenuItem
+                                        className={classes.menuItem}
+                                        onClick={() => handleButtonClick('/createEvent/general')}
+                                    >
                                         {t('navBar.create')}
                                     </MenuItem>
                                 </Hidden>
@@ -106,7 +109,6 @@ const HelpMenu = (props) => {
 
 HelpMenu.propTypes = {
     history: PropTypes.object.isRequired,
-    handleCreateEventButtonClick: PropTypes.func.isRequired,
 };
 
 export default HelpMenu;

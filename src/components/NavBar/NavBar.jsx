@@ -1,15 +1,16 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Button, InputBase, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { AppBar, Toolbar, Button, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
+import Autocomplete from '../../scenes/EventList/components/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
+        transition: 'background-color 0.6s',
         position: 'sticky',
         zIndex: theme.zIndex.drawer + 1, // Clip sidebar drawer under navbar
     },
@@ -28,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
         height: '5vh',
     },
     search: {
-        transition: 'display .3s',
         position: 'relative',
         borderRadius: 3,
         backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -42,28 +42,6 @@ const useStyles = makeStyles((theme) => ({
         },
         [theme.breakpoints.down('xs')]: {
             width: '30%',
-        },
-    },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
         },
     },
     transparent: {
@@ -80,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         width: '0%',
     },
     hidden: {
-        display: 'none',
+        visibility: 'hidden',
     },
 }));
 
@@ -100,7 +78,6 @@ const NavBar = (props) => {
     let mainPageTheme = mainPage();
     const [transparent, setTransparent] = React.useState(true);
     const progressBar = useRef();
-    const searchNav = useRef();
 
     // Change NavBar theme when scrolling
     function scrollFunction() {
@@ -133,29 +110,10 @@ const NavBar = (props) => {
     const isSignIn = Boolean(currentUser);
 
     const { history } = props;
+    const searchBarRef = useRef();
 
     const handleButtonClick = (pageURL) => {
         history.push(pageURL);
-    };
-
-    const handleCreateEventButtonClick = () => {
-        if (isSignIn) {
-            history.push('/createEvent/general');
-        } else {
-            history.push('/signIn');
-        }
-    };
-
-    const checkEnterKey = (key) => {
-        if (key.keyCode === 13) {
-            if (searchNav.current.value === '') return;
-            history.push({
-                pathname: `/search/${searchNav.current.value}`,
-                state: {
-                    search: searchNav.current.value,
-                },
-            });
-        }
     };
 
     return (
@@ -171,27 +129,18 @@ const NavBar = (props) => {
                         <Typography className={classes.title}>EOS Event</Typography>
                     </Hidden>
                 </Button>
-                <div className={`${classes.search} ${transparent && mainPageTheme ? classes.hidden : ''}`}>
-                    <div className={classes.searchIcon}>
-                        <SearchIcon />
-                    </div>
-                    <InputBase
-                        inputRef={searchNav}
-                        placeholder={t('navBar.search')}
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                        onKeyDown={(e) => checkEnterKey(e)}
-                    />
+                <div
+                    className={`${classes.search} ${transparent && mainPageTheme ? classes.hidden : ''}`}
+                    ref={searchBarRef}
+                >
+                    <Autocomplete searchBarRef={searchBarRef} navbar />
                 </div>
 
                 <div style={{ flexGrow: 1 }} />
 
-                <HelpMenu history={history} handleCreateEventButtonClick={handleCreateEventButtonClick} />
+                <HelpMenu history={history} />
                 <Hidden xsDown>
-                    <Button color="inherit" onClick={handleCreateEventButtonClick}>
+                    <Button color="inherit" onClick={() => handleButtonClick('/createEvent/general')}>
                         {t('navBar.create')}
                     </Button>
                 </Hidden>

@@ -1,11 +1,21 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Grid, InputBase, Paper, Divider, Typography, Hidden, IconButton } from '@material-ui/core';
+import {
+    makeStyles,
+    Grid,
+    InputBase,
+    Paper,
+    Divider,
+    Typography,
+    Hidden,
+    IconButton,
+    TextField,
+} from '@material-ui/core';
 import { LocationOn, Event } from '@material-ui/icons';
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
+import { LocalizationProvider, DateRangePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import DateFnsUtils from '@date-io/date-fns';
 import frLocale from 'date-fns/locale/fr';
 import Autocomplete from './Autocomplete';
 
@@ -44,12 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     underline: {
         cursor: 'pointer',
-        '&::before': {
-            borderBottom: 'none!important',
-        },
-        '&::after': {
-            borderBottom: 'none!important',
-        },
+        border: 'none!important',
     },
 }));
 
@@ -61,17 +66,21 @@ const CustomSearchBar = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
     const { history } = props;
-    const date = new Date();
     const locationRef = useRef();
     const searchBarRef = useRef();
 
     const handleDateChange = (selectedDate) => {
-        history.push({
-            pathname: `/search/${+selectedDate}`,
-            state: {
-                date: +selectedDate,
-            },
-        });
+        if (selectedDate[0] && selectedDate[1]) {
+            history.push({
+                pathname: '/search',
+                state: {
+                    date: {
+                        min: selectedDate[0],
+                        max: selectedDate[1],
+                    },
+                },
+            });
+        }
     };
 
     const handleLocation = () => {
@@ -118,27 +127,32 @@ const CustomSearchBar = (props) => {
                             <LocationOn />
                         </IconButton>
                         <Divider className={classes.divider} orientation="vertical" />
-                        <MuiPickersUtilsProvider
+                        <LocalizationProvider
                             {...(t('language') === 'fr' && { locale: frLocale })}
-                            utils={DateFnsUtils}
+                            dateAdapter={DateFnsUtils}
                         >
-                            <DatePicker
-                                variant="inline"
+                            <DateRangePicker
                                 onChange={(selectedDate) => handleDateChange(selectedDate)}
-                                value={date}
-                                InputProps={{
-                                    classes: {
-                                        root: classes.underline,
-                                        focused: classes.underline,
-                                        input: classes.underline,
-                                    },
-                                    endAdornment: <Event color="primary" />,
+                                value={[null, null]}
+                                startText={t('customSearchBar.search')}
+                                renderInput={(inputProps) => {
+                                    const finalProps = { ...inputProps };
+                                    finalProps.helperText = '';
+                                    finalProps.InputProps = {
+                                        endAdornment: <Event color="primary" pointerEvents="none" />,
+                                        classes: {
+                                            root: classes.underline,
+                                            focused: classes.underline,
+                                            notchedOutline: classes.underline,
+                                        },
+                                    };
+                                    return <TextField {...finalProps} />;
                                 }}
                                 className={classes.input}
                                 style={{ flex: 2 }}
                                 disablePast
                             />
-                        </MuiPickersUtilsProvider>
+                        </LocalizationProvider>
                         <Divider className={classes.divider} orientation="vertical" />
                     </Hidden>
                     <div style={{ flex: 4 }}>

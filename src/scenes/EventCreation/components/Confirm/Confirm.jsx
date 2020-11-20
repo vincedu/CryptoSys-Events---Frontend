@@ -134,14 +134,15 @@ export const Confirm = (props) => {
                         </Hidden>
                     </Grid>
                     <CustomEventItem
-                        id={event.objectID}
-                        name={event.name}
-                        description={event.description}
-                        image={event.image}
-                        date={event.date ? new Date(event.date).toISOString() : ''}
-                        type={event.type}
-                        tags={event.tags}
-                        languages={event.languages}
+                        name={props.variables.name?.value ? props.variables.name.value : event.name}
+                        description={
+                            props.variables.description?.value ? props.variables.description.value : event.description
+                        }
+                        date={props.variables.startDate?.value ? props.variables.startDate.value : event.startDate}
+                        image={imageUrl}
+                        type={props.variables.type?.value ? props.variables.type.value : event.type}
+                        tags={props.variables.tags?.value ? props.variables.tags.value : event.tags}
+                        languages={props.variables.languages?.value ? props.variables.languages.value : event.languages}
                     />
                     <CustomEventItem
                         id={event.objectID}

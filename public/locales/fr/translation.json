@@ -32,7 +32,9 @@
     "featured": "En vedette",
     "asc": "Bientôt",
     "desc": "Dans longtemps",
-    "sortDate": "Trier par date"
+    "sortDate": "Trier par date",
+    "from": "À partir de",
+    "to": "jusqu'à"
   },
   "navBar": {
     "help": "Aide",
@@ -117,9 +119,7 @@
       "title": "Date et heure",
       "description": "Informez les participants potentiels du début et de la fin de votre événement afin qu'ils puissent planifier leur visite",
       "startDate": "Date de début",
-      "endDate": "Heure de début",
-      "startTime": "Date de fin",
-      "endTime": "Heure de fin"
+      "endDate": "Heure de début"
     },
     "tickets": {
       "title": "Billets",

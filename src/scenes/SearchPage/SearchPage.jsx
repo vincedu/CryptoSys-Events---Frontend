@@ -31,15 +31,15 @@ function SearchPage() {
 
     return (
         <InstantSearch searchClient={searchClient} indexName="events">
-            <Grid container justify="space-around" style={{ padding: '0 1rem' }}>
-                <Grid item xs={11} sm={3} style={{ width: '100%' }}>
+            <Grid container justify={window.innerWidth > 600 ? 'flex-start' : 'center'} style={{ padding: '0 1rem' }}>
+                <Grid item xs={11} sm={3} lg={2} style={{ width: '100%', padding: 5 }}>
                     <CustomDate attribute="date" />
-                    <CustomRefinementList attribute="category" numberItems={3} />
-                    <CustomRefinementList attribute="type" numberItems={3} />
+                    <CustomRefinementList attribute="category" numberItems={5} />
+                    <CustomRefinementList attribute="type" numberItems={5} />
                     <CustomRefinementList attribute="tags" numberItems={2} />
                     <CustomRefinementList attribute="languages" numberItems={2} />
                 </Grid>
-                <Grid item xs={12} sm={9} md={8} className={classes.right}>
+                <Grid item xs={12} sm={9} className={classes.right}>
                     <Typography className={classes.title} variant="h2">
                         {t('searchPage.customSearch')}
                     </Typography>
