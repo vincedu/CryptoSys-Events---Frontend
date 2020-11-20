@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 const MyTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { name, description, image, templateId, assetId, opened, used } = props;
+    const { name, description, image, templateId, assetId, eventId, opened, used } = props;
     const { sellTicket, transferTicketNFTs } = useContext(NFTContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setiInfoDialogOpen] = useState(false);
@@ -115,11 +115,7 @@ const MyTicketItem = (props) => {
             <TicketInfoDialog
                 open={infoDialogOpen}
                 onClose={handleInfoDialogClose}
-                name={name}
-                description={description}
-                image={image}
-                templateId={templateId}
-                assetId={assetId}
+                ticket={{ name, description, image, templateId, eventId, assetId }}
             />
             <ResaleDialog
                 isOpen={resaleDialogOpen}
@@ -182,6 +178,7 @@ MyTicketItem.propTypes = {
     templateId: PropTypes.string.isRequired,
     assetId: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    eventId: PropTypes.string.isRequired,
     opened: PropTypes.bool.isRequired,
     used: PropTypes.bool.isRequired,
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, Dialog, Grid, Typography } from '@material-ui/core';
 import { TitledPaper } from '@components';
+import TicketQRCode from './TicketQRCode';
 
 const useStyles = makeStyles({
     ticketImage: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles({
 
 const TicketInfoDialog = (props) => {
     const classes = useStyles();
+    const { open, onClose, ticket, price } = props;
     const { t } = useTranslation();
-    const { open, onClose, name, description, image, templateId, assetId, price } = props;
 
     const handleClose = () => {
         onClose();
@@ -27,23 +28,27 @@ const TicketInfoDialog = (props) => {
             <TitledPaper title={t('ticketList.nftTicketInfo')}>
                 <Grid container spacing={2}>
                     <Grid item>
-                        <img className={classes.ticketImage} alt="complex" src={`https://ipfs.io/ipfs/${image}`} />
+                        <img
+                            className={classes.ticketImage}
+                            alt="complex"
+                            src={`https://ipfs.io/ipfs/${ticket.image}`}
+                        />
                     </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1">
-                                    {name}
+                                    {ticket.name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    {description}
+                                    {ticket.description}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    Asset ID: {assetId}
+                                    Asset ID: {ticket.assetId}
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant="body2">Template ID: {templateId}</Typography>
+                                <Typography variant="body2">Template ID: {ticket.templateId}</Typography>
                             </Grid>
                         </Grid>
                         <Grid item>
@@ -52,6 +57,9 @@ const TicketInfoDialog = (props) => {
                             </Typography>
                         </Grid>
                     </Grid>
+                    <Grid item>
+                        <TicketQRCode ticket={ticket} />
+                    </Grid>
                 </Grid>
             </TitledPaper>
         </Dialog>
@@ -59,11 +67,14 @@ const TicketInfoDialog = (props) => {
 };
 
 TicketInfoDialog.propTypes = {
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    templateId: PropTypes.string.isRequired,
-    assetId: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    ticket: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        templateId: PropTypes.string.isRequired,
+        eventId: PropTypes.string.isRequired,
+        assetId: PropTypes.string.isRequired,
+    }).isRequired,
     price: PropTypes.shape({
         amount: PropTypes.number,
         currency: PropTypes.string,

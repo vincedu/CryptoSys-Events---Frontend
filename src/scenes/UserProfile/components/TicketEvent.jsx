@@ -96,22 +96,22 @@ const TicketEvent = (props) => {
                         eventTicketsType.tickets.map((ticket) =>
                             forSale ? (
                                 <SellTicketItem
-                                    key={ticket.assetId}
                                     name={eventTicketsType.template.name}
                                     description={eventTicketsType.template.description}
                                     image={eventTicketsType.template.image}
                                     templateId={eventTicketsType.template.templateId}
                                     assetId={ticket.assetId}
                                     sale={ticket.sale}
+                                    eventId={eventTickets.event.id}
                                 />
                             ) : (
                                 <MyTicketItem
-                                    key={ticket.assetId}
                                     name={eventTicketsType.template.name}
                                     description={eventTicketsType.template.description}
                                     image={eventTicketsType.template.image}
                                     templateId={eventTicketsType.template.templateId}
                                     assetId={ticket.assetId}
+                                    eventId={eventTickets.event.id}
                                     opened={ticket.opened}
                                     used={ticket.used}
                                 />

@@ -30,6 +30,7 @@
     "material-ui-chip-input": "^2.0.0-beta.2",
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
+    "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",

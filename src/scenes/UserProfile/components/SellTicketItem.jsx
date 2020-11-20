@@ -36,11 +36,11 @@ const useStyles = makeStyles({
     },
 });
 
-const MyTicketItem = (props) => {
+const SellTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
     const { cancelTicketSale } = useContext(NFTContext);
-    const { name, description, image, templateId, assetId, sale } = props;
+    const { name, description, image, templateId, assetId, sale, eventId } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
@@ -74,11 +74,7 @@ const MyTicketItem = (props) => {
             <TicketInfoDialog
                 open={infoDialogOpen}
                 onClose={handleInfoDialogClose}
-                name={name}
-                description={description}
-                image={image}
-                templateId={templateId}
-                assetId={assetId}
+                ticket={{ name, description, image, templateId, eventId, assetId }}
                 price={sale.price}
             />
         </Menu>
@@ -120,12 +116,13 @@ const MyTicketItem = (props) => {
     );
 };
 
-MyTicketItem.propTypes = {
+SellTicketItem.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     templateId: PropTypes.string.isRequired,
     assetId: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    eventId: PropTypes.string.isRequired,
     sale: PropTypes.shape({
         saleId: PropTypes.string.isRequired,
         price: PropTypes.shape({
@@ -135,4 +132,4 @@ MyTicketItem.propTypes = {
     }).isRequired,
 };
 
-export default MyTicketItem;
+export default SellTicketItem;
