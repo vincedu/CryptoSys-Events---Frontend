@@ -9,7 +9,7 @@ import LocationButtonGroup from './LocationButtonGroup';
 
 let autocomplete;
 
-const Location = (props) => {
+const LocationForm = (props) => {
     const handleChange = (name, l) => {
         props.onChange(name, l);
     };
@@ -78,7 +78,7 @@ const Location = (props) => {
     );
 };
 
-Location.propTypes = {
+LocationForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.shape({
         location: PropTypes.shape({
@@ -92,4 +92,4 @@ Location.propTypes = {
     }).isRequired,
 };
 
-export default Location;
+export default LocationForm;

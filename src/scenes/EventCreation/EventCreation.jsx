@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { Grid, Stepper, StepLabel, Step } from '@material-ui/core';
+import { Grid, Stepper, StepLabel, Step, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,11 +10,10 @@ import {
     PIN_TICKET_IMAGE_TO_IPFS_MUTATION,
     LINK_NFT_TEMPLATES_TO_EVENT_MUTATION,
 } from '@graphql/mutations';
-import { PageContainer } from '@components';
+import { PageContainer, EventInformationForm, EventTicketsForm } from '@components';
 import { NFTContext } from '@providers';
-import { TicketCreation, DEFAULT_TICKET_IMAGE_IPFS_HASH } from './components/TicketCreation';
+import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '@constants';
 import { Confirm } from './components/Confirm';
-import { Information } from './components/Information';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -41,7 +40,7 @@ const DEFAULT_EVENT_FORM = {
         value: [],
         error: false,
     },
-    imageFile: {
+    image: {
         value: undefined,
         error: false,
     },
@@ -68,6 +67,15 @@ const useStyles = makeStyles(() => ({
     stepper: {
         backgroundColor: 'transparent',
     },
+    stepButtonContainer: {
+        padding: '60px 16px 16px 16px',
+    },
+    stepButton: {
+        padding: 15,
+    },
+    nextButton: {
+        fontWeight: 900,
+    },
 }));
 
 const variables = {};
@@ -93,9 +101,9 @@ const EventCreation = (props) => {
     }
 
     const classes = useStyles();
-    const [form, setForm] = useState(DEFAULT_EVENT_FORM);
-    const [location, setLocation] = useState(DEFAULT_EVENT_LOCATION);
-    const [date, setDate] = useState(DEFAULT_EVENT_DATE);
+    const [generalInfoForm, setGeneralInfoForm] = useState(DEFAULT_EVENT_FORM);
+    const [locationForm, setLocationForm] = useState(DEFAULT_EVENT_LOCATION);
+    const [dateForm, setDateForm] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
@@ -111,12 +119,12 @@ const EventCreation = (props) => {
     };
 
     const areDatesValid = () => {
-        return date.start <= date.end;
+        return dateForm.start <= dateForm.end;
     };
 
     const isLocationValid = () => {
-        if (location.locationType.value === 'venue') {
-            return location.location.value !== '';
+        if (locationForm.locationType.value === 'venue') {
+            return locationForm.location.value !== '';
         }
         return true;
     };
@@ -130,8 +138,8 @@ const EventCreation = (props) => {
     const isFormValid = () => {
         let isValid = true;
 
-        Object.keys(form).forEach((key) => {
-            if (form[key].error || !isValueValid(form[key].value)) {
+        Object.keys(generalInfoForm).forEach((key) => {
+            if (generalInfoForm[key].error || !isValueValid(generalInfoForm[key].value)) {
                 isValid = false;
             }
         });
@@ -146,20 +154,20 @@ const EventCreation = (props) => {
 
     const updateFormErrors = () => {
         const updatedForm = {};
-        Object.keys(form).forEach((key) => {
+        Object.keys(generalInfoForm).forEach((key) => {
             updatedForm[key] = {
-                value: form[key].value,
-                error: !isValueValid(form[key].value),
+                value: generalInfoForm[key].value,
+                error: !isValueValid(generalInfoForm[key].value),
             };
         });
-        setForm(updatedForm);
-        setLocation({ ...location, location: { ...location.location, error: !isLocationValid() } });
-        setDate({ ...date, error: !areDatesValid() });
+        setGeneralInfoForm(updatedForm);
+        setLocationForm({ ...locationForm, location: { ...locationForm.location, error: !isLocationValid() } });
+        setDateForm({ ...dateForm, error: !areDatesValid() });
     };
 
-    const handleNextButtonClick = () => {
+    const handleGeneralInfoNextButtonClick = () => {
         if (isFormValid()) {
-            Object.entries(form).forEach(([key, value]) => {
+            Object.entries(generalInfoForm).forEach(([key, value]) => {
                 variables[key] = value;
             });
             history.push({ pathname: '/createEvent/createTicket' });
@@ -168,37 +176,45 @@ const EventCreation = (props) => {
         }
     };
 
+    const handleTicketsNextButtonClick = () => {
+        history.push({ pathname: '/createEvent/confirm' });
+    };
+
     const handleCreateTicket = (ticketData) => {
         setTickets([...tickets, ticketData]);
     };
 
-    const handleFormChange = (field, value) => {
-        setForm({ ...form, [field]: { value, error: !isValueValid(value) } });
+    const handleGeneralInfoFormChange = (field, value) => {
+        setGeneralInfoForm({ ...generalInfoForm, [field]: { value, error: !isValueValid(value) } });
     };
 
-    const handleLocationChange = (field, value) => {
-        setLocation({ ...location, [field]: { value, error: !isValueValid(value) } });
+    const handleLocationFormChange = (field, value) => {
+        setLocationForm({ ...locationForm, [field]: { value, error: !isValueValid(value) } });
     };
 
-    const handleDateChange = (field, value) => {
+    const handleDateFormChange = (field, value) => {
         let error;
-        if (field === 'start') error = value > date.end;
-        else error = value < date.start;
-        setDate({ ...date, [field]: value, error });
+        if (field === 'start') error = value > dateForm.end;
+        else error = value < dateForm.start;
+        setDateForm({ ...dateForm, [field]: value, error });
     };
 
     const handleSubmit = async () => {
         let eventName = '';
-        Object.keys(form).forEach((key) => {
-            variables[key] = form[key].value;
+        Object.keys(generalInfoForm).forEach((key) => {
+            if (key === 'image') {
+                variables.imageFile = generalInfoForm[key].value;
+            } else {
+                variables[key] = generalInfoForm[key].value;
+            }
             if (key === 'name') {
-                eventName = form[key].value;
+                eventName = generalInfoForm[key].value;
             }
         });
-        variables.location = location.location.value;
-        variables.locationType = location.locationType.value;
-        variables.startDate = date.start;
-        variables.endDate = date.end;
+        variables.location = locationForm.location.value;
+        variables.locationType = locationForm.locationType.value;
+        variables.startDate = dateForm.start;
+        variables.endDate = dateForm.end;
         if (variables.locationType !== 'venue') variables.location = null;
 
         const createEventResult = await createEvent({ variables: { ...variables } });
@@ -247,25 +263,46 @@ const EventCreation = (props) => {
             <Grid item xs={12} style={{ margin: 'auto' }}>
                 <Switch>
                     <Route path="/createEvent/general">
-                        <Information
-                            history={history}
-                            handleNextButtonClick={handleNextButtonClick}
-                            form={form}
-                            value={location}
-                            date={date}
-                            handleFormChange={handleFormChange}
-                            handleDateChange={handleDateChange}
-                            handleLocationChange={handleLocationChange}
+                        <EventInformationForm
+                            generalInfoForm={generalInfoForm}
+                            locationForm={locationForm}
+                            dateForm={dateForm}
+                            onGeneralInfoFormChange={handleGeneralInfoFormChange}
+                            onLocationFormChange={handleLocationFormChange}
+                            onDateFormChange={handleDateFormChange}
                         />
+                        <Grid container justify="flex-end" className={classes.stepButtonContainer}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={`${classes.stepButton} ${classes.nextButton}`}
+                                onClick={handleGeneralInfoNextButtonClick}
+                            >
+                                {t('next')}
+                            </Button>
+                        </Grid>
                     </Route>
 
                     <Route path="/createEvent/createTicket">
-                        <TicketCreation
-                            history={history}
-                            tickets={tickets}
-                            onCreateTicket={handleCreateTicket}
-                            handleBackStep={handleBackStep}
-                        />
+                        <EventTicketsForm tickets={tickets} onCreateTicket={handleCreateTicket} />
+                        <Grid container justify="space-between" className={classes.stepButtonContainer}>
+                            <Button
+                                variant="outlined"
+                                className={classes.stepButton}
+                                color="primary"
+                                onClick={handleBackStep}
+                            >
+                                {t('back')}
+                            </Button>
+                            <Button
+                                variant="contained"
+                                className={`${classes.stepButton} ${classes.nextButton}`}
+                                color="primary"
+                                onClick={handleTicketsNextButtonClick}
+                            >
+                                {t('next')}
+                            </Button>
+                        </Grid>
                     </Route>
 
                     <Route path="/createEvent/confirm">
@@ -275,7 +312,7 @@ const EventCreation = (props) => {
                             handleSubmit={handleSubmit}
                             handleBackStep={handleBackStep}
                             variables={variables}
-                            date={date}
+                            date={dateForm}
                         />
                     </Route>
                 </Switch>

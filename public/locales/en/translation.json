@@ -123,19 +123,31 @@
     },
     "tickets": {
       "title": "Tickets",
-      "description": "Create tickets for your event. You can create multiple types of tickets if you want to offerdifferent experiences for your attendees",
+      "description": "Create tickets for your event. You can create multiple types of tickets if you want to offer different experiences for your attendees",
       "createTickets": "Create Tickets",
       "createTicket": "Create a Ticket",
       "image": "Choose Image",
       "ticketName": "Ticket Name",
       "ticketDescription": "Ticket Description",
       "quantity": "Quantity",
-      "unitPrice": "Unit Price"
+      "unitPrice": "Unit Price",
+      "units": "units"
     },
     "confirm": {
       "title": "Confirm",
       "description": "Confirm your Event",
       "createEvent": "Create Event"
+    }
+  },
+  "modifyEvent": {
+    "title": "Modify Event",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "manageEvents": {
+    "moreOptions": {
+      "modifyGeneral": "Modify",
+      "modifyTickets": "Create tickets"
     }
   },
   "buyTickets": {
@@ -183,6 +195,10 @@
   "ticketOpening": {
     "openButtonLabel": "Open",
     "closeButtonLabel": "Close"
+  },
+  "unauthorized": {
+    "title": "Unauthorized",
+    "message": "You do not have the permissions to access this page."
   },
 
   "venue": "Venue",

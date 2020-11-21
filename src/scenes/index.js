@@ -7,6 +7,9 @@ import AccountSetup from './AccountSetup';
 import PostAuth from './PostAuth';
 import UserProfile from './UserProfile';
 import Dashboard from './Dashboard';
+import EventModification from './EventModification';
+import Unauthorized from './Unauthorized';
+import SearchPage from './SearchPage';
 
 export {
     EventCreation,
@@ -19,4 +22,7 @@ export {
     PostAuth,
     UserProfile,
     Dashboard,
+    EventModification,
+    Unauthorized,
+    SearchPage,
 };

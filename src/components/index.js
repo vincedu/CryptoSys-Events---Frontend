@@ -7,6 +7,7 @@ import CenteredCircularProgress from './CenteredCircularProgress';
 import TransactionProcessDialog from './TransactionProcessDialog';
 import ImageUpload from './ImageUpload';
 import AutoComplete from './AutoComplete';
+import { EventInformationForm, EventTicketsForm } from './Event';
 
 export {
     NavBar,
@@ -18,4 +19,6 @@ export {
     TransactionProcessDialog,
     ImageUpload,
     AutoComplete,
+    EventInformationForm,
+    EventTicketsForm,
 };

@@ -4,6 +4,7 @@ import SET_USER_DATA_MUTATION from './setUserData';
 import LINK_NFT_TEMPLATES_TO_EVENT_MUTATION from './linkNftTemplatesToEvent';
 import LIKE_EVENT_MUTATION from './likeEvent';
 import UNLIKE_EVENT_MUTATION from './unlikeEvent';
+import MODIFY_EVENT_MUTATION from './modifyEvent';
 
 export {
     CREATE_EVENT_MUTATION,
@@ -12,4 +13,5 @@ export {
     LINK_NFT_TEMPLATES_TO_EVENT_MUTATION,
     LIKE_EVENT_MUTATION,
     UNLIKE_EVENT_MUTATION,
+    MODIFY_EVENT_MUTATION,
 };

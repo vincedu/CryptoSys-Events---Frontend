@@ -7,19 +7,19 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { TitledPaper, ImageUpload } from '@components';
-import { TYPES, CATEGORIES, LANGUAGES } from '../../../lists';
+import { EVENT_TYPES, EVENT_CATEGORIES, EVENT_LANGUAGES } from '@constants';
 
-const GeneralInfo = (props) => {
-    const useStyles = makeStyles((theme) => ({
-        textField: {
-            borderRadius: 0,
-        },
-        button: {
-            backgroundColor: `${theme.palette.primary.main} !important`,
-            borderRadius: '3px !important',
-        },
-    }));
+const useStyles = makeStyles((theme) => ({
+    textField: {
+        borderRadius: 0,
+    },
+    button: {
+        backgroundColor: `${theme.palette.primary.main} !important`,
+        borderRadius: '3px !important',
+    },
+}));
 
+const GeneralInfoForm = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -73,7 +73,7 @@ const GeneralInfo = (props) => {
                     />
                     <Autocomplete
                         name="category"
-                        options={CATEGORIES}
+                        options={EVENT_CATEGORIES}
                         getOptionLabel={(option) => t(option)}
                         value={props.value.category.value}
                         onChange={(__, newValue) => handleSelectCategory('category', newValue)}
@@ -108,17 +108,15 @@ const GeneralInfo = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <ImageUpload
-                        value={props.value.imageFile.value}
+                        value={props.value.image.value}
                         error={
-                            props.value.imageFile.error
-                                ? t('createEvent.generalInfo.image.missingImageError')
-                                : undefined
+                            props.value.image.error ? t('createEvent.generalInfo.image.missingImageError') : undefined
                         }
-                        onChange={(image) => props.onChange('imageFile', image)}
+                        onChange={(image) => props.onChange('image', image)}
                     />
                     <Autocomplete
                         name="type"
-                        options={TYPES}
+                        options={EVENT_TYPES}
                         getOptionLabel={(option) => t(option)}
                         value={props.value.type.value}
                         onChange={(__, newValue) => handleSelectType('type', newValue)}
@@ -137,7 +135,7 @@ const GeneralInfo = (props) => {
                     />
                     <Autocomplete
                         name="languages"
-                        options={LANGUAGES}
+                        options={EVENT_LANGUAGES}
                         getOptionLabel={(option) => t(option)}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
@@ -196,9 +194,8 @@ const propArray = PropTypes.shape({
     error: PropTypes.bool,
 });
 
-GeneralInfo.propTypes = {
+GeneralInfoForm.propTypes = {
     onChange: PropTypes.func.isRequired,
-    onImageUpload: PropTypes.object,
     value: PropTypes.shape({
         name: propString,
         description: propString,
@@ -206,14 +203,11 @@ GeneralInfo.propTypes = {
         category: propString,
         languages: propArray,
         tags: propArray,
-        imageFile: PropTypes.shape({
-            value: PropTypes.object,
+        image: PropTypes.shape({
+            value: PropTypes.any,
             error: PropTypes.bool,
         }),
     }).isRequired,
 };
-GeneralInfo.defaultProps = {
-    onImageUpload: {},
-};
 
-export default GeneralInfo;
+export default GeneralInfoForm;

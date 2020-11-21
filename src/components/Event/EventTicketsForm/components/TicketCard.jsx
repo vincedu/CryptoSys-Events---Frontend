@@ -1,9 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-const DATE_FORMAT = 'MMMM Do, YYYY, h:mma';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
     ticketCard: {
@@ -29,9 +27,14 @@ const useStyles = makeStyles({
 
 const TicketCard = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { ticket, defaultTicketImageUrl } = props;
 
-    const ticketImageUrl = ticket.image ? URL.createObjectURL(ticket.image) : defaultTicketImageUrl;
+    let ticketImageUrl = defaultTicketImageUrl;
+    if (ticket.image) {
+        if (typeof ticket.image === 'string') ticketImageUrl = `https://ipfs.io/ipfs/${ticket.image}`;
+        else ticketImageUrl = URL.createObjectURL(ticket.image);
+    }
 
     return (
         <Card className={classes.ticketCard}>
@@ -43,20 +46,19 @@ const TicketCard = (props) => {
                     <Grid item md={6} xs={12} className={classes.ticketMainContent}>
                         <Typography variant="h6">{ticket.name}</Typography>
                         <Typography variant="body2">{ticket.description}</Typography>
-                        <Typography variant="overline">
-                            {moment(ticket.startDate).format(DATE_FORMAT)}
-                            {' to '}
-                            {moment(ticket.endDate).format(DATE_FORMAT)}
-                        </Typography>
                     </Grid>
                     <Grid item container md={6} xs={12}>
                         <Grid item xs={6} className={classes.ticketAdditionalContent}>
                             <Typography variant="body1">
-                                {ticket.soldQuantity ? ticket.soldQuantity : 0}/{ticket.quantity}
+                                {ticket.originalSoldCount !== undefined
+                                    ? `${ticket.originalSoldCount}/${ticket.quantity} ${t('createEvent.tickets.units')}`
+                                    : `${ticket.quantity} ${t('createEvent.tickets.units')}`}
                             </Typography>
                         </Grid>
                         <Grid item xs={6} className={classes.ticketAdditionalContent}>
-                            <Typography variant="body1">${ticket.price}</Typography>
+                            <Typography variant="body1">
+                                {ticket.price ? `${ticket.price} ${ticket.currency ? ticket.currency : 'WAX'}` : '-'}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -69,12 +71,11 @@ TicketCard.propTypes = {
     ticket: PropTypes.shape({
         name: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        startDate: PropTypes.instanceOf(Date).isRequired,
-        endDate: PropTypes.instanceOf(Date).isRequired,
-        soldQuantity: PropTypes.number,
+        image: PropTypes.object,
         quantity: PropTypes.number.isRequired,
         price: PropTypes.number.isRequired,
-        image: PropTypes.object,
+        currency: PropTypes.string.isRequired,
+        originalSoldCount: PropTypes.number,
     }).isRequired,
     defaultTicketImageUrl: PropTypes.string.isRequired,
 };

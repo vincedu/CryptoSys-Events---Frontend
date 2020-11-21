@@ -7,7 +7,7 @@ import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { TitledPaper } from '@components';
 import frLocale from 'date-fns/locale/fr';
 
-const DateTime = (props) => {
+const DateTimeForm = (props) => {
     const handleChange = (name, value) => {
         props.onChange(name, value);
     };
@@ -56,7 +56,7 @@ const DateTime = (props) => {
     );
 };
 
-DateTime.propTypes = {
+DateTimeForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.shape({
         start: PropTypes.instanceOf(Date),
@@ -65,4 +65,4 @@ DateTime.propTypes = {
     }).isRequired,
 };
 
-export default DateTime;
+export default DateTimeForm;
