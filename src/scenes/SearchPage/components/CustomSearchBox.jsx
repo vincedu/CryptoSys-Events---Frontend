@@ -34,7 +34,7 @@ const CustomSearchBox = (props) => {
                 <InputBase
                     type="search"
                     className={classes.input}
-                    placeholder={t('customSearchBar.search')}
+                    placeholder={t('mainPageHeader.search')}
                     onChange={(event) => {
                         refine(event.currentTarget.value);
                     }}

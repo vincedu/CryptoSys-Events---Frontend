@@ -17,7 +17,7 @@ import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import frLocale from 'date-fns/locale/fr';
-import Autocomplete from './Autocomplete';
+import { AutoComplete } from '@components';
 
 const useStyles = makeStyles((theme) => ({
     // Header
@@ -58,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CustomSearchBar = (props) => {
-    CustomSearchBar.propTypes = {
+const MainPageHeader = (props) => {
+    MainPageHeader.propTypes = {
         history: PropTypes.object.isRequired,
     };
 
@@ -109,7 +109,7 @@ const CustomSearchBar = (props) => {
                             Eos Event
                         </Typography>
                         <Typography variant="body1" className={classes.title}>
-                            {t('customSearchBar.paragraph')}
+                            {t('mainPageHeader.paragraph')}
                         </Typography>
                     </div>
                 </div>
@@ -120,7 +120,7 @@ const CustomSearchBar = (props) => {
                             className={classes.input}
                             inputProps={{ style: { textOverflow: 'ellipsis', overflow: 'hidden' } }}
                             style={{ flex: 1 }}
-                            placeholder={t('customSearchBar.location')}
+                            placeholder={t('mainPageHeader.location')}
                             onKeyDown={checkEnterKey}
                         />
                         <IconButton onClick={handleLocation} color="primary">
@@ -134,7 +134,7 @@ const CustomSearchBar = (props) => {
                             <DateRangePicker
                                 onChange={(selectedDate) => handleDateChange(selectedDate)}
                                 value={[null, null]}
-                                startText={t('customSearchBar.search')}
+                                startText={t('mainPageHeader.search')}
                                 renderInput={(inputProps) => {
                                     const finalProps = { ...inputProps };
                                     finalProps.helperText = '';
@@ -156,7 +156,7 @@ const CustomSearchBar = (props) => {
                         <Divider className={classes.divider} orientation="vertical" />
                     </Hidden>
                     <div style={{ flex: 4 }}>
-                        <Autocomplete searchBarRef={searchBarRef} />
+                        <AutoComplete searchBarRef={searchBarRef} />
                     </div>
                 </Paper>
             </Grid>
@@ -164,4 +164,4 @@ const CustomSearchBar = (props) => {
     );
 };
 
-export default withRouter(CustomSearchBar);
+export default withRouter(MainPageHeader);

@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { Typography, CircularProgress, Grid } from '@material-ui/core';
 import { EVENTS_BY_IDS_QUERY } from '@graphql/queries';
 import { AuthContext } from '@providers';
-import EventItem from '../../EventList/components/EventItem';
+import EventItem from '../../MainPage/components/EventItem';
 
 const Liked = () => {
     const { userData } = useContext(AuthContext);

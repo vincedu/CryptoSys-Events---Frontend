@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { AutoComplete } from '@components';
 import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
-import Autocomplete from '../../scenes/EventList/components/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -133,7 +133,7 @@ const NavBar = (props) => {
                     className={`${classes.search} ${transparent && mainPageTheme ? classes.hidden : ''}`}
                     ref={searchBarRef}
                 >
-                    <Autocomplete searchBarRef={searchBarRef} navbar />
+                    <AutoComplete searchBarRef={searchBarRef} navbar />
                 </div>
 
                 <div style={{ flexGrow: 1 }} />

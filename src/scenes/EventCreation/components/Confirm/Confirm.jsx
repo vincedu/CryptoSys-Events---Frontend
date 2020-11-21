@@ -4,7 +4,7 @@ import { Button, Grid, Typography, makeStyles, Hidden } from '@material-ui/core'
 import { TitledPaper } from '@components';
 import { useTranslation } from 'react-i18next';
 import { PlaylistAddCheck } from '@material-ui/icons';
-import EventItem from '../../../EventList/components/EventItem';
+import EventItem from '../../../MainPage/components/EventItem';
 import CustomEventItem from '../../../SearchPage/components/CustomEventItem';
 
 const useStyles = makeStyles((theme) => ({

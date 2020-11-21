@@ -6,9 +6,9 @@ import { PageContainer } from '@components';
 import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
 import MainEventItem from './components/MainEventItem';
-import CustomSearchBar from './components/CustomSearchBar';
+import MainPageHeader from './components/MainPageHeader';
 
-const EventListContainer = () => {
+const MainPage = () => {
     const mainEvent = useQuery(EVENT_BY_ID_QUERY, { variables: { id: '5fb54e8ad314f47f6c16be43' } });
     function FetchCategories() {
         return CATEGORIES.map((name, id) => {
@@ -19,7 +19,7 @@ const EventListContainer = () => {
 
     return (
         <>
-            <CustomSearchBar />
+            <MainPageHeader />
             <PageContainer>
                 <div />
                 {mainEvent.loading ? <CircularProgress /> : null}
@@ -43,4 +43,4 @@ const EventListContainer = () => {
     );
 };
 
-export default EventListContainer;
+export default MainPage;

@@ -4,7 +4,7 @@ import {
     HowItWorks,
     HelpCenter,
     EventCreation,
-    EventList,
+    MainPage,
     SignIn,
     AccountSetup,
     PostAuth,
@@ -26,7 +26,7 @@ const App = () => {
                 <NFTProvider>
                     <NavBar />
                     <Switch>
-                        <Route exact path="/" component={EventList} />
+                        <Route exact path="/" component={MainPage} />
                         <Route path="/event" component={EventPage} />
                         <Route exact path="/signIn" component={SignIn} />
                         <Route exact path="/howItWorks" component={HowItWorks} />

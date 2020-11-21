@@ -98,6 +98,7 @@ const CustomDate = (props) => {
 
     const RangeInput = connectRange(({ currentRefinement, refine }) => {
         const handleDateChange = (date) => {
+            console.log(date);
             refine({
                 ...(date[0] && { min: +date[0] }),
                 ...(date[1] && { max: date[1] === date[0] ? +date[0] + 24 * 60 * 60 * 1000 : +date[1] }),

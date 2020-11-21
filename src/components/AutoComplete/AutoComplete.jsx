@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles, InputBase, IconButton, Paper, Popper, Grid, Typography, fade } from '@material-ui/core';
-import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom';
+import { InstantSearch, Configure, connectAutoComplete } from 'react-instantsearch-dom';
 import { Search } from '@material-ui/icons';
 import algoliasearch from 'algoliasearch/lite';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import CustomEventItem from '../../SearchPage/components/CustomEventItem';
+import CustomEventItem from '../../scenes/SearchPage/components/CustomEventItem';
 
 const algoliaClient = algoliasearch('VCNEJZ733V', '34110b7a7dda814d41a2851e341a2f6b');
 const searchClient = {
@@ -15,6 +15,7 @@ const searchClient = {
         if (requests.every(({ params }) => !params.query)) {
             return null;
         }
+        console.log(requests);
         return algoliaClient.search(requests);
     },
 };
@@ -87,7 +88,7 @@ const Autocomplete = (props) => {
                         type="search"
                         margin="dense"
                         className={classes.input}
-                        placeholder={t('customSearchBar.search')}
+                        placeholder={t('mainPageHeader.search')}
                         onChange={(event) => {
                             refine(event.currentTarget.value);
                         }}
@@ -135,6 +136,7 @@ const Autocomplete = (props) => {
     return (
         <div>
             <InstantSearch searchClient={searchClient} indexName="events">
+                <Configure filters={`date > ${+new Date()}`} hitsPerPage={3} />
                 <CustomAutocomplete />
             </InstantSearch>
         </div>

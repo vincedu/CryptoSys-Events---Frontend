@@ -22,34 +22,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SidebarItems = (props) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [sideBarTab, setSideBarTab] = useState(0);
+    // Fermé sous-onglet Tickets quand le drawer est fermé
+    if (!props.drawerOpen && open) setOpen(false);
+    const closeIfXS = () => {
+        if (window.innerWidth < 600) props.handleDrawerToggle(false);
+    };
     switch (window.location.pathname) {
         case '/userProfile/accountSettings':
             if (sideBarTab !== 0) {
                 setSideBarTab(0);
+                closeIfXS();
             }
             break;
         case '/userProfile/myTickets':
             if (sideBarTab !== 1) {
                 setSideBarTab(1);
                 if (!open) setOpen(true);
+                closeIfXS();
             }
             break;
         case '/userProfile/sellTickets':
             if (sideBarTab !== 2) {
                 setSideBarTab(2);
                 if (!open) setOpen(true);
+                closeIfXS();
             }
             break;
         case '/userProfile/manageEvents':
             if (sideBarTab !== 3) {
                 setSideBarTab(3);
+                closeIfXS();
             }
             break;
         case '/userProfile/liked':
             if (sideBarTab !== 4) {
                 setSideBarTab(4);
+                closeIfXS();
             }
             break;
         default:
@@ -58,12 +68,15 @@ const SidebarItems = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
 
-    const handleClick = () => {
+    const handleTicketList = () => {
+        // Ouvrir drawer si le sous-onglet Tickets est ouvert
+        if (!open) props.handleDrawerToggle(true);
         setOpen(!open);
     };
+
     return (
         <List style={{ paddingTop: 0 }}>
-            <Link to="/userProfile/accountSettings" className={classes.link} onClick={props.handleDrawerToggle}>
+            <Link to="/userProfile/accountSettings" className={classes.link}>
                 <ListItem button selected={sideBarTab === 0}>
                     <ListItemIcon>
                         <SettingsIcon style={{ color: '#FFF' }} />
@@ -71,8 +84,12 @@ const SidebarItems = (props) => {
                     <ListItemText primary={t('sideBar.accountSettings')} />
                 </ListItem>
             </Link>
-
-            <ListItem button onClick={handleClick}>
+            {/* Afficher comme selectionné si le drawer est fermé et que l'une des 2 pages de billet est selectionnée */}
+            <ListItem
+                button
+                onClick={handleTicketList}
+                selected={(sideBarTab === 1 || sideBarTab === 2) && !props.drawerOpen}
+            >
                 <ListItemIcon>
                     <ConfirmationNumberIcon style={{ color: '#FFF' }} />
                 </ListItemIcon>
@@ -82,7 +99,7 @@ const SidebarItems = (props) => {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
-                    <Link to="/userProfile/myTickets" className={classes.link} onClick={props.handleDrawerToggle}>
+                    <Link to="/userProfile/myTickets" className={classes.link}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 1}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon style={{ color: '#FFF' }} />
@@ -91,7 +108,7 @@ const SidebarItems = (props) => {
                         </ListItem>
                     </Link>
 
-                    <Link to="/userProfile/sellTickets" className={classes.link} onClick={props.handleDrawerToggle}>
+                    <Link to="/userProfile/sellTickets" className={classes.link}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 2}>
                             <ListItemIcon>
                                 <LocalAtmIcon style={{ color: '#FFF' }} />
@@ -102,7 +119,7 @@ const SidebarItems = (props) => {
                 </List>
             </Collapse>
 
-            <Link to="/userProfile/manageEvents" className={classes.link} onClick={props.handleDrawerToggle}>
+            <Link to="/userProfile/manageEvents" className={classes.link}>
                 <ListItem button selected={sideBarTab === 3}>
                     <ListItemIcon>
                         <EventIcon style={{ color: '#FFF' }} />
@@ -110,7 +127,7 @@ const SidebarItems = (props) => {
                     <ListItemText primary={t('sideBar.manage')} />
                 </ListItem>
             </Link>
-            <Link to="/userProfile/liked" className={classes.link} onClick={props.handleDrawerToggle}>
+            <Link to="/userProfile/liked" className={classes.link}>
                 <ListItem button selected={sideBarTab === 4}>
                     <ListItemIcon>
                         <FavoriteIcon style={{ color: '#FFF' }} />
@@ -124,6 +141,7 @@ const SidebarItems = (props) => {
 
 SidebarItems.propTypes = {
     handleDrawerToggle: PropTypes.func.isRequired,
+    drawerOpen: PropTypes.bool.isRequired,
 };
 
 export default SidebarItems;

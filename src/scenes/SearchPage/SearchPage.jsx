@@ -1,6 +1,6 @@
 import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch } from 'react-instantsearch-dom';
+import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 import CustomHits from './components/CustomHits';
@@ -31,6 +31,7 @@ function SearchPage() {
 
     return (
         <InstantSearch searchClient={searchClient} indexName="events">
+            <Configure filters={`date > ${+new Date()}`} hitsPerPage={3} />
             <Grid container justify={window.innerWidth > 600 ? 'flex-start' : 'center'} style={{ padding: '0 1rem' }}>
                 <Grid item xs={11} sm={3} lg={2} style={{ width: '100%', padding: 5 }}>
                     <CustomDate attribute="date" />

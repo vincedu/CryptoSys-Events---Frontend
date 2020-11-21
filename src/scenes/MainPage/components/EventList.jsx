@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'flex-end',
     },
     categoryTitle: {
-        padding: 20,
+        margin: 20,
         textAlign: 'left',
         width: 'fit-content',
         fontFamily: `'Bebas Neue', sans-serif`,

@@ -6,6 +6,7 @@ import PageContainer from './PageContainer';
 import CenteredCircularProgress from './CenteredCircularProgress';
 import TransactionProcessDialog from './TransactionProcessDialog';
 import ImageUpload from './ImageUpload';
+import AutoComplete from './AutoComplete';
 
 export {
     NavBar,
@@ -16,4 +17,5 @@ export {
     CenteredCircularProgress,
     TransactionProcessDialog,
     ImageUpload,
+    AutoComplete,
 };

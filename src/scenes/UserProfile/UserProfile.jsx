@@ -1,8 +1,7 @@
-import React from 'react';
-import { makeStyles, Hidden, Drawer, IconButton } from '@material-ui/core';
+import React, { useState } from 'react';
+import { makeStyles, Drawer } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountSettings from './components/AccountSettings';
 import Liked from './components/Liked';
 import TicketList from './components/TicketList';
@@ -15,11 +14,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-        overflow: 'auto',
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        background: theme.palette.primary.main,
     },
     appBar: {
         [theme.breakpoints.up('sm')]: {
@@ -30,73 +27,63 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
     },
     toolbar: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        overflowX: 'hidden',
+    },
     drawerPaper: {
-        width: drawerWidth,
         background: theme.palette.primary.main,
         borderRight: 0,
         top: 'auto',
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
+    drawerOpen: {
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerClose: {
+        background: theme.palette.primary.main,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
     },
 }));
 
 const UserProfile = () => {
     const classes = useStyles();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 600);
     const { t } = useTranslation();
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
+    const handleDrawerToggle = (open = !drawerOpen) => {
+        setDrawerOpen(open);
     };
 
     return (
         <div className={classes.root}>
-            <nav className={classes.drawer} aria-label="sidebar">
-                <Hidden smUp>
-                    <Drawer
-                        variant="temporary"
-                        anchor="left"
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
-                    >
-                        <SideBar handleDrawerToggle={handleDrawerToggle} />
-                    </Drawer>
-                </Hidden>
-                <Hidden xsDown>
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        variant="permanent"
-                        open
-                    >
-                        <SideBar />
-                    </Drawer>
-                </Hidden>
+            <nav className={classes.drawer}>
+                <Drawer
+                    variant="permanent"
+                    open={drawerOpen}
+                    ModalProps={{ keepMounted: true }}
+                    className={`${classes.drawer}
+                        ${drawerOpen ? classes.drawerOpen : classes.drawerClose}`}
+                    classes={{
+                        paper: `${classes.drawerPaper}
+                            ${drawerOpen ? classes.drawerOpen : classes.drawerClose}`,
+                    }}
+                >
+                    <SideBar handleDrawerToggle={handleDrawerToggle} drawerOpen={drawerOpen} />
+                </Drawer>
             </nav>
             <main className={classes.content}>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    className={classes.menuButton}
-                >
-                    <MenuIcon />
-                </IconButton>
                 <Switch>
                     <Route path="/userProfile/accountSettings" component={AccountSettings} />
                     <Route path="/userProfile/myTickets" component={TicketList} />

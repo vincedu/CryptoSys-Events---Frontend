@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { makeStyles, ListItemAvatar, Divider, ListItem, ListItemText, Avatar } from '@material-ui/core';
+import { makeStyles, ListItemAvatar, Divider, ListItem, ListItemText, Avatar, IconButton } from '@material-ui/core';
+import { ChevronLeft, Menu } from '@material-ui/icons';
 import firebase from 'firebase';
 import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
@@ -22,13 +23,21 @@ const useStyles = makeStyles((theme) => ({
         position: 'sticky',
     },
     avatar: {
+        transition: 'width 0.3s, height 0.3s',
         backgroundColor: theme.palette.secondary.main,
-        fontSize: '0.8em',
+    },
+    avatarSmall: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
     },
     user: {
-        flexGrow: 1,
+        transition: 'padding-top 0.3s, padding-bottom 0.3s',
         background: 'lightgray',
         padding: '17px 15px',
+    },
+    userListSmall: {
+        paddingTop: 2,
+        paddingBottom: 2,
     },
     toolbar: theme.mixins.toolbar,
 }));
@@ -37,12 +46,16 @@ const SideBar = (props) => {
     const classes = useStyles();
     const { userData } = useContext(AuthContext);
     const user = firebase.auth().currentUser;
+    console.log(props.drawerOpen);
     return (
         <div className={classes.sidebar}>
-            <div className={classes.user}>
+            <IconButton style={{ padding: 16 }} onClick={() => props.handleDrawerToggle()}>
+                {props.drawerOpen ? <ChevronLeft /> : <Menu />}
+            </IconButton>
+            <div className={`${classes.user} ${props.drawerOpen ? null : classes.userListSmall}`}>
                 <ListItem style={{ padding: 0 }}>
                     <ListItemAvatar>
-                        <Avatar className={classes.avatar} />
+                        <Avatar className={`${classes.avatar} ${props.drawerOpen ? null : classes.avatarSmall}`} />
                     </ListItemAvatar>
                     <ListItemText
                         classes={{ primary: classes.primaryText, secondary: classes.secondaryText }}
@@ -52,13 +65,14 @@ const SideBar = (props) => {
                 </ListItem>
             </div>
             <Divider />
-            <SidebarItems handleDrawerToggle={props.handleDrawerToggle} />
+            <SidebarItems drawerOpen={props.drawerOpen} handleDrawerToggle={props.handleDrawerToggle} />
         </div>
     );
 };
 
 SideBar.propTypes = {
     handleDrawerToggle: PropTypes.func,
+    drawerOpen: PropTypes.bool.isRequired,
 };
 
 SideBar.defaultProps = {
