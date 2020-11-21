@@ -10,10 +10,10 @@ import {
     PostAuth,
     EventPage,
     UserProfile,
+    EventModification,
+    Unauthorized,
 } from '@scenes';
 import { NavBar, AuthenticatedRoute, Footer } from '@components';
-import { TicketCreation } from '@scenes/EventCreation/components/TicketCreation';
-import { Confirm } from '@scenes/EventCreation/components/Confirm';
 import { AuthProvider, NFTProvider } from '@providers';
 
 import './App.css';
@@ -30,15 +30,15 @@ const App = () => {
                         <Route exact path="/signIn" component={SignIn} />
                         <Route exact path="/howItWorks" component={HowItWorks} />
                         <Route exact path="/helpCenter" component={HelpCenter} />
-                        <Route exact path="/createTicket" component={TicketCreation} />
-                        <Route exact path="/confirm" component={Confirm} />
                         <Route path="/search" component={HowItWorks} />
                         <Route path="/location" component={HowItWorks} />
                         <Route path="/date" component={HowItWorks} />
+                        <Route path="/unauthorized" component={Unauthorized} />
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />
                         <AuthenticatedRoute exact path="/setupAccount" component={AccountSetup} />
                         <AuthenticatedRoute exact path="/postAuth" component={PostAuth} />
                         <AuthenticatedRoute path="/userProfile" component={UserProfile} />
+                        <AuthenticatedRoute path="/modifyEvent/:eventId" component={EventModification} />
                     </Switch>
                     <Footer />
                 </NFTProvider>

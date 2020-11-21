@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React from 'react';
+import React, { useState } from 'react';
 import {
     CircularProgress,
     makeStyles,
@@ -11,10 +11,16 @@ import {
     TableCell,
     TableBody,
     Avatar,
+    IconButton,
+    MenuItem,
+    Menu,
 } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { TICKETS_SALES_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreatedEventList = () => {
+    const { t } = useTranslation();
+    const history = useHistory();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
+
     const displayVenue = (location) => {
         if (location.type === 'venue') {
             return location.location;
@@ -109,9 +120,27 @@ const CreatedEventList = () => {
         const amountResaleTickets = computeResaleTickets(tickets);
         return `${amountResaleTickets}`;
     };
+
+    const handleModifyEventGeneralClick = (eventId) => {
+        history.push(`/modifyEvent/${eventId}/general`);
+    };
+
+    const handleModifyEventTicketsClick = (eventId) => {
+        history.push(`/modifyEvent/${eventId}/tickets`);
+    };
+
     const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, {
         variables: { createdBy: 'TODO enlever le param' },
+        fetchPolicy: 'network-only',
     });
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
 
     const classes = useStyles();
     return (
@@ -131,6 +160,7 @@ const CreatedEventList = () => {
                                 <TableCell align="left">Listed Resale Tickets</TableCell>
                                 <TableCell align="left">Sold Resale Tickets</TableCell>
                                 <TableCell align="left">Gross</TableCell>
+                                <TableCell />
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -146,6 +176,33 @@ const CreatedEventList = () => {
                                     <TableCell align="left">{displayResaleTickets(event.ticketsListedSale)}</TableCell>
                                     <TableCell align="left">{displayResaleTickets(event.ticketsSoldSale)}</TableCell>
                                     <TableCell align="left">{displayGross(event.ticketsSoldSale)}</TableCell>
+                                    <TableCell align="left">
+                                        <IconButton
+                                            aria-label="Show more"
+                                            aria-controls="event-options"
+                                            aria-haspopup="true"
+                                            onClick={handleMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <MoreIcon />
+                                        </IconButton>
+                                        <Menu
+                                            anchorEl={anchorEl}
+                                            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                            id="event-options"
+                                            keepMounted
+                                            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                            open={isMenuOpen}
+                                            onClose={handleMenuClose}
+                                        >
+                                            <MenuItem onClick={() => handleModifyEventGeneralClick(event.id)}>
+                                                {t('manageEvents.moreOptions.modifyGeneral')}
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleModifyEventTicketsClick(event.id)}>
+                                                {t('manageEvents.moreOptions.modifyTickets')}
+                                            </MenuItem>
+                                        </Menu>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

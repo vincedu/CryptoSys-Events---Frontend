@@ -1,9 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, Grid, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-const DATE_FORMAT = 'MMMM Do, YYYY, h:mma';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
     ticketCard: {
@@ -29,6 +27,7 @@ const useStyles = makeStyles({
 
 const TicketCard = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { ticket, defaultTicketImageUrl } = props;
 
     const ticketImageUrl = ticket.image ? URL.createObjectURL(ticket.image) : defaultTicketImageUrl;
@@ -43,20 +42,15 @@ const TicketCard = (props) => {
                     <Grid item md={6} xs={12} className={classes.ticketMainContent}>
                         <Typography variant="h6">{ticket.name}</Typography>
                         <Typography variant="body2">{ticket.description}</Typography>
-                        <Typography variant="overline">
-                            {moment(ticket.startDate).format(DATE_FORMAT)}
-                            {' to '}
-                            {moment(ticket.endDate).format(DATE_FORMAT)}
-                        </Typography>
                     </Grid>
                     <Grid item container md={6} xs={12}>
                         <Grid item xs={6} className={classes.ticketAdditionalContent}>
-                            <Typography variant="body1">
-                                {ticket.soldQuantity ? ticket.soldQuantity : 0}/{ticket.quantity}
-                            </Typography>
+                            <Typography variant="body1">{`${ticket.quantity} ${t(
+                                'createEvent.tickets.units',
+                            )}`}</Typography>
                         </Grid>
                         <Grid item xs={6} className={classes.ticketAdditionalContent}>
-                            <Typography variant="body1">${ticket.price}</Typography>
+                            <Typography variant="body1">{ticket.price ? `WAX ${ticket.price}` : '-'}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

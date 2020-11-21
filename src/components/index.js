@@ -6,6 +6,7 @@ import PageContainer from './PageContainer';
 import CenteredCircularProgress from './CenteredCircularProgress';
 import TransactionProcessDialog from './TransactionProcessDialog';
 import ImageUpload from './ImageUpload';
+import { EventInformationForm, EventTicketsForm } from './Event';
 
 export {
     NavBar,
@@ -16,4 +17,6 @@ export {
     CenteredCircularProgress,
     TransactionProcessDialog,
     ImageUpload,
+    EventInformationForm,
+    EventTicketsForm,
 };

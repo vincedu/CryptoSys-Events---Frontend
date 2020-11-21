@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
 import { TitledPaper } from '@components';
 
-const DateTime = (props) => {
+const DateTimeForm = (props) => {
     const handleChange = (name, value) => {
         props.onChange(name, value);
     };
@@ -99,7 +99,7 @@ const DateTime = (props) => {
     );
 };
 
-DateTime.propTypes = {
+DateTimeForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.shape({
         start: PropTypes.instanceOf(Date),
@@ -108,4 +108,4 @@ DateTime.propTypes = {
     }).isRequired,
 };
 
-export default DateTime;
+export default DateTimeForm;

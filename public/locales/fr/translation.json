@@ -103,12 +103,24 @@
       "ticketName": "Nom du billet",
       "ticketDescription": "Description du billet",
       "quantity": "Quantité",
-      "unitPrice": "Prix unitaire"
+      "unitPrice": "Prix unitaire",
+      "units": "unités"
     },
     "confirm": {
       "title": "Confirmation",
       "description": "Confirmer votre événement",
       "createEvent": "Créer l'événement"
+    }
+  },
+  "modifyEvent": {
+    "title": "Modification d'événement",
+    "save": "Sauvegarder",
+    "cancel": "Annuler"
+  },
+  "manageEvents": {
+    "moreOptions": {
+      "modifyGeneral": "Modifier",
+      "modifyTickets": "Créer des billets"
     }
   },
   "buyTickets": {
@@ -143,6 +155,10 @@
   "ticketOpening": {
     "openButtonLabel": "Déballer",
     "closeButtonLabel": "Fermer"
+  },
+  "unauthorized": {
+    "title": "Non autorisé",
+    "message": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
   },
 
   "venue": "Lieu",

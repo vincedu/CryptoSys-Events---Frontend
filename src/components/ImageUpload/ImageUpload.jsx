@@ -102,10 +102,14 @@ const ImageUpload = (props) => {
     };
 
     if (props.value && (!selectedImage || props.value !== selectedImage.file)) {
-        readFile(props.value).then((newImage) => {
-            setError(undefined);
-            setSelectedImage(newImage);
-        });
+        if (typeof props.value === 'string') {
+            setSelectedImage({ file: props.value, dataUrl: props.value });
+        } else {
+            readFile(props.value).then((newImage) => {
+                setError(undefined);
+                setSelectedImage(newImage);
+            });
+        }
     } else if (!props.value && selectedImage) {
         setSelectedImage(undefined);
     }
@@ -120,7 +124,7 @@ const ImageUpload = (props) => {
                 onChange={handleUpload}
                 onClick={onUploadClick}
             />
-            {selectedImage && selectedImage.file && selectedImage.dataUrl ? (
+            {selectedImage && selectedImage.dataUrl ? (
                 <>
                     <Fab className={classes.removeImageFab} size="small" onClick={resetSelectedImage}>
                         <CloseIcon />
@@ -145,7 +149,7 @@ const ImageUpload = (props) => {
 };
 
 ImageUpload.propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.any,
     error: PropTypes.string,
     onChange: PropTypes.func,
 };

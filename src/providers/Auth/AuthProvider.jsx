@@ -9,6 +9,7 @@ const defaultAuthContext = {
     isAuthStatusReported: false,
     isUserSignedIn: false,
     isUserDataConfigured: false,
+    userId: undefined,
     userData: undefined,
     setUserData: () => {},
     resetAuthStatusReported: () => {},
@@ -36,6 +37,7 @@ class AuthProviderWithoutClient extends React.Component {
                                     isAuthStatusReported: true,
                                     isUserSignedIn: true,
                                     isUserDataConfigured: !!result && !!result.data && !!result.data.userData,
+                                    userId: user.uid,
                                     userData: result.data.userData,
                                 });
                             })
@@ -44,6 +46,7 @@ class AuthProviderWithoutClient extends React.Component {
                                     isAuthStatusReported: true,
                                     isUserSignedIn: false,
                                     isUserDataConfigured: false,
+                                    userId: undefined,
                                     userData: undefined,
                                 });
                             });
@@ -53,6 +56,7 @@ class AuthProviderWithoutClient extends React.Component {
                             isAuthStatusReported: true,
                             isUserSignedIn: false,
                             isUserDataConfigured: false,
+                            userId: undefined,
                             userData: undefined,
                         });
                     });
@@ -61,6 +65,7 @@ class AuthProviderWithoutClient extends React.Component {
                     isAuthStatusReported: true,
                     isUserSignedIn: false,
                     isUserDataConfigured: false,
+                    userId: undefined,
                     userData: undefined,
                 });
                 localStorage.removeItem('token');
@@ -89,6 +94,7 @@ class AuthProviderWithoutClient extends React.Component {
             isUserSignedIn,
             isUserDataConfigured,
             userData,
+            userId,
             setUserData,
             resetAuthStatusReported,
         } = this.state;
@@ -99,6 +105,7 @@ class AuthProviderWithoutClient extends React.Component {
                     isUserSignedIn,
                     isAuthStatusReported,
                     isUserDataConfigured,
+                    userId,
                     userData,
                     setUserData,
                     resetAuthStatusReported,

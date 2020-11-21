@@ -9,6 +9,7 @@ import TICKET_BY_ASSET_ID_QUERY from './ticketByAssetId';
 import EVENTS_BY_CREATOR_QUERY from './eventByCreator';
 import TICKETS_SALES_BY_ACCOUNT_NAME_QUERY from './ticketsSalesByAccountName';
 import TICKET_SCHEMAS_BY_ACCOUNT_NAME_AND_COLLECTION_NAME_QUERY from './ticketSchemasByAccountNameAndCollectionName';
+import TICKET_TEMPLATES_BY_EVENT_ID_QUERY from './ticketTemplatesByEventId';
 
 export {
     EVENT_BY_ID_QUERY,
@@ -22,4 +23,5 @@ export {
     TICKET_SALES_BY_EVENT_IDS_QUERY,
     TICKETS_SALES_BY_ACCOUNT_NAME_QUERY,
     TICKET_SCHEMAS_BY_ACCOUNT_NAME_AND_COLLECTION_NAME_QUERY,
+    TICKET_TEMPLATES_BY_EVENT_ID_QUERY,
 };

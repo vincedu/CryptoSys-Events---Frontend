@@ -1,37 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Typography, makeStyles, Hidden } from '@material-ui/core';
-import { TitledPaper } from '@components';
-import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Receipt } from '@material-ui/icons';
+import { TitledPaper } from '@components';
+import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '@constants';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
 
-// TODO: Replace this temp IPFS Hash with real default ticket image IPFS Hash
-export const DEFAULT_TICKET_IMAGE_IPFS_HASH = 'QmUSRaUYknQeVKGn3AzrtZuN9UA1aDrPaDP7M4Z1B6ktYS';
-
-// TODO: Uncomment when moving ticket creation to a seperate page
 const useStyles = makeStyles((theme) => ({
-    createTicketFab: {
-        margin: 0,
-        right: 24,
-        bottom: 24,
-        position: 'fixed',
-    },
     button: {
         padding: 15,
         maxHeight: 50,
     },
     submit: {
         paddingTop: 40,
-    },
-    lowerButton: {
-        padding: 15,
-        margin: '60px 10px 0 10px',
-    },
-    special: {
-        fontWeight: 900,
     },
     icon: {
         fontSize: '5em',
@@ -46,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const TicketCreation = (props) => {
-    const { handleBackStep, tickets, onCreateTicket, history } = props;
+export const EventTicketsForm = (props) => {
+    const { tickets, onCreateTicket } = props;
     const { t } = useTranslation();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
@@ -58,10 +41,6 @@ export const TicketCreation = (props) => {
 
     const handleCloseTicketDialog = () => {
         setIsTicketDialogOpen(false);
-    };
-
-    const handleNextButtonClick = () => {
-        history.push({ pathname: '/createEvent/confirm' });
     };
 
     return (
@@ -102,44 +81,22 @@ export const TicketCreation = (props) => {
                             />
                         ))}
                     </div>
-                    <Grid container justify="space-between" className={classes.submit}>
-                        <Button
-                            variant="outlined"
-                            className={classes.lowerButton}
-                            color="primary"
-                            onClick={handleBackStep}
-                        >
-                            {t('back')}
-                        </Button>
-                        <Button
-                            variant="contained"
-                            className={`${classes.lowerButton} ${classes.special}`}
-                            color="primary"
-                            onClick={handleNextButtonClick}
-                        >
-                            {t('next')}
-                        </Button>
-                    </Grid>
                 </TitledPaper>
             </Grid>
         </Grid>
     );
 };
 
-TicketCreation.propTypes = {
+EventTicketsForm.propTypes = {
     tickets: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
             quantity: PropTypes.number.isRequired,
             price: PropTypes.number.isRequired,
-            startDate: PropTypes.instanceOf(Date).isRequired,
-            endDate: PropTypes.instanceOf(Date).isRequired,
         }),
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
-    handleBackStep: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
-export default withRouter(TicketCreation);
+export default EventTicketsForm;

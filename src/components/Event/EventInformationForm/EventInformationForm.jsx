@@ -1,12 +1,11 @@
 import React from 'react';
-import { Grid, makeStyles, Hidden, Button } from '@material-ui/core';
+import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import { FindInPage, Event, Map } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { TitledPaper } from '@components';
-import GeneralInfo from './components/GeneralInfo';
-import Location from './components/Location';
-import DateTime from './components/DateTime';
+import GeneralInfoForm from './components/GeneralInfoForm';
+import LocationForm from './components/LocationForm';
+import DateTimeForm from './components/DateTimeForm';
 
 const useStyles = makeStyles((theme) => ({
     horizontalLine: {
@@ -32,17 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Information = (props) => {
-    Information.propTypes = {
-        handleFormChange: PropTypes.func.isRequired,
-        handleDateChange: PropTypes.func.isRequired,
-        handleNextButtonClick: PropTypes.func.isRequired,
-        handleLocationChange: PropTypes.func.isRequired,
-        value: PropTypes.object.isRequired,
-        form: PropTypes.object.isRequired,
-        date: PropTypes.object.isRequired,
-    };
-    const { t } = useTranslation();
+const EventInformationForm = (props) => {
     const classes = useStyles();
 
     return (
@@ -54,7 +43,7 @@ export const Information = (props) => {
                     </Grid>
                 </Hidden>
                 <Grid item xs={12} sm={11} md={9} className={classes.noPaddingLeft}>
-                    <GeneralInfo value={props.form} onChange={props.handleFormChange} />
+                    <GeneralInfoForm value={props.generalInfoForm} onChange={props.onGeneralInfoFormChange} />
                     <hr className={classes.horizontalLine} />
                 </Grid>
             </Grid>
@@ -65,7 +54,7 @@ export const Information = (props) => {
                     </Grid>
                 </Hidden>
                 <Grid item xs={12} sm={11} md={9} className={classes.noPaddingLeft}>
-                    <Location value={props.value} onChange={props.handleLocationChange} />
+                    <LocationForm value={props.locationForm} onChange={props.onLocationFormChange} />
                     <hr className={classes.horizontalLine} />
                 </Grid>
             </Grid>
@@ -76,21 +65,20 @@ export const Information = (props) => {
                     </Grid>
                 </Hidden>
                 <Grid item xs={12} sm={11} md={9} className={classes.noPaddingLeft}>
-                    <DateTime value={props.date} onChange={props.handleDateChange} />
+                    <DateTimeForm value={props.dateForm} onChange={props.onDateFormChange} />
                 </Grid>
-            </Grid>
-            <Grid container justify="flex-end">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.lowerbutton}
-                    onClick={props.handleNextButtonClick}
-                >
-                    {t('next')}
-                </Button>
             </Grid>
         </TitledPaper>
     );
 };
 
-export default Information;
+EventInformationForm.propTypes = {
+    generalInfoForm: PropTypes.object.isRequired,
+    onGeneralInfoFormChange: PropTypes.func.isRequired,
+    locationForm: PropTypes.object.isRequired,
+    onLocationFormChange: PropTypes.func.isRequired,
+    dateForm: PropTypes.object.isRequired,
+    onDateFormChange: PropTypes.func.isRequired,
+};
+
+export default EventInformationForm;
