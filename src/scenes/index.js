@@ -9,6 +9,7 @@ import UserProfile from './UserProfile';
 import Dashboard from './Dashboard';
 import EventModification from './EventModification';
 import Unauthorized from './Unauthorized';
+import QRCodeScanDialog from './QRCodeScan';
 
 export {
     EventCreation,
@@ -23,4 +24,5 @@ export {
     Dashboard,
     EventModification,
     Unauthorized,
+    QRCodeScanDialog,
 };

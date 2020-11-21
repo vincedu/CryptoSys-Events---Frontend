@@ -31,7 +31,8 @@
     "profile": "Profil",
     "manage": "Gérer les événements",
     "settings": "Réglages du compte",
-    "signOut": "Déconnexion"
+    "signOut": "Déconnexion",
+    "scanTicket": "Scanner un billet"
   },
   "sideBar": {
     "profile": "Profil",
@@ -166,6 +167,11 @@
   "unauthorized": {
     "title": "Non autorisé",
     "message": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
+  },
+  "scanTicket": {
+    "noResult": "Aucun résultat",
+    "holdSteady": "Tenez fermement le code QR pour scanner",
+    "scanResult": "Résultat de scan"
   },
 
   "venue": "Lieu",

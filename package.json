@@ -37,6 +37,7 @@
     "react-i18next": "^11.7.3",
     "react-instantsearch-dom": "^6.8.2",
     "react-load-script": "0.0.6",
+    "react-qr-reader": "^2.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "ual-anchor": "^0.5.1",
