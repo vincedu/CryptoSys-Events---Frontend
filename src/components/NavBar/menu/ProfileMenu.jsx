@@ -6,10 +6,12 @@ import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
+import { QRCodeScanDialog } from '@scenes';
 
 const ProfileMenu = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const { userData } = useContext(AuthContext);
+    const [scanTicketDialogOpen, setScanTicketDialogOpen] = useState(null);
     const user = firebase.auth().currentUser;
 
     const isMenuOpen = Boolean(anchorEl);
@@ -34,6 +36,15 @@ const ProfileMenu = (props) => {
 
     const handleButtonClick = (pageURL) => {
         history.push(pageURL);
+    };
+
+    const handleScanTicketButtonClick = () => {
+        setAnchorEl(null);
+        setScanTicketDialogOpen(true);
+    };
+
+    const handleScanTicketDialogClose = () => {
+        setScanTicketDialogOpen(false);
     };
 
     const menuId = 'profile-menu';
@@ -63,6 +74,8 @@ const ProfileMenu = (props) => {
             <MenuItem onClick={() => handleButtonClick('/userProfile/manageEvents')}>
                 {t('profileMenu.manage')}
             </MenuItem>
+            <MenuItem onClick={handleScanTicketButtonClick}>{t('profileMenu.scanTicket')}</MenuItem>
+            <QRCodeScanDialog open={scanTicketDialogOpen} onClose={handleScanTicketDialogClose} />
             <hr />
             <MenuItem onClick={() => handleButtonClick('/userProfile/accountSettings')}>
                 {t('profileMenu.settings')}

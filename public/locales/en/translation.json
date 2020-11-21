@@ -31,7 +31,8 @@
     "profile": "Profile",
     "manage": "Manage Events",
     "settings": "Account Settings",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "scanTicket": "Scan Ticket"
   },
   "sideBar": {
     "profile": "Profile",
@@ -159,6 +160,11 @@
   "unauthorized": {
     "title": "Unauthorized",
     "message": "You do not have the permissions to access this page."
+  },
+  "scanTicket": {
+    "noResult": "No Result",
+    "holdSteady": "Hold QR Code Steady and Clear to Scan",
+    "scanResult": "Scan Result"
   },
 
   "venue": "Venue",
