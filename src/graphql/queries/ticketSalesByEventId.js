@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
-    query ticketSalesByEventId($eventId: String!) {
-        ticketSalesByEventId(eventId: $eventId) {
+const TICKET_SALES_BY_EVENT_IDS_QUERY = gql`
+    query ticketSalesByEventIds($eventIds: [String!]) {
+        ticketSalesByEventIds(eventIds: $eventIds) {
             original {
                 template {
                     templateId
@@ -51,4 +51,4 @@ const TICKET_SALES_BY_EVENT_ID_QUERY = gql`
     }
 `;
 
-export default TICKET_SALES_BY_EVENT_ID_QUERY;
+export default TICKET_SALES_BY_EVENT_IDS_QUERY;

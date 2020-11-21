@@ -38,8 +38,8 @@ const anchorTestnet = new Anchor([WAX_TESTNET_CHAIN], {
 
 const waxCloudWallet = new Wax([WAX_CHAIN]);
 
-const isProductionEnv = process.env.NODE_ENV === 'production';
+const isTestNet = process.env.REACT_APP_EOS_NET === 'test' || process.env.NODE_ENV === 'development';
 
-export const chains = isProductionEnv ? [WAX_CHAIN] : [WAX_TESTNET_CHAIN];
+export const chains = isTestNet ? [WAX_TESTNET_CHAIN] : [WAX_CHAIN];
 
-export const authenticators = isProductionEnv ? [anchor, waxCloudWallet] : [anchorTestnet];
+export const authenticators = isTestNet ? [anchorTestnet] : [anchor, waxCloudWallet];

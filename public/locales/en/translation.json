@@ -63,8 +63,8 @@
     "accountSettings": "Account Settings",
     "tickets": "Tickets",
     "myTickets": "My Tickets",
-    "sellTickets": "Sell Tickets",
-    "liked": "Liked"
+    "liked": "Liked",
+    "sellTickets": "For Sale"
   },
   "accountSettings": {
     "information": "Account Informations",
@@ -163,6 +163,26 @@
     "fastDesc": "EOS.IO is one of the fastest blockchain",
     "eos": "EOS",
     "eosDesc": "Built on EOS.IO blockchain"
+  },
+  "ticketList": {
+    "myTickets": "My Tickets",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "myTicketsForSale": "My Tickets For Sale",
+    "noTickets": "No tickets",
+    "ticket": "ticket",
+    "tickets": "tickets",
+    "nftTicketInfo": "NFT Ticket Info",
+    "ticketInfo": "Ticket Info",
+    "resellTicket": "Resell Ticket",
+    "stopSelling": "Stop Selling",
+    "transferTicket": "Transfer Ticket",
+    "transferRecipient": "Recipient (wallet account name)",
+    "openTicket": "Open Ticket"
+  },
+  "ticketOpening": {
+    "openButtonLabel": "Open",
+    "closeButtonLabel": "Close"
   },
 
   "venue": "Venue",

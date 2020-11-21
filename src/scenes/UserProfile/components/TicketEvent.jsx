@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import {
     makeStyles,
     CardMedia,
@@ -12,9 +13,10 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment';
-import TicketItem from './TicketItem';
+import MyTicketItem from './MyTicketItem';
+import SellTicketItem from './SellTicketItem';
 
-const DATE_FORMAT = 'MMMM Do, YYYY, h:mma';
+const DATE_FORMAT = 'YYYY-MM-DD, h:mma';
 
 const useStyles = makeStyles((theme) => ({
     ticketEvent: {
@@ -61,7 +63,8 @@ const getTicketsQuantity = (eventTickets) => {
 
 const TicketEvent = (props) => {
     const classes = useStyles();
-    const { eventTickets } = props;
+    const { t } = useTranslation();
+    const { eventTickets, forSale } = props;
     const ticketsQuantity = getTicketsQuantity(eventTickets);
 
     return (
@@ -70,12 +73,16 @@ const TicketEvent = (props) => {
                 <Grid item xs={12} sm={6} md={3}>
                     <div className={classes.banner}>
                         <Paper className={classes.bannerContent}>
-                            <p style={{ margin: 'auto' }}>{ticketsQuantity} tickets</p>
+                            <p style={{ margin: 'auto' }}>
+                                {`${ticketsQuantity} ${
+                                    ticketsQuantity < 2 ? t('ticketList.ticket') : t('ticketList.tickets')
+                                }`}
+                            </p>
                         </Paper>
                     </div>
                     <CardMedia className={classes.eventImage} image={eventTickets.event.image} />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3} className={classes.eventContent}>
+                <Grid item xs={12} sm={6} md={9} className={classes.eventContent}>
                     <Typography variant="h5">{eventTickets.event.name}</Typography>
                     <Typography variant="body2">{eventTickets.event.description}</Typography>
                     <Typography variant="overline">
@@ -87,15 +94,30 @@ const TicketEvent = (props) => {
             <AccordionDetails className={classes.ticketItem}>
                 <div>
                     {eventTickets.tickets.map((eventTicketsType) =>
-                        eventTicketsType.tickets.map((ticket) => (
-                            <TicketItem
-                                name={eventTicketsType.template.name}
-                                description={eventTicketsType.template.description}
-                                image={eventTicketsType.template.image}
-                                templateId={eventTicketsType.template.templateId}
-                                assetId={ticket.assetId}
-                            />
-                        )),
+                        eventTicketsType.tickets.map((ticket) =>
+                            forSale ? (
+                                <SellTicketItem
+                                    name={eventTicketsType.template.name}
+                                    description={eventTicketsType.template.description}
+                                    image={eventTicketsType.template.image}
+                                    templateId={eventTicketsType.template.templateId}
+                                    assetId={ticket.assetId}
+                                    sale={ticket.sale}
+                                    eventId={eventTickets.event.id}
+                                />
+                            ) : (
+                                <MyTicketItem
+                                    name={eventTicketsType.template.name}
+                                    description={eventTicketsType.template.description}
+                                    image={eventTicketsType.template.image}
+                                    templateId={eventTicketsType.template.templateId}
+                                    assetId={ticket.assetId}
+                                    eventId={eventTickets.event.id}
+                                    opened={ticket.opened}
+                                    used={ticket.used}
+                                />
+                            ),
+                        ),
                     )}
                 </div>
             </AccordionDetails>
@@ -105,6 +127,10 @@ const TicketEvent = (props) => {
 
 TicketEvent.propTypes = {
     eventTickets: PropTypes.object.isRequired,
+    forSale: PropTypes.bool,
+};
+TicketEvent.defaultProps = {
+    forSale: false,
 };
 
 export default TicketEvent;

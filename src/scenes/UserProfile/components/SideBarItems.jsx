@@ -93,7 +93,7 @@ const SidebarItems = (props) => {
                 <ListItemIcon>
                     <ConfirmationNumberIcon style={{ color: '#FFF' }} />
                 </ListItemIcon>
-                <ListItemText primary="Tickets" style={{ color: '#FFF' }} />
+                <ListItemText primary={t('sideBar.tickets')} style={{ color: '#FFF' }} />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
 

@@ -14,9 +14,6 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { LocalizationProvider, DatePicker } from '@material-ui/pickers';
-import frLocale from 'date-fns/locale/fr';
-import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { ImageUpload } from '@components';
 
 const DEFAULT_TICKET_FORM = {
@@ -160,14 +157,7 @@ const CreateTicketDialog = (props) => {
         });
     };
 
-    const handleDateChange = (field, value) => {
-        let error;
-        if (field === 'start') error = value > date.end;
-        else error = value < date.start;
-        setDate({ ...date, [field]: value, error });
-    };
-
-    const handleImageUpload = (image) => {
+    const handleImageUpload = async (image) => {
         setForm({
             ...form,
             image: {
@@ -241,39 +231,6 @@ const CreateTicketDialog = (props) => {
                             error={form.price.error}
                             onChange={handleFormChange}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <LocalizationProvider
-                            {...(t('language') === 'fr' && { locale: frLocale })}
-                            dateAdapter={DateFnsUtils}
-                        >
-                            <Grid container justify="space-evenly">
-                                <DatePicker
-                                    renderInput={(inputProps) => <TextField variant="outlined" {...inputProps} />}
-                                    required
-                                    allowSameDateSelection
-                                    disablePast
-                                    OpenPickerButtonProps={{ color: 'primary', style: { marginRight: 0 } }}
-                                    label={t('createEvent.date.startDate')}
-                                    value={date.start}
-                                    error={date.error}
-                                    onChange={(value) => handleDateChange('start', value)}
-                                    style={{ width: '100%' }}
-                                />
-                                <DatePicker
-                                    renderInput={(inputProps) => <TextField variant="outlined" {...inputProps} />}
-                                    required
-                                    allowSameDateSelection
-                                    disablePast
-                                    OpenPickerButtonProps={{ color: 'primary', style: { marginRight: 0 } }}
-                                    label={t('createEvent.date.endDate')}
-                                    value={date.end}
-                                    error={date.error}
-                                    onChange={(value) => handleDateChange('end', value)}
-                                    style={{ width: '100%' }}
-                                />
-                            </Grid>
-                        </LocalizationProvider>
                     </Grid>
                 </Grid>
             </DialogContent>

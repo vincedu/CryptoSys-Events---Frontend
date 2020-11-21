@@ -4,7 +4,11 @@ import { offsetLimitPagination } from '@apollo/client/utilities';
 import { createUploadLink } from 'apollo-upload-client';
 import { RestLink } from 'apollo-link-rest';
 
-const API_URI = 'http://localhost:4000/graphql';
+const isProductionEnv = process.env.NODE_ENV === 'production';
+
+const API_URI = isProductionEnv
+    ? 'http://ec2-3-23-217-19.us-east-2.compute.amazonaws.com:4000/graphql'
+    : 'http://localhost:4000/graphql';
 
 const restLink = new RestLink({
     uri: 'https://us-central1-eosio-8f13d.cloudfunctions.net/api',

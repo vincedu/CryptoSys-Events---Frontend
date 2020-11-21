@@ -27,7 +27,7 @@ const App = () => {
                     <NavBar />
                     <Switch>
                         <Route exact path="/" component={MainPage} />
-                        <Route path="/event" component={EventPage} />
+                        <Route path="/event/:id" component={EventPage} />
                         <Route exact path="/signIn" component={SignIn} />
                         <Route exact path="/howItWorks" component={HowItWorks} />
                         <Route exact path="/helpCenter" component={HelpCenter} />

@@ -11,11 +11,7 @@ const createTemplateAction = (schemaName, collectionName, maxSupply, templateDat
         immutable_data: [
             { key: 'name', value: ['string', templateData.name] },
             { key: 'description', value: ['string', templateData.description] },
-            { key: 'price', value: ['uint64', templateData.price] },
-            { key: 'startDate', value: ['string', templateData.startDate] },
-            { key: 'endDate', value: ['string', templateData.endDate] },
             { key: 'eventId', value: ['string', templateData.eventId] },
-            { key: 'eventName', value: ['string', templateData.eventName] },
             { key: 'img', value: ['string', templateData.image] },
         ],
     };

@@ -19,28 +19,20 @@ const createSchemaAction = (schemaName, collectionName, accountName) => {
                 type: 'string',
             },
             {
-                name: 'price',
-                type: 'uint64',
-            },
-            {
-                name: 'startDate',
-                type: 'string',
-            },
-            {
-                name: 'endDate',
-                type: 'string',
-            },
-            {
                 name: 'eventId',
-                type: 'string',
-            },
-            {
-                name: 'eventName',
                 type: 'string',
             },
             {
                 name: 'img',
                 type: 'image',
+            },
+            {
+                name: 'opened',
+                type: 'bool',
+            },
+            {
+                name: 'used',
+                type: 'bool',
             },
         ],
     };

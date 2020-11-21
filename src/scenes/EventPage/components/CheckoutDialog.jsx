@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     Button,
     CardMedia,
     Dialog,
     DialogActions,
     DialogContent,
+    DialogContentText,
     DialogTitle,
     Grid,
     Tab,
@@ -15,6 +16,8 @@ import {
     useTheme,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 import TabPanel from '@components/TabPanel';
 import CheckoutTicketCard from './CheckoutTicketCard';
@@ -53,6 +56,10 @@ const CheckoutDialog = (props) => {
     const { isOpen, onClose, onSubmit, newTickets, otherTickets } = props;
     const [tab, setTab] = React.useState(0);
 
+    const { isUserSignedIn } = useContext(AuthContext);
+    const history = useHistory();
+    const [signInAlertOpen, setSignInAlertOpen] = useState(false);
+
     Object.keys(newTickets).forEach((key) => {
         newTickets[key] = { ...newTickets[key], number: 0 };
     });
@@ -87,9 +94,36 @@ const CheckoutDialog = (props) => {
         onClose();
     };
 
+    const handleSignInAlertClose = () => {
+        setSignInAlertOpen(false);
+    };
+
+    const renderNotSignInAlert = (
+        <Dialog open={signInAlertOpen} onClose={handleSignInAlertClose}>
+            <DialogTitle>You are not signed in</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    You will need to sign in to proceed to checkout. Do you want to sign in now?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleSignInAlertClose} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={() => history.push('/signIn')} color="primary" autoFocus>
+                    Sign In
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+
     const handleCheckout = () => {
-        onSubmit(_newTickets, _otherTickets, bill.total);
-        handleClose();
+        if (isUserSignedIn) {
+            onSubmit(_newTickets, _otherTickets, bill.total);
+            handleClose();
+        } else {
+            setSignInAlertOpen(true);
+        }
     };
 
     return (
@@ -199,6 +233,7 @@ const CheckoutDialog = (props) => {
                         >
                             {t('buyTickets.checkout')}
                         </Button>
+                        {renderNotSignInAlert}
                     </Grid>
                 </Grid>
             </DialogActions>
