@@ -62,6 +62,9 @@ const EventTicketsModification = (props) => {
             description: ticketData.description,
             image: ticketData.image,
             quantity: ticketData.maxSupply,
+            price: ticketData.originalPrice.amount,
+            currency: ticketData.originalPrice.currency,
+            originalSoldCount: ticketData.originalSoldCount,
         }));
 
         setTickets(existingTickets);

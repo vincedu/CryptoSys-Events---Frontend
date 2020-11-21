@@ -92,8 +92,11 @@ EventTicketsForm.propTypes = {
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
+            image: PropTypes.object,
             quantity: PropTypes.number.isRequired,
             price: PropTypes.number.isRequired,
+            currency: PropTypes.string.isRequired,
+            originalSoldCount: PropTypes.number,
         }),
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
