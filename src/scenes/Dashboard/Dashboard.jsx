@@ -1,8 +1,15 @@
 import React from 'react';
+import { PageContainer } from '@components';
 import CreatedEventList from './CreatedEventList/CreatedEventList';
+import GlobalStats from './GlobalStats/GlobalStats';
 
 const Dashboard = () => {
-    return <CreatedEventList />;
+    return (
+        <PageContainer>
+            <GlobalStats />
+            <CreatedEventList />
+        </PageContainer>
+    );
 };
 
 Dashboard.propTypes = {};

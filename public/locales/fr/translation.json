@@ -136,6 +136,13 @@
     "boughtAt": "Acheté à",
     "resalePrice": "Prix de revente"
   },
+  "eventsDashboard": {
+    "totalEvents": "ÉVÉNEMENTS",
+    "totalSoldTickets": "NOMBRE DE BILLETS VENDUS",
+    "totalResaleTickets": "NOMBRE DE BILLETS EN REVENTE",
+    "totalRevenue": "REVENUE TOTALE",
+    "currency": "devise"
+  },
   "ticketList": {
     "myTickets": "Mes billets",
     "upcoming": "Événements futurs",
