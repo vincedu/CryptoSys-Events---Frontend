@@ -124,7 +124,7 @@ const SpecialEventItem = (props) => {
                         />
                         <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <div>
+                                <div style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
                                     {props.tags?.length
                                         ? props.tags
                                               .slice(0, 3)
