@@ -2,9 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { EVENTS_BY_IDS_QUERY } from '@graphql/queries';
+import { EVENTS_BY_IDS_QUERY, DISTINCT_QUERY } from '@graphql/queries';
 import { PageContainer } from '@components';
-import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
 import SpecialEventItem from './components/SpecialEventItem';
 import MainPageHeader from './components/MainPageHeader';
@@ -34,22 +33,18 @@ const useStyles = makeStyles((theme) => ({
 const MainPage = () => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const featuredEvents = useQuery(EVENTS_BY_IDS_QUERY, {
-        variables: { ids: ['5fb54e8ad314f47f6c16be43', '5fb559d5d439e40df74ac907'] },
-    });
-    function FetchCategories() {
-        return CATEGORIES.map((name, id) => {
-            return { id, name };
-        });
-    }
-    const categories = FetchCategories();
 
+    const ids = ['5fb54e8ad314f47f6c16be43', '5fb559d5d439e40df74ac907'];
+
+    const featuredEvents = useQuery(EVENTS_BY_IDS_QUERY, { variables: { ids } });
+
+    const categories = useQuery(DISTINCT_QUERY, { variables: { attribute: 'category' } });
     return (
         <>
             <MainPageHeader />
             <PageContainer>
                 {featuredEvents.loading ? <CircularProgress /> : null}
-                {featuredEvents.data?.eventsByIds ? (
+                {featuredEvents.data?.eventsByIds.length ? (
                     <div className={classes.listContainer}>
                         <Typography className={classes.categoryTitle} variant="h3" color="secondary">
                             {t('eventList.featured')}
@@ -71,15 +66,17 @@ const MainPage = () => {
                         </Grid>
                     </div>
                 ) : null}
-                {categories
-                    .splice(0, 5)
-                    .map((category) => <EventList key={category.name} category={category.name} id={category.id} />)
-                    .reduce((prev, curr) => {
-                        return [prev, <hr className={classes.horizontalLine} key={null} />, curr];
-                    })}
+                {categories.loading ? <CircularProgress /> : null}
+                {categories.data?.distinct.length
+                    ? categories.data.distinct
+                          .map((category) => <EventList key={category} category={category} />)
+                          .reduce((prev, curr) => [prev, <hr className={classes.horizontalLine} key={null} />, curr])
+                    : null}
             </PageContainer>
         </>
     );
 };
+
+MainPage.propTypes = {};
 
 export default MainPage;

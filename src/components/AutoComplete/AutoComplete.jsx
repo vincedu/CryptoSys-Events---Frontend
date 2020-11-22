@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Autocomplete = (props) => {
+const AutoComplete = (props) => {
     const classes = useStyles();
 
     const { t } = useTranslation();
@@ -184,13 +184,13 @@ const Autocomplete = (props) => {
     );
 };
 
-Autocomplete.propTypes = {
+AutoComplete.propTypes = {
     searchBarRef: PropTypes.object.isRequired,
     navbar: PropTypes.bool,
 };
 
-Autocomplete.defaultProps = {
+AutoComplete.defaultProps = {
     navbar: false,
 };
 
-export default Autocomplete;
+export default AutoComplete;

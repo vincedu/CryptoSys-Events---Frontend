@@ -21,4 +21,6 @@ const CenteredCircularProgress = (props) => {
     );
 };
 
+CenteredCircularProgress.propTypes = {};
+
 export default CenteredCircularProgress;

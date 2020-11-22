@@ -12,6 +12,7 @@ import {
     CardHeader,
     Chip,
     IconButton,
+    Tooltip,
 } from '@material-ui/core';
 import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
 import { useTranslation } from 'react-i18next';
@@ -124,7 +125,9 @@ const SpecialEventItem = (props) => {
                                         : null}
                                 </div>
                                 <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
-                                    {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                                    <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
+                                        {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                                    </Tooltip>
                                 </IconButton>
                             </div>
                             <Typography variant="body2" color="textSecondary">

@@ -1,16 +1,6 @@
 import React, { useRef } from 'react';
-import {
-    makeStyles,
-    Grid,
-    InputBase,
-    Paper,
-    Divider,
-    Typography,
-    Hidden,
-    IconButton,
-    TextField,
-} from '@material-ui/core';
-import { LocationOn, Event } from '@material-ui/icons';
+import { makeStyles, Grid, Paper, Divider, Typography, IconButton, TextField } from '@material-ui/core';
+import { Event } from '@material-ui/icons';
 import { LocalizationProvider, DateRangePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import { useHistory } from 'react-router-dom';
@@ -61,7 +51,6 @@ const MainPageHeader = () => {
     const { t } = useTranslation();
     const classes = useStyles();
     const history = useHistory();
-    const locationRef = useRef();
     const searchBarRef = useRef();
 
     const handleDateChange = (selectedDate) => {
@@ -76,20 +65,6 @@ const MainPageHeader = () => {
                 },
             });
         }
-    };
-
-    const handleLocation = () => {
-        if (!locationRef.current.value) return;
-        history.push({
-            pathname: `/search/${locationRef.current.value}`,
-            state: {
-                location: locationRef.current.value,
-            },
-        });
-    };
-
-    const checkEnterKey = (key) => {
-        if (key.keyCode === 13) handleLocation();
     };
 
     return (
@@ -109,49 +84,36 @@ const MainPageHeader = () => {
                     </div>
                 </div>
                 <Paper className={classes.searchBar} ref={searchBarRef}>
-                    <Hidden smDown>
-                        <InputBase
-                            inputRef={locationRef}
-                            className={classes.input}
-                            style={{ flex: 1 }}
-                            placeholder={t('mainPageHeader.location')}
-                            onKeyDown={checkEnterKey}
+                    <LocalizationProvider
+                        {...(t('language') === 'fr' && { locale: frLocale })}
+                        dateAdapter={DateFnsUtils}
+                    >
+                        <DateRangePicker
+                            onChange={(selectedDate) => handleDateChange(selectedDate)}
+                            value={[null, null]}
+                            startText={t('mainPageHeader.date')}
+                            renderInput={(inputProps) => {
+                                const finalProps = { ...inputProps };
+                                finalProps.helperText = '';
+                                finalProps.style = { width: '100%' };
+                                finalProps.InputProps = {
+                                    endAdornment: (
+                                        <IconButton color="primary" onClick={inputProps.inputProps.onFocus}>
+                                            <Event />
+                                        </IconButton>
+                                    ),
+                                    classes: {
+                                        root: classes.underline,
+                                        focused: classes.underline,
+                                        notchedOutline: classes.underline,
+                                    },
+                                };
+                                return <TextField {...finalProps} />;
+                            }}
+                            disablePast
                         />
-                        <IconButton onClick={handleLocation} color="primary">
-                            <LocationOn />
-                        </IconButton>
-                        <Divider className={classes.divider} orientation="vertical" />
-                        <LocalizationProvider
-                            {...(t('language') === 'fr' && { locale: frLocale })}
-                            dateAdapter={DateFnsUtils}
-                        >
-                            <DateRangePicker
-                                onChange={(selectedDate) => handleDateChange(selectedDate)}
-                                value={[null, null]}
-                                startText={t('mainPageHeader.date')}
-                                renderInput={(inputProps) => {
-                                    const finalProps = { ...inputProps };
-                                    finalProps.helperText = '';
-                                    finalProps.style = { width: '100%' };
-                                    finalProps.InputProps = {
-                                        endAdornment: (
-                                            <IconButton color="primary" onClick={inputProps.inputProps.onFocus}>
-                                                <Event />
-                                            </IconButton>
-                                        ),
-                                        classes: {
-                                            root: classes.underline,
-                                            focused: classes.underline,
-                                            notchedOutline: classes.underline,
-                                        },
-                                    };
-                                    return <TextField {...finalProps} />;
-                                }}
-                                disablePast
-                            />
-                        </LocalizationProvider>
-                        <Divider className={classes.divider} orientation="vertical" />
-                    </Hidden>
+                    </LocalizationProvider>
+                    <Divider className={classes.divider} orientation="vertical" />
                     <div style={{ flex: 4 }}>
                         <AutoComplete searchBarRef={searchBarRef} />
                     </div>

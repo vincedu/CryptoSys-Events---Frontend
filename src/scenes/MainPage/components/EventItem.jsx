@@ -118,7 +118,7 @@ const EventItem = (props) => {
                                 : null}
                         </div>
                         <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
-                            <Tooltip title={isLiked ? 'Unlike' : 'Like'}>
+                            <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
                                 {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
                             </Tooltip>
                         </IconButton>
