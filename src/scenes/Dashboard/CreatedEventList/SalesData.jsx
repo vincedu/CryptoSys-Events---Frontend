@@ -139,7 +139,7 @@ const SalesData = (props) => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7} align="right">
                     <Collapse in={openRow} timeout="auto" unmountOnExit>
                         <Typography variant="h6" align="left" style={{ paddingTop: 20 }}>
-                            Ticket Sales Details
+                            {t('eventsDashboard.eventDetails')}
                         </Typography>
                         <Grid container direction="column" spacing={3} alignItems="center">
                             <Grid item xs={12}>

@@ -80,7 +80,6 @@ const computeTotalSoldTickets = (events) => {
 const computeTotalResaleTickets = (events) => {
     let totalResaleTickets = 0;
     events.forEach((event) => {
-        totalResaleTickets += computeResaleTickets(event.ticketsListedSale);
         totalResaleTickets += computeResaleTickets(event.ticketsSoldSale);
     });
     return totalResaleTickets;
