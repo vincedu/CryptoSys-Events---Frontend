@@ -11,8 +11,6 @@ import SellTicketList from './components/SellTicketList';
 import SideBar from './components/SideBar';
 import Liked from './components/Liked';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
     drawer: {
         whiteSpace: 'nowrap',
@@ -20,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
-        overflowX: 'hidden',
     },
     drawerPaper: {
         background: theme.palette.primary.main,
@@ -29,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         top: 'auto',
     },
     drawerOpen: {
-        width: drawerWidth,
+        width: 240,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,

@@ -41,5 +41,6 @@ const Liked = () => {
         </PageContainer>
     );
 };
+Liked.propTypes = {};
 
 export default Liked;
