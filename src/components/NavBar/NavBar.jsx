@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Button, Typography, Hidden, makeStyles } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AutoComplete } from '@components';
 import firebase from 'firebase';
@@ -41,25 +40,18 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const NavBar = (props) => {
+const NavBar = () => {
     const classes = useStyles();
     const { t } = useTranslation();
+    const location = useLocation();
+    const history = useHistory();
+    const searchBarRef = useRef();
 
-    const mainPage = () => {
-        switch (window.location.pathname) {
-            case '/':
-                return true;
-            default:
-                return false;
-        }
-    };
-
-    let isMainPage = mainPage();
+    const isMainPage = location.pathname === '/';
     const [transparent, setTransparent] = useState(isMainPage);
 
     if (isMainPage) {
         window.onscroll = () => {
-            isMainPage = mainPage();
             if (window.pageYOffset > 0) {
                 setTransparent(false);
             } else if (window.pageYOffset === 0) {
@@ -73,11 +65,6 @@ const NavBar = (props) => {
     firebase.auth().onAuthStateChanged((user) => {
         setCurrentUser(user);
     });
-
-    const isSignIn = Boolean(currentUser);
-
-    const { history } = props;
-    const searchBarRef = useRef();
 
     const handleButtonClick = (pageURL) => {
         history.push(pageURL);
@@ -112,7 +99,7 @@ const NavBar = (props) => {
                         {t('navBar.create')}
                     </Button>
                 </Hidden>
-                {isSignIn ? (
+                {currentUser ? (
                     <ProfileMenu history={history} />
                 ) : (
                     <Button color="inherit" onClick={() => handleButtonClick('/signIn')} style={{ marginLeft: 16 }}>
@@ -124,8 +111,6 @@ const NavBar = (props) => {
     );
 };
 
-NavBar.propTypes = {
-    history: PropTypes.object.isRequired,
-};
+NavBar.propTypes = {};
 
-export default withRouter(NavBar);
+export default NavBar;

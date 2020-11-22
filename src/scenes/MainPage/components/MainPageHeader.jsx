@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import {
     makeStyles,
     Grid,
@@ -14,7 +13,7 @@ import {
 import { LocationOn, Event } from '@material-ui/icons';
 import { LocalizationProvider, DateRangePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import frLocale from 'date-fns/locale/fr';
 import { AutoComplete } from '@components';
@@ -58,14 +57,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MainPageHeader = (props) => {
-    MainPageHeader.propTypes = {
-        history: PropTypes.object.isRequired,
-    };
-
+const MainPageHeader = () => {
     const { t } = useTranslation();
     const classes = useStyles();
-    const { history } = props;
+    const history = useHistory();
     const locationRef = useRef();
     const searchBarRef = useRef();
 
@@ -84,7 +79,7 @@ const MainPageHeader = (props) => {
     };
 
     const handleLocation = () => {
-        if (locationRef.current.value === '') return;
+        if (!locationRef.current.value) return;
         history.push({
             pathname: `/search/${locationRef.current.value}`,
             state: {
@@ -134,10 +129,11 @@ const MainPageHeader = (props) => {
                             <DateRangePicker
                                 onChange={(selectedDate) => handleDateChange(selectedDate)}
                                 value={[null, null]}
-                                startText={t('mainPageHeader.search')}
+                                startText={t('mainPageHeader.date')}
                                 renderInput={(inputProps) => {
                                     const finalProps = { ...inputProps };
                                     finalProps.helperText = '';
+                                    finalProps.style = { width: '100%' };
                                     finalProps.InputProps = {
                                         endAdornment: (
                                             <IconButton color="primary" onClick={inputProps.inputProps.onFocus}>
@@ -165,5 +161,6 @@ const MainPageHeader = (props) => {
         </Grid>
     );
 };
+MainPageHeader.propTypes = {};
 
-export default withRouter(MainPageHeader);
+export default MainPageHeader;

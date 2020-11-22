@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import {
     Checkbox,
     Grid,
@@ -15,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { CheckBox, CheckBoxOutlineBlank, ExpandMore, ExpandLess } from '@material-ui/icons';
 import { connectRefinementList } from 'react-instantsearch-dom';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -79,6 +79,7 @@ const CustomAccordionDetails = withStyles({
 const CustomRefinementList = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
+    const location = useLocation();
 
     const [showMore, setShowMore] = useState(props.numberItems);
     const handleMore = () => {
@@ -140,9 +141,8 @@ const CustomRefinementList = (props) => {
     ));
 
     const attribute = {};
-    // Check if page includes search filter
-    if (props.location.state?.category && props.attribute === 'category')
-        attribute.defaultRefinement = [props.location.state.category];
+    if (location.state?.category && props.attribute === 'category')
+        attribute.defaultRefinement = [location.state.category];
     attribute.attribute = props.attribute;
     attribute.limit = showMore;
 
@@ -163,11 +163,10 @@ const CustomRefinementList = (props) => {
 CustomRefinementList.propTypes = {
     attribute: PropTypes.string.isRequired,
     numberItems: PropTypes.number,
-    location: PropTypes.object.isRequired,
 };
 
 CustomRefinementList.defaultProps = {
     numberItems: 5,
 };
 
-export default withRouter(CustomRefinementList);
+export default CustomRefinementList;

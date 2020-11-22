@@ -2,9 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Paper, InputBase, IconButton, makeStyles } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import PropTypes from 'prop-types';
 import { connectSearchBox } from 'react-instantsearch-dom';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     input: {
@@ -20,13 +19,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CustomSearchBox = (props) => {
-    CustomSearchBox.propTypes = {
-        location: PropTypes.object.isRequired,
-    };
-
+const CustomSearchBox = () => {
     const classes = useStyles();
     const { t } = useTranslation();
+    const location = useLocation();
 
     const SearchBox = connectSearchBox(({ currentRefinement, refine }) => {
         return (
@@ -48,6 +44,9 @@ const CustomSearchBox = (props) => {
         );
     });
 
-    return <SearchBox defaultRefinement={props.location.state?.search ? props.location.state.search : ''} />;
+    return <SearchBox defaultRefinement={location.state?.search ? location.state.search : ''} />;
 };
-export default withRouter(CustomSearchBox);
+
+CustomSearchBox.propTypes = {};
+
+export default CustomSearchBox;

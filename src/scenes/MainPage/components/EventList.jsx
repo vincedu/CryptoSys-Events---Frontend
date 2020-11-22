@@ -3,12 +3,12 @@ import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
 import { makeStyles, Grid, Typography, Button, CircularProgress, Tooltip } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 import EventItem from './EventItem';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     seeMoreBtn: {
         padding: 30,
         display: 'flex',
@@ -29,11 +29,19 @@ const useStyles = makeStyles(() => ({
         height: 1,
         backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
     },
+    listContainer: {
+        dilplay: 'flex',
+        padding: 15,
+        [theme.breakpoints.down('xs')]: {
+            padding: 0,
+        },
+    },
 }));
 
 const EventList = (props) => {
     const { t } = useTranslation();
     const { userData } = useContext(AuthContext);
+    const history = useHistory();
     const classes = useStyles();
     const offset = 0;
     const limit = 4;
@@ -54,7 +62,7 @@ const EventList = (props) => {
             });
     }
     const handleCategory = (category) => {
-        props.history.push({
+        history.push({
             pathname: `/search/${category}`,
             state: {
                 category,
@@ -68,7 +76,7 @@ const EventList = (props) => {
 
     if (query.data.eventsByParam && query.data.eventsByParam.length) {
         return (
-            <div style={{ dilplay: 'flex', padding: 20 }}>
+            <div className={classes.listContainer}>
                 <Tooltip title={`${t('eventList.seeMore')} ${t(props.category)}`} placement="top" arrow>
                     <Typography
                         className={classes.categoryTitle}
@@ -109,7 +117,6 @@ const EventList = (props) => {
 
 EventList.propTypes = {
     category: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
-export default withRouter(EventList);
+export default EventList;

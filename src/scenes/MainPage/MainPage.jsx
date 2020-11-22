@@ -9,7 +9,7 @@ import EventList from './components/EventList';
 import SpecialEventItem from './components/SpecialEventItem';
 import MainPageHeader from './components/MainPageHeader';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     horizontalLine: {
         margin: 30,
         border: 0,
@@ -21,6 +21,13 @@ const useStyles = makeStyles(() => ({
         textAlign: 'left',
         width: 'fit-content',
         fontFamily: `'Bebas Neue', sans-serif`,
+    },
+    listContainer: {
+        dilplay: 'flex',
+        padding: 15,
+        [theme.breakpoints.down('xs')]: {
+            padding: 0,
+        },
     },
 }));
 
@@ -44,7 +51,7 @@ const MainPage = () => {
             <PageContainer>
                 {featuredEvents.loading ? <CircularProgress /> : null}
                 {featuredEvents.data?.eventsByIds ? (
-                    <div style={{ padding: 20 }}>
+                    <div className={classes.listContainer}>
                         <Typography className={classes.categoryTitle} variant="h3" color="secondary">
                             {t('eventList.featured')}
                         </Typography>

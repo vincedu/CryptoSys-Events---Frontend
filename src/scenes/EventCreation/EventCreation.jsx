@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { Grid, Stepper, StepLabel, Step, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -79,7 +78,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const variables = {};
-const EventCreation = (props) => {
+const EventCreation = () => {
     const [activeStep, setActiveStep] = useState(0);
     switch (window.location.pathname) {
         case '/createEvent/createTicket':
@@ -129,7 +128,7 @@ const EventCreation = (props) => {
         return true;
     };
 
-    const { history } = props;
+    const history = useHistory();
 
     const handleBackStep = () => {
         history.goBack();
@@ -246,7 +245,7 @@ const EventCreation = (props) => {
 
         const { templateIds } = await createTicketNFTs(ticketNFTs);
         await linkNftTemplatesToEvent({ variables: { eventId, templateIds } });
-        props.history.push('/');
+        history.push('/');
     };
 
     return (
@@ -321,8 +320,6 @@ const EventCreation = (props) => {
     );
 };
 
-EventCreation.propTypes = {
-    history: PropTypes.object.isRequired,
-};
+EventCreation.propTypes = {};
 
-export default withRouter(EventCreation);
+export default EventCreation;

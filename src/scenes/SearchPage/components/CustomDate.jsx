@@ -5,7 +5,7 @@ import { LocalizationProvider, DateRangePicker, DateRangeDelimiter } from '@mate
 import { connectRange, connectSortBy } from 'react-instantsearch-dom';
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
 import frLocale from 'date-fns/locale/fr';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
     Chip,
     Typography,
@@ -74,11 +74,7 @@ const CustomAccordionDetails = withStyles({
 const CustomDate = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
-
-    CustomDate.propTypes = {
-        attribute: PropTypes.string.isRequired,
-        location: PropTypes.object.isRequired,
-    };
+    const location = useLocation();
 
     const SortBy = connectSortBy(({ items, refine, createURL }) => (
         <Autocomplete
@@ -167,10 +163,10 @@ const CustomDate = (props) => {
     });
 
     const attribute = {};
-    if (props.location.state?.date)
+    if (location.state?.date)
         attribute.defaultRefinement = {
-            min: +props.location.state.date.min,
-            max: +props.location.state.date.max,
+            min: +location.state.date.min,
+            max: +location.state.date.max,
         };
     attribute.attribute = props.attribute;
 
@@ -195,4 +191,9 @@ const CustomDate = (props) => {
         </CustomAccordion>
     );
 };
-export default withRouter(CustomDate);
+
+CustomDate.propTypes = {
+    attribute: PropTypes.string.isRequired,
+};
+
+export default CustomDate;

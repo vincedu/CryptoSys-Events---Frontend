@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Grid, Card, Typography, CardContent, CardMedia, CardHeader, Chip } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Translate } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const CustomEventItem = (props) => {
     const classes = useStyles();
 
-    const { history } = props;
+    const history = useHistory();
     const { t } = useTranslation();
 
     const handleButtonClick = (pageURL) => {
@@ -105,7 +105,6 @@ CustomEventItem.propTypes = {
     image: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
     tags: PropTypes.array.isRequired,
     languages: PropTypes.array.isRequired,
     fake: PropTypes.bool,
@@ -115,4 +114,4 @@ CustomEventItem.defaultProps = {
     fake: false,
 };
 
-export default withRouter(CustomEventItem);
+export default CustomEventItem;

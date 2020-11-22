@@ -69,7 +69,7 @@ const EventPage = () => {
         return <CircularProgress />;
     }
 
-    if (data !== undefined) {
+    if (data) {
         const newTickets = {};
         const otherTickets = {};
         ticketsQuery.data.ticketSalesByEventIds[0].original.forEach((originalTicket) => {
@@ -95,7 +95,6 @@ const EventPage = () => {
                 };
             });
         });
-        console.log('RESALE TICKETS', otherTickets);
         return (
             <div style={{ padding: 20 }}>
                 <Grid container justify="center" className={classes.event}>

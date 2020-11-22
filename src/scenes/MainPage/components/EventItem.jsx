@@ -18,34 +18,10 @@ import {
     Chip,
     Tooltip,
 } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
 
 const EventItem = (props) => {
-    EventItem.propTypes = {
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        tags: PropTypes.array.isRequired,
-        languages: PropTypes.array.isRequired,
-        history: PropTypes.object.isRequired,
-        withBanner: PropTypes.bool,
-        hoverZoom: PropTypes.bool,
-        clickeable: PropTypes.bool,
-        style: PropTypes.object,
-        confirmPage: PropTypes.bool,
-        liked: PropTypes.bool,
-    };
-    EventItem.defaultProps = {
-        withBanner: false,
-        hoverZoom: true,
-        style: {},
-        clickeable: true,
-        confirmPage: false,
-        liked: false,
-    };
     const confirmPageStyle = props.confirmPage ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%' } : {};
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -85,8 +61,8 @@ const EventItem = (props) => {
     }));
     const classes = useStyles();
     const { t } = useTranslation();
-    const { history, liked } = props;
-    const [isLiked, setIsLiked] = useState(liked);
+    const history = useHistory();
+    const [isLiked, setIsLiked] = useState(props.liked);
 
     const handleButtonClick = () => {
         history.push({
@@ -166,4 +142,28 @@ const EventItem = (props) => {
     );
 };
 
-export default withRouter(EventItem);
+EventItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tags: PropTypes.array.isRequired,
+    languages: PropTypes.array.isRequired,
+    withBanner: PropTypes.bool,
+    hoverZoom: PropTypes.bool,
+    clickeable: PropTypes.bool,
+    style: PropTypes.object,
+    confirmPage: PropTypes.bool,
+    liked: PropTypes.bool,
+};
+EventItem.defaultProps = {
+    withBanner: false,
+    hoverZoom: true,
+    style: {},
+    clickeable: true,
+    confirmPage: false,
+    liked: false,
+};
+
+export default EventItem;

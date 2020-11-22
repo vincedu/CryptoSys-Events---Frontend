@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,23 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SpecialEventItem = (props) => {
     const classes = useStyles();
-
-    SpecialEventItem.propTypes = {
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        tags: PropTypes.array.isRequired,
-        languages: PropTypes.array.isRequired,
-        history: PropTypes.object.isRequired,
-        liked: PropTypes.bool,
-    };
-    SpecialEventItem.defaultProps = {
-        liked: false,
-    };
-
-    const { history } = props;
+    const history = useHistory();
     const { t } = useTranslation();
 
     const handleButtonClick = (pageURL) => {
@@ -110,7 +94,7 @@ const SpecialEventItem = (props) => {
     };
 
     return (
-        <Grid item sm={12} md={6}>
+        <Grid item sm={12} md={6} style={{ width: '100%' }}>
             <Card className={classes.root} onClick={() => handleButtonClick(`/event/${props.id}`)}>
                 <Grid container style={{ height: '100%' }}>
                     <Grid item xs={12} sm={6}>
@@ -165,4 +149,19 @@ const SpecialEventItem = (props) => {
         </Grid>
     );
 };
-export default withRouter(SpecialEventItem);
+
+SpecialEventItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tags: PropTypes.array.isRequired,
+    languages: PropTypes.array.isRequired,
+    liked: PropTypes.bool,
+};
+SpecialEventItem.defaultProps = {
+    liked: false,
+};
+
+export default SpecialEventItem;
