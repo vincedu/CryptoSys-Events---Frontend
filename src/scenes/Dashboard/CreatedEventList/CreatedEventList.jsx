@@ -21,6 +21,7 @@ import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useTranslation } from 'react-i18next';
+import { computeGross, computeMaxTickets, computeResaleTickets, computeTicketsSold } from '../computeStats';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,56 +58,9 @@ const CreatedEventList = () => {
         return location.type;
     };
 
-    const computeGross = (tickets) => {
-        let totalGross = 0;
-        tickets.original.forEach((ticketType) => {
-            const totalTicketsSold = parseInt(ticketType.sales.length);
-            if (ticketType.sales.length > 0) {
-                const price = parseInt(ticketType.sales[0].price.amount);
-                totalGross += totalTicketsSold * price;
-            }
-        });
-
-        tickets.resale.forEach((ticketType) => {
-            const totalTicketsSold = parseInt(ticketType.sales.length);
-            if (ticketType.sales.length > 0) {
-                ticketType.sales.forEach((sale) => {
-                    const price = parseInt(sale.price.amount);
-                    totalGross += totalTicketsSold * price * 0.03; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
-                });
-            }
-        });
-        return totalGross;
-    };
-
     const displayGross = (tickets) => {
         const gross = computeGross(tickets);
         return `${gross} WAX`;
-    };
-
-    const computeMaxTickets = (tickets) => {
-        let totalTickets = 0;
-        tickets.original.forEach((ticketType) => {
-            totalTickets += parseInt(ticketType.template.maxSupply);
-        });
-        return totalTickets;
-    };
-
-    const computeResaleTickets = (tickets) => {
-        let totalTicketsInResale = 0;
-        tickets.resale.forEach((ticketType) => {
-            totalTicketsInResale += parseInt(ticketType.sales.length);
-        });
-        return totalTicketsInResale;
-    };
-
-    const computeTicketsSold = (tickets) => {
-        let totalTicketsInSale = 0;
-        tickets.original.forEach((ticketType) => {
-            totalTicketsInSale += parseInt(ticketType.sales.length);
-        });
-        const maxTickets = computeMaxTickets(tickets);
-        return maxTickets - totalTicketsInSale;
     };
 
     const displaySoldTickets = (tickets) => {
