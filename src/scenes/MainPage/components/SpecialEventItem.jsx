@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import {
     makeStyles,
@@ -117,9 +118,8 @@ const SpecialEventItem = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ margin: 'auto' }}>
                         <CardHeader
-                            titleTypographyProps={{ variant: 'h4' }}
                             title={props.name}
-                            subheader={props.date.substring(0, 10)}
+                            subheader={moment(props.date).locale(t('language')).format('MMM Do, h:mm a')}
                             style={{ paddingBottom: 0 }}
                         />
                         <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>

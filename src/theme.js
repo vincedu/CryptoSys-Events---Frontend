@@ -50,6 +50,9 @@ const theme = createMuiTheme({
                 color: '#324856 !important',
             },
         },
+        MuiPickersDateRangePickerInput: {
+            root: { flex: 2 },
+        },
     },
 });
 

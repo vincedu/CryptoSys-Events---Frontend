@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+import 'moment/locale/fr';
 import { useMutation } from '@apollo/client';
 import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
 import {
@@ -117,7 +119,11 @@ const EventItem = (props) => {
             ) : null}
             <Card onClick={props.clickeable ? handleButtonClick : null} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
-                <CardHeader title={props.name} subheader={props.date.substring(0, 10)} style={{ paddingBottom: 0 }} />
+                <CardHeader
+                    title={props.name}
+                    subheader={moment(props.date).locale(t('language')).format('MMM Do, h:mm a')}
+                    style={{ paddingBottom: 0 }}
+                />
                 <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>

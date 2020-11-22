@@ -11,6 +11,7 @@
   "mainPageHeader": {
     "paragraph": "The future of online ticketing. EOS Event is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
     "search": "Search events",
+    "date": "Date",
     "location": "Location"
   },
   "eventList": {

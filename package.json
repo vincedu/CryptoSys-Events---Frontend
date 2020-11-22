@@ -25,6 +25,7 @@
     "graphql": "^15.3.0",
     "graphql-anywhere": "^4.2.7",
     "i18next": "^19.8.3",
+    "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",
     "lodash": "^4.17.20",
     "material-ui-chip-input": "^2.0.0-beta.2",

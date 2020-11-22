@@ -20,22 +20,14 @@ import LanguageIcon from '@material-ui/icons/Language';
 import DescriptionIcon from '@material-ui/icons/Description';
 import ClassIcon from '@material-ui/icons/Class';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import CheckoutDialog from './components/CheckoutDialog';
 
 const useStyles = makeStyles((theme) => ({
-    imageBackground: {
-        backgroundImage: `url('https://eosnation.io/wp-content/uploads/2019/02/2018-07-26_19.16.59.jpg')`,
-        height: '100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        padding: '5%',
-    },
     event: {
-        padding: 20,
+        backgroundColor: theme.palette.secondary.main,
+        height: '400px',
     },
     media: {
         display: 'block',
@@ -51,27 +43,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const EOS_ORANGE = 'rgba(209, 130, 55, 1)';
-
 const EventPage = () => {
     const { id } = useParams();
     const { t } = useTranslation();
     const { buyTicketNFTs } = useContext(NFTContext);
-
+    const classes = useStyles();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
-    // Query Item by ID
     const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id } });
     const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_IDS_QUERY, {
         variables: { eventIds: [id] },
     });
-
-    const handleOpenTicketDialog = () => {
-        setIsTicketDialogOpen(true);
-    };
-
-    const handleCloseTicketDialog = () => {
-        setIsTicketDialogOpen(false);
-    };
 
     const handleBuyTicket = async (newTickets, otherTickets, total) => {
         await buyTicketNFTs(newTickets, otherTickets, total);
@@ -81,31 +62,8 @@ const EventPage = () => {
         if (data.eventById.location.type === 'venue') {
             return data.eventById.location.location;
         }
-        if (data.eventById.location.type === 'tbd') {
-            return 'To be announced';
-        }
-        return data.eventById.location.type;
+        return t(data.eventById.location.type);
     };
-
-    EventPage.propTypes = {
-        location: PropTypes.shape({
-            pathname: PropTypes.string.isRequired,
-            state: PropTypes.shape({
-                id: PropTypes.string.isRequired,
-            }),
-        }),
-    };
-
-    EventPage.defaultProps = {
-        location: {
-            pathname: '',
-            state: {
-                id: '',
-            },
-        },
-    };
-
-    const classes = useStyles();
 
     if (loading || ticketsQuery.loading) {
         return <CircularProgress />;
@@ -140,12 +98,7 @@ const EventPage = () => {
         console.log('RESALE TICKETS', otherTickets);
         return (
             <div style={{ padding: 20 }}>
-                <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    style={{ backgroundColor: EOS_ORANGE, height: '400px' }}
-                >
+                <Grid container justify="center" className={classes.event}>
                     <div style={{ height: '50px' }}>
                         <div
                             className={classes.media}
@@ -241,7 +194,7 @@ const EventPage = () => {
                             variant="outlined"
                             color="secondary"
                             style={{ float: 'right', margin: 20 }}
-                            onClick={handleOpenTicketDialog}
+                            onClick={() => setIsTicketDialogOpen(true)}
                         >
                             {t('buyTickets.tickets')}
                         </Button>
@@ -250,7 +203,7 @@ const EventPage = () => {
                 <CheckoutDialog
                     isOpen={isTicketDialogOpen}
                     onSubmit={handleBuyTicket}
-                    onClose={handleCloseTicketDialog}
+                    onClose={() => setIsTicketDialogOpen(false)}
                     newTickets={newTickets}
                     otherTickets={otherTickets}
                     event={data.eventById}

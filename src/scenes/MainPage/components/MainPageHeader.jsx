@@ -152,8 +152,6 @@ const MainPageHeader = (props) => {
                                     };
                                     return <TextField {...finalProps} />;
                                 }}
-                                className={classes.input}
-                                style={{ flex: 2 }}
                                 disablePast
                             />
                         </LocalizationProvider>
