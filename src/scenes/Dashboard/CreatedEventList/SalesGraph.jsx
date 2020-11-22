@@ -3,12 +3,14 @@ import { Charts, ChartContainer, ChartRow, YAxis, AreaChart, styler, Legend } fr
 import { TimeSeries } from 'pondjs';
 import { Grid, useTheme } from '@material-ui/core';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-
-const columnNames = ['Sales', 'Resales'];
 
 const SalesGraph = (props) => {
     const { event } = props;
+    const { t } = useTranslation();
+    const columnNames = [t('eventsDashboard.graph.sales'), t('eventsDashboard.graph.resales')];
+
     const theme = useTheme();
     const customColorsList = [theme.palette.colors.coolSage, theme.palette.colors.rawSienna];
     const s = styler(
@@ -38,12 +40,12 @@ const SalesGraph = (props) => {
     const resaleData = getSalesData(event.ticketsSoldSale.resale).map((x) => [x[0], 0.03 * x[1]]);
     const originalSalesSeries = new TimeSeries({
         name: 'sales',
-        columns: ['time', 'Sales'],
+        columns: ['time', columnNames[0]],
         points: originalData,
     });
     const resalesSeries = new TimeSeries({
         name: 'resales',
-        columns: ['time', 'Resales'],
+        columns: ['time', columnNames[1]],
         points: resaleData,
     });
 
@@ -53,11 +55,11 @@ const SalesGraph = (props) => {
                 <Legend categories={legendCategories} style={s} type="dot" />
             </Grid>
             <Grid item>
-                <ChartContainer timeRange={originalSalesSeries.timerange()}>
+                <ChartContainer timeRange={originalSalesSeries.timerange()} format="%Y-%m-%d">
                     <ChartRow height="200">
                         <YAxis
                             id="axis1"
-                            label="Original Sales (WAX)"
+                            label={t('eventsDashboard.graph.axis1')}
                             min={0}
                             max={originalData.slice(-1)[0][1]}
                             width="60"
@@ -67,7 +69,7 @@ const SalesGraph = (props) => {
                             <AreaChart
                                 axis="axis1"
                                 series={originalSalesSeries}
-                                columns={{ up: ['Sales'], down: [] }}
+                                columns={{ up: [columnNames[0]], down: [] }}
                                 style={s}
                                 fillOpacity={0.4}
                                 interpolation="curveStepAfter"
@@ -75,7 +77,7 @@ const SalesGraph = (props) => {
                             <AreaChart
                                 axis="axis2"
                                 series={resalesSeries}
-                                columns={{ up: ['Resales'], down: [] }}
+                                columns={{ up: [columnNames[1]], down: [] }}
                                 style={s}
                                 fillOpacity={0.4}
                                 interpolation="curveStepAfter"
@@ -83,7 +85,7 @@ const SalesGraph = (props) => {
                         </Charts>
                         <YAxis
                             id="axis2"
-                            label="Resales (WAX)"
+                            label={t('eventsDashboard.graph.axis2')}
                             min={0}
                             max={resaleData.slice(-1)[0][1] * 2}
                             width="60"

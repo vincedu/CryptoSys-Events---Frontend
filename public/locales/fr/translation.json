@@ -146,9 +146,10 @@
     "title": "Tableau de bord des mes événements",
     "totalEvents": "ÉVÉNEMENTS",
     "totalSoldTickets": "NOMBRE DE BILLETS VENDUS",
-    "totalResaleTickets": "NOMBRE DE BILLETS EN REVENTE",
+    "totalResaleTickets": "NOMBRE DE BILLETS REVENDUS",
     "totalRevenue": "REVENUE TOTALE",
     "currency": "devise",
+    "eventDetails": "Détails des ventes de billets",
     "tableHeader": {
       "name": "Nom",
       "ticketName": "Nom du billet",
@@ -158,6 +159,12 @@
       "listedResale": "Billets en revente",
       "soldResale": "Billets revendus",
       "gross": "Revenus"
+    },
+    "graph": {
+      "sales": "Ventes",
+      "resales": "Reventes",
+      "axis1": "Ventes originales (WAX)",
+      "axis2": "Reventes (WAX)"
     }
   },
   "ticketList": {

@@ -146,9 +146,10 @@
     "title": "My Events Dashboard",
     "totalEvents": "TOTAL EVENTS",
     "totalSoldTickets": "TOTAL SOLD TICKETS",
-    "totalResaleTickets": "TOTAL RESALE TICKETS",
+    "totalResaleTickets": "TOTAL TICKETS RESOLD",
     "totalRevenue": "TOTAL REVENUE",
     "currency": "currency",
+    "eventDetails": "Ticket Sales Details",
     "tableHeader": {
       "name": "Name",
       "ticketName": "Ticket Name",
@@ -158,6 +159,12 @@
       "listedResale": "Listed Resale Tickets",
       "soldResale": "Sold Resale Tickets",
       "gross": "Gross"
+    },
+    "graph": {
+      "sales": "Sales",
+      "resales": "Resales",
+      "axis1": "Original Sales (WAX)",
+      "axis2": "Resales (WAX)"
     }
   },
   "ticketList": {
