@@ -74,9 +74,8 @@ const TicketEvent = (props) => {
                     <div className={classes.banner}>
                         <Paper className={classes.bannerContent}>
                             <p style={{ margin: 'auto' }}>
-                                {`${ticketsQuantity} ${
-                                    ticketsQuantity < 2 ? t('ticketList.ticket') : t('ticketList.tickets')
-                                }`}
+                                {ticketsQuantity}{' '}
+                                {ticketsQuantity < 2 ? t('ticketList.ticket') : t('ticketList.tickets')}
                             </p>
                         </Paper>
                     </div>
