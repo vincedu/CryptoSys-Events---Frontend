@@ -125,8 +125,8 @@
   },
   "manageEvents": {
     "moreOptions": {
-      "modifyGeneral": "Modify",
-      "modifyTickets": "Create tickets"
+      "modifyGeneral": "Modify Event",
+      "modifyTickets": "Add tickets"
     }
   },
   "buyTickets": {
@@ -143,11 +143,22 @@
     "resalePrice": "Resale price"
   },
   "eventsDashboard": {
+    "title": "My Events Dashboard",
     "totalEvents": "TOTAL EVENTS",
     "totalSoldTickets": "TOTAL SOLD TICKETS",
     "totalResaleTickets": "TOTAL RESALE TICKETS",
     "totalRevenue": "TOTAL REVENUE",
-    "currency": "currency"
+    "currency": "currency",
+    "tableHeader": {
+      "name": "Name",
+      "ticketName": "Ticket Name",
+      "date": "Date",
+      "location": "Location",
+      "soldTickets": "Sold Tickets",
+      "listedResale": "Listed Resale Tickets",
+      "soldResale": "Sold Resale Tickets",
+      "gross": "Gross"
+    }
   },
   "ticketList": {
     "myTickets": "My Tickets",

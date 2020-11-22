@@ -13,6 +13,7 @@ const TICKETS_SALES_BY_ACCOUNT_NAME_QUERY = gql`
             category
             languages
             tags
+            createdAt
             location {
                 type
                 location
@@ -78,6 +79,7 @@ const TICKETS_SALES_BY_ACCOUNT_NAME_QUERY = gql`
                         saleId
                         offerId
                         seller
+                        time
                         price {
                             amount
                             currency
@@ -100,6 +102,7 @@ const TICKETS_SALES_BY_ACCOUNT_NAME_QUERY = gql`
                         saleId
                         offerId
                         seller
+                        time
                         price {
                             amount
                             currency

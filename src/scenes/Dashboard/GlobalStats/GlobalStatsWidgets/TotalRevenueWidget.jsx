@@ -23,7 +23,7 @@ const TotalRevenueWidget = (props) => {
                 <Typography className={classes.title} color="textSecondary" gutterBottom variant="body2">
                     {t('eventsDashboard.totalRevenue')}
                 </Typography>
-                <Typography variant="h3">{totalRevenue}</Typography>
+                <Typography variant="h3">{totalRevenue.toFixed(2)}</Typography>
                 <Typography variant="caption">{t('eventsDashboard.currency')}: WAX</Typography>
             </CardContent>
         </Card>

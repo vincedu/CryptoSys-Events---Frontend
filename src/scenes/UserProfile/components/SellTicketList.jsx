@@ -13,8 +13,8 @@ export default function SellTicketList(props) {
         eventsTickets = tickets;
     }
     return (
-        <PageContainer>
-            <TitledPaper title={t('ticketList.myTicketsForSale')}>
+        <PageContainer title={t('ticketList.myTicketsForSale')}>
+            <TitledPaper>
                 <div>
                     {loading ? (
                         <CircularProgress />

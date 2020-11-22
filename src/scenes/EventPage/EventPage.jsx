@@ -111,7 +111,7 @@ const EventPage = () => {
         return <CircularProgress />;
     }
 
-    if (data !== undefined) {
+    if (data && ticketsQuery.data) {
         const newTickets = {};
         const otherTickets = {};
         ticketsQuery.data.ticketSalesByEventIds[0].original.forEach((originalTicket) => {
