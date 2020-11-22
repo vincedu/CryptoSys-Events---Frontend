@@ -74,7 +74,7 @@ const EventList = (props) => {
         return <CircularProgress />;
     }
 
-    if (query.data.eventsByParam && query.data.eventsByParam.length) {
+    if (query.data.eventsByParam?.length) {
         return (
             <div className={classes.listContainer}>
                 <Tooltip title={`${t('eventList.seeMore')} ${t(props.category)}`} placement="top" arrow>

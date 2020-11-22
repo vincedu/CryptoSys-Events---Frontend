@@ -91,8 +91,8 @@ const ProfileMenu = (props) => {
                                     </ListItemIcon>
                                     <ListItemText
                                         classes={{ primary: classes.primaryText, secondary: classes.secondaryText }}
-                                        primary={userData && userData.displayName ? userData.displayName : null}
-                                        secondary={user && user.email ? user.email : null}
+                                        primary={userData?.displayName ? userData.displayName : null}
+                                        secondary={user?.email ? user.email : null}
                                     />
                                 </MenuItem>
                                 <hr className={classes.horizontalLine} />
