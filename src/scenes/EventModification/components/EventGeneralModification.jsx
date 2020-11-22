@@ -178,6 +178,7 @@ const EventGeneralModification = (props) => {
                         variant="contained"
                         color="primary"
                         onClick={updateEventGeneralInfo}
+                        onCancel={props.onExit}
                         disabled={!isFormModified}
                     >
                         {t('modifyEvent.save')}
