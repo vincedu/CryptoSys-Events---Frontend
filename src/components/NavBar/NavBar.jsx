@@ -93,14 +93,14 @@ const NavBar = () => {
 
                 <div style={{ flexGrow: 1 }} />
 
-                <HelpMenu history={history} />
+                <HelpMenu />
                 <Hidden xsDown>
                     <Button color="inherit" onClick={() => handleButtonClick('/createEvent/general')}>
                         {t('navBar.create')}
                     </Button>
                 </Hidden>
                 {currentUser ? (
-                    <ProfileMenu history={history} />
+                    <ProfileMenu />
                 ) : (
                     <Button color="inherit" onClick={() => handleButtonClick('/signIn')} style={{ marginLeft: 16 }}>
                         {t('navBar.signIn')}

@@ -40,14 +40,12 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 0,
         paddingBottom: 0,
     },
-    toolbar: theme.mixins.toolbar,
 }));
 
 const SideBar = (props) => {
     const classes = useStyles();
     const { userData } = useContext(AuthContext);
     const user = firebase.auth().currentUser;
-    console.log(props.drawerOpen);
     return (
         <div className={classes.sidebar}>
             <IconButton style={{ padding: 16 }} onClick={() => props.handleDrawerToggle()}>
@@ -60,8 +58,8 @@ const SideBar = (props) => {
                     </ListItemAvatar>
                     <ListItemText
                         classes={{ primary: classes.primaryText, secondary: classes.secondaryText }}
-                        primary={userData && userData.displayName ? userData.displayName : null}
-                        secondary={user && user.email ? user.email : null}
+                        primary={userData?.displayName ? userData.displayName : null}
+                        secondary={user?.email ? user.email : null}
                     />
                 </ListItem>
             </div>
@@ -72,12 +70,8 @@ const SideBar = (props) => {
 };
 
 SideBar.propTypes = {
-    handleDrawerToggle: PropTypes.func,
+    handleDrawerToggle: PropTypes.func.isRequired,
     drawerOpen: PropTypes.bool.isRequired,
-};
-
-SideBar.defaultProps = {
-    handleDrawerToggle: () => {},
 };
 
 export default SideBar;

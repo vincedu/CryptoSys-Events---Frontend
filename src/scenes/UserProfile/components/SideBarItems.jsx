@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import { makeStyles, List, ListItem, ListItemIcon, ListItemText, Collapse } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import { ExpandLess, ExpandMore, Settings, ConfirmationNumber, LocalAtm, Favorite, Event } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import EventIcon from '@material-ui/icons/Event';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     nested: {
-        paddingLeft: theme.spacing(4),
+        paddingLeft: theme.spacing(5),
     },
     link: {
         color: '#FFF',
@@ -24,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 const SidebarItems = (props) => {
     const [open, setOpen] = useState(false);
     const [sideBarTab, setSideBarTab] = useState(0);
-    // Fermé sous-onglet Tickets quand le drawer est fermé
     if (!props.drawerOpen && open) setOpen(false);
     const closeIfXS = () => {
         if (window.innerWidth < 600) props.handleDrawerToggle(false);
@@ -79,7 +72,7 @@ const SidebarItems = (props) => {
             <Link to="/userProfile/accountSettings" className={classes.link}>
                 <ListItem button selected={sideBarTab === 0}>
                     <ListItemIcon>
-                        <SettingsIcon style={{ color: '#FFF' }} />
+                        <Settings style={{ color: '#FFF' }} />
                     </ListItemIcon>
                     <ListItemText primary={t('sideBar.accountSettings')} />
                 </ListItem>
@@ -90,7 +83,7 @@ const SidebarItems = (props) => {
                 selected={(sideBarTab === 1 || sideBarTab === 2) && (!props.drawerOpen || !open)}
             >
                 <ListItemIcon>
-                    <ConfirmationNumberIcon style={{ color: '#FFF' }} />
+                    <ConfirmationNumber style={{ color: '#FFF' }} />
                 </ListItemIcon>
                 <ListItemText primary={t('sideBar.tickets')} style={{ color: '#FFF' }} />
                 {open ? <ExpandLess /> : <ExpandMore />}
@@ -101,7 +94,7 @@ const SidebarItems = (props) => {
                     <Link to="/userProfile/myTickets" className={classes.link}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 1}>
                             <ListItemIcon>
-                                <ConfirmationNumberIcon style={{ color: '#FFF' }} />
+                                <ConfirmationNumber style={{ color: '#FFF' }} />
                             </ListItemIcon>
                             <ListItemText primary={t('sideBar.myTickets')} />
                         </ListItem>
@@ -110,7 +103,7 @@ const SidebarItems = (props) => {
                     <Link to="/userProfile/sellTickets" className={classes.link}>
                         <ListItem button className={classes.nested} selected={sideBarTab === 2}>
                             <ListItemIcon>
-                                <LocalAtmIcon style={{ color: '#FFF' }} />
+                                <LocalAtm style={{ color: '#FFF' }} />
                             </ListItemIcon>
                             <ListItemText primary={t('sideBar.sellTickets')} />
                         </ListItem>
@@ -121,7 +114,7 @@ const SidebarItems = (props) => {
             <Link to="/userProfile/manageEvents" className={classes.link}>
                 <ListItem button selected={sideBarTab === 3}>
                     <ListItemIcon>
-                        <EventIcon style={{ color: '#FFF' }} />
+                        <Event style={{ color: '#FFF' }} />
                     </ListItemIcon>
                     <ListItemText primary={t('sideBar.manage')} />
                 </ListItem>
@@ -129,7 +122,7 @@ const SidebarItems = (props) => {
             <Link to="/userProfile/liked" className={classes.link}>
                 <ListItem button selected={sideBarTab === 4}>
                     <ListItemIcon>
-                        <FavoriteIcon style={{ color: '#FFF' }} />
+                        <Favorite style={{ color: '#FFF' }} />
                     </ListItemIcon>
                     <ListItemText primary={t('sideBar.liked')} />
                 </ListItem>

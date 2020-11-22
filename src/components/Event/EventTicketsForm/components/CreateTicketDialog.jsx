@@ -168,7 +168,7 @@ const CreateTicketDialog = (props) => {
     };
 
     return (
-        <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen} disableEnforceFocus>
+        <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
             <Typography variant="h4" className={classes.title}>
                 {t('createEvent.tickets.createTicket')}
             </Typography>

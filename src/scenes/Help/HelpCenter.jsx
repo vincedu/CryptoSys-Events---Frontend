@@ -16,11 +16,6 @@ const useStyles = makeStyles((theme) => ({
             transform: 'translatey(0px)',
         },
     },
-
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-    },
     img: {
         width: '100%',
         objectFit: 'contain',
@@ -34,37 +29,12 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
     },
-    promotion: {
-        paddingBottom: 40,
-        background: 'linear-gradient(70deg, rgba(50,72,86,1) 0%, rgba(99,140,166,1) 100%)',
-        boxSizing: 'border-box!important',
-        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-    },
     categoryTitle: {
         fontFamily: `'Bebas Neue', sans-serif`,
     },
-    container: {
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-    },
-    backgroundBlue: {
-        position: 'absolute',
-        background: 'linear-gradient(190deg, #324856 50%, transparent 25%)',
-        height: '100vh',
-        width: '100%',
-        animation: '$float 5s ease-in-out infinite',
-    },
-    backgroundOrange: {
-        position: 'absolute',
-        background: 'linear-gradient(170deg, #d66c44 50%, transparent 25%)',
-        height: '95vh',
-        width: '100%',
-        animation: '$float 6s ease-in-out infinite',
-    },
 }));
 
-export default function HelpCenter() {
+const HelpCenter = () => {
     const classes = useStyles();
     const { t } = useTranslation();
 
@@ -144,4 +114,8 @@ export default function HelpCenter() {
             </Grid>
         </PageContainer>
     );
-}
+};
+
+HelpCenter.propTypes = {};
+
+export default HelpCenter;

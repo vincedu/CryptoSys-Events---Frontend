@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         zIndex: 2,
     },
-    content: {
-        flexGrow: 1,
-    },
     drawerPaper: {
         background: theme.palette.primary.main,
         borderRight: 0,
@@ -78,7 +75,7 @@ const UserProfile = () => {
                     <SideBar handleDrawerToggle={handleDrawerToggle} drawerOpen={drawerOpen} />
                 </Drawer>
             </nav>
-            <main className={classes.content}>
+            <main style={{ flexGrow: 1 }}>
                 <Switch>
                     <Route path="/userProfile/accountSettings" component={AccountSettings} />
                     <Route

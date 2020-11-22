@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Button,
     Popper,
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const HelpMenu = (props) => {
+const HelpMenu = () => {
     const classes = useStyles();
     const { t } = useTranslation();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
-    const { history } = props;
+    const history = useHistory();
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -107,8 +107,6 @@ const HelpMenu = (props) => {
     );
 };
 
-HelpMenu.propTypes = {
-    history: PropTypes.object.isRequired,
-};
+HelpMenu.propTypes = {};
 
 export default HelpMenu;

@@ -42,7 +42,6 @@ const MainPage = () => {
             return { id, name };
         });
     }
-    console.log(featuredEvents);
     const categories = FetchCategories();
 
     return (

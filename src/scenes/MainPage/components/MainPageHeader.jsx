@@ -113,7 +113,6 @@ const MainPageHeader = () => {
                         <InputBase
                             inputRef={locationRef}
                             className={classes.input}
-                            inputProps={{ style: { textOverflow: 'ellipsis', overflow: 'hidden' } }}
                             style={{ flex: 1 }}
                             placeholder={t('mainPageHeader.location')}
                             onKeyDown={checkEnterKey}

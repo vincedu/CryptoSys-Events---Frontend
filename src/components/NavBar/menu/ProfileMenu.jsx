@@ -12,6 +12,7 @@ import {
     MenuList,
     Grow,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { AccountCircle } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
@@ -47,8 +48,9 @@ const ProfileMenu = (props) => {
     const { userData } = useContext(AuthContext);
     const user = firebase.auth().currentUser;
 
-    const { history, ual } = props;
+    const { ual } = props;
     const { t } = useTranslation();
+    const history = useHistory();
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -157,7 +159,6 @@ const ProfileMenu = (props) => {
 };
 
 ProfileMenu.propTypes = {
-    history: PropTypes.object.isRequired,
     ual: PropTypes.object.isRequired,
 };
 
