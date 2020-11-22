@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '12px 40px',
         position: 'absolute',
         bottom: 0,
+        zIndex: 3,
     },
     title: {
         marginTop: '5px',

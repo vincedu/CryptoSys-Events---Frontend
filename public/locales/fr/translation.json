@@ -15,9 +15,10 @@
   },
   "eventList": {
     "seeMore": "Voir plus de",
-    "noEvent": "Aucun événement",
+    "noEvent": "Aucun événement pour",
     "free": "Gratuit",
-    "type": "Type"
+    "type": "Type",
+    "featured": "En vedette"
   },
   "searchPage": {
     "more": "Plus de",

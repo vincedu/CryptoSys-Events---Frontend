@@ -14,25 +14,10 @@ import Liked from './components/Liked';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
     drawer: {
-        flexShrink: 0,
         whiteSpace: 'nowrap',
-        background: theme.palette.primary.main,
+        zIndex: 2,
     },
-    appBar: {
-        [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth,
-        },
-        background: 'white',
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
@@ -81,7 +66,7 @@ const UserProfile = () => {
     };
 
     return (
-        <div className={classes.root}>
+        <div style={{ display: 'flex' }}>
             <nav className={classes.drawer}>
                 <Drawer
                     variant="permanent"

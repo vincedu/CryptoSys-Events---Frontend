@@ -1,43 +1,76 @@
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { CircularProgress, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { EVENT_BY_ID_QUERY } from '@graphql/queries';
+import { EVENTS_BY_IDS_QUERY } from '@graphql/queries';
 import { PageContainer } from '@components';
 import { CATEGORIES } from '@scenes/EventCreation/lists';
 import EventList from './components/EventList';
-import MainEventItem from './components/MainEventItem';
+import SpecialEventItem from './components/SpecialEventItem';
 import MainPageHeader from './components/MainPageHeader';
 
+const useStyles = makeStyles(() => ({
+    horizontalLine: {
+        margin: 30,
+        border: 0,
+        height: 1,
+        backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
+    },
+    categoryTitle: {
+        margin: 20,
+        textAlign: 'left',
+        width: 'fit-content',
+        fontFamily: `'Bebas Neue', sans-serif`,
+    },
+}));
+
 const MainPage = () => {
-    const mainEvent = useQuery(EVENT_BY_ID_QUERY, { variables: { id: '5fb54e8ad314f47f6c16be43' } });
+    const classes = useStyles();
+    const { t } = useTranslation();
+    const featuredEvents = useQuery(EVENTS_BY_IDS_QUERY, {
+        variables: { ids: ['5fb54e8ad314f47f6c16be43', '5fb559d5d439e40df74ac907'] },
+    });
     function FetchCategories() {
         return CATEGORIES.map((name, id) => {
             return { id, name };
         });
     }
+    console.log(featuredEvents);
     const categories = FetchCategories();
 
     return (
         <>
             <MainPageHeader />
             <PageContainer>
-                <div />
-                {mainEvent.loading ? <CircularProgress /> : null}
-                {mainEvent.data?.eventById ? (
-                    <MainEventItem
-                        id={mainEvent.data.eventById.id}
-                        name={mainEvent.data.eventById.name}
-                        description={mainEvent.data.eventById.description}
-                        date={mainEvent.data.eventById.startDate}
-                        type={mainEvent.data.eventById.type}
-                        image={mainEvent.data.eventById.image}
-                        tags={mainEvent.data.eventById.tags}
-                        languages={mainEvent.data.eventById.languages}
-                    />
+                {featuredEvents.loading ? <CircularProgress /> : null}
+                {featuredEvents.data?.eventsByIds ? (
+                    <div style={{ padding: 20 }}>
+                        <Typography className={classes.categoryTitle} variant="h3" color="secondary">
+                            {t('eventList.featured')}
+                        </Typography>
+                        <Grid container spacing={3}>
+                            {featuredEvents.data.eventsByIds.map((event) => (
+                                <SpecialEventItem
+                                    key={event.id}
+                                    id={event.id}
+                                    name={event.name}
+                                    description={event.description}
+                                    date={event.startDate}
+                                    type={event.type}
+                                    image={event.image}
+                                    tags={event.tags}
+                                    languages={event.languages}
+                                />
+                            ))}
+                        </Grid>
+                    </div>
                 ) : null}
-                {categories.map((category) => (
-                    <EventList key={category.id} category={category.name} id={category.id} />
-                ))}
+                {categories
+                    .splice(0, 5)
+                    .map((category) => <EventList key={category.name} category={category.name} id={category.id} />)
+                    .reduce((prev, curr) => {
+                        return [prev, <hr className={classes.horizontalLine} key={null} />, curr];
+                    })}
             </PageContainer>
         </>
     );

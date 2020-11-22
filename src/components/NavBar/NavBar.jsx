@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Button, Typography, Hidden, fade, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Typography, Hidden, makeStyles } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AutoComplete } from '@components';
@@ -8,11 +8,11 @@ import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     appBar: {
-        transition: 'background-color 0.6s',
+        transition: 'background-color 0.5s',
         position: 'sticky',
-        zIndex: theme.zIndex.drawer + 1, // Clip sidebar drawer under navbar
+        zIndex: 2,
     },
     appBarMainPage: {
         position: 'fixed',
@@ -28,37 +28,16 @@ const useStyles = makeStyles((theme) => ({
         width: 'auto',
         height: '5vh',
     },
-    search: {
-        position: 'relative',
-        borderRadius: 3,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: 'auto',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '30%',
-        },
-    },
     transparent: {
         backgroundColor: 'transparent',
         boxShadow: 'none',
     },
-    progressContainer: {
-        width: '100%',
-        height: 2,
-    },
-    progressBar: {
-        height: 2,
-        background: theme.palette.secondary.main,
-        width: '0%',
+    visible: {
+        transition: 'opacity 0.5s',
+        opacity: 100,
     },
     hidden: {
-        visibility: 'hidden',
+        opacity: 0,
     },
 }));
 
@@ -75,29 +54,17 @@ const NavBar = (props) => {
         }
     };
 
-    let mainPageTheme = mainPage();
-    const [transparent, setTransparent] = React.useState(true);
-    const progressBar = useRef();
+    let isMainPage = mainPage();
+    const [transparent, setTransparent] = useState(isMainPage);
 
-    // Change NavBar theme when scrolling
-    function scrollFunction() {
-        mainPageTheme = mainPage();
-        if (window.pageYOffset > 0 && mainPageTheme) {
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (window.pageYOffset / height) * 100;
-            progressBar.current.style.width = `${scrolled}%`;
-            if (transparent) setTransparent(false);
-        } else if (window.pageYOffset === 0 && !transparent && mainPageTheme) {
-            progressBar.current.style.width = '0%';
-            setTransparent(true);
-        } else if (!mainPageTheme) {
-            progressBar.current.style.width = '0%';
-        }
-    }
-
-    if (mainPageTheme) {
+    if (isMainPage) {
         window.onscroll = () => {
-            scrollFunction();
+            isMainPage = mainPage();
+            if (window.pageYOffset > 0) {
+                setTransparent(false);
+            } else if (window.pageYOffset === 0) {
+                setTransparent(true);
+            }
         };
     }
 
@@ -118,8 +85,8 @@ const NavBar = (props) => {
 
     return (
         <AppBar
-            className={`${mainPageTheme ? classes.appBarMainPage : ''} ${classes.appBar} ${
-                transparent && mainPageTheme ? classes.transparent : ''
+            className={`${isMainPage ? classes.appBarMainPage : ''} ${classes.appBar} ${
+                transparent && isMainPage ? classes.transparent : ''
             }`}
         >
             <Toolbar>
@@ -130,8 +97,9 @@ const NavBar = (props) => {
                     </Hidden>
                 </Button>
                 <div
-                    className={`${classes.search} ${transparent && mainPageTheme ? classes.hidden : ''}`}
+                    className={transparent && isMainPage ? classes.hidden : classes.visible}
                     ref={searchBarRef}
+                    style={{ paddingLeft: 20 }}
                 >
                     <AutoComplete searchBarRef={searchBarRef} navbar />
                 </div>
@@ -152,9 +120,6 @@ const NavBar = (props) => {
                     </Button>
                 )}
             </Toolbar>
-            <div className={classes.progressContainer}>
-                <div className={classes.progressBar} ref={progressBar} />
-            </div>
         </AppBar>
     );
 };

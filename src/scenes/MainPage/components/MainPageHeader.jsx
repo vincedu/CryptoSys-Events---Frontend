@@ -139,7 +139,11 @@ const MainPageHeader = (props) => {
                                     const finalProps = { ...inputProps };
                                     finalProps.helperText = '';
                                     finalProps.InputProps = {
-                                        endAdornment: <Event color="primary" pointerEvents="none" />,
+                                        endAdornment: (
+                                            <IconButton color="primary" onClick={inputProps.inputProps.onFocus}>
+                                                <Event />
+                                            </IconButton>
+                                        ),
                                         classes: {
                                             root: classes.underline,
                                             focused: classes.underline,

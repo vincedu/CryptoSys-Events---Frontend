@@ -15,9 +15,10 @@
   },
   "eventList": {
     "seeMore": "See More",
-    "noEvent": "No Event",
+    "noEvent": "No Event for",
     "free": "Free",
-    "type": "Type"
+    "type": "Type",
+    "featured": "Featured"
   },
   "searchPage": {
     "more": "More",

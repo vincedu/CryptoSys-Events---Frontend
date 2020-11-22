@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import { withStyles, fade } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
@@ -19,6 +19,17 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     },
 }))(ToggleButtonGroup);
 
+const StyledToggleButton = withStyles((theme) => ({
+    root: {
+        color: fade(theme.palette.primary.main, 0.5),
+    },
+    selected: {
+        backgroundColor: `${fade(theme.palette.primary.main, 0.12)} !important`,
+        color: `${fade(theme.palette.primary.main, 1)} !important`,
+        fontWeight: 700,
+    },
+}))(ToggleButton);
+
 const LocationButtonGroup = (props) => {
     const { t } = useTranslation();
     const [location, setLocation] = useState(props.value);
@@ -33,9 +44,9 @@ const LocationButtonGroup = (props) => {
     return (
         <StyledToggleButtonGroup value={location} exclusive onChange={handleLocation}>
             {values.map((value) => (
-                <ToggleButton key={value} value={value}>
+                <StyledToggleButton key={value} value={value}>
                     {t(value)}
-                </ToggleButton>
+                </StyledToggleButton>
             ))}
         </StyledToggleButtonGroup>
     );

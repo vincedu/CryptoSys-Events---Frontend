@@ -10,6 +10,8 @@ const EVENTS_BY_IDS_QUERY = gql`
             image
             startDate
             category
+            tags
+            languages
         }
     }
 `;

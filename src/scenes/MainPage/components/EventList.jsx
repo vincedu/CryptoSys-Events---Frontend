@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
-import { makeStyles, Grid, Typography, Button, CircularProgress } from '@material-ui/core';
+import { makeStyles, Grid, Typography, Button, CircularProgress, Tooltip } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { AuthContext } from '@providers';
@@ -69,17 +69,18 @@ const EventList = (props) => {
     if (query.data.eventsByParam && query.data.eventsByParam.length) {
         return (
             <div style={{ dilplay: 'flex', padding: 20 }}>
-                <Typography
-                    title={`${t('eventList.seeMore')} ${t(props.category)}`}
-                    className={classes.categoryTitle}
-                    color="secondary"
-                    value={props.category}
-                    variant="h3"
-                    onClick={() => handleCategory(props.category)}
-                >
-                    {t(props.category)}
-                </Typography>
-                <Grid container spacing={3} direction="row" justify="flex-start" alignItems="stretch">
+                <Tooltip title={`${t('eventList.seeMore')} ${t(props.category)}`} placement="top" arrow>
+                    <Typography
+                        className={classes.categoryTitle}
+                        color="secondary"
+                        value={props.category}
+                        variant="h3"
+                        onClick={() => handleCategory(props.category)}
+                    >
+                        {t(props.category)}
+                    </Typography>
+                </Tooltip>
+                <Grid container spacing={3}>
                     {query.data.eventsByParam.map((event) => (
                         <EventItem
                             key={event.id}
@@ -100,7 +101,6 @@ const EventList = (props) => {
                         {t('eventList.seeMore')} {t(props.category)}
                     </Button>
                 </div>
-                <hr className={classes.horizontalLine} />
             </div>
         );
     }

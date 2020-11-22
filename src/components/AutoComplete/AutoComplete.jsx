@@ -1,10 +1,20 @@
 import React from 'react';
-import { makeStyles, InputBase, IconButton, Paper, Popper, Grid, Typography, fade } from '@material-ui/core';
+import {
+    makeStyles,
+    InputBase,
+    IconButton,
+    Paper,
+    Popper,
+    Grid,
+    Typography,
+    OutlinedInput,
+    ClickAwayListener,
+} from '@material-ui/core';
 import { InstantSearch, Configure, connectAutoComplete } from 'react-instantsearch-dom';
 import { Search } from '@material-ui/icons';
 import algoliasearch from 'algoliasearch/lite';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CustomEventItem from '../../scenes/SearchPage/components/CustomEventItem';
 
@@ -15,57 +25,56 @@ const searchClient = {
         if (requests.every(({ params }) => !params.query)) {
             return null;
         }
-        console.log(requests);
         return algoliaClient.search(requests);
     },
 };
 
+const useStyles = makeStyles((theme) => ({
+    input: {
+        marginLeft: theme.spacing(1),
+    },
+    searchBar: {
+        display: 'flex',
+        alignItems: 'center',
+        boxShadow: 'none',
+    },
+    popper: {
+        backgroundColor: 'white',
+        boxShadow: `0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+            0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+            0 12.5px 10px rgba(0, 0, 0, 0.06),
+            0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+            0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+            0 100px 80px rgba(0, 0, 0, 0.12)`,
+        width: '100%',
+        borderRadius: 3,
+        marginTop: -5,
+        padding: 10,
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        },
+    },
+    inputFocused: {
+        backgroundColor: '#FFF',
+        '&:hover': {
+            backgroundColor: '#FFF',
+        },
+    },
+    inputNotch: {
+        border: '0 !important',
+    },
+}));
+
 const Autocomplete = (props) => {
-    Autocomplete.propTypes = {
-        searchBarRef: PropTypes.object.isRequired,
-        history: PropTypes.object.isRequired,
-        navbar: PropTypes.bool,
-    };
-
-    Autocomplete.defaultProps = {
-        navbar: false,
-    };
-
-    const useStyles = makeStyles((theme) => ({
-        input: {
-            marginLeft: theme.spacing(1),
-        },
-        searchBar: {
-            display: 'flex',
-            alignItems: 'center',
-            boxShadow: 'none',
-            height: 40,
-        },
-        popper: {
-            backgroundColor: 'white',
-            boxShadow: `0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-                0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-                0 12.5px 10px rgba(0, 0, 0, 0.06),
-                0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-                0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-                0 100px 80px rgba(0, 0, 0, 0.12)`,
-            margin: 0,
-            width: '100%',
-            borderRadius: 3,
-            marginTop: -5,
-        },
-        root: {
-            backgroundColor: fade(theme.palette.common.white, 0.9),
-            '&:hover': {
-                backgroundColor: '#FFF',
-            },
-        },
-    }));
-
     const classes = useStyles();
 
     const { t } = useTranslation();
-    const { searchBarRef, history } = props;
+    const { searchBarRef } = props;
+    const history = useHistory();
 
     const CustomAutocomplete = connectAutoComplete(({ refine, hits, currentRefinement }) => {
         const handleSearch = () => {
@@ -83,51 +92,83 @@ const Autocomplete = (props) => {
         };
         return (
             <>
-                <Paper className={classes.searchBar} {...(props.navbar && { classes: { root: classes.root } })}>
-                    <InputBase
+                {props.navbar ? (
+                    <OutlinedInput
                         type="search"
-                        margin="dense"
-                        className={classes.input}
+                        variant="outlined"
                         placeholder={t('mainPageHeader.search')}
+                        margin="dense"
+                        onKeyDown={checkEnterKey}
+                        value={currentRefinement}
                         onChange={(event) => {
                             refine(event.currentTarget.value);
                         }}
-                        value={currentRefinement}
-                        style={{ flex: 4 }}
-                        onKeyDown={checkEnterKey}
+                        endAdornment={
+                            <IconButton color="primary" onClick={handleSearch} style={{ padding: 8 }}>
+                                <Search style={{ width: '0.8em', height: '0.8em' }} />
+                            </IconButton>
+                        }
+                        classes={{
+                            root: classes.inputRoot,
+                            focused: classes.inputFocused,
+                            notchedOutline: classes.inputNotch,
+                        }}
                     />
-                    <IconButton color="primary" className={classes.iconButton} onClick={handleSearch}>
-                        <Search className={classes.iconButton} />
-                    </IconButton>
-                </Paper>
-                {hits.length && currentRefinement ? (
-                    <Popper
-                        open
-                        anchorEl={searchBarRef.current}
-                        placement="bottom"
-                        style={{ width: searchBarRef.current.offsetWidth, minWidth: 500, maxHeight: 0 }}
-                        disablePortal={props.navbar}
-                    >
-                        <Grid container className={classes.popper}>
-                            {hits.length ? (
-                                hits.map((hit) => (
-                                    <CustomEventItem
-                                        key={hit.objectID}
-                                        id={hit.objectID}
-                                        name={hit.name}
-                                        description={hit.description}
-                                        image={hit.image}
-                                        date={hit.date ? new Date(hit.date).toISOString() : ''}
-                                        type={hit.type}
-                                        tags={hit.tags}
-                                        languages={hit.languages}
-                                    />
-                                ))
-                            ) : (
-                                <Typography variant="body1">{t('eventList.noEvent')}</Typography>
-                            )}
-                        </Grid>
-                    </Popper>
+                ) : (
+                    <Paper className={classes.searchBar}>
+                        <InputBase
+                            type="search"
+                            margin="dense"
+                            className={classes.input}
+                            placeholder={t('mainPageHeader.search')}
+                            onChange={(event) => {
+                                refine(event.currentTarget.value);
+                            }}
+                            value={currentRefinement}
+                            style={{ flex: 4 }}
+                            onKeyDown={checkEnterKey}
+                        />
+                        <IconButton color="primary" onClick={handleSearch}>
+                            <Search />
+                        </IconButton>
+                    </Paper>
+                )}
+                {currentRefinement ? (
+                    <ClickAwayListener onClickAway={() => refine()}>
+                        <Popper
+                            open
+                            anchorEl={searchBarRef.current}
+                            placement="bottom"
+                            style={{
+                                width: Math.floor(searchBarRef.current.getBoundingClientRect().width),
+                                minWidth: Math.min(window.innerWidth, 500),
+                                maxHeight: 0,
+                            }}
+                            disablePortal={props.navbar}
+                        >
+                            <Grid container className={classes.popper}>
+                                {hits.length ? (
+                                    hits.map((hit) => (
+                                        <CustomEventItem
+                                            key={hit.objectID}
+                                            id={hit.objectID}
+                                            name={hit.name}
+                                            description={hit.description}
+                                            image={hit.image}
+                                            date={hit.date ? new Date(hit.date).toISOString() : ''}
+                                            type={hit.type}
+                                            tags={hit.tags}
+                                            languages={hit.languages}
+                                        />
+                                    ))
+                                ) : (
+                                    <Typography variant="body1" color="primary">
+                                        {t('eventList.noEvent')} &quot;{currentRefinement}&quot;
+                                    </Typography>
+                                )}
+                            </Grid>
+                        </Popper>
+                    </ClickAwayListener>
                 ) : null}
             </>
         );
@@ -142,4 +183,14 @@ const Autocomplete = (props) => {
         </div>
     );
 };
-export default withRouter(Autocomplete);
+
+Autocomplete.propTypes = {
+    searchBarRef: PropTypes.object.isRequired,
+    navbar: PropTypes.bool,
+};
+
+Autocomplete.defaultProps = {
+    navbar: false,
+};
+
+export default Autocomplete;

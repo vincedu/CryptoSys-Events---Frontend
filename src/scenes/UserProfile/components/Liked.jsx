@@ -17,8 +17,8 @@ const Liked = () => {
     }
 
     return (
-        <PageContainer title={t('liked.title')}>
-            <TitledPaper>
+        <PageContainer>
+            <TitledPaper title={t('liked.title')}>
                 {data.eventsByIds.length ? (
                     <Grid container spacing={3} justify="flex-start" alignItems="stretch">
                         {data.eventsByIds.map((event) => (

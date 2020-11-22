@@ -45,19 +45,6 @@ const theme = createMuiTheme({
                 paddingRight: 0,
             },
         },
-        MuiToggleButton: {
-            root: {
-                color: 'rgba(50, 72, 86, 0.38)',
-                '&$selected': {
-                    backgroundColor: 'rgba(50, 72, 86, 0.12)',
-                    color: 'rgba(50, 72, 86, 1)',
-                    fontWeight: 700,
-                    '&:hover': {
-                        backgroundColor: 'rgba(50, 72, 86, 0.15)',
-                    },
-                },
-            },
-        },
         MuiAutocomplete: {
             endAdornment: {
                 color: '#324856 !important',

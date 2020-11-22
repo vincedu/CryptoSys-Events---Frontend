@@ -84,11 +84,10 @@ const SidebarItems = (props) => {
                     <ListItemText primary={t('sideBar.accountSettings')} />
                 </ListItem>
             </Link>
-            {/* Afficher comme selectionné si le drawer est fermé et que l'une des 2 pages de billet est selectionnée */}
             <ListItem
                 button
                 onClick={handleTicketList}
-                selected={(sideBarTab === 1 || sideBarTab === 2) && !props.drawerOpen}
+                selected={(sideBarTab === 1 || sideBarTab === 2) && (!props.drawerOpen || !open)}
             >
                 <ListItemIcon>
                     <ConfirmationNumberIcon style={{ color: '#FFF' }} />

@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     sidebar: {
         position: 'sticky',
+        textAlign: 'right',
     },
     avatar: {
         transition: 'width 0.3s, height 0.3s',
@@ -36,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
         padding: '17px 15px',
     },
     userListSmall: {
-        paddingTop: 2,
-        paddingBottom: 2,
+        paddingTop: 0,
+        paddingBottom: 0,
     },
     toolbar: theme.mixins.toolbar,
 }));

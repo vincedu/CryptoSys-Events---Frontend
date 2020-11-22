@@ -14,6 +14,7 @@ import {
     Paper,
     IconButton,
     Chip,
+    Tooltip,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
@@ -119,7 +120,7 @@ const EventItem = (props) => {
                 <CardHeader title={props.name} subheader={props.date.substring(0, 10)} style={{ paddingBottom: 0 }} />
                 <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div>
+                        <div style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
                             {props.tags?.length
                                 ? props.tags
                                       .slice(0, 2)
@@ -135,7 +136,9 @@ const EventItem = (props) => {
                                 : null}
                         </div>
                         <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
-                            {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                            <Tooltip title={isLiked ? 'Unlike' : 'Like'}>
+                                {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                            </Tooltip>
                         </IconButton>
                     </div>
                     <Typography variant="body2" color="textSecondary">
