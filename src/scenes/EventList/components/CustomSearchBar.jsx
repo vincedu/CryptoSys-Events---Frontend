@@ -105,11 +105,11 @@ const CustomSearchBar = (props) => {
             <Grid item className={classes.grid} xs={11} sm={8} md={7}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 50 }}>
                     <div>
-                        <img src="/eos.svg" alt="eos event" className={classes.logo} />
+                        <img src="/spectacular.png" alt="spectacular" className={classes.logo} />
                     </div>
                     <div>
                         <Typography variant="h2" className={classes.title}>
-                            Eos Event
+                            spectacular
                         </Typography>
                         <Typography variant="body1" className={classes.title}>
                             {t('customSearchBar.paragraph')}

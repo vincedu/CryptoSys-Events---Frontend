@@ -98,7 +98,7 @@ const GeneralInfoForm = (props) => {
                         margin="normal"
                         required
                         multiline
-                        rows={9}
+                        rows={9.4}
                         rowsMax={10}
                         className={classes.textField}
                         value={props.value.description.value}

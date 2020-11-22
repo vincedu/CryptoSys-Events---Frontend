@@ -1,5 +1,5 @@
 {
-  "title": "EOS Event",
+  "title": "Spectacular",
   "next": "Next",
   "back": "Back",
   "language": "fr",
@@ -8,7 +8,7 @@
   "cancel": "Cancel",
   "create": "Create",
   "customSearchBar": {
-    "paragraph": "The future of online ticketing. EOS Event is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
+    "paragraph": "The future of online ticketing. Spectacular is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
     "search": "Search events",
     "location": "Location"
   },

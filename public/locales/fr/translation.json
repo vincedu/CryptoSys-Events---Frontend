@@ -1,5 +1,5 @@
 {
-  "title": "EOS Event",
+  "title": "Spectacular",
   "next": "Suivant",
   "back": "Retour",
   "language": "en",
@@ -8,7 +8,7 @@
   "cancel": "Annuler",
   "create": "Créer",
   "customSearchBar": {
-    "paragraph": "Le futur des billeteries en ligne. EOS Event est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
+    "paragraph": "Le futur des billeteries en ligne. Spectacular est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
     "search": "Rechercher des événements",
     "location": "Emplacement"
   },

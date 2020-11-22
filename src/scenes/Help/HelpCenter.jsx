@@ -39,11 +39,11 @@ export default function HelpCenter() {
                         <Grid item xs={12} sm={8} md={6}>
                             <div className={classes.ticketText}>
                                 {/* NFT text */}
-                                <Typography variant="h4">Why choose EOS Event?</Typography>
+                                <Typography variant="h4">Why choose Spectacular?</Typography>
                                 <br />
                                 <Typography variant="body1">
-                                    EOS Event is a decentralized ticket sale plateform. With the power of EOS IO&apos;s
-                                    blockchain, all tickets are unique and cannot be revoke by the seller.
+                                    Spectacular is a decentralized ticket sale plateform. With the power of EOS
+                                    IO&apos;s blockchain, all tickets are unique and cannot be revoke by the seller.
                                 </Typography>
                             </div>
                         </Grid>
@@ -66,8 +66,9 @@ export default function HelpCenter() {
                                 <Typography variant="subtitle1">
                                     NFT is a special type of cryptographic token which represents something unique. They
                                     can represent ownership of digitally scares good such as pieces of art or
-                                    collectibles EOS Event takes advantage of this by creating NFT for each event&apos;s
-                                    tickets. That way, you know your ticket is original and cannot be copied or faked.
+                                    collectibles Spectacular takes advantage of this by creating NFT for each
+                                    event&apos;s tickets. That way, you know your ticket is original and cannot be
+                                    copied or faked.
                                 </Typography>
                             </div>
                         </Grid>

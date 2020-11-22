@@ -37,9 +37,9 @@ const Footer = () => {
     return (
         <Grid container justify="space-between" className={classes.footer}>
             <Grid item xs={2} sm={3} className={classes.footerItems}>
-                <img src="/eos.svg" className={classes.avatar} alt="eos event" />
+                <img src="/spectacular.svg" className={classes.avatar} alt="spectacular" />
                 <Hidden xsDown>
-                    <Typography className={classes.title}>EOS Event</Typography>
+                    <Typography className={classes.title}>Spectacular</Typography>
                 </Hidden>
             </Grid>
             <Grid item xs={6} className={classes.footerItems} style={{ justifyContent: 'space-evenly' }}>
