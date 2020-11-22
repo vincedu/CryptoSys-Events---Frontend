@@ -185,11 +185,22 @@
     "eosDesc": "Supporté par la chaine de blocs EOS"
   },
   "eventsDashboard": {
+    "title": "Tableau de bord des mes événements",
     "totalEvents": "ÉVÉNEMENTS",
     "totalSoldTickets": "NOMBRE DE BILLETS VENDUS",
     "totalResaleTickets": "NOMBRE DE BILLETS EN REVENTE",
     "totalRevenue": "REVENUE TOTALE",
-    "currency": "devise"
+    "currency": "devise",
+    "tableHeader": {
+      "name": "Nom",
+      "ticketName": "Nom du billet",
+      "date": "Date",
+      "location": "Lieu",
+      "soldTickets": "Billets vendus",
+      "listedResale": "Billets en revente",
+      "soldResale": "Billets revendus",
+      "gross": "Revenus"
+    }
   },
   "ticketList": {
     "myTickets": "Mes billets",

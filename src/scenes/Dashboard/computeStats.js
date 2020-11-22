@@ -1,22 +1,33 @@
 /* eslint-disable radix */
 
+const computeGrossPerTemplateOriginal = (template) => {
+    let gross = 0;
+    const totalTicketsSold = parseInt(template.sales.length);
+    if (template.sales.length > 0) {
+        const price = parseInt(template.sales[0].price.amount);
+        gross += totalTicketsSold * price;
+    }
+    return gross;
+};
+
+const computeGrossPerTemplateResale = (template) => {
+    let gross = 0;
+    template.sales.forEach((sale) => {
+        const price = parseInt(sale.price.amount);
+        gross += price * 0.03; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
+    });
+    return gross;
+};
+
 const computeGross = (tickets) => {
     let totalGross = 0;
     tickets.original.forEach((ticketType) => {
-        const totalTicketsSold = parseInt(ticketType.sales.length);
-        if (ticketType.sales.length > 0) {
-            const price = parseInt(ticketType.sales[0].price.amount);
-            totalGross += totalTicketsSold * price;
-        }
+        totalGross += computeGrossPerTemplateOriginal(ticketType);
     });
 
     tickets.resale.forEach((ticketType) => {
-        const totalTicketsSold = parseInt(ticketType.sales.length);
         if (ticketType.sales.length > 0) {
-            ticketType.sales.forEach((sale) => {
-                const price = parseInt(sale.price.amount);
-                totalGross += totalTicketsSold * price * 0.03; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
-            });
+            totalGross += computeGrossPerTemplateResale(ticketType);
         }
     });
     return totalGross;
@@ -43,8 +54,7 @@ const computeTicketsSold = (tickets) => {
     tickets.original.forEach((ticketType) => {
         totalTicketsInSale += parseInt(ticketType.sales.length);
     });
-    const maxTickets = computeMaxTickets(tickets);
-    return maxTickets - totalTicketsInSale;
+    return totalTicketsInSale;
 };
 
 const computeTotalEvents = (events) => {
@@ -62,7 +72,7 @@ const computeTotalRevenue = (events) => {
 const computeTotalSoldTickets = (events) => {
     let totalSoldTickets = 0;
     events.forEach((event) => {
-        totalSoldTickets += computeTicketsSold(event.ticketsListedSale);
+        totalSoldTickets += computeTicketsSold(event.ticketsSoldSale);
     });
     return totalSoldTickets;
 };
@@ -85,6 +95,8 @@ const computeTotalTickets = (events) => {
 };
 
 export {
+    computeGrossPerTemplateOriginal,
+    computeGrossPerTemplateResale,
     computeGross,
     computeMaxTickets,
     computeResaleTickets,
