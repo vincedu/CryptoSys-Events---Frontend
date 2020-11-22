@@ -95,7 +95,7 @@ EventTicketsForm.propTypes = {
             image: PropTypes.object,
             quantity: PropTypes.number.isRequired,
             price: PropTypes.number.isRequired,
-            currency: PropTypes.string.isRequired,
+            currency: PropTypes.string,
             originalSoldCount: PropTypes.number,
         }),
     ).isRequired,

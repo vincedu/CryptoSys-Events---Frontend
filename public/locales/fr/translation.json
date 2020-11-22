@@ -111,6 +111,11 @@
       "title": "Confirmation",
       "description": "Confirmer votre événement",
       "createEvent": "Créer l'événement"
+    },
+    "creationWarningDialog": {
+      "title": "Avertissement de création d'événement!",
+      "message": "Votre événement a été créé, mais vos billets NFT n'ont pas été créés avec succès. Vous pourrez réessayer de créer ces billets NFT via la page de gestion des événements.",
+      "continueButtonLabel": "Continuer"
     }
   },
   "modifyEvent": {
@@ -172,6 +177,18 @@
     "noResult": "Aucun résultat",
     "holdSteady": "Tenez fermement le code QR pour scanner",
     "scanResult": "Résultat de scan"
+  },
+  "retryDialog": {
+    "title": "Action échouée!",
+    "message": "Voudriez-vous réessayer l'action?",
+    "retryButtonLabel": "Réessayer",
+    "cancelButtonLabel": "Annuler"
+  },
+  "processTransactionDialog": {
+    "processingTransaction": "Transaction en traitement",
+    "transactionFailed": "Transaction échouée",
+    "retryButtonLabel": "Réessayer",
+    "cancelButtonLabel": "Annuler"
   },
 
   "venue": "Lieu",

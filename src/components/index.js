@@ -7,6 +7,7 @@ import CenteredCircularProgress from './CenteredCircularProgress';
 import TransactionProcessDialog from './TransactionProcessDialog';
 import ImageUpload from './ImageUpload';
 import { EventInformationForm, EventTicketsForm } from './Event';
+import LoadingButton from './LoadingButton';
 
 export {
     NavBar,
@@ -19,4 +20,5 @@ export {
     ImageUpload,
     EventInformationForm,
     EventTicketsForm,
+    LoadingButton,
 };

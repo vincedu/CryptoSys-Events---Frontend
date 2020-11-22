@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withUAL } from 'ual-reactjs-renderer';
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Box, Grid, TextField, Typography } from '@material-ui/core';
 import { useMutation } from '@apollo/client';
 import { SET_USER_DATA_MUTATION } from '@graphql/mutations';
-import { TitledPaper, PageContainer } from '@components';
+import { TitledPaper, PageContainer, LoadingButton } from '@components';
 import { AuthContext } from '@providers';
 import LinkWallet from './components/LinkWallet';
 
@@ -128,7 +128,7 @@ const AccountSetup = (props) => {
                         />
                     </Grid>
                     <Grid container item xs={12} justify="flex-end">
-                        <Button
+                        <LoadingButton
                             variant="contained"
                             color="secondary"
                             style={{ padding: 12 }}
@@ -136,7 +136,7 @@ const AccountSetup = (props) => {
                             onClick={handleSubmit}
                         >
                             {t('accountSetup.submit')}
-                        </Button>
+                        </LoadingButton>
                     </Grid>
                 </Grid>
             </TitledPaper>

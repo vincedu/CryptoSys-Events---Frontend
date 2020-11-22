@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { EVENT_BY_ID_QUERY } from '@graphql/queries';
-import { CenteredCircularProgress, EventInformationForm } from '@components';
+import { CenteredCircularProgress, EventInformationForm, LoadingButton } from '@components';
 import { MODIFY_EVENT_MUTATION } from '@graphql/mutations';
 
 const useStyles = makeStyles({
@@ -174,14 +174,14 @@ const EventGeneralModification = (props) => {
                     <Button variant="outlined" color="primary" onClick={discardChanges}>
                         {t('modifyEvent.cancel')}
                     </Button>
-                    <Button
+                    <LoadingButton
                         variant="contained"
                         color="primary"
                         onClick={updateEventGeneralInfo}
                         disabled={!isFormModified}
                     >
                         {t('modifyEvent.save')}
-                    </Button>
+                    </LoadingButton>
                 </Grid>
             </>
         );

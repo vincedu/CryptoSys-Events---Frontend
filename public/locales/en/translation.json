@@ -111,6 +111,11 @@
       "title": "Confirm",
       "description": "Confirm your Event",
       "createEvent": "Create Event"
+    },
+    "creationWarningDialog": {
+      "title": "Event creation warning!",
+      "message": "Your event was created, but your NFT tickets were not created successfully. You will be able to re-attempt to create those NFT tickets through the manage events page.",
+      "continueButtonLabel": "Continue"
     }
   },
   "modifyEvent": {
@@ -172,6 +177,18 @@
     "noResult": "No Result",
     "holdSteady": "Hold QR Code Steady and Clear to Scan",
     "scanResult": "Scan Result"
+  },
+  "retryDialog": {
+    "title": "Action failed!",
+    "message": "Would you like to retry the action?",
+    "retryButtonLabel": "Retry",
+    "cancelButtonLabel": "Cancel"
+  },
+  "processTransactionDialog": {
+    "processingTransaction": "Processing transaction",
+    "transactionFailed": "Transaction failed",
+    "retryButtonLabel": "Retry",
+    "cancelButtonLabel": "Cancel"
   },
 
   "venue": "Venue",
