@@ -15,6 +15,9 @@ import {
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { ImageUpload } from '@components';
+import { Autocomplete } from '@material-ui/lab';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { TICKET_NAME_SUGGESTIONS } from '@constants/';
 
 const DEFAULT_TICKET_FORM = {
     name: {
@@ -167,6 +170,16 @@ const CreateTicketDialog = (props) => {
         });
     };
 
+    const handleNameChange = (_, newName) => {
+        setForm({
+            ...form,
+            name: {
+                value: newName || '',
+                error: !isValueValid(newName),
+            },
+        });
+    };
+
     return (
         <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen}>
             <Typography variant="h4" className={classes.title}>
@@ -178,15 +191,27 @@ const CreateTicketDialog = (props) => {
                         <ImageUpload value={form.image.value} onChange={handleImageUpload} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
+                        <Autocomplete
+                            freeSolo
+                            autoSelect
                             fullWidth
-                            required
-                            label={t('createEvent.tickets.ticketName')}
-                            variant="outlined"
+                            options={TICKET_NAME_SUGGESTIONS}
+                            getOptionLabel={(option) => option}
                             name="name"
                             value={form.name.value}
-                            error={form.name.error}
-                            onChange={handleFormChange}
+                            onChange={handleNameChange}
+                            popupIcon={<ArrowDropDownIcon color="primary" />}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label={t('createEvent.tickets.ticketName')}
+                                    variant="outlined"
+                                    margin="normal"
+                                    fullWidth
+                                    required
+                                    error={form.name.error}
+                                />
+                            )}
                         />
                     </Grid>
                     <Grid item xs={12}>
