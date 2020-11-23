@@ -38,10 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const CreatedEventList = () => {
     const { t } = useTranslation();
 
-    const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, {
-        variables: { createdBy: 'TODO enlever le param' },
-        fetchPolicy: 'network-only',
-    });
+    const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, { fetchPolicy: 'network-only' });
 
     const classes = useStyles();
     return (
