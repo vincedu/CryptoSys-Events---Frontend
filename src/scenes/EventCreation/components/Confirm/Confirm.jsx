@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, Typography, makeStyles, Hidden } from '@material-ui/core';
-import { TitledPaper } from '@components';
+import { TitledPaper, LoadingButton } from '@components';
 import { useTranslation } from 'react-i18next';
 import { PlaylistAddCheck } from '@material-ui/icons';
 import EventItem from '../../../MainPage/components/EventItem';
@@ -59,12 +59,13 @@ export const Confirm = (props) => {
     Confirm.propTypes = {
         handleBackStep: PropTypes.func.isRequired,
         handleSubmit: PropTypes.func.isRequired,
+        handleCancel: PropTypes.func.isRequired,
         variables: PropTypes.object.isRequired,
     };
 
     const imageUrl =
-        props.variables.imageFile && props.variables.imageFile.value
-            ? URL.createObjectURL(props.variables.imageFile.value)
+        props.variables.image && props.variables.image.value
+            ? URL.createObjectURL(props.variables.image.value)
             : 'https://miro.medium.com/max/1400/0*RE_lW738kmA3SuW2.png';
 
     const { t } = useTranslation();
@@ -164,14 +165,15 @@ export const Confirm = (props) => {
                         >
                             {t('back')}
                         </Button>
-                        <Button
+                        <LoadingButton
                             variant="contained"
                             className={`${classes.lowerButton} ${classes.special}`}
                             color="primary"
                             onClick={props.handleSubmit}
+                            onCancel={props.handleCancel}
                         >
                             {t('submit')}
-                        </Button>
+                        </LoadingButton>
                     </Grid>
                 </TitledPaper>
             </Grid>

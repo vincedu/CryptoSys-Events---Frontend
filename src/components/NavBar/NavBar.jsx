@@ -78,9 +78,9 @@ const NavBar = () => {
         >
             <Toolbar>
                 <Button onClick={() => handleButtonClick('/')}>
-                    <img src="/eos.svg" className={classes.avatar} alt="eos event" />
+                    <img src="/spectacular.svg" className={classes.avatar} alt="spectacular" />
                     <Hidden smDown>
-                        <Typography className={classes.title}>EOS Event</Typography>
+                        <Typography className={classes.title}>Spectacular</Typography>
                     </Hidden>
                 </Button>
                 <div

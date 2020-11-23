@@ -27,6 +27,15 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         fontFamily: `'Bebas Neue', sans-serif`,
     },
+    spectacular: {
+        fontSize: '2rem',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '3rem',
+        },
+        [theme.breakpoints.up('md')]: {
+            fontSize: '4rem',
+        },
+    },
     // Custom Search Bar
     searchBar: {
         padding: '2px 4px',
@@ -70,19 +79,17 @@ const MainPageHeader = () => {
     return (
         <Grid container className={classes.promotion} direction="row" justify="center">
             <Grid item className={classes.grid} xs={11} sm={8} md={7}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 50 }}>
-                    <div>
-                        <img src="/eos.svg" alt="eos event" className={classes.logo} />
-                    </div>
-                    <div>
-                        <Typography variant="h2" className={classes.title}>
-                            Eos Event
-                        </Typography>
+                <Grid container style={{ alignItems: 'center', justifyContent: 'center', padding: '10px 0 50px' }}>
+                    <Grid item xs={6}>
+                        <img src="/spectacular.svg" alt="Spectacular" className={classes.logo} />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography className={`${classes.title} ${classes.spectacular}`}>Spectacular</Typography>
                         <Typography variant="body1" className={classes.title}>
                             {t('mainPageHeader.paragraph')}
                         </Typography>
-                    </div>
-                </div>
+                    </Grid>
+                </Grid>
                 <Paper className={classes.searchBar} ref={searchBarRef}>
                     <LocalizationProvider
                         {...(t('language') === 'fr' && { locale: frLocale })}

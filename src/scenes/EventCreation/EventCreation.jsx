@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useMutation } from '@apollo/client';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Grid, Stepper, StepLabel, Step, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import { PageContainer, EventInformationForm, EventTicketsForm } from '@componen
 import { NFTContext } from '@providers';
 import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '@constants';
 import { Confirm } from './components/Confirm';
+import { CreationWarningDialog } from './components/CreationWarningDialog';
 
 const DEFAULT_EVENT_FORM = {
     name: {
@@ -104,6 +105,7 @@ const EventCreation = () => {
     const [locationForm, setLocationForm] = useState(DEFAULT_EVENT_LOCATION);
     const [dateForm, setDateForm] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
+    const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
     const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
     const [linkNftTemplatesToEvent] = useMutation(LINK_NFT_TEMPLATES_TO_EVENT_MUTATION);
@@ -198,54 +200,74 @@ const EventCreation = () => {
         setDateForm({ ...dateForm, [field]: value, error });
     };
 
-    const handleSubmit = async () => {
-        let eventName = '';
-        Object.keys(generalInfoForm).forEach((key) => {
-            if (key === 'image') {
-                variables.imageFile = generalInfoForm[key].value;
-            } else {
-                variables[key] = generalInfoForm[key].value;
-            }
-            if (key === 'name') {
-                eventName = generalInfoForm[key].value;
-            }
-        });
-        variables.location = locationForm.location.value;
-        variables.locationType = locationForm.locationType.value;
-        variables.startDate = dateForm.start;
-        variables.endDate = dateForm.end;
-        if (variables.locationType !== 'venue') variables.location = null;
-
-        const createEventResult = await createEvent({ variables: { ...variables } });
-        const eventId = createEventResult.data.createEvent.id;
-
-        const ticketNFTs = await Promise.all(
-            tickets.map(async (ticket) => {
-                let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
-
-                if (ticket.image) {
-                    const pinTicketImageResult = await pinTicketImageMutation({
-                        variables: { file: ticket.image, ticketName: ticket.name, eventName },
-                    });
-                    ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
-                }
-
-                return {
-                    ticketData: {
-                        name: ticket.name,
-                        description: ticket.description,
-                        eventId,
-                        image: ticketImageIpfsHash,
-                    },
-                    maxSupply: ticket.quantity,
-                    price: ticket.price,
-                };
-            }),
-        );
-
-        const { templateIds } = await createTicketNFTs(ticketNFTs);
-        await linkNftTemplatesToEvent({ variables: { eventId, templateIds } });
+    const redirectAfterCreation = () => {
         history.push('/');
+    };
+
+    const handleSubmit = async () => {
+        let eventId;
+        try {
+            let eventName = '';
+            Object.keys(generalInfoForm).forEach((key) => {
+                if (key === 'image') {
+                    variables.imageFile = generalInfoForm[key].value;
+                } else {
+                    variables[key] = generalInfoForm[key].value;
+                }
+                if (key === 'name') {
+                    eventName = generalInfoForm[key].value;
+                }
+            });
+            variables.location = locationForm.location.value;
+            variables.locationType = locationForm.locationType.value;
+            variables.startDate = dateForm.start;
+            variables.endDate = dateForm.end;
+            if (variables.locationType !== 'venue') variables.location = null;
+
+            const createEventResult = await createEvent({ variables: { ...variables } });
+            eventId = createEventResult.data.createEvent.id;
+
+            const ticketNFTs = await Promise.all(
+                tickets.map(async (ticket) => {
+                    let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
+
+                    if (ticket.image) {
+                        const pinTicketImageResult = await pinTicketImageMutation({
+                            variables: { file: ticket.image, ticketName: ticket.name, eventName },
+                        });
+                        ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
+                    }
+
+                    return {
+                        ticketData: {
+                            name: ticket.name,
+                            description: ticket.description,
+                            eventId,
+                            image: ticketImageIpfsHash,
+                        },
+                        maxSupply: ticket.quantity,
+                        price: ticket.price,
+                    };
+                }),
+            );
+
+            const { templateIds } = await createTicketNFTs(ticketNFTs);
+            if (templateIds.length > 0) {
+                await linkNftTemplatesToEvent({ variables: { eventId, templateIds } });
+            }
+            redirectAfterCreation();
+        } catch (error) {
+            if (eventId) {
+                setIsWarningDialogOpen(true);
+            } else {
+                throw error;
+            }
+        }
+    };
+
+    const handleCloseWarningDialog = () => {
+        setIsWarningDialogOpen(false);
+        redirectAfterCreation();
     };
 
     return (
@@ -283,36 +305,50 @@ const EventCreation = () => {
                     </Route>
 
                     <Route path="/createEvent/createTicket">
-                        <EventTicketsForm tickets={tickets} onCreateTicket={handleCreateTicket} />
-                        <Grid container justify="space-between" className={classes.stepButtonContainer}>
-                            <Button
-                                variant="outlined"
-                                className={classes.stepButton}
-                                color="primary"
-                                onClick={handleBackStep}
-                            >
-                                {t('back')}
-                            </Button>
-                            <Button
-                                variant="contained"
-                                className={`${classes.stepButton} ${classes.nextButton}`}
-                                color="primary"
-                                onClick={handleTicketsNextButtonClick}
-                            >
-                                {t('next')}
-                            </Button>
-                        </Grid>
+                        {isFormValid() ? (
+                            <>
+                                <EventTicketsForm tickets={tickets} onCreateTicket={handleCreateTicket} />
+                                <Grid container justify="space-between" className={classes.stepButtonContainer}>
+                                    <Button
+                                        variant="outlined"
+                                        className={classes.stepButton}
+                                        color="primary"
+                                        onClick={handleBackStep}
+                                    >
+                                        {t('back')}
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        className={`${classes.stepButton} ${classes.nextButton}`}
+                                        color="primary"
+                                        onClick={handleTicketsNextButtonClick}
+                                    >
+                                        {t('next')}
+                                    </Button>
+                                </Grid>
+                            </>
+                        ) : (
+                            <Redirect to="/createEvent/general" />
+                        )}
                     </Route>
 
                     <Route path="/createEvent/confirm">
-                        <Confirm
-                            history={history}
-                            tickets={tickets}
-                            handleSubmit={handleSubmit}
-                            handleBackStep={handleBackStep}
-                            variables={variables}
-                            date={dateForm}
-                        />
+                        {isFormValid() ? (
+                            <>
+                                <Confirm
+                                    history={history}
+                                    tickets={tickets}
+                                    handleSubmit={handleSubmit}
+                                    handleCancel={redirectAfterCreation}
+                                    handleBackStep={handleBackStep}
+                                    variables={variables}
+                                    date={dateForm}
+                                />
+                                <CreationWarningDialog open={isWarningDialogOpen} onClose={handleCloseWarningDialog} />
+                            </>
+                        ) : (
+                            <Redirect to="/createEvent/general" />
+                        )}
                     </Route>
                 </Switch>
             </Grid>

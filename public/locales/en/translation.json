@@ -1,5 +1,5 @@
 {
-  "title": "EOS Event",
+  "title": "Spectacular",
   "next": "Next",
   "back": "Back",
   "language": "en",
@@ -9,7 +9,7 @@
   "cancel": "Cancel",
   "create": "Create",
   "mainPageHeader": {
-    "paragraph": "The future of online ticketing. EOS Event is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
+    "paragraph": "The future of online ticketing. Spectacular is the first ticket office based on the EOS.IO cryptocurrency network. Blockchain transactions are done quickly and inexpensively.",
     "search": "Search events",
     "date": "Date"
   },
@@ -55,7 +55,8 @@
     "liked": "Liked",
     "browse": "Browse Events",
     "tickets": "Tickets",
-    "create": "Create Event"
+    "create": "Create Event",
+    "scanTicket": "Scan Ticket"
   },
   "sideBar": {
     "profile": "Profile",
@@ -139,6 +140,11 @@
       "title": "Confirm",
       "description": "Confirm your Event",
       "createEvent": "Create Event"
+    },
+    "creationWarningDialog": {
+      "title": "Event creation warning!",
+      "message": "Your event was created, but your NFT tickets were not created successfully. You will be able to re-attempt to create those NFT tickets through the manage events page.",
+      "continueButtonLabel": "Continue"
     }
   },
   "modifyEvent": {
@@ -167,10 +173,10 @@
   },
   "helpCenter": {
     "title": "Help Center",
-    "why": "Why choose EOS Event?",
-    "whyDesc": "EOS Event is a decentralized ticket sale plateform. With the power of EOS IO's blockchain, all tickets are unique and cannot be revoke by the seller.",
+    "why": "Why choose Spectacular?",
+    "whyDesc": "Spectacular is a decentralized ticket sale plateform. With the power of EOS IO's blockchain, all tickets are unique and cannot be revoke by the seller.",
     "nft": "Non-Fungible Tokens",
-    "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scares good such as pieces of art or collectibles EOS Event takes advantage of this by creating NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
+    "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scares good such as pieces of art or collectibles. Spectacular takes advantage of this by creating NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
     "safe": "Safe",
     "safeDesc": "NFT is safer than traditional ticket systems",
     "fast": "Fast",
@@ -208,6 +214,23 @@
   "unauthorized": {
     "title": "Unauthorized",
     "message": "You do not have the permissions to access this page."
+  },
+  "scanTicket": {
+    "noResult": "No Result",
+    "holdSteady": "Hold QR Code Steady and Clear to Scan",
+    "scanResult": "Scan Result"
+  },
+  "retryDialog": {
+    "title": "Action failed!",
+    "message": "Would you like to retry the action?",
+    "retryButtonLabel": "Retry",
+    "cancelButtonLabel": "Cancel"
+  },
+  "processTransactionDialog": {
+    "processingTransaction": "Processing transaction",
+    "transactionFailed": "Transaction failed",
+    "retryButtonLabel": "Retry",
+    "cancelButtonLabel": "Cancel"
   },
 
   "venue": "Venue",

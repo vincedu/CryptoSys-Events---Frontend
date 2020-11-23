@@ -1,5 +1,5 @@
 {
-  "title": "EOS Event",
+  "title": "Spectacular",
   "next": "Suivant",
   "back": "Retour",
   "language": "fr",
@@ -9,7 +9,7 @@
   "cancel": "Annuler",
   "create": "Créer",
   "mainPageHeader": {
-    "paragraph": "Le futur des billeteries en ligne. EOS Event est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
+    "paragraph": "Le futur des billeteries en ligne. Spectacular est la première billeterie basée sur le réseau de cryptomonnaie EOS.IO. Les transactions sur la chaine de blocs se font rapidement et à faible cout.",
     "search": "Rechercher des événements",
     "date": "Date"
   },
@@ -55,7 +55,8 @@
     "liked": "Aimés",
     "browse": "Parcourir les événements",
     "tickets": "Billets",
-    "create": "Créer un événement"
+    "create": "Créer un événement",
+    "scanTicket": "Scanner un billet"
   },
   "sideBar": {
     "profile": "Profil",
@@ -139,6 +140,11 @@
       "title": "Confirmation",
       "description": "Confirmer votre événement",
       "createEvent": "Créer l'événement"
+    },
+    "creationWarningDialog": {
+      "title": "Avertissement de création d'événement!",
+      "message": "Votre événement a été créé, mais vos billets NFT n'ont pas été créés avec succès. Vous pourrez réessayer de créer ces billets NFT via la page de gestion des événements.",
+      "continueButtonLabel": "Continuer"
     }
   },
   "modifyEvent": {
@@ -167,10 +173,10 @@
   },
   "helpCenter": {
     "title": "Centre d'aide",
-    "why": "Pourquoi choisir EOS Event?",
-    "whyDesc": "EOS Event est une billeterie décentralisée. Avec la puissance de la blockchain EOS, tout les billets sont uniques et vérifiables.",
+    "why": "Pourquoi choisir Spectacular?",
+    "whyDesc": "Spectacular est une billeterie décentralisée. Avec la puissance de la blockchain EOS, tout les billets sont uniques et vérifiables.",
     "nft": "Jetons non fongibles",
-    "nftDesc": "Les jetons non fongibles sont un type spécial de cryptographie qui permet de représenter quelque chose d'unique. Les jetons permettent de représenter la possession d'un bien électronique comme des pièces d'art ou des objets de collections. EOS Event prend avantage de cette technologie pour offrir un service de billeterie en ligne.",
+    "nftDesc": "Les jetons non fongibles sont un type spécial de cryptographie qui permet de représenter quelque chose d'unique. Les jetons permettent de représenter la possession d'un bien électronique comme des pièces d'art ou des objets de collections. Spectacular prend avantage de cette technologie pour offrir un service de billeterie en ligne.",
     "safe": "Sécuritaire",
     "safeDesc": "Les NFT sont plus sécuritaires que les billets traditionnels",
     "fast": "Rapide",
@@ -208,6 +214,23 @@
   "unauthorized": {
     "title": "Non autorisé",
     "message": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
+  },
+  "scanTicket": {
+    "noResult": "Aucun résultat",
+    "holdSteady": "Tenez fermement le code QR pour scanner",
+    "scanResult": "Résultat de scan"
+  },
+  "retryDialog": {
+    "title": "Action échouée!",
+    "message": "Voudriez-vous réessayer l'action?",
+    "retryButtonLabel": "Réessayer",
+    "cancelButtonLabel": "Annuler"
+  },
+  "processTransactionDialog": {
+    "processingTransaction": "Transaction en traitement",
+    "transactionFailed": "Transaction échouée",
+    "retryButtonLabel": "Réessayer",
+    "cancelButtonLabel": "Annuler"
   },
 
   "venue": "Lieu",

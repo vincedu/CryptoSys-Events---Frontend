@@ -41,15 +41,29 @@ const GeneralInfoForm = (props) => {
         if (addedLanguage.firstChild) {
             value = addedLanguage.firstChild.data;
         }
-        const languages = props.value.languages.value;
+        const languages = [...props.value.languages.value];
         if (languages.indexOf(value) === -1) languages.push(value);
         props.onChange('languages', languages);
     };
 
     const handleLanguageDelete = (removedLanguage) => {
-        const languages = props.value.languages.value;
+        const languages = [...props.value.languages.value];
         _.remove(languages, (language) => language === removedLanguage);
         props.onChange('languages', languages);
+    };
+
+    const handleTagAdd = (addedTag) => {
+        if (addedTag && addedTag !== '') {
+            const tags = [...props.value.tags.value];
+            if (tags.indexOf(addedTag) === -1) tags.push(addedTag);
+            props.onChange('tags', tags);
+        }
+    };
+
+    const handleTagDelete = (removedTag) => {
+        const tags = [...props.value.tags.value];
+        _.remove(tags, (tag) => tag === removedTag);
+        props.onChange('tags', tags);
     };
 
     return (
@@ -98,7 +112,7 @@ const GeneralInfoForm = (props) => {
                         margin="normal"
                         required
                         multiline
-                        rows={9}
+                        rows={9.4}
                         rowsMax={10}
                         className={classes.textField}
                         value={props.value.description.value}
@@ -174,9 +188,8 @@ const GeneralInfoForm = (props) => {
                         required
                         value={props.value.tags.value}
                         error={props.value.tags.error}
-                        onChange={(chips) => {
-                            props.onChange('tags', chips);
-                        }}
+                        onAdd={handleTagAdd}
+                        onDelete={handleTagDelete}
                     />
                 </Grid>
             </Grid>

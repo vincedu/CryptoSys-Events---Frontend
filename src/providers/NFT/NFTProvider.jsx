@@ -23,9 +23,15 @@ import {
 } from './actions';
 
 const defaultNFTContext = {
-    createEventTickets: () => {},
+    createTicketNFTs: () => {},
+    sellTicket: () => {},
+    buyTicketNFTs: () => {},
+    transferTicketNFTs: () => {},
+    cancelTicketSale: () => {},
+    setTicketData: () => {},
     transactionQueue: [],
     isLoading: false,
+    failedTransaction: undefined,
 };
 
 export const NFTContext = React.createContext(defaultNFTContext);
@@ -89,6 +95,10 @@ class NFTProvider extends React.Component {
     };
 
     createTicketNFTs = async (tickets) => {
+        if (!tickets || tickets.length === 0) {
+            return { templateIds: [] };
+        }
+
         const collectionAndSchemaActions = [];
 
         const isCollectionExisting = await this.isCollectionExisting();
@@ -308,13 +318,33 @@ class NFTProvider extends React.Component {
                 .signTransaction(transaction.transaction, DEFAULT_TRANSACTION_CONFIG)
                 .then((result) => {
                     transaction.resolve(result);
-                    this.setIsLoading(false);
+                    this.setState({
+                        isLoading: false,
+                        failedTransaction: undefined,
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
-                    transaction.reject();
-                    this.setIsLoading(false);
+                    this.setState({
+                        failedTransaction: transaction,
+                    });
                 });
+        }
+    };
+
+    handleRetryTransaction = () => {
+        if (this.state.failedTransaction) {
+            this.signTransaction(this.state.failedTransaction);
+        }
+    };
+
+    handleCancelTransaction = () => {
+        if (this.state.failedTransaction) {
+            this.state.failedTransaction.reject();
+            this.setState({
+                isLoading: false,
+                failedTransaction: undefined,
+            });
         }
     };
 
@@ -371,7 +401,13 @@ class NFTProvider extends React.Component {
                 }}
             >
                 {children}
-                <TransactionProcessDialog open={isLoading} onClose={this.handleCloseDialog} />
+                <TransactionProcessDialog
+                    open={isLoading}
+                    onClose={this.handleCloseDialog}
+                    failed={Boolean(this.state.failedTransaction)}
+                    onRetry={this.handleRetryTransaction}
+                    onCancel={this.handleCancelTransaction}
+                />
             </NFTContext.Provider>
         );
     }

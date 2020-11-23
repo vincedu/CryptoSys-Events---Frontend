@@ -8,6 +8,7 @@ import TransactionProcessDialog from './TransactionProcessDialog';
 import ImageUpload from './ImageUpload';
 import AutoComplete from './AutoComplete';
 import { EventInformationForm, EventTicketsForm } from './Event';
+import LoadingButton from './LoadingButton';
 
 export {
     NavBar,
@@ -21,4 +22,5 @@ export {
     AutoComplete,
     EventInformationForm,
     EventTicketsForm,
+    LoadingButton,
 };
