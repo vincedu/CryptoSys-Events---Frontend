@@ -69,8 +69,6 @@ const CheckoutDialog = (props) => {
     });
     const [_newTickets, setNewTickets] = useState(newTickets);
     const [_otherTickets, setOtherTickets] = useState(otherTickets);
-    console.log(_newTickets);
-    console.log(_otherTickets);
 
     const bill = { tickets: [], total: 0 };
     Object.values({ ..._newTickets, ..._otherTickets }).forEach((ticket) => {
