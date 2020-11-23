@@ -31,4 +31,7 @@ const CustomHits = () => {
 
     return <CustomSearchHits />;
 };
+
+CustomHits.defaultProps = {};
+
 export default CustomHits;

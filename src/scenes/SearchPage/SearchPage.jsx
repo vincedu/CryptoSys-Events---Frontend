@@ -31,7 +31,7 @@ function SearchPage() {
 
     return (
         <InstantSearch searchClient={searchClient} indexName="events">
-            <Configure filters={`date > ${+new Date()}`} hitsPerPage={3} />
+            <Configure filters={`date > ${+new Date()}`} />
             <Grid container justify={window.innerWidth > 600 ? 'flex-start' : 'center'} style={{ padding: '0 1rem' }}>
                 <Grid item xs={11} sm={3} lg={2} style={{ width: '100%', padding: 5 }}>
                     <CustomDate attribute="date" />
