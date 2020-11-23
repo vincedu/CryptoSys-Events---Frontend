@@ -54,7 +54,7 @@ const CheckoutDialog = (props) => {
     const { t } = useTranslation();
 
     const [price, setPrice] = useState('');
-    const { isOpen, onClose, onSubmit } = props;
+    const { isOpen, onClose, onSubmit, refetch } = props;
 
     const handleClose = () => {
         onClose();
@@ -62,6 +62,7 @@ const CheckoutDialog = (props) => {
 
     const handleSubmit = async () => {
         await onSubmit(Number(price));
+        await refetch();
         handleClose();
     };
 
@@ -134,6 +135,7 @@ const CheckoutDialog = (props) => {
 };
 
 CheckoutDialog.propTypes = {
+    refetch: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

@@ -41,17 +41,18 @@ const useStyles = makeStyles((theme) => ({
 
 const UserProfile = () => {
     const { userData } = useContext(AuthContext);
-    const eventsTickets = useQuery(TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY, {
+    const { loading, data, refetch } = useQuery(TICKETS_FOR_EVENTS_BY_ACCOUNT_NAME_QUERY, {
         variables: { accountName: userData.walletAccountName },
+        fetchPolicy: 'network-only',
     });
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 600);
 
     let myTickets;
     let sellTickets;
-    if (eventsTickets.data) {
-        myTickets = eventsTickets.data.ticketsForEventsByAccountName.myTickets;
-        sellTickets = eventsTickets.data.ticketsForEventsByAccountName.sellTickets;
+    if (data) {
+        myTickets = data.ticketsForEventsByAccountName.myTickets;
+        sellTickets = data.ticketsForEventsByAccountName.sellTickets;
     }
 
     const handleDrawerToggle = (open = !drawerOpen) => {
@@ -81,13 +82,19 @@ const UserProfile = () => {
                     <Route
                         path="/userProfile/myTickets"
                         render={(props) => (
-                            <MyTicketList {...props} loading={eventsTickets.loading} tickets={myTickets} myTickets />
+                            <MyTicketList
+                                {...props}
+                                loading={loading}
+                                tickets={myTickets}
+                                refetch={refetch}
+                                myTickets
+                            />
                         )}
                     />
                     <Route
                         path="/userProfile/sellTickets"
                         render={(props) => (
-                            <SellTicketList {...props} loading={eventsTickets.loading} tickets={sellTickets} />
+                            <SellTicketList {...props} loading={loading} tickets={sellTickets} refetch={refetch} />
                         )}
                     />
                     <Route path="/userProfile/manageEvents" component={Dashboard} />

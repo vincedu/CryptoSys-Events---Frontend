@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 const MyTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { name, description, image, templateId, assetId, eventId, opened, used } = props;
+    const { name, description, image, templateId, assetId, eventId, opened, used, refetch } = props;
     const { sellTicket, transferTicketNFTs } = useContext(NFTContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setiInfoDialogOpen] = useState(false);
@@ -122,6 +122,7 @@ const MyTicketItem = (props) => {
                 onSubmit={handleResellTicket}
                 onClose={handleResaleDialogClose}
                 ticket={{ name, description, image }}
+                refetch={refetch}
             />
             <TicketOpeningDialog
                 isOpen={isTicketOpeningDialogOpen}
@@ -134,6 +135,7 @@ const MyTicketItem = (props) => {
                 onSubmit={handleTransferTicket}
                 onClose={handleTransferDialogClose}
                 ticket={{ name, description, image }}
+                refetch={refetch}
             />
         </Menu>
     );
@@ -173,6 +175,7 @@ const MyTicketItem = (props) => {
 };
 
 MyTicketItem.propTypes = {
+    refetch: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     templateId: PropTypes.string.isRequired,

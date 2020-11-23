@@ -8,7 +8,7 @@ import TicketEvent from './TicketEvent';
 export default function MyTicketList(props) {
     const { t } = useTranslation();
 
-    const { tickets, loading, myTickets } = props;
+    const { tickets, loading, myTickets, refetch } = props;
     let upcomingEventsTickets;
     let pastEventsTickets;
     if (tickets) {
@@ -31,6 +31,7 @@ export default function MyTicketList(props) {
                                         key={upcomingEventTickets.event.name}
                                         eventTickets={upcomingEventTickets}
                                         myTickets={myTickets}
+                                        refetch={refetch}
                                     />
                                 ))
                             )}
@@ -52,6 +53,7 @@ export default function MyTicketList(props) {
                                         key={pastEventTickets.event.name}
                                         eventTickets={pastEventTickets}
                                         myTickets={myTickets}
+                                        refetch={refetch}
                                     />
                                 ))
                             )}
@@ -64,6 +66,7 @@ export default function MyTicketList(props) {
 }
 
 MyTicketList.propTypes = {
+    refetch: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     myTickets: PropTypes.bool,
     tickets: PropTypes.shape({

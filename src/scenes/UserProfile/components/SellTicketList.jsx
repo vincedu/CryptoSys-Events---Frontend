@@ -7,7 +7,7 @@ import TicketEvent from './TicketEvent';
 
 export default function SellTicketList(props) {
     const { t } = useTranslation();
-    const { tickets, loading } = props;
+    const { tickets, loading, refetch } = props;
     let eventsTickets;
     if (tickets) {
         eventsTickets = tickets;
@@ -24,7 +24,13 @@ export default function SellTicketList(props) {
                                 <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
                             ) : (
                                 eventsTickets.map((ticketGroup) => (
-                                    <TicketEvent key={ticketGroup.event.name} eventTickets={ticketGroup} forSale />
+                                    <TicketEvent
+                                        {...props}
+                                        key={ticketGroup.event.name}
+                                        eventTickets={ticketGroup}
+                                        refetch={refetch}
+                                        forSale
+                                    />
                                 ))
                             )}
                         </div>
@@ -38,4 +44,5 @@ export default function SellTicketList(props) {
 SellTicketList.propTypes = {
     loading: PropTypes.bool.isRequired,
     tickets: PropTypes.array.isRequired,
+    refetch: PropTypes.func.isRequired,
 };

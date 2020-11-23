@@ -53,7 +53,7 @@ const TransferDialog = (props) => {
     const { t } = useTranslation();
 
     const [recipient, setRecipient] = useState('');
-    const { isOpen, onClose, onSubmit } = props;
+    const { isOpen, onClose, onSubmit, refetch } = props;
 
     const handleClose = () => {
         onClose();
@@ -61,6 +61,7 @@ const TransferDialog = (props) => {
 
     const handleSubmit = async () => {
         await onSubmit(recipient);
+        await refetch();
         handleClose();
     };
 
@@ -130,6 +131,7 @@ const TransferDialog = (props) => {
 };
 
 TransferDialog.propTypes = {
+    refetch: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

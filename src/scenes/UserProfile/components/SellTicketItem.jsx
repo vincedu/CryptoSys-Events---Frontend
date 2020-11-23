@@ -40,7 +40,7 @@ const SellTicketItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
     const { cancelTicketSale } = useContext(NFTContext);
-    const { name, description, image, templateId, assetId, sale, eventId } = props;
+    const { name, description, image, templateId, assetId, sale, eventId, refetch } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
@@ -53,8 +53,10 @@ const SellTicketItem = (props) => {
         setInfoDialogOpen(false);
     };
 
-    const handleCancelSale = () => {
-        cancelTicketSale(sale.saleId);
+    const handleCancelSale = async () => {
+        await cancelTicketSale(sale.saleId);
+        await refetch();
+
         setAnchorEl(null);
     };
 
@@ -117,6 +119,7 @@ const SellTicketItem = (props) => {
 };
 
 SellTicketItem.propTypes = {
+    refetch: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     templateId: PropTypes.string.isRequired,

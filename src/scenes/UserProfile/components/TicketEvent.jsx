@@ -64,7 +64,7 @@ const getTicketsQuantity = (eventTickets) => {
 const TicketEvent = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { eventTickets, forSale } = props;
+    const { eventTickets, forSale, refetch } = props;
     const ticketsQuantity = getTicketsQuantity(eventTickets);
 
     return (
@@ -103,9 +103,11 @@ const TicketEvent = (props) => {
                                     assetId={ticket.assetId}
                                     sale={ticket.sale}
                                     eventId={eventTickets.event.id}
+                                    refetch={refetch}
                                 />
                             ) : (
                                 <MyTicketItem
+                                    refetch={refetch}
                                     name={eventTicketsType.template.name}
                                     description={eventTicketsType.template.description}
                                     image={eventTicketsType.template.image}
@@ -127,6 +129,7 @@ const TicketEvent = (props) => {
 TicketEvent.propTypes = {
     eventTickets: PropTypes.object.isRequired,
     forSale: PropTypes.bool,
+    refetch: PropTypes.func.isRequired,
 };
 TicketEvent.defaultProps = {
     forSale: false,
