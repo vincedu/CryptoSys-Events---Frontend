@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const TICKETS_SALES_BY_ACCOUNT_NAME_QUERY = gql`
-    query ticketsSalesByAccountName($createdBy: String!) {
-        ticketsSalesByAccountName(createdBy: $createdBy) {
+    query ticketsSalesByAccountName {
+        ticketsSalesByAccountName {
             id
             name
             description

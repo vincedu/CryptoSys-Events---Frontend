@@ -23,9 +23,7 @@ const useStyles = makeStyles(() => ({
 const GlobalStats = () => {
     const classes = useStyles();
 
-    const query = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, {
-        variables: { createdBy: 'TODO enlever le param' },
-    });
+    const query = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY);
 
     let events;
     if (query.data) {
