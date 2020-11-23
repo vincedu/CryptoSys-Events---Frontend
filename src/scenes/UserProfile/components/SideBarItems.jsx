@@ -79,6 +79,7 @@ const SidebarItems = (props) => {
             </Link>
             <ListItem
                 button
+                className={classes.link}
                 onClick={handleTicketList}
                 selected={(sideBarTab === 1 || sideBarTab === 2) && (!props.drawerOpen || !open)}
             >
