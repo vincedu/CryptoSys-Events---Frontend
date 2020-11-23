@@ -76,9 +76,6 @@ const HelpMenu = () => {
                                     </MenuItem>
                                 </Hidden>
                                 <hr className={classes.horizontalLine} />
-                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/howItWorks')}>
-                                    {t('navBar.howItWorks')}
-                                </MenuItem>
                                 <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/helpCenter')}>
                                     {t('navBar.helpCenter')}
                                 </MenuItem>

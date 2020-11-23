@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Route } from 'react-router-dom';
 import { AuthenticatedRoute } from '@components';
-import { HowItWorks, HelpCenter, EventCreation, MainPage, SignIn } from '../scenes';
+import { HelpCenter, EventCreation, MainPage, SignIn } from '../scenes';
 import App from '../App';
 
 describe('App', () => {
@@ -19,12 +19,6 @@ describe('App', () => {
     it('renders SignIn', () => {
         const wrapper = shallow(<App />);
         const eventList = <Route exact path="/signIn" component={SignIn} />;
-        expect(wrapper.contains(eventList)).toEqual(true);
-    });
-
-    it('renders howitWorks', () => {
-        const wrapper = shallow(<App />);
-        const eventList = <Route exact path="/howItWorks" component={HowItWorks} />;
         expect(wrapper.contains(eventList)).toEqual(true);
     });
 

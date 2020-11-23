@@ -1,6 +1,6 @@
 import EventCreation from './EventCreation';
 import MainPage from './MainPage';
-import { HelpCenter, HowItWorks } from './Help';
+import { HelpCenter } from './Help';
 import SignIn from './SignIn';
 import EventPage from './EventPage';
 import AccountSetup from './AccountSetup';
@@ -15,7 +15,6 @@ export {
     EventCreation,
     MainPage,
     HelpCenter,
-    HowItWorks,
     SignIn,
     EventPage,
     AccountSetup,

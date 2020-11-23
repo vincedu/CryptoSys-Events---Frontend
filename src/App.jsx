@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-    HowItWorks,
     HelpCenter,
     EventCreation,
     MainPage,
@@ -29,7 +28,6 @@ const App = () => {
                         <Route exact path="/" component={MainPage} />
                         <Route path="/event/:id" component={EventPage} />
                         <Route exact path="/signIn" component={SignIn} />
-                        <Route exact path="/howItWorks" component={HowItWorks} />
                         <Route exact path="/helpCenter" component={HelpCenter} />
                         <Route path="/search" component={SearchPage} />
                         <Route path="/unauthorized" component={Unauthorized} />

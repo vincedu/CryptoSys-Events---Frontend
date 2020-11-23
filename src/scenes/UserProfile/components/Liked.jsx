@@ -30,7 +30,8 @@ const Liked = () => {
                                 date={event.startDate}
                                 image={event.image}
                                 type={event.type}
-                                withBanner
+                                languages={event.languages}
+                                tags={event.tags}
                             />
                         ))}
                     </Grid>

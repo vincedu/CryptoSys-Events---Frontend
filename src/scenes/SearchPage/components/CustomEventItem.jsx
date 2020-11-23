@@ -4,6 +4,7 @@ import { makeStyles, Grid, Card, Typography, CardContent, CardMedia, CardHeader,
 import { useHistory } from 'react-router-dom';
 import { Translate } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     media: {
@@ -53,7 +54,7 @@ const CustomEventItem = (props) => {
                         <CardHeader
                             titleTypographyProps={{ variant: 'h4' }}
                             title={props.name}
-                            subheader={props.date.substring(0, 10)}
+                            subheader={moment(props.date).locale(t('language')).format('MMM Do, h:mm a')}
                             style={{ paddingBottom: 0 }}
                         />
                         <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
