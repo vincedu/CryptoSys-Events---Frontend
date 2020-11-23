@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import 'moment/locale/fr';
+import _ from 'lodash';
 import { useMutation } from '@apollo/client';
 import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
 import {
@@ -20,6 +21,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
+import { AuthContext } from '@providers';
 
 const EventItem = (props) => {
     const confirmPageStyle = props.confirmPage ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%' } : {};
@@ -62,7 +64,8 @@ const EventItem = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
     const history = useHistory();
-    const [isLiked, setIsLiked] = useState(props.liked);
+    const { userData, setUserData, isUserDataConfigured } = useContext(AuthContext);
+    const [isLiked, setIsLiked] = useState(userData?.liked?.includes(props.id));
 
     const handleButtonClick = () => {
         history.push({
@@ -78,12 +81,21 @@ const EventItem = (props) => {
 
     const handleLike = async (event) => {
         event.stopPropagation();
-        if (isLiked) {
-            unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
-        } else {
-            likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
+        if (isUserDataConfigured) {
+            if (isLiked) {
+                unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
+                const updatedLiked = [...userData.liked];
+                _.remove(updatedLiked, (likedEventId) => likedEventId === props.id);
+                setUserData({ ...userData, liked: updatedLiked });
+            } else {
+                likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
+                const updatedLiked = [...userData.liked, props.id];
+                setUserData({ ...userData, liked: updatedLiked });
+            }
+            props.onLike();
         }
     };
+
     return (
         <Grid item xs={12} sm={6} md={3} className={classes.root}>
             {props.withBanner || props.tags?.includes('free') ? (
@@ -117,11 +129,13 @@ const EventItem = (props) => {
                                       ))
                                 : null}
                         </div>
-                        <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
-                            <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
-                                {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
-                            </Tooltip>
-                        </IconButton>
+                        {isUserDataConfigured ? (
+                            <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
+                                <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
+                                    {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
+                                </Tooltip>
+                            </IconButton>
+                        ) : null}
                     </div>
                     <Typography variant="body2" color="textSecondary">
                         {props.description.length < 100
@@ -155,15 +169,16 @@ EventItem.propTypes = {
     clickeable: PropTypes.bool,
     style: PropTypes.object,
     confirmPage: PropTypes.bool,
-    liked: PropTypes.bool,
+    onLike: PropTypes.func,
 };
+
 EventItem.defaultProps = {
     withBanner: false,
     hoverZoom: true,
     style: {},
     clickeable: true,
     confirmPage: false,
-    liked: false,
+    onLike: () => {},
 };
 
 export default EventItem;
