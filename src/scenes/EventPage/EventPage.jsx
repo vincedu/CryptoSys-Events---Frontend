@@ -95,9 +95,9 @@ const EventPage = () => {
         return (
             <div style={{ padding: 20 }}>
                 <Grid container justify="center">
-                    <Grid item xs={11} className={classes.event}>
+                    <Grid item xs={12} sm={11} className={classes.event}>
                         <Grid conteiner>
-                            <Grid item xs={7} style={{ margin: 'auto' }}>
+                            <Grid item xs={12} sm={7} style={{ margin: 'auto' }}>
                                 <div
                                     className={classes.media}
                                     style={{ backgroundImage: `url('${data.eventById.image}'`, height: 400 }}
