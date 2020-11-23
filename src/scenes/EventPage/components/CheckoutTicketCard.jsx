@@ -40,7 +40,7 @@ const CheckoutTicketCard = (props) => {
                     <Grid item sm={9} xs={12} className={classes.ticketMainContent}>
                         <Typography variant="h6">{ticket.name}</Typography>
                         <Typography variant="body1">
-                            {ticket.quantity > 0 ? `WAX ${ticket.price}` : t('buyTickets.soldOut')}
+                            {ticket.quantity > 0 ? `${ticket.price} WAX` : t('buyTickets.soldOut')}
                         </Typography>
                         <Typography variant="body2">{ticket.description}</Typography>
                     </Grid>

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const TicketInfoDialog = (props) => {
     const classes = useStyles();
-    const { open, onClose, ticket, price } = props;
+    const { open, onClose, ticket } = props;
     const { t } = useTranslation();
 
     const handleClose = () => {
@@ -51,11 +51,11 @@ const TicketInfoDialog = (props) => {
                                 <Typography variant="body2">Template ID: {ticket.templateId}</Typography>
                             </Grid>
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <Typography variant="subtitle1">
                                 {price.currency} {price.amount}
                             </Typography>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Grid item>
                         <TicketQRCode ticket={ticket} />

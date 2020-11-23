@@ -87,11 +87,11 @@ const CheckoutDialog = (props) => {
                                 <Typography variant="h6">{props.ticket.name}</Typography>
                                 <Typography variant="body2">{props.ticket.description}</Typography>
                             </Grid>
-                            <Grid item xs={6} className={classes.ticketAdditionalContent}>
+                            {/* <Grid item xs={6} className={classes.ticketAdditionalContent}>
                                 <Typography variant="body1">
                                     {t('resale.boughtAt')} WAX {10}
                                 </Typography>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                 </Card>

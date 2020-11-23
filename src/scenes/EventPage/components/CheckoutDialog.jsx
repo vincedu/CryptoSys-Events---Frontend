@@ -189,7 +189,7 @@ const CheckoutDialog = (props) => {
                                                 </Grid>
                                                 <Grid item xs={3}>
                                                     <Typography key={ticket.id} variant="body2" align="right">
-                                                        WAX {(ticket.number * ticket.price).toFixed(2)}
+                                                        {(ticket.number * ticket.price).toFixed(2)} WAX
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
@@ -205,7 +205,7 @@ const CheckoutDialog = (props) => {
                                         </Grid>
                                         <Grid item xs={3}>
                                             <Typography key="ticket.name" variant="body1" align="right">
-                                                WAX {bill.total.toFixed(2)}
+                                                {bill.total.toFixed(2)} WAX
                                             </Typography>
                                         </Grid>
                                     </Grid>

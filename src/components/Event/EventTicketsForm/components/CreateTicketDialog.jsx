@@ -249,7 +249,7 @@ const CreateTicketDialog = (props) => {
                             variant="outlined"
                             type="number"
                             InputProps={{
-                                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                startAdornment: <InputAdornment position="start">WAX</InputAdornment>,
                             }}
                             name="price"
                             value={form.price.value}
