@@ -127,7 +127,7 @@ const ProfileMenu = (props) => {
                                     className={classes.menuItem}
                                     onClick={() => handleButtonClick('/userProfile/liked')}
                                 >
-                                    {`${t('profileMenu.liked')} (${userData.liked ? userData.liked.length : 0})`}
+                                    {`${t('profileMenu.liked')} (${userData?.liked ? userData.liked.length : 0})`}
                                 </MenuItem>
                                 <hr className={classes.horizontalLine} />
                                 <MenuItem

@@ -36,9 +36,9 @@ const MainPage = () => {
 
     const ids = ['5fb54e8ad314f47f6c16be43', '5fb559d5d439e40df74ac907'];
 
-    const featuredEvents = useQuery(EVENTS_BY_IDS_QUERY, { variables: { ids } });
+    const featuredEvents = useQuery(EVENTS_BY_IDS_QUERY, { variables: { ids }, fetchPolicy: 'network-only' });
 
-    const categories = useQuery(DISTINCT_QUERY, { variables: { attribute: 'category' } });
+    const categories = useQuery(DISTINCT_QUERY, { variables: { attribute: 'category' }, fetchPolicy: 'network-only' });
     return (
         <>
             <MainPageHeader />
