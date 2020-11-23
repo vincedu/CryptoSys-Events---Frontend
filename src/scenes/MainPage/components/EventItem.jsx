@@ -114,7 +114,7 @@ const EventItem = (props) => {
                 />
                 <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
+                        <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
                             {props.tags?.length
                                 ? props.tags
                                       .slice(0, 2)

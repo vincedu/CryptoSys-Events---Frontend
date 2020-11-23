@@ -89,6 +89,7 @@ const GeneralInfoForm = (props) => {
                         name="category"
                         options={EVENT_CATEGORIES}
                         getOptionLabel={(option) => t(option)}
+                        getOptionSelected={(option, value) => option.label === value.label}
                         value={props.value.category.value}
                         onChange={(__, newValue) => handleSelectCategory('category', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
@@ -131,7 +132,8 @@ const GeneralInfoForm = (props) => {
                     <Autocomplete
                         name="type"
                         options={EVENT_TYPES}
-                        getOptionLabel={(option) => t(option)}
+                        getOptionLabel={(option) => (option.label ? t(option.label) : option)}
+                        getOptionSelected={(option, value) => option.label === value.label}
                         value={props.value.type.value}
                         onChange={(__, newValue) => handleSelectType('type', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
@@ -150,7 +152,8 @@ const GeneralInfoForm = (props) => {
                     <Autocomplete
                         name="languages"
                         options={EVENT_LANGUAGES}
-                        getOptionLabel={(option) => t(option)}
+                        getOptionLabel={(option) => (option.label ? t(option.label) : option)}
+                        getOptionSelected={(option, value) => option.label === value.label}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
