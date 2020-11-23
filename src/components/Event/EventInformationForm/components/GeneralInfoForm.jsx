@@ -132,7 +132,7 @@ const GeneralInfoForm = (props) => {
                     <Autocomplete
                         name="type"
                         options={EVENT_TYPES}
-                        getOptionLabel={(option) => (option.label ? t(option.label) : option)}
+                        getOptionLabel={(option) => t(option)}
                         getOptionSelected={(option, value) => option.label === value.label}
                         value={props.value.type.value}
                         onChange={(__, newValue) => handleSelectType('type', newValue)}
@@ -152,7 +152,7 @@ const GeneralInfoForm = (props) => {
                     <Autocomplete
                         name="languages"
                         options={EVENT_LANGUAGES}
-                        getOptionLabel={(option) => (option.label ? t(option.label) : option)}
+                        getOptionLabel={(option) => t(option)}
                         getOptionSelected={(option, value) => option.label === value.label}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
