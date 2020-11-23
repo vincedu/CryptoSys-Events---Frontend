@@ -106,13 +106,13 @@ const EventPage = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={11} sm={7} md={6}>
+                    <Grid item xs={11} sm={7}>
                         <Typography variant="h2" className={classes.categoryTitle}>
                             {data.eventById.name}
                         </Typography>
                         <br />
                         <Grid container spacing={1}>
-                            <ListItem style={{ height: '100%', margin: 'auto' }}>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <DescriptionIcon />
@@ -123,7 +123,7 @@ const EventPage = () => {
                                     secondary={data.eventById.description}
                                 />
                             </ListItem>
-                            <ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <EventIcon />
@@ -136,7 +136,7 @@ const EventPage = () => {
                             </ListItem>
                         </Grid>
                         <Grid container spacing={1}>
-                            <ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <LocationOnIcon />
@@ -144,7 +144,7 @@ const EventPage = () => {
                                 </ListItemAvatar>
                                 <ListItemText primary={t('createEvent.location.title')} secondary={displayVenue()} />
                             </ListItem>
-                            <ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <ClassIcon />
@@ -157,7 +157,7 @@ const EventPage = () => {
                             </ListItem>
                         </Grid>
                         <Grid container spacing={1}>
-                            <ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <LanguageIcon />
@@ -168,7 +168,7 @@ const EventPage = () => {
                                     secondary={data.eventById.languages}
                                 />
                             </ListItem>
-                            <ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <LocalOfferIcon />
