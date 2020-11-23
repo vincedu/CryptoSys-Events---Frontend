@@ -97,7 +97,7 @@ const EventItem = (props) => {
     };
 
     return (
-        <Grid item xs={12} sm={6} md={3} className={classes.root}>
+        <Grid item xs={12} sm={6} md={4} lg={3} className={classes.root}>
             {props.withBanner || props.tags?.includes('free') ? (
                 <div className={classes.banner}>
                     <Paper className={classes.bannerContent}>
