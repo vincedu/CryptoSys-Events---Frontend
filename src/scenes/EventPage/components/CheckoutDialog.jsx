@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 import TabPanel from '@components/TabPanel';
+import { isEmpty } from 'lodash';
 import CheckoutTicketCard from './CheckoutTicketCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -127,117 +128,135 @@ const CheckoutDialog = (props) => {
     };
 
     return (
-        <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen} fullWidth maxWidth="md">
-            <DialogContent className={classes.root}>
-                <Grid container spacing={0} className={classes.rightGrid}>
-                    <Grid item xs={12} md={8}>
-                        <DialogTitle disableTypography>
-                            <Typography variant="h4">{props.event.name}</Typography>
-                        </DialogTitle>
-                        <Tabs
-                            value={tab}
-                            onChange={handleTabChange}
-                            aria-label="simple tabs example"
-                            indicatorColor="secondary"
-                            textColor="secondary"
-                            className={classes.checkoutTotal}
-                        >
-                            <Tab label={t('buyTickets.newTickets')} />
-                            <Tab
-                                label={t('buyTickets.otherVendors')}
-                                disabled={Object.values(_otherTickets).length === 0}
-                            />
-                        </Tabs>
-                        <TabPanel value={tab} index={0}>
-                            {Object.values(_newTickets).map((ticket) => {
-                                return (
-                                    <CheckoutTicketCard
-                                        key={ticket.id}
-                                        ticket={ticket}
-                                        onUpdate={handleNewTicketUpdate}
-                                    />
-                                );
-                            })}
-                        </TabPanel>
-                        <TabPanel value={tab} index={1}>
-                            {Object.values(_otherTickets).map((ticket) => {
-                                return (
-                                    <CheckoutTicketCard
-                                        key={ticket.id}
-                                        ticket={ticket}
-                                        onUpdate={handleOtherTicketUpdate}
-                                    />
-                                );
-                            })}
-                        </TabPanel>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <CardMedia className={classes.eventImage} image={props.event.image} />
-                        <div className={classes.checkoutTotal}>
-                            <Grid container direction="column" justify="space-between" alignItems="stretch" spacing={2}>
-                                <Grid item>
-                                    <Typography variant="h6">{t('buyTickets.orderSummary')}</Typography>
-                                </Grid>
-                                <Grid item>
-                                    {bill.tickets.map((ticket) => {
-                                        return (
-                                            <Grid key={ticket.id} container spacing={0}>
+        <div>
+            <Dialog onClose={handleClose} open={isOpen} fullScreen={isFullScreen} fullWidth maxWidth="md">
+                <DialogContent className={classes.root}>
+                    <Grid container spacing={0} className={classes.rightGrid}>
+                        <Grid item xs={12} md={8}>
+                            <DialogTitle disableTypography>
+                                <Typography variant="h4">{props.event.name}</Typography>
+                            </DialogTitle>
+                            <Tabs
+                                value={tab}
+                                onChange={handleTabChange}
+                                aria-label="simple tabs example"
+                                indicatorColor="secondary"
+                                textColor="secondary"
+                                className={classes.checkoutTotal}
+                            >
+                                <Tab label={t('buyTickets.newTickets')} />
+                                <Tab
+                                    label={t('buyTickets.otherVendors')}
+                                    disabled={Object.values(_otherTickets).length === 0}
+                                />
+                            </Tabs>
+
+                            <TabPanel value={tab} index={0} _newTickets={_newTickets}>
+                                {Object.values(_newTickets).map((ticket) => {
+                                    return (
+                                        <CheckoutTicketCard
+                                            key={ticket.id}
+                                            ticket={ticket}
+                                            onUpdate={handleNewTicketUpdate}
+                                        />
+                                    );
+                                })}
+                            </TabPanel>
+                            <TabPanel value={tab} index={1}>
+                                {Object.values(_otherTickets).map((ticket) => {
+                                    return (
+                                        <CheckoutTicketCard
+                                            key={ticket.id}
+                                            ticket={ticket}
+                                            onUpdate={handleOtherTicketUpdate}
+                                        />
+                                    );
+                                })}
+                            </TabPanel>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <CardMedia className={classes.eventImage} image={props.event.image} />
+                            <div className={classes.checkoutTotal}>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justify="space-between"
+                                    alignItems="stretch"
+                                    spacing={2}
+                                >
+                                    <Grid item>
+                                        <Typography variant="h6">{t('buyTickets.orderSummary')}</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        {bill.tickets.map((ticket) => {
+                                            return (
+                                                <Grid key={ticket.id} container spacing={0}>
+                                                    <Grid item xs={9}>
+                                                        <Typography key={ticket.id} variant="body2">
+                                                            {ticket.number} x {ticket.name}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={3}>
+                                                        <Typography key={ticket.id} variant="body2" align="right">
+                                                            {(ticket.number * ticket.price).toFixed(2)} WAX
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            );
+                                        })}
+                                    </Grid>
+
+                                    {isEmpty(_newTickets) && isEmpty(_otherTickets) ? (
+                                        <div>
+                                            <Typography key="ticket.name" variant="body1">
+                                                {t('buyTickets.total')} {bill.total.toFixed(2)} WAX
+                                            </Typography>
+                                        </div>
+                                    ) : (
+                                        <Grid item>
+                                            <Grid container spacing={0}>
                                                 <Grid item xs={9}>
-                                                    <Typography key={ticket.id} variant="body2">
-                                                        {ticket.number} x {ticket.name}
+                                                    <Typography key="ticket.name" variant="body1">
+                                                        {t('buyTickets.total')}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={3}>
-                                                    <Typography key={ticket.id} variant="body2" align="right">
-                                                        {(ticket.number * ticket.price).toFixed(2)} WAX
+                                                    <Typography key="ticket.name" variant="body1" align="right">
+                                                        {bill.total.toFixed(2)} WAX
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
-                                        );
-                                    })}
-                                </Grid>
-                                <Grid item>
-                                    <Grid container spacing={0}>
-                                        <Grid item xs={9}>
-                                            <Typography key="ticket.name" variant="body1">
-                                                {t('buyTickets.total')}
-                                            </Typography>
                                         </Grid>
-                                        <Grid item xs={3}>
-                                            <Typography key="ticket.name" variant="body1" align="right">
-                                                {bill.total.toFixed(2)} WAX
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
+                                    )}
                                 </Grid>
-                            </Grid>
-                        </div>
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </DialogContent>
-            <DialogActions className={classes.createTicketDialogActionsContainer}>
-                <Grid container justify="space-between" spacing={3}>
-                    <Grid item md={3} sm={4} xs={6}>
-                        <Button fullWidth variant="contained" color="default" onClick={handleClose}>
-                            {t('cancel')}
-                        </Button>
+                </DialogContent>
+                <DialogActions className={classes.createTicketDialogActionsContainer}>
+                    <Grid container justify="space-between" spacing={3}>
+                        <Grid item md={3} sm={4} xs={6}>
+                            <Button fullWidth variant="contained" color="default" onClick={handleClose}>
+                                {t('cancel')}
+                            </Button>
+                        </Grid>
+                        <Grid item md={3} sm={4} xs={6}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                type="submit"
+                                onClick={handleCheckout}
+                                disabled={bill.tickets.length === 0}
+                            >
+                                {t('buyTickets.checkout')}
+                            </Button>
+                            {renderNotSignInAlert}
+                        </Grid>
                     </Grid>
-                    <Grid item md={3} sm={4} xs={6}>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            type="submit"
-                            onClick={handleCheckout}
-                            disabled={bill.tickets.length === 0}
-                        >
-                            {t('buyTickets.checkout')}
-                        </Button>
-                        {renderNotSignInAlert}
-                    </Grid>
-                </Grid>
-            </DialogActions>
-        </Dialog>
+                </DialogActions>
+            </Dialog>
+        </div>
     );
 };
 
