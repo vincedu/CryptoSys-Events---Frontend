@@ -60,7 +60,7 @@ const UserProfile = () => {
     };
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', overflowX: 'hidden' }}>
             <nav className={classes.drawer}>
                 <Drawer
                     variant="permanent"
