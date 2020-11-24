@@ -96,7 +96,7 @@ const EventPage = () => {
             <div style={{ padding: 20 }}>
                 <Grid container justify="center">
                     <Grid item xs={12} sm={11} className={classes.event}>
-                        <Grid conteiner>
+                        <Grid container>
                             <Grid item xs={12} sm={7} style={{ margin: 'auto' }}>
                                 <div
                                     className={classes.media}

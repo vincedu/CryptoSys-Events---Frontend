@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     Dialog,
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { NFTContext } from '@providers';
+// import { NFTContext } from '@providers';
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper: {
@@ -115,7 +115,7 @@ const TicketOpeningDialog = (props) => {
     const { t } = useTranslation();
     const isFullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
-    const { setTicketData } = useContext(NFTContext);
+    // const { setTicketData } = useContext(NFTContext);
 
     const [isTicketOpen, setIsTicketOpen] = useState(false);
 
@@ -130,10 +130,10 @@ const TicketOpeningDialog = (props) => {
 
     const handleOpenTicket = async () => {
         if (!ticket.opened) {
-            await setTicketData(ticket.assetId, {
-                opened: true,
-                used: ticket.used,
-            });
+            // await setTicketData(ticket.assetId, {
+            //     opened: true,
+            //     used: ticket.used,
+            // });
 
             setIsTicketOpen(true);
             onTicketOpen();

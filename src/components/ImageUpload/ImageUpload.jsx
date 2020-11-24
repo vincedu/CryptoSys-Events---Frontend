@@ -4,7 +4,7 @@ import { Button, Fab, makeStyles, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
 
-const ACCEPTED_FILE_EXTENSIONS = ['.jpg', '.gif', '.png', '.gif'];
+const ACCEPTED_FILE_EXTENSIONS = ['.jpg', '.jpeg', '.gif', '.png', '.gif'];
 const MAX_ACCEPTED_FILE_SIZE = 5242880;
 
 const useStyles = (error) =>
