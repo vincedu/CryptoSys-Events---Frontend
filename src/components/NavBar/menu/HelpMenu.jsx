@@ -90,7 +90,7 @@ const HelpMenu = () => {
     return (
         <div className={classes.menuButton}>
             <Hidden xsDown>
-                <Button onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
+                <Button onClick={() => handleButtonClick('/helpCenter')} color="inherit">
                     {t('navBar.help')}
                 </Button>
             </Hidden>

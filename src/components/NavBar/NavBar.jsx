@@ -9,11 +9,11 @@ import ProfileMenu from './menu/ProfileMenu';
 
 const useStyles = makeStyles(() => ({
     appBar: {
-        transition: 'background-color 0.5s',
         position: 'sticky',
         zIndex: 2,
     },
     appBarMainPage: {
+        transition: 'background-color 0.5s',
         position: 'fixed',
     },
     title: {
@@ -92,7 +92,11 @@ const NavBar = () => {
                 </div>
 
                 <div style={{ flexGrow: 1 }} />
-
+                <Hidden xsDown>
+                    <Button color="inherit" onClick={() => handleButtonClick('/search')}>
+                        {t('profileMenu.browse')}
+                    </Button>
+                </Hidden>
                 <HelpMenu />
                 <Hidden xsDown>
                     <Button color="inherit" onClick={() => handleButtonClick('/createEvent/general')}>
