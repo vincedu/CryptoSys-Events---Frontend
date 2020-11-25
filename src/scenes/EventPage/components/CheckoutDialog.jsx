@@ -19,7 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
-import TabPanel from '@components/TabPanel';
 import { isEmpty } from 'lodash';
 import CheckoutTicketCard from './CheckoutTicketCard';
 
@@ -151,7 +150,7 @@ const CheckoutDialog = (props) => {
                                 />
                             </Tabs>
 
-                            <TabPanel value={tab} index={0} _newTickets={_newTickets}>
+                            <div hidden={tab !== 0}>
                                 {Object.values(_newTickets).map((ticket) => {
                                     return (
                                         <CheckoutTicketCard
@@ -161,8 +160,8 @@ const CheckoutDialog = (props) => {
                                         />
                                     );
                                 })}
-                            </TabPanel>
-                            <TabPanel value={tab} index={1}>
+                            </div>
+                            <div hidden={tab !== 1}>
                                 {Object.values(_otherTickets).map((ticket) => {
                                     return (
                                         <CheckoutTicketCard
@@ -172,7 +171,7 @@ const CheckoutDialog = (props) => {
                                         />
                                     );
                                 })}
-                            </TabPanel>
+                            </div>
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <CardMedia className={classes.eventImage} image={props.event.image} />
