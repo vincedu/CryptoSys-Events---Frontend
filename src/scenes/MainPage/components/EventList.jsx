@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { EVENTS_BY_PARAM_QUERY } from '@graphql/queries';
 import { makeStyles, Grid, Typography, Button, CircularProgress, Tooltip } from '@material-ui/core';
@@ -43,6 +43,7 @@ const EventList = (props) => {
     const { userData } = useContext(AuthContext);
     const history = useHistory();
     const classes = useStyles();
+    const [isMore, setIsMore] = useState(true);
     const offset = 0;
     const limit = 4;
     const query = useQuery(EVENTS_BY_PARAM_QUERY, {
@@ -57,8 +58,9 @@ const EventList = (props) => {
                     offset: query.data.eventsByParam.length,
                 },
             })
-            .then(() => {
-                window.scrollTo(0, pos);
+            .then((result) => {
+                if (result.data.eventsByParam.length) window.scrollTo(0, pos);
+                else setIsMore(false);
             });
     }
     const handleCategory = (category) => {
@@ -105,8 +107,8 @@ const EventList = (props) => {
                     ))}
                 </Grid>
                 <div className={classes.seeMoreBtn}>
-                    <Button variant="outlined" color="secondary" onClick={() => loadMore()}>
-                        {t('eventList.seeMore')} {t(props.category)}
+                    <Button variant="outlined" color="secondary" disabled={!isMore} onClick={loadMore}>
+                        {isMore ? t('eventList.seeMore') : t('eventList.noMore')} {t(props.category)}
                     </Button>
                 </div>
             </div>

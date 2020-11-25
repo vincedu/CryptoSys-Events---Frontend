@@ -17,6 +17,7 @@
   },
   "eventList": {
     "seeMore": "Voir plus de",
+    "noMore": "Tout les",
     "noEvent": "Aucun événement pour",
     "free": "Gratuit",
     "type": "Type",

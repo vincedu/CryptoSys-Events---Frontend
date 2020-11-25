@@ -17,6 +17,7 @@
   },
   "eventList": {
     "seeMore": "See More",
+    "noMore": "No More",
     "noEvent": "No Event for",
     "free": "Free",
     "type": "Type",
