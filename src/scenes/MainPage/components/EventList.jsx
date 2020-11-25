@@ -23,12 +23,6 @@ const useStyles = makeStyles((theme) => ({
             cursor: 'pointer',
         },
     },
-    horizontalLine: {
-        margin: 30,
-        border: 0,
-        height: 1,
-        backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
-    },
     listContainer: {
         dilplay: 'flex',
         padding: 15,

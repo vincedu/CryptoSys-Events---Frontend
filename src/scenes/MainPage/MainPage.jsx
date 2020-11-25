@@ -6,7 +6,7 @@ import { PageContainer } from '@components';
 import EventList from './components/EventList';
 import MainPageHeader from './components/MainPageHeader';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     horizontalLine: {
         margin: 30,
         border: 0,
@@ -18,13 +18,6 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         width: 'fit-content',
         fontFamily: `'Bebas Neue', sans-serif`,
-    },
-    listContainer: {
-        dilplay: 'flex',
-        padding: 15,
-        [theme.breakpoints.down('xs')]: {
-            padding: 0,
-        },
     },
 }));
 
@@ -38,7 +31,6 @@ const MainPage = () => {
         'Science & Technology',
         'Seasonal & Holiday',
         'Charity & Causes',
-        'Seasonal & Holiday',
     ];
     return (
         <>
