@@ -76,7 +76,6 @@ const SalesData = (props) => {
     };
 
     const displaySoldTickets = () => {
-        console.log('TOTAL FOR TICKETS SOLD:', event.ticketsSoldSale);
         const amountTicketsSold = computeTicketsSold(event.ticketsSoldSale);
         const maxTicket = computeMaxTickets(event.ticketsSoldSale);
         return `${amountTicketsSold} / ${maxTicket}`;
@@ -107,7 +106,6 @@ const SalesData = (props) => {
     };
 
     const handleEventClick = () => {
-        console.log('ORIGINAL TICKETS:', event.ticketsSoldSale.original);
         setOpenRow(!openRow);
     };
 

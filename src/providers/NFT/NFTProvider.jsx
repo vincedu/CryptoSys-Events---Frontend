@@ -211,7 +211,6 @@ class NFTProvider extends React.Component {
 
     buyTicketNFTs = async (newTickets, otherTickets, total) => {
         const walletAccount = this.getWalletAccountName();
-        console.log('TOTAL:', total);
         const actions = [depositTokenAction(walletAccount, `${total.toFixed(8)} WAX`)];
         Object.values(newTickets).forEach((ticket) => {
             for (let i = 0; i < ticket.number; i += 1) {
@@ -333,8 +332,7 @@ class NFTProvider extends React.Component {
                         failedTransaction: undefined,
                     });
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
                     this.setState({
                         failedTransaction: transaction,
                     });
@@ -380,10 +378,8 @@ class NFTProvider extends React.Component {
             })
             .then((result) => {
                 if (result.data.ticketSchemasByAccountNameAndCollectionName.length > 0) {
-                    console.log('schema exists');
                     return true;
                 }
-                console.log('schema doesnt exist');
                 return false;
             });
     }
