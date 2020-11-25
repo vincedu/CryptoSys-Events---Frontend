@@ -90,7 +90,7 @@ const GeneralInfoForm = (props) => {
                         options={EVENT_CATEGORIES}
                         getOptionLabel={(option) => t(option)}
                         getOptionSelected={(option, value) => option.label === value.label}
-                        value={props.value.category.value}
+                        inputValue={props.value.category.value}
                         onChange={(__, newValue) => handleSelectCategory('category', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
@@ -134,7 +134,7 @@ const GeneralInfoForm = (props) => {
                         options={EVENT_TYPES}
                         getOptionLabel={(option) => t(option)}
                         getOptionSelected={(option, value) => option.label === value.label}
-                        value={props.value.type.value}
+                        inputValue={props.value.type.value}
                         onChange={(__, newValue) => handleSelectType('type', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
