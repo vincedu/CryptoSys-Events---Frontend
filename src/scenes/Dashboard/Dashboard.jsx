@@ -17,8 +17,5 @@ const Dashboard = () => {
 };
 
 Dashboard.propTypes = {};
-Dashboard.defaultProps = {
-    title: '',
-};
 
 export default Dashboard;
