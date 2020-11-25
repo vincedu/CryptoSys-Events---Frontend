@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import 'moment/locale/fr';
-import _ from 'lodash';
 import { useMutation } from '@apollo/client';
 import { LIKE_EVENT_MUTATION, UNLIKE_EVENT_MUTATION } from '@graphql/mutations';
 import {
@@ -14,7 +13,6 @@ import {
     CardContent,
     Typography,
     Grid,
-    Paper,
     IconButton,
     Chip,
     Tooltip,
@@ -42,24 +40,6 @@ const EventItem = (props) => {
             boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
             '&:hover': props.hoverZoom ? { transform: 'scale(1.01)', cursor: 'pointer' } : {},
         },
-        banner: {
-            minWidth: 40,
-            height: 35,
-            borderRadius: 2,
-            position: 'absolute',
-            top: 30,
-            right: 0,
-            boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-            zIndex: 1,
-        },
-        bannerContent: {
-            backgroundColor: theme.palette.secondary.main,
-            opacity: 0.95,
-            textAlign: 'center',
-            padding: 10,
-            color: '#fff',
-            fontWeight: 500,
-        },
     }));
     const classes = useStyles();
     const { t } = useTranslation();
@@ -84,9 +64,7 @@ const EventItem = (props) => {
         if (isUserDataConfigured) {
             if (isLiked) {
                 unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
-                const updatedLiked = [...userData.liked];
-                _.remove(updatedLiked, (likedEventId) => likedEventId === props.id);
-                setUserData({ ...userData, liked: updatedLiked });
+                setUserData({ ...userData, liked: userData.liked.filter((id) => id !== props.id) });
             } else {
                 likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
                 const updatedLiked = [...userData.liked, props.id];
@@ -98,14 +76,7 @@ const EventItem = (props) => {
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} className={classes.root}>
-            {props.withBanner || props.tags?.includes('free') ? (
-                <div className={classes.banner}>
-                    <Paper className={classes.bannerContent}>
-                        <p style={{ margin: 'auto' }}>{t('eventList.free')}</p>
-                    </Paper>
-                </div>
-            ) : null}
-            <Card onClick={props.clickeable ? handleButtonClick : null} className={classes.card}>
+            <Card onClick={props.clickeable && handleButtonClick} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
                 <CardHeader
                     title={props.name}
@@ -115,41 +86,40 @@ const EventItem = (props) => {
                 <CardContent style={{ paddingTop: 5, paddingBottom: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                            {props.tags?.length
-                                ? props.tags
-                                      .slice(0, 2)
-                                      .map((tag) => (
-                                          <Chip
-                                              key={tag}
-                                              style={{ fontSize: '0.8em', height: 28, marginRight: 5 }}
-                                              label={`#${tag}`}
-                                              variant="outlined"
-                                              color="primary"
-                                          />
-                                      ))
-                                : null}
+                            {props.tags?.length &&
+                                props.tags
+                                    .slice(0, 2)
+                                    .map((tag) => (
+                                        <Chip
+                                            key={tag}
+                                            style={{ fontSize: '0.8em', height: 28, marginRight: 5 }}
+                                            label={`#${tag}`}
+                                            variant="outlined"
+                                            color="primary"
+                                        />
+                                    ))}
                         </div>
-                        {isUserDataConfigured ? (
-                            <IconButton onClick={handleLike} style={{ marginRight: -5 }}>
+                        {isUserDataConfigured && (
+                            <IconButton onClick={props.clickeable && handleLike} style={{ marginRight: -5 }}>
                                 <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
                                     {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
                                 </Tooltip>
                             </IconButton>
-                        ) : null}
+                        )}
                     </div>
                     <Typography variant="body2" color="textSecondary">
                         {props.description.length < 100
                             ? props.description
                             : `${props.description.substring(0, 100)}...`}
                     </Typography>
-                    {props.languages?.length ? (
+                    {props.languages?.length && (
                         <div style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
                             <Translate style={{ fontSize: '1rem', padding: '0 5px', color: 'rgba(0, 0, 0, 0.54)' }} />
                             <Typography variant="body2" color="textSecondary">
                                 {props.languages.map((language) => t(language)).join(', ')}
                             </Typography>
                         </div>
-                    ) : null}
+                    )}
                 </CardContent>
             </Card>
         </Grid>
@@ -164,7 +134,6 @@ EventItem.propTypes = {
     description: PropTypes.string.isRequired,
     tags: PropTypes.array.isRequired,
     languages: PropTypes.array.isRequired,
-    withBanner: PropTypes.bool,
     hoverZoom: PropTypes.bool,
     clickeable: PropTypes.bool,
     style: PropTypes.object,
@@ -173,7 +142,6 @@ EventItem.propTypes = {
 };
 
 EventItem.defaultProps = {
-    withBanner: false,
     hoverZoom: true,
     style: {},
     clickeable: true,
