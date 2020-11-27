@@ -89,8 +89,6 @@ const GeneralInfoForm = (props) => {
                         name="category"
                         options={EVENT_CATEGORIES}
                         getOptionLabel={(option) => t(option)}
-                        getOptionSelected={(option, value) => option.label === value.label}
-                        inputValue={props.value.category.value}
                         onChange={(__, newValue) => handleSelectCategory('category', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
@@ -133,8 +131,6 @@ const GeneralInfoForm = (props) => {
                         name="type"
                         options={EVENT_TYPES}
                         getOptionLabel={(option) => t(option)}
-                        getOptionSelected={(option, value) => option.label === value.label}
-                        inputValue={props.value.type.value}
                         onChange={(__, newValue) => handleSelectType('type', newValue)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
                         renderInput={(params) => (
@@ -153,7 +149,6 @@ const GeneralInfoForm = (props) => {
                         name="languages"
                         options={EVENT_LANGUAGES}
                         getOptionLabel={(option) => t(option)}
-                        getOptionSelected={(option, value) => option.label === value.label}
                         inputValue=""
                         onChange={(event) => handleLanguageAdd(event.target)}
                         popupIcon={<ArrowDropDownIcon color="primary" />}
@@ -173,6 +168,7 @@ const GeneralInfoForm = (props) => {
                         return (
                             <Chip
                                 key={i}
+                                style={{ margin: 3 }}
                                 value={language}
                                 label={language}
                                 onDelete={() => {
