@@ -33,6 +33,7 @@ const DateTimeForm = (props) => {
                             error={props.value.error}
                             onChange={(event) => handleChange('start', event)}
                             style={{ width: '100%' }}
+                            inputFormat="yyyy/MM/dd hh:mm a"
                         />
                     </Grid>
                     <Grid item xs={12} sm={5}>
@@ -49,6 +50,7 @@ const DateTimeForm = (props) => {
                             onChange={(event) => handleChange('end', event)}
                             style={{ width: '100%' }}
                             minDateTime={props.value.start}
+                            inputFormat="yyyy/MM/dd hh:mm a"
                         />
                     </Grid>
                 </LocalizationProvider>
