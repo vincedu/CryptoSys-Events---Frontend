@@ -62,6 +62,14 @@ const useStyles = makeStyles((theme) => ({
     title: {
         padding: '16px 24px 0 24px',
     },
+    noArrow: {
+        '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+        },
+        '& input[type=number]': {
+            '-moz-appearance': 'textfield',
+        },
+    },
 }));
 
 const CreateTicketDialog = (props) => {
@@ -236,6 +244,7 @@ const CreateTicketDialog = (props) => {
                             variant="outlined"
                             type="number"
                             name="quantity"
+                            className={classes.noArrow}
                             value={form.quantity.value}
                             error={form.quantity.error}
                             onChange={handleFormChange}
@@ -248,8 +257,9 @@ const CreateTicketDialog = (props) => {
                             label={t('createEvent.tickets.unitPrice')}
                             variant="outlined"
                             type="number"
+                            className={classes.noArrow}
                             InputProps={{
-                                endAdornment: <InputAdornment position="start">WAX</InputAdornment>,
+                                endAdornment: <InputAdornment style={{ marginRight: 15 }}>WAX</InputAdornment>,
                             }}
                             name="price"
                             value={form.price.value}
