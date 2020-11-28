@@ -20,6 +20,9 @@
     "type": "Type",
     "featured": "Featured"
   },
+  "eventPage": {
+    "organizer": "Organizer"
+  },
   "searchPage": {
     "more": "More",
     "category": "Categories",
