@@ -17,7 +17,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EventIcon from '@material-ui/icons/Event';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LanguageIcon from '@material-ui/icons/Language';
-import DescriptionIcon from '@material-ui/icons/Description';
 import ClassIcon from '@material-ui/icons/Class';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -37,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.main,
         fontFamily: `'Bebas Neue', sans-serif`,
         paddingTop: 25,
+        paddingBottom: 12,
     },
 }));
 
@@ -110,17 +110,16 @@ const EventPage = () => {
                         <Typography variant="h2" className={classes.categoryTitle}>
                             {data.eventById.name}
                         </Typography>
+                        <Typography>{data.eventById.description}</Typography>
                         <br />
                         <Grid container spacing={1}>
                             <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
-                                    <Avatar>
-                                        <DescriptionIcon />
-                                    </Avatar>
+                                    <Avatar />
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={t('createEvent.generalInfo.eventDescription')}
-                                    secondary={data.eventById.description}
+                                    primary={t('eventPage.organizer')}
+                                    secondary={data.eventById.createdByDisplayName}
                                 />
                             </ListItem>
                             <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
@@ -131,7 +130,7 @@ const EventPage = () => {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={t('createEvent.date.title')}
-                                    secondary={moment(data.eventById.startDate).format('LLLL')}
+                                    secondary={moment(data.eventById.startDate).format('yyyy-MM-DD HH:mm')}
                                 />
                             </ListItem>
                         </Grid>
@@ -165,16 +164,29 @@ const EventPage = () => {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={t('createEvent.generalInfo.languages')}
-                                    secondary={data.eventById.languages}
+                                    secondary={data.eventById.languages.join(' ')}
                                 />
                             </ListItem>
+                            <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <ClassIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={t('eventList.type')} secondary={data.eventById.type} />
+                            </ListItem>
+                        </Grid>
+                        <Grid container spacing={1}>
                             <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <LocalOfferIcon />
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={t('searchPage.tags')} secondary={data.eventById.tags} />
+                                <ListItemText
+                                    primary={t('searchPage.tags')}
+                                    secondary={data.eventById.tags.join(' ')}
+                                />
                             </ListItem>
                         </Grid>
                         <Button

@@ -5,6 +5,7 @@ const EVENT_BY_ID_QUERY = gql`
         eventById(id: $id) {
             id
             createdBy
+            createdByDisplayName
             name
             description
             type
