@@ -50,13 +50,12 @@ const EventPage = () => {
     const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_IDS_QUERY, {
         variables: { eventIds: [id] },
     });
-
     const handleBuyTicket = async (newTickets, otherTickets, total) => {
         await buyTicketNFTs(newTickets, otherTickets, total);
     };
 
-    const displayVenue = () => {
-        if (data.eventById.location.type === 'venue') {
+    const displayLocation = () => {
+        if (data.eventById.location.type === 'venue' || data.eventById.location.type === 'online') {
             return data.eventById.location.location;
         }
         return t(data.eventById.location.type);
@@ -67,6 +66,7 @@ const EventPage = () => {
     }
 
     if (data && ticketsQuery.data) {
+        const isOnlineEvent = data.eventById.location.type === 'online';
         const newTickets = {};
         const otherTickets = {};
         ticketsQuery.data.ticketSalesByEventIds[0].original.forEach((originalTicket) => {
@@ -143,7 +143,14 @@ const EventPage = () => {
                                         <LocationOnIcon />
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={t('createEvent.location.title')} secondary={displayVenue()} />
+                                <ListItemText
+                                    primary={
+                                        isOnlineEvent
+                                            ? t('createEvent.location.eventLink')
+                                            : t('createEvent.location.title')
+                                    }
+                                    secondary={displayLocation()}
+                                />
                             </ListItem>
                             <ListItem style={{ height: '100%', margin: 'auto', flex: 1 }}>
                                 <ListItemAvatar>
