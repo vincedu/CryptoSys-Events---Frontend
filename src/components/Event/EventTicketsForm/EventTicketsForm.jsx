@@ -7,6 +7,8 @@ import { TitledPaper } from '@components';
 import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '@constants';
 import CreateTicketDialog from './components/CreateTicketDialog';
 import TicketCard from './components/TicketCard';
+import TicketCreationProcessDialog from './components/TicketCreationProcessDialog';
+import TicketCreationErrorDialog from './components/TicketCreationErrorDialog';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -30,10 +32,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EventTicketsForm = (props) => {
-    const { tickets, onCreateTicket } = props;
+    const { tickets, onCreateTicket, eventId } = props;
     const { t } = useTranslation();
-    const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const classes = useStyles();
+    const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+    const [currentTicket, setCurrentTicket] = useState(undefined);
+    const [isShowingErrorDialog, setIsShowingErrorDialog] = useState(false);
 
     const handleOpenTicketDialog = () => {
         setIsTicketDialogOpen(true);
@@ -41,6 +45,20 @@ export const EventTicketsForm = (props) => {
 
     const handleCloseTicketDialog = () => {
         setIsTicketDialogOpen(false);
+    };
+
+    const handleInitiliazeCreateTicket = (ticket) => {
+        setCurrentTicket(ticket);
+    };
+
+    const handleFinishCreateTicket = () => {
+        onCreateTicket(currentTicket);
+        setCurrentTicket(undefined);
+    };
+
+    const handleCreateTicketError = () => {
+        setIsShowingErrorDialog(true);
+        setCurrentTicket(undefined);
     };
 
     return (
@@ -69,8 +87,22 @@ export const EventTicketsForm = (props) => {
                     </Grid>
                     <CreateTicketDialog
                         isOpen={isTicketDialogOpen}
-                        onSubmit={onCreateTicket}
+                        onSubmit={handleInitiliazeCreateTicket}
                         onClose={handleCloseTicketDialog}
+                    />
+                    {currentTicket ? (
+                        <TicketCreationProcessDialog
+                            isOpen={Boolean(currentTicket)}
+                            onClose={() => setCurrentTicket(undefined)}
+                            onCancel={handleCreateTicketError}
+                            onFinish={handleFinishCreateTicket}
+                            ticket={currentTicket}
+                            eventId={eventId}
+                        />
+                    ) : null}
+                    <TicketCreationErrorDialog
+                        open={isShowingErrorDialog}
+                        onClose={() => setIsShowingErrorDialog(false)}
                     />
                     <div>
                         {tickets.map((ticket) => (
@@ -100,6 +132,7 @@ EventTicketsForm.propTypes = {
         }),
     ).isRequired,
     onCreateTicket: PropTypes.func.isRequired,
+    eventId: PropTypes.func.isRequired,
 };
 
 export default EventTicketsForm;

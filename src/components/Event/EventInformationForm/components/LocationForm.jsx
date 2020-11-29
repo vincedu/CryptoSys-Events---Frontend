@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
@@ -10,7 +10,18 @@ import LocationButtonGroup from './LocationButtonGroup';
 let autocomplete;
 
 const LocationForm = (props) => {
+    const [location, setLocation] = useState(props.value.location.value);
+    const [locationType, setLocationType] = useState(props.value.locationType.value);
+    const [link, setLink] = useState(props.value.link.value);
+
     const handleChange = (name, l) => {
+        if (name === 'locationType') {
+            setLocationType(l);
+        } else if (name === 'location') {
+            setLocation(l);
+        } else if (name === 'link') {
+            setLink(l);
+        }
         props.onChange(name, l);
     };
     const { t } = useTranslation();
@@ -42,39 +53,49 @@ const LocationForm = (props) => {
     };
 
     return (
-        <TitledPaper title={t('createEvent.location.title')}>
-            <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>
-                {t('createEvent.location.description')}
-            </Typography>
-            <Grid container spacing={2} direction="column">
-                <Grid item xs={12} sm={8}>
-                    <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
-                    <Script
-                        url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
-                        onLoad={handleScriptLoad}
-                    />
+        <div>
+            <Script
+                url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZHQdnlyuo3spiKtfixH818xkohVXExh8&libraries=places"
+                onLoad={handleScriptLoad}
+            />
+            <TitledPaper title={t('createEvent.location.title')}>
+                <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>
+                    {t('createEvent.location.description')}
+                </Typography>
+                <Grid container spacing={2} direction="column">
+                    <Grid item xs={12} sm={8}>
+                        <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
+                    </Grid>
+                    <Grid item xs={12} sm={8} hidden={locationType === 'online' || locationType === 'tbd'}>
+                        <TextField
+                            id="location"
+                            placeholder={t('createEvent.location.search')}
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            color="primary"
+                            InputProps={{ startAdornment: <Search style={{ marginRight: 10 }} /> }}
+                            value={locationType === 'venue' ? location : ''}
+                            error={props.value.location.error}
+                            onChange={(e) => handleChange('location', e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={8} hidden={locationType === 'venue' || locationType === 'tbd'}>
+                        <TextField
+                            id="online-event-link"
+                            placeholder={t('createEvent.location.link')}
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            color="primary"
+                            value={locationType === 'online' ? link : ''}
+                            error={props.value.link.error}
+                            onChange={(e) => handleChange('link', e.target.value)}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    hidden={props.value.locationType.value === 'online' || props.value.locationType.value === 'tbd'}
-                >
-                    <TextField
-                        id="location"
-                        placeholder={t('createEvent.location.search')}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        color="primary"
-                        InputProps={{ startAdornment: <Search style={{ marginRight: 10 }} /> }}
-                        value={props.value.locationType.value === 'venue' ? props.value.location.value : ''}
-                        error={props.value.location.error}
-                        onChange={(e) => handleChange('location', e.target.value)}
-                    />
-                </Grid>
-            </Grid>
-        </TitledPaper>
+            </TitledPaper>
+        </div>
     );
 };
 
@@ -82,6 +103,10 @@ LocationForm.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.shape({
         location: PropTypes.shape({
+            value: PropTypes.string,
+            error: PropTypes.bool,
+        }),
+        link: PropTypes.shape({
             value: PropTypes.string,
             error: PropTypes.bool,
         }),

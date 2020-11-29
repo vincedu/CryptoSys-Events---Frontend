@@ -37,11 +37,22 @@ const EventGeneralModification = (props) => {
         return dateForm.start <= dateForm.end;
     };
 
-    const isLocationValid = () => {
+    const isAddressValid = () => {
         if (locationForm.locationType.value === 'venue') {
             return locationForm.location.value !== '';
         }
         return true;
+    };
+
+    const isLinkValid = () => {
+        if (locationForm.locationType.value === 'online') {
+            return locationForm.link.value !== '';
+        }
+        return true;
+    };
+
+    const isLocationValid = () => {
+        return isAddressValid() && isLinkValid();
     };
 
     const isFormValid = () => {
@@ -111,13 +122,26 @@ const EventGeneralModification = (props) => {
             },
         });
 
+        let address = '';
+        let link = '';
+        const locationType = eventData.location.type;
+        if (locationType === 'venue') {
+            address = eventData.location.location;
+        } else if (locationType === 'online') {
+            link = eventData.location.location;
+        }
+
         setLocationForm({
             location: {
-                value: eventData.location.location,
+                value: address,
+                error: false,
+            },
+            link: {
+                value: link,
                 error: false,
             },
             locationType: {
-                value: eventData.location.type,
+                value: locationType,
                 error: false,
             },
         });
@@ -145,12 +169,16 @@ const EventGeneralModification = (props) => {
                     variables[key] = generalInfoForm[key].value;
                 }
             });
-            variables.location = locationForm.location.value;
             variables.locationType = locationForm.locationType.value;
+            if (variables.locationType === 'venue') {
+                variables.location = locationForm.location.value;
+            } else if (variables.locationType === 'online') {
+                variables.location = locationForm.link.value;
+            } else if (variables.locationType === 'tbd') {
+                variables.location = null;
+            }
             variables.startDate = dateForm.start;
             variables.endDate = dateForm.end;
-            if (variables.locationType !== 'venue') variables.location = null;
-
             await modifyEvent({ variables: { ...variables } });
             props.onExit();
         }

@@ -23,7 +23,9 @@ import {
 } from './actions';
 
 const defaultNFTContext = {
-    createTicketNFTs: () => {},
+    createTicketTemplates: () => {},
+    mintTickets: () => {},
+    sellTickets: () => {},
     sellTicket: () => {},
     buyTicketNFTs: () => {},
     transferTicketNFTs: () => {},
@@ -49,8 +51,14 @@ class NFTProvider extends React.Component {
 
     componentDidMount() {
         this.setState({
-            createTicketNFTs: async (tickets) => {
-                return this.createTicketNFTs(tickets);
+            createTicketTemplates: async (tickets) => {
+                return this.createTicketTemplates(tickets);
+            },
+            mintTickets: async (ticketTemplates) => {
+                return this.mintTickets(ticketTemplates);
+            },
+            sellTickets: async (assetsForSale) => {
+                return this.setupAssetSales(assetsForSale);
             },
             sellTicket: async (assetId, price) => {
                 return this.setupAssetSales([
@@ -94,9 +102,9 @@ class NFTProvider extends React.Component {
         return this.transact(transaction);
     };
 
-    createTicketNFTs = async (tickets) => {
+    createTicketTemplates = async (tickets) => {
         if (!tickets || tickets.length === 0) {
-            return { templateIds: [] };
+            return [];
         }
 
         const collectionAndSchemaActions = [];
@@ -150,13 +158,17 @@ class NFTProvider extends React.Component {
             };
         });
 
+        return ticketTemplates;
+    };
+
+    mintTickets = async (ticketTemplates) => {
         const mintAssetsResults = await this.mintAssetsForTemplates(
             SCHEMA_NAME,
             this.getWalletAccountName(),
             ticketTemplates,
         );
 
-        const assetsForSale = mintAssetsResults.transaction.processed.action_traces.map((actionTrace) => {
+        const assetsToSell = mintAssetsResults.transaction.processed.action_traces.map((actionTrace) => {
             const assetData = actionTrace.inline_traces[0].act.data;
             return {
                 assetId: assetData.asset_id,
@@ -164,9 +176,7 @@ class NFTProvider extends React.Component {
             };
         });
 
-        await this.setupAssetSales(assetsForSale);
-
-        return { templateIds: ticketTemplates.map((template) => template.templateId.toString()) };
+        return assetsToSell;
     };
 
     mintAssetsForTemplates = async (schemaName, collectionName, ticketTemplates) => {
@@ -381,7 +391,9 @@ class NFTProvider extends React.Component {
     render() {
         const { children } = this.props;
         const {
-            createTicketNFTs,
+            createTicketTemplates,
+            mintTickets,
+            sellTickets,
             sellTicket,
             buyTicketNFTs,
             cancelTicketSale,
@@ -392,7 +404,9 @@ class NFTProvider extends React.Component {
         return (
             <NFTContext.Provider
                 value={{
-                    createTicketNFTs,
+                    createTicketTemplates,
+                    mintTickets,
+                    sellTickets,
                     sellTicket,
                     buyTicketNFTs,
                     cancelTicketSale,

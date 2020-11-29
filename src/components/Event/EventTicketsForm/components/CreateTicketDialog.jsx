@@ -62,6 +62,14 @@ const useStyles = makeStyles((theme) => ({
     title: {
         padding: '16px 24px 0 24px',
     },
+    noArrow: {
+        '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+        },
+        '& input[type=number]': {
+            '-moz-appearance': 'textfield',
+        },
+    },
 }));
 
 const CreateTicketDialog = (props) => {
@@ -228,7 +236,7 @@ const CreateTicketDialog = (props) => {
                             onChange={handleFormChange}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <TextField
                             fullWidth
                             required
@@ -236,20 +244,22 @@ const CreateTicketDialog = (props) => {
                             variant="outlined"
                             type="number"
                             name="quantity"
+                            className={classes.noArrow}
                             value={form.quantity.value}
                             error={form.quantity.error}
                             onChange={handleFormChange}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <TextField
                             fullWidth
                             required
                             label={t('createEvent.tickets.unitPrice')}
                             variant="outlined"
                             type="number"
+                            className={classes.noArrow}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start">WAX</InputAdornment>,
+                                endAdornment: <InputAdornment style={{ marginRight: 15 }}>WAX</InputAdornment>,
                             }}
                             name="price"
                             value={form.price.value}

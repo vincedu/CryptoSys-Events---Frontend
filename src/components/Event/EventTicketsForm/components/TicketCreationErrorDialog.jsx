@@ -8,15 +8,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTranslation } from 'react-i18next';
 
-const CreationWarningDialog = (props) => {
+const TicketCreationErrorDialog = (props) => {
     const { t } = useTranslation();
     const { open, onClose } = props;
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>{t('createEvent.creationWarningDialog.title')}</DialogTitle>
+            <DialogTitle>{t('createEvent.ticketCreationErrorDialog.title')}</DialogTitle>
             <DialogContent>
-                <DialogContentText>{t('createEvent.creationWarningDialog.message')}</DialogContentText>
+                <DialogContentText>{t('createEvent.ticketCreationErrorDialog.message')}</DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} variant="contained" color="secondary" type="submit" autoFocus>
@@ -27,9 +27,9 @@ const CreationWarningDialog = (props) => {
     );
 };
 
-CreationWarningDialog.propTypes = {
+TicketCreationErrorDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 
-export default CreationWarningDialog;
+export default TicketCreationErrorDialog;
