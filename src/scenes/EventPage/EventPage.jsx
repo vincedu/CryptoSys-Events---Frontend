@@ -73,6 +73,7 @@ const EventPage = () => {
             newTickets[originalTicket.template.templateId] = {
                 id: originalTicket.template.templateId,
                 name: originalTicket.template.name,
+                seller: originalTicket.template.creator,
                 description: originalTicket.template.description,
                 quantity: originalTicket.sales.length,
                 price: originalTicket.sales.length > 0 ? originalTicket.sales[0].price.amount : undefined,
@@ -85,6 +86,7 @@ const EventPage = () => {
                 otherTickets[sale.saleId] = {
                     id: sale.saleId,
                     name: resaleTicket.template.name,
+                    seller: sale.seller,
                     description: resaleTicket.template.description,
                     quantity: 1,
                     price: sale.price.amount,
