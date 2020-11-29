@@ -11,6 +11,7 @@ const TICKET_SALES_BY_EVENT_IDS_QUERY = gql`
                     name
                     description
                     image
+                    creator
                 }
                 sales {
                     saleId

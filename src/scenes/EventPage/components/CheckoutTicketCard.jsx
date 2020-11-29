@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, CardMedia, FormControl, Grid, MenuItem, makeStyles, Select, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '@providers';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
 const CheckoutTicketCard = (props) => {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { userData } = useContext(AuthContext);
 
     const { ticket } = props;
     return (
@@ -48,6 +50,7 @@ const CheckoutTicketCard = (props) => {
                         <FormControl disabled={ticket.quantity === 0}>
                             <Select
                                 variant="outlined"
+                                disabled={ticket.seller === userData.walletAccountName}
                                 value={ticket.number}
                                 onChange={(event) => props.onUpdate(ticket.id, event.target.value)}
                             >
@@ -72,6 +75,7 @@ CheckoutTicketCard.propTypes = {
     ticket: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        seller: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         quantity: PropTypes.number.isRequired,
         price: PropTypes.number,
