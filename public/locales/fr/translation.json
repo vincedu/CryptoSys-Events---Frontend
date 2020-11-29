@@ -20,6 +20,9 @@
     "type": "Type",
     "featured": "En vedette"
   },
+  "eventPage": {
+    "organizer": "Organisateur"
+  },
   "searchPage": {
     "more": "Plus de",
     "category": "Categories",
