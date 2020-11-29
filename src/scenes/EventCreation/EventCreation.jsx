@@ -51,6 +51,10 @@ const DEFAULT_EVENT_LOCATION = {
         value: '',
         error: false,
     },
+    link: {
+        value: '',
+        error: false,
+    },
     locationType: {
         value: 'venue',
         error: false,
@@ -123,11 +127,22 @@ const EventCreation = () => {
         return dateForm.start <= dateForm.end;
     };
 
-    const isLocationValid = () => {
+    const isAddressValid = () => {
         if (locationForm.locationType.value === 'venue') {
             return locationForm.location.value !== '';
         }
         return true;
+    };
+
+    const isLinkValid = () => {
+        if (locationForm.locationType.value === 'online') {
+            return locationForm.link.value !== '';
+        }
+        return true;
+    };
+
+    const isLocationValid = () => {
+        return isAddressValid() && isLinkValid();
     };
 
     const history = useHistory();
@@ -162,7 +177,11 @@ const EventCreation = () => {
             };
         });
         setGeneralInfoForm(updatedForm);
-        setLocationForm({ ...locationForm, location: { ...locationForm.location, error: !isLocationValid() } });
+        setLocationForm({
+            ...locationForm,
+            location: { ...locationForm.location, error: !isAddressValid() },
+            link: { ...locationForm.link, error: !isLinkValid() },
+        });
         setDateForm({ ...dateForm, error: !areDatesValid() });
     };
 
@@ -218,11 +237,16 @@ const EventCreation = () => {
                     eventName = generalInfoForm[key].value;
                 }
             });
-            variables.location = locationForm.location.value;
             variables.locationType = locationForm.locationType.value;
+            if (variables.locationType === 'venue') {
+                variables.location = locationForm.location.value;
+            } else if (variables.locationType === 'online') {
+                variables.location = locationForm.link.value;
+            } else if (variables.locationType === 'tbd') {
+                variables.location = null;
+            }
             variables.startDate = dateForm.start;
             variables.endDate = dateForm.end;
-            if (variables.locationType !== 'venue') variables.location = null;
 
             const createEventResult = await createEvent({ variables: { ...variables } });
             eventId = createEventResult.data.createEvent.id;

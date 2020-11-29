@@ -115,8 +115,10 @@
     },
     "location": {
       "title": "Emplacement",
+      "eventLink": "Lien de l'événement",
       "description": "Partager votre événements et dites l'emplacement",
-      "search": "Rechercher un lieu ou une adresse"
+      "search": "Rechercher un lieu ou une adresse",
+      "link": "Entrer un lien pour votre événement"
     },
     "date": {
       "title": "Date et heure",
