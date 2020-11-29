@@ -117,8 +117,10 @@
     },
     "location": {
       "title": "Location",
+      "eventLink": "Event Link",
       "description": "Share your event with locals and let them know where it's going to be",
-      "search": "Search for a venue or address"
+      "search": "Search for a venue or address",
+      "link": "Enter link for your event"
     },
     "date": {
       "title": "Date & Hour",

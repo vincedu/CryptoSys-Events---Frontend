@@ -32,17 +32,17 @@ const StyledToggleButton = withStyles((theme) => ({
 
 const LocationButtonGroup = (props) => {
     const { t } = useTranslation();
-    const [location, setLocation] = useState(props.value);
+    const [locationType, setLocationType] = useState(props.value);
 
-    const handleLocation = (event, newLocation) => {
-        if (newLocation !== null) {
-            setLocation(newLocation);
-            props.onChange('locationType', newLocation);
+    const handleLocation = (event, newLocationType) => {
+        if (newLocationType !== null) {
+            setLocationType(newLocationType);
+            props.onChange('locationType', newLocationType);
         }
     };
 
     return (
-        <StyledToggleButtonGroup value={location} exclusive onChange={handleLocation}>
+        <StyledToggleButtonGroup value={locationType} exclusive onChange={handleLocation}>
             {values.map((value) => (
                 <StyledToggleButton key={value} value={value}>
                     {t(value)}
