@@ -1,17 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { Grid, Stepper, StepLabel, Step, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import {
-    CREATE_EVENT_MUTATION,
-    PIN_TICKET_IMAGE_TO_IPFS_MUTATION,
-    LINK_NFT_TEMPLATES_TO_EVENT_MUTATION,
-} from '@graphql/mutations';
+import { CREATE_EVENT_MUTATION } from '@graphql/mutations';
 import { PageContainer, EventInformationForm, EventTicketsForm } from '@components';
-import { NFTContext } from '@providers';
-import { DEFAULT_TICKET_IMAGE_IPFS_HASH } from '@constants';
 import { Confirm } from './components/Confirm';
 import { CreationWarningDialog } from './components/CreationWarningDialog';
 
@@ -83,13 +77,13 @@ const EventCreation = () => {
     const [activeStep, setActiveStep] = useState(0);
     switch (window.location.pathname) {
         case '/createEvent/createTicket':
-            if (activeStep !== 1) {
-                setActiveStep(1);
+            if (activeStep !== 2) {
+                setActiveStep(2);
             }
             break;
         case '/createEvent/confirm':
-            if (activeStep !== 2) {
-                setActiveStep(2);
+            if (activeStep !== 1) {
+                setActiveStep(1);
             }
             break;
         case '/createEvent/general':
@@ -106,14 +100,11 @@ const EventCreation = () => {
     const [dateForm, setDateForm] = useState(DEFAULT_EVENT_DATE);
     const [tickets, setTickets] = useState([]);
     const [isWarningDialogOpen, setIsWarningDialogOpen] = useState(false);
+    const [createdEventId, setCreatedEventId] = useState(undefined);
     const [createEvent] = useMutation(CREATE_EVENT_MUTATION);
-    const [pinTicketImageMutation] = useMutation(PIN_TICKET_IMAGE_TO_IPFS_MUTATION);
-    const [linkNftTemplatesToEvent] = useMutation(LINK_NFT_TEMPLATES_TO_EVENT_MUTATION);
     const { t } = useTranslation();
 
     const PROGRESSION_STEPS = t('createEvent.stepper', { returnObjects: true });
-
-    const { createTicketNFTs } = useContext(NFTContext);
 
     const isValueValid = (value) => {
         return value && (value.length > 0 || value.size);
@@ -171,14 +162,14 @@ const EventCreation = () => {
             Object.entries(generalInfoForm).forEach(([key, value]) => {
                 variables[key] = value;
             });
-            history.push({ pathname: '/createEvent/createTicket' });
+            history.push({ pathname: '/createEvent/confirm' });
         } else {
             updateFormErrors();
         }
     };
 
-    const handleTicketsNextButtonClick = () => {
-        history.push({ pathname: '/createEvent/confirm' });
+    const handleTicketsFinishButtonClick = () => {
+        history.push('/');
     };
 
     const handleCreateTicket = (ticketData) => {
@@ -207,15 +198,11 @@ const EventCreation = () => {
     const handleSubmit = async () => {
         let eventId;
         try {
-            let eventName = '';
             Object.keys(generalInfoForm).forEach((key) => {
                 if (key === 'image') {
                     variables.imageFile = generalInfoForm[key].value;
                 } else {
                     variables[key] = generalInfoForm[key].value;
-                }
-                if (key === 'name') {
-                    eventName = generalInfoForm[key].value;
                 }
             });
             variables.location = locationForm.location.value;
@@ -225,37 +212,8 @@ const EventCreation = () => {
             if (variables.locationType !== 'venue') variables.location = null;
 
             const createEventResult = await createEvent({ variables: { ...variables } });
-            eventId = createEventResult.data.createEvent.id;
-
-            const ticketNFTs = await Promise.all(
-                tickets.map(async (ticket) => {
-                    let ticketImageIpfsHash = DEFAULT_TICKET_IMAGE_IPFS_HASH;
-
-                    if (ticket.image) {
-                        const pinTicketImageResult = await pinTicketImageMutation({
-                            variables: { file: ticket.image, ticketName: ticket.name, eventName },
-                        });
-                        ticketImageIpfsHash = pinTicketImageResult.data.pinTicketImageToIpfs.ipfsHash;
-                    }
-
-                    return {
-                        ticketData: {
-                            name: ticket.name,
-                            description: ticket.description,
-                            eventId,
-                            image: ticketImageIpfsHash,
-                        },
-                        maxSupply: ticket.quantity,
-                        price: ticket.price,
-                    };
-                }),
-            );
-
-            const { templateIds } = await createTicketNFTs(ticketNFTs);
-            if (templateIds.length > 0) {
-                await linkNftTemplatesToEvent({ variables: { eventId, templateIds } });
-            }
-            redirectAfterCreation();
+            setCreatedEventId(createEventResult.data.createEvent.id);
+            history.push({ pathname: '/createEvent/createTicket' });
         } catch (error) {
             if (eventId) {
                 setIsWarningDialogOpen(true);
@@ -304,34 +262,6 @@ const EventCreation = () => {
                         </Grid>
                     </Route>
 
-                    <Route path="/createEvent/createTicket">
-                        {isFormValid() ? (
-                            <>
-                                <EventTicketsForm tickets={tickets} onCreateTicket={handleCreateTicket} />
-                                <Grid container justify="space-between" className={classes.stepButtonContainer}>
-                                    <Button
-                                        variant="outlined"
-                                        className={classes.stepButton}
-                                        color="primary"
-                                        onClick={handleBackStep}
-                                    >
-                                        {t('back')}
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        className={`${classes.stepButton} ${classes.nextButton}`}
-                                        color="primary"
-                                        onClick={handleTicketsNextButtonClick}
-                                    >
-                                        {t('next')}
-                                    </Button>
-                                </Grid>
-                            </>
-                        ) : (
-                            <Redirect to="/createEvent/general" />
-                        )}
-                    </Route>
-
                     <Route path="/createEvent/confirm">
                         {isFormValid() ? (
                             <>
@@ -345,6 +275,30 @@ const EventCreation = () => {
                                     date={dateForm}
                                 />
                                 <CreationWarningDialog open={isWarningDialogOpen} onClose={handleCloseWarningDialog} />
+                            </>
+                        ) : (
+                            <Redirect to="/createEvent/general" />
+                        )}
+                    </Route>
+
+                    <Route path="/createEvent/createTicket">
+                        {createdEventId ? (
+                            <>
+                                <EventTicketsForm
+                                    tickets={tickets}
+                                    onCreateTicket={handleCreateTicket}
+                                    eventId={createdEventId}
+                                />
+                                <Grid container justify="flex-end" className={classes.stepButtonContainer}>
+                                    <Button
+                                        variant="contained"
+                                        className={`${classes.stepButton} ${classes.nextButton}`}
+                                        color="primary"
+                                        onClick={handleTicketsFinishButtonClick}
+                                    >
+                                        {t('finish')}
+                                    </Button>
+                                </Grid>
                             </>
                         ) : (
                             <Redirect to="/createEvent/general" />

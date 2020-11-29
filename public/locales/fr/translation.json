@@ -2,6 +2,8 @@
   "title": "Spectacular",
   "next": "Suivant",
   "back": "Retour",
+  "finish": "Compléter",
+  "continue": "Continuer",
   "language": "fr",
   "translation": "en",
   "languageFlag": "us",
@@ -95,8 +97,8 @@
     "title": "Création d'événement",
     "stepper": {
       "step1": "Informations",
-      "step2": "Billets",
-      "step3": "Confirmation"
+      "step2": "Confirmation",
+      "step3": "Billets"
     },
     "generalInfo": {
       "eventName": "Nom de l'événement",
@@ -134,7 +136,13 @@
       "ticketDescription": "Description du billet",
       "quantity": "Quantité",
       "unitPrice": "Prix unitaire",
-      "units": "unités"
+      "units": "unités",
+      "ticketCreationProcessDialog": {
+        "title": "Création de vos billets",
+        "createTicketType": "Créer le type de billet",
+        "mintTickets": "Minter vos billets",
+        "putUpForSale": "Mettre vos billets sur le marché"
+      }
     },
     "confirm": {
       "title": "Confirmation",
@@ -143,8 +151,11 @@
     },
     "creationWarningDialog": {
       "title": "Avertissement de création d'événement!",
-      "message": "Votre événement a été créé, mais vos billets NFT n'ont pas été créés avec succès. Vous pourrez réessayer de créer ces billets NFT via la page de gestion des événements.",
-      "continueButtonLabel": "Continuer"
+      "message": "Votre événement a été créé, mais vos billets NFT n'ont pas été créés avec succès. Vous pourrez réessayer de créer ces billets NFT via la page de gestion des événements."
+    },
+    "ticketCreationErrorDialog": {
+      "title": "Erreur de création de billet",
+      "message": "Une erreur s'est produite lors de la création de votre ticket. Vous pouvez tenter à nouveau de créer votre ticket."
     }
   },
   "modifyEvent": {

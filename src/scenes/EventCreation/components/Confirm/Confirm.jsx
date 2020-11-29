@@ -149,7 +149,7 @@ export const Confirm = (props) => {
                             onClick={props.handleSubmit}
                             onCancel={props.handleCancel}
                         >
-                            {t('submit')}
+                            {t('create')}
                         </LoadingButton>
                     </Grid>
                 </TitledPaper>

@@ -2,6 +2,8 @@
   "title": "Spectacular",
   "next": "Next",
   "back": "Back",
+  "finish": "Finish",
+  "continue": "Continue",
   "language": "en",
   "translation": "fr",
   "languageFlag": "fr",
@@ -95,8 +97,8 @@
     "title": "Create Event",
     "stepper": {
       "step1": "Information",
-      "step2": "Tickets",
-      "step3": "Review"
+      "step2": "Review",
+      "step3": "Tickets"
     },
     "generalInfo": {
       "eventName": "Event Name",
@@ -134,7 +136,13 @@
       "ticketDescription": "Ticket Description",
       "quantity": "Quantity",
       "unitPrice": "Unit Price",
-      "units": "units"
+      "units": "units",
+      "ticketCreationProcessDialog": {
+        "title": "Creating your tickets",
+        "createTicketType": "Create ticket type",
+        "mintTickets": "Mint tickets",
+        "putUpForSale": "Put up for sale"
+      }
     },
     "confirm": {
       "title": "Confirm",
@@ -143,8 +151,11 @@
     },
     "creationWarningDialog": {
       "title": "Event creation warning!",
-      "message": "Your event was created, but your NFT tickets were not created successfully. You will be able to re-attempt to create those NFT tickets through the manage events page.",
-      "continueButtonLabel": "Continue"
+      "message": "Your event was created, but your NFT tickets were not created successfully. You will be able to re-attempt to create those NFT tickets through the manage events page."
+    },
+    "ticketCreationErrorDialog": {
+      "title": "Ticket creation error",
+      "message": "An error has occured while creating your ticket. You can attempt to create your ticket again."
     }
   },
   "modifyEvent": {
