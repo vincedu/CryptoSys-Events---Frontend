@@ -113,9 +113,15 @@ const AccountSetup = (props) => {
                         <Box hidden={!isShowingWalletLinkError}>
                             <Typography color="error">{t('accountSetup.error')}</Typography>
                         </Box>
+                        <Grid item sm={12} style={{ paddingTop: '10px' }}>
+                            <Typography variant="h8">
+                                {t('accountSetup.help')} <a href="/getStarted">{t('accountSetup.helpLink')}</a>
+                            </Typography>
+                        </Grid>
                     </Grid>
+
                     <Grid item sm={12} md={5}>
-                        <Typography variant="h6">{t('accountSetup.userInfo')}</Typography>
+                        <Typography variant="caption">{t('accountSetup.userInfo')}</Typography>
                         <TextField
                             fullWidth
                             required
@@ -127,6 +133,7 @@ const AccountSetup = (props) => {
                             onChange={handleFormChange}
                         />
                     </Grid>
+
                     <Grid container item xs={12} justify="flex-end">
                         <LoadingButton
                             variant="contained"
