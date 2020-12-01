@@ -102,10 +102,12 @@ const EventList = (props) => {
                         />
                     ))}
                 </Grid>
-                <div className={classes.seeMoreBtn}>
-                    <Button variant="outlined" color="secondary" disabled={!isMore} onClick={loadMore}>
-                        {isMore ? t('eventList.seeMore') : t('eventList.noMore')} {t(props.category)}
-                    </Button>
+                <div hidden={query.data.eventsByParam.length < 4}>
+                    <div className={classes.seeMoreBtn}>
+                        <Button variant="outlined" color="secondary" disabled={!isMore} onClick={loadMore}>
+                            {isMore ? t('eventList.seeMore') : t('eventList.noMore')} {t(props.category)}
+                        </Button>
+                    </div>
                 </div>
             </div>
         );

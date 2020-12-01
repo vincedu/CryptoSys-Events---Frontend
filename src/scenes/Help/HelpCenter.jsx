@@ -49,7 +49,7 @@ const HelpCenter = () => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={8} md={6}>
-                            <div className={classes.ticketText}>
+                            <div className={classes.ticketText} style={{ textAlign: 'right' }}>
                                 <Typography color="primary" variant="h4">
                                     {t('helpCenter.why')}
                                 </Typography>

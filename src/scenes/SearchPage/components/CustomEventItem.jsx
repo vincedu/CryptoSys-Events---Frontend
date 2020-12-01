@@ -52,7 +52,7 @@ const CustomEventItem = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={7} style={{ margin: 'auto' }}>
                         <CardHeader
-                            titleTypographyProps={{ variant: 'h4' }}
+                            titleTypographyProps={{ variant: 'h5' }}
                             title={props.name}
                             subheader={moment(props.date).locale(t('language')).format('MMM Do, h:mm a')}
                             style={{ paddingBottom: 0 }}

@@ -78,7 +78,7 @@
     "name": "Nom du compte",
     "email": "Adresse courriel du compte",
     "photo": "Photo de profil",
-    "creation": "Date de création du compte",
+    "creation": "Compte Spectacular depuis",
     "wallet": "Portefeuille associé"
   },
   "liked": {
@@ -305,7 +305,7 @@
   "Health & Wellness": "Santé",
   "Hobbies & Special Interest": "Loisirs et intérêts particuliers",
   "Home & Lifestyle": "Maison et style de vie",
-  "Music": "La musique",
+  "Music": "Musique",
   "Performing & Visual Arts": "Arts du spectacle et visuels",
   "Religion & Spirituality": "Religion et spiritualité",
   "School Activities": "Activités scolaires",

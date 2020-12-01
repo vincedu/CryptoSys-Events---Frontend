@@ -81,7 +81,7 @@ export const Confirm = (props) => {
                 <TitledPaper title={t('createEvent.confirm.title')}>
                     <Typography variant="body1">{t('createEvent.confirm.description')}</Typography>
                     <Grid container justify="space-around" className={classes.eventItems}>
-                        <Hidden smDown>
+                        <Hidden xsDown>
                             <EventItem
                                 key={0}
                                 id={event.id}
@@ -93,7 +93,7 @@ export const Confirm = (props) => {
                                 languages={event.languages}
                                 type={event.type}
                                 clickeable={false}
-                                style={{ opacity: 0.5, filter: 'blur(1px)' }}
+                                style={{ opacity: 0.5, filter: 'blur(1px)', maxWidth: '30%' }}
                                 hoverZoom={false}
                             />
                         </Hidden>
@@ -115,8 +115,9 @@ export const Confirm = (props) => {
                             }
                             confirmPage
                             clickeable={false}
+                            style={{ zIndex: 2 }}
                         />
-                        <Hidden smDown>
+                        <Hidden xsDown>
                             <EventItem
                                 key={2}
                                 id={event.id}
@@ -127,7 +128,7 @@ export const Confirm = (props) => {
                                 tags={event.tags}
                                 languages={event.languages}
                                 type={event.type}
-                                style={{ opacity: 0.5, filter: 'blur(1px)' }}
+                                style={{ opacity: 0.5, filter: 'blur(1px)', maxWidth: '30%' }}
                                 hoverZoom={false}
                                 clickeable={false}
                             />

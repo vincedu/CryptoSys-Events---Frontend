@@ -32,7 +32,7 @@ const TitledPaper = (props) => {
                     </Typography>
                 </div>
             )}
-            <div>{props.children}</div>
+            {props.children}
         </Paper>
     );
 };

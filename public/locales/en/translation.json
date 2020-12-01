@@ -78,7 +78,7 @@
     "name": "Account Name",
     "email": "Account Email Address",
     "photo": "Profile Photo",
-    "creation": "Account Creation Time",
+    "creation": "Spectacular account since",
     "wallet": "Linked Wallet Account"
   },
   "liked": {

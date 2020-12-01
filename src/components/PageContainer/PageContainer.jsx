@@ -30,7 +30,7 @@ const PageContainer = (props) => {
                     </Typography>
                 </Grid>
             ) : null}
-            <Grid item sm={12} md={11}>
+            <Grid item md={12} lg={11}>
                 {children}
             </Grid>
         </Grid>

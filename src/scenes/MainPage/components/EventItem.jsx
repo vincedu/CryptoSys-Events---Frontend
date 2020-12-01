@@ -22,12 +22,14 @@ import { Favorite, FavoriteBorder, Translate } from '@material-ui/icons';
 import { AuthContext } from '@providers';
 
 const EventItem = (props) => {
-    const confirmPageStyle = props.confirmPage ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%' } : {};
+    const confirmPageStyle = props.confirmPage
+        ? { transform: 'scale(1.3)', maxWidth: '32%', flexBasis: '32%', zIndex: 2 }
+        : {};
     const useStyles = makeStyles((theme) => ({
         root: {
             ...props.style,
             position: 'relative',
-            [theme.breakpoints.up('md')]: confirmPageStyle,
+            [theme.breakpoints.up('sm')]: confirmPageStyle,
             zIndex: 0,
         },
         media: {
