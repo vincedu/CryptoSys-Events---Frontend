@@ -176,7 +176,8 @@
   "manageEvents": {
     "moreOptions": {
       "modifyGeneral": "Modifier",
-      "modifyTickets": "Créer des billets"
+      "modifyTickets": "Créer des billets",
+      "scanTickets": "Scanner des billets"
     }
   },
   "buyTickets": {
@@ -284,7 +285,8 @@
   },
   "ticketValidationDialog": {
     "validTicket": "Billet valide",
-    "invalidTicket": "Billet invalide"
+    "invalidTicket": "Billet invalide",
+    "checkIn": "Enregistrer"
   },
 
   "venue": "Lieu",
