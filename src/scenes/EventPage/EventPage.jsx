@@ -11,6 +11,8 @@ import {
     Avatar,
     ListItem,
     ListItemAvatar,
+    Chip,
+    Tooltip,
 } from '@material-ui/core';
 import { CenteredCircularProgress } from '@components';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -19,7 +21,7 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import LanguageIcon from '@material-ui/icons/Language';
 import ClassIcon from '@material-ui/icons/Class';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import CheckoutDialog from './components/CheckoutDialog';
 
@@ -45,6 +47,7 @@ const EventPage = () => {
     const { t } = useTranslation();
     const { buyTicketNFTs } = useContext(NFTContext);
     const classes = useStyles();
+    const history = useHistory();
     const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
     const { data, loading } = useQuery(EVENT_BY_ID_QUERY, { variables: { id } });
     const ticketsQuery = useQuery(TICKET_SALES_BY_EVENT_IDS_QUERY, {
@@ -52,6 +55,15 @@ const EventPage = () => {
     });
     const handleBuyTicket = async (newTickets, otherTickets, total) => {
         await buyTicketNFTs(newTickets, otherTickets, total);
+    };
+
+    const handleClick = (tag) => {
+        history.push({
+            pathname: '/search',
+            state: {
+                tag,
+            },
+        });
     };
 
     const displayLocation = () => {
@@ -194,7 +206,23 @@ const EventPage = () => {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={t('searchPage.tags')}
-                                    secondary={data.eventById.tags.join(' ')}
+                                    secondary={
+                                        data.eventById.tags?.length
+                                            ? data.eventById.tags.map((tag) => (
+                                                  <Tooltip title={`${t('eventList.seeMore')} #${tag}`} arrow>
+                                                      <Chip
+                                                          key={tag}
+                                                          style={{ margin: '5px 3px' }}
+                                                          label={`#${tag}`}
+                                                          onClick={() => handleClick(tag)}
+                                                          variant="outlined"
+                                                          color="primary"
+                                                          size="small"
+                                                      />
+                                                  </Tooltip>
+                                              ))
+                                            : null
+                                    }
                                 />
                             </ListItem>
                         </Grid>

@@ -143,6 +143,7 @@ const CustomRefinementList = (props) => {
     const attribute = {};
     if (location.state?.category && props.attribute === 'category')
         attribute.defaultRefinement = [location.state.category];
+    if (location.state?.tag && props.attribute === 'tags') attribute.defaultRefinement = [location.state.tag];
     attribute.attribute = props.attribute;
     attribute.limit = showMore;
 
