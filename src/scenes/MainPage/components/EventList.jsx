@@ -53,8 +53,10 @@ const EventList = (props) => {
                 },
             })
             .then((result) => {
-                if (result.data.eventsByParam.length) window.scrollTo(0, pos);
-                else setIsMore(false);
+                if (result.data.eventsByParam.length) {
+                    window.scrollTo(0, pos);
+                    if (result.data.eventsByParam.length < 4) setIsMore(false);
+                } else setIsMore(false);
             });
     }
     const handleCategory = (category) => {
