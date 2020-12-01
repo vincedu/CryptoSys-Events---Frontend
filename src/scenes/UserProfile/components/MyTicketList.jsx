@@ -9,6 +9,9 @@ export default function MyTicketList(props) {
     const { t } = useTranslation();
 
     const { tickets, loading, myTickets, refetch } = props;
+
+    if (loading) return <CircularProgress />;
+
     let upcomingEventsTickets;
     let pastEventsTickets;
     if (tickets) {
@@ -16,50 +19,36 @@ export default function MyTicketList(props) {
         pastEventsTickets = tickets.past;
     }
     return (
-        <PageContainer title={t('ticketList.myTickets')}>
-            <TitledPaper title={t('ticketList.upcoming')}>
-                <div>
-                    {loading ? (
-                        <CircularProgress />
+        <PageContainer>
+            <TitledPaper title={t('ticketList.myTickets')}>
+                <TitledPaper title={t('ticketList.upcoming')}>
+                    {upcomingEventsTickets && upcomingEventsTickets.length ? (
+                        upcomingEventsTickets.map((upcomingEventTickets) => (
+                            <TicketEvent
+                                key={upcomingEventTickets.event.name}
+                                eventTickets={upcomingEventTickets}
+                                myTickets={myTickets}
+                                refetch={refetch}
+                            />
+                        ))
                     ) : (
-                        <div>
-                            {upcomingEventsTickets === undefined || upcomingEventsTickets.length === 0 ? (
-                                <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
-                            ) : (
-                                upcomingEventsTickets.map((upcomingEventTickets) => (
-                                    <TicketEvent
-                                        key={upcomingEventTickets.event.name}
-                                        eventTickets={upcomingEventTickets}
-                                        myTickets={myTickets}
-                                        refetch={refetch}
-                                    />
-                                ))
-                            )}
-                        </div>
+                        <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
                     )}
-                </div>
-            </TitledPaper>
-            <TitledPaper title={t('ticketList.past')}>
-                <div>
-                    {loading ? (
-                        <CircularProgress />
+                </TitledPaper>
+                <TitledPaper title={t('ticketList.past')}>
+                    {pastEventsTickets && pastEventsTickets.length ? (
+                        pastEventsTickets.map((pastEventTickets) => (
+                            <TicketEvent
+                                key={pastEventTickets.event.name}
+                                eventTickets={pastEventTickets}
+                                myTickets={myTickets}
+                                refetch={refetch}
+                            />
+                        ))
                     ) : (
-                        <div>
-                            {pastEventsTickets === undefined || pastEventsTickets.length === 0 ? (
-                                <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
-                            ) : (
-                                pastEventsTickets.map((pastEventTickets) => (
-                                    <TicketEvent
-                                        key={pastEventTickets.event.name}
-                                        eventTickets={pastEventTickets}
-                                        myTickets={myTickets}
-                                        refetch={refetch}
-                                    />
-                                ))
-                            )}
-                        </div>
+                        <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
                     )}
-                </div>
+                </TitledPaper>
             </TitledPaper>
         </PageContainer>
     );

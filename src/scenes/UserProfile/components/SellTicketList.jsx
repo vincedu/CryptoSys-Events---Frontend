@@ -8,34 +8,29 @@ import TicketEvent from './TicketEvent';
 export default function SellTicketList(props) {
     const { t } = useTranslation();
     const { tickets, loading, refetch } = props;
+
+    if (loading) return <CircularProgress />;
+
     let eventsTickets;
     if (tickets) {
         eventsTickets = tickets;
     }
     return (
-        <PageContainer title={t('ticketList.myTicketsForSale')}>
-            <TitledPaper>
-                <div>
-                    {loading ? (
-                        <CircularProgress />
-                    ) : (
-                        <div>
-                            {eventsTickets === undefined || eventsTickets.length === 0 ? (
-                                <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
-                            ) : (
-                                eventsTickets.map((ticketGroup) => (
-                                    <TicketEvent
-                                        {...props}
-                                        key={ticketGroup.event.name}
-                                        eventTickets={ticketGroup}
-                                        refetch={refetch}
-                                        forSale
-                                    />
-                                ))
-                            )}
-                        </div>
-                    )}
-                </div>
+        <PageContainer>
+            <TitledPaper title={t('ticketList.myTicketsForSale')}>
+                {eventsTickets && eventsTickets.length ? (
+                    eventsTickets.map((ticketGroup) => (
+                        <TicketEvent
+                            {...props}
+                            key={ticketGroup.event.name}
+                            eventTickets={ticketGroup}
+                            refetch={refetch}
+                            forSale
+                        />
+                    ))
+                ) : (
+                    <Typography variant="h5">{t('ticketList.noTickets')}</Typography>
+                )}
             </TitledPaper>
         </PageContainer>
     );

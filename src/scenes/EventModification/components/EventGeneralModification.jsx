@@ -15,7 +15,6 @@ const useStyles = makeStyles({
 });
 
 const EventGeneralModification = (props) => {
-    console.log('EVENT MODIF PROPS:', props);
     const classes = useStyles();
     const { t } = useTranslation();
     const { eventId } = useParams();

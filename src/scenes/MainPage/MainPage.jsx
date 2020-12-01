@@ -1,4 +1,5 @@
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { DISTINCT_QUERY } from '@graphql/queries';
@@ -6,7 +7,7 @@ import { PageContainer } from '@components';
 import EventList from './components/EventList';
 import MainPageHeader from './components/MainPageHeader';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     horizontalLine: {
         margin: 30,
         border: 0,
@@ -19,26 +20,33 @@ const useStyles = makeStyles((theme) => ({
         width: 'fit-content',
         fontFamily: `'Bebas Neue', sans-serif`,
     },
-    listContainer: {
-        dilplay: 'flex',
-        padding: 15,
-        [theme.breakpoints.down('xs')]: {
-            padding: 0,
-        },
-    },
 }));
 
 const MainPage = () => {
     const classes = useStyles();
 
     const categories = useQuery(DISTINCT_QUERY, { variables: { attribute: 'category' }, fetchPolicy: 'network-only' });
-    const categoriesToShow = [
+    const categoriesPriority = [
         'Music',
         'Hobbies & Special Interest',
         'Science & Technology',
         'Seasonal & Holiday',
+        'Sports & Fitness',
         'Charity & Causes',
-        'Seasonal & Holiday',
+        'Auto, Boat & Air',
+        'Business & Professional',
+        'Community & Culture',
+        'Family & Education',
+        'Fashion & Beauty',
+        'Film, Media & Entertainment',
+        'Food & Drink',
+        'Government & Politics',
+        'Health & Wellness',
+        'Home & Lifestyle',
+        'Performing & Visual Arts',
+        'Religion & Spirituality',
+        'School Activities',
+        'Travel & Outdoor',
     ];
     return (
         <>
@@ -46,9 +54,13 @@ const MainPage = () => {
             <PageContainer>
                 {categories.loading ? <CircularProgress /> : null}
                 {categories.data?.distinct.length
-                    ? categoriesToShow
+                    ? categoriesPriority
                           .filter((value) => categories.data.distinct.includes(value))
-                          .map((category) => <EventList key={category} category={category} />)
+                          .map((category) => (
+                              <LazyLoad key={category} placeholder={<CircularProgress />}>
+                                  <EventList category={category} />
+                              </LazyLoad>
+                          ))
                           .reduce((prev, curr) => [prev, <hr className={classes.horizontalLine} key={null} />, curr])
                     : null}
             </PageContainer>

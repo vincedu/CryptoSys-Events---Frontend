@@ -102,7 +102,7 @@ const CheckoutDialog = (props) => {
                         variant="outlined"
                         type="number"
                         InputProps={{
-                            startAdornment: <InputAdornment position="start">WAX </InputAdornment>,
+                            endAdornment: <InputAdornment style={{ marginRight: 15 }}>WAX</InputAdornment>,
                         }}
                         name="price"
                         onChange={handlePriceChange}

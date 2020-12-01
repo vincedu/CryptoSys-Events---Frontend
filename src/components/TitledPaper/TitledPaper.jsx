@@ -25,14 +25,14 @@ const TitledPaper = (props) => {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>
-            {props?.title ? (
+            {props?.title && (
                 <div className={classes.header}>
                     <Typography className={classes.title} variant="h3">
                         {props.title}
                     </Typography>
                 </div>
-            ) : null}
-            <div className={classes.content}>{props.children}</div>
+            )}
+            <div>{props.children}</div>
         </Paper>
     );
 };

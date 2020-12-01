@@ -1,6 +1,6 @@
 import EventCreation from './EventCreation';
 import MainPage from './MainPage';
-import { HelpCenter } from './Help';
+import { HelpCenter, GetStarted } from './Help';
 import SignIn from './SignIn';
 import EventPage from './EventPage';
 import AccountSetup from './AccountSetup';
@@ -26,4 +26,5 @@ export {
     Unauthorized,
     SearchPage,
     QRCodeScanDialog,
+    GetStarted,
 };

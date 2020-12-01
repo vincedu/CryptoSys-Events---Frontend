@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     },
     fullHeightCard: {
         height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
 }));
 
@@ -28,7 +31,7 @@ const TotalSoldTicketsWidget = (props) => {
 
     return (
         <Card className={classes.fullHeightCard}>
-            <CardContent>
+            <CardContent style={{ textAlign: 'center' }}>
                 <Typography className={classes.title} color="textSecondary" gutterBottom variant="body2">
                     {t('eventsDashboard.totalSoldTickets')}
                 </Typography>

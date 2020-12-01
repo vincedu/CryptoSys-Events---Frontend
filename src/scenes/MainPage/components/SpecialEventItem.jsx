@@ -48,24 +48,6 @@ const useStyles = makeStyles((theme) => ({
         height: 1,
         backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(214, 108, 68, 0.75), rgba(0, 0, 0, 0))',
     },
-    banner: {
-        minWidth: 40,
-        height: 35,
-        borderRadius: 2,
-        position: 'absolute',
-        top: 15,
-        right: -15,
-        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-        zIndex: 1,
-    },
-    bannerContent: {
-        backgroundColor: theme.palette.secondary.main,
-        opacity: 0.95,
-        textAlign: 'center',
-        padding: 10,
-        color: '#fff',
-        fontWeight: 500,
-    },
 }));
 
 const SpecialEventItem = (props) => {

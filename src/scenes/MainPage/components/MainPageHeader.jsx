@@ -42,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    input: {
-        marginLeft: theme.spacing(1),
-    },
     divider: {
         height: 28,
         margin: 4,

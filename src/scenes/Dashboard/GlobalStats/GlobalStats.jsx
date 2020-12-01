@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { TICKETS_SALES_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
-import { CircularProgress, Typography, Grid, makeStyles } from '@material-ui/core';
+import { CircularProgress, Typography, Grid } from '@material-ui/core';
 import TotalEventsWidget from './GlobalStatsWidgets/TotalEventsWidget';
 import TotalSoldTicketsWidget from './GlobalStatsWidgets/TotalSoldTicketsWidget';
 import TotalResaleTicketsWidget from './GlobalStatsWidgets/TotalResaleTicketsWidget';
@@ -14,53 +14,39 @@ import {
     computeTotalTickets,
 } from '../computeStats';
 
-const useStyles = makeStyles(() => ({
-    widgetsContainer: {
-        paddingBottom: '24px',
-    },
-}));
-
 const GlobalStats = () => {
-    const classes = useStyles();
+    const { data, loading } = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY);
 
-    const query = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY);
+    if (loading) return <CircularProgress />;
 
     let events;
-    if (query.data) {
-        events = query.data.ticketsSalesByAccountName;
+    if (data) {
+        events = data.ticketsSalesByAccountName;
     }
 
-    return (
-        <div>
-            {query.loading ? (
-                <CircularProgress />
-            ) : (
-                <div>
-                    {events === undefined ? (
-                        <Typography variant="h5">Failed fetching backend</Typography>
-                    ) : (
-                        <Grid container spacing={6} className={classes.widgetsContainer}>
-                            <Grid item xs={4} sm={3}>
-                                <TotalEventsWidget totalEvents={computeTotalEvents(events)} />
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <TotalSoldTicketsWidget
-                                    totalSoldTickets={computeTotalSoldTickets(events)}
-                                    totalTickets={computeTotalTickets(events)}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <TotalResaleTicketsWidget totalResaleTickets={computeTotalResaleTickets(events)} />
-                            </Grid>
-                            <Grid item xs={4} sm={3}>
-                                <TotalRevenueWidget totalRevenue={computeTotalRevenue(events)} />
-                            </Grid>
-                        </Grid>
-                    )}
-                </div>
-            )}
-        </div>
+    return events ? (
+        <Grid container spacing={6} style={{ paddingBottom: '24px' }}>
+            <Grid item xs={4} sm={3}>
+                <TotalEventsWidget totalEvents={computeTotalEvents(events)} />
+            </Grid>
+            <Grid item xs={4} sm={3}>
+                <TotalSoldTicketsWidget
+                    totalSoldTickets={computeTotalSoldTickets(events)}
+                    totalTickets={computeTotalTickets(events)}
+                />
+            </Grid>
+            <Grid item xs={4} sm={3}>
+                <TotalResaleTicketsWidget totalResaleTickets={computeTotalResaleTickets(events)} />
+            </Grid>
+            <Grid item xs={4} sm={3}>
+                <TotalRevenueWidget totalRevenue={computeTotalRevenue(events)} />
+            </Grid>
+        </Grid>
+    ) : (
+        <Typography variant="h5">Failed fetching backend</Typography>
     );
 };
+
+GlobalStats.propTypes = {};
 
 export default GlobalStats;
