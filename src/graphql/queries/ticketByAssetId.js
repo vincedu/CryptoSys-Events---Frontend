@@ -11,6 +11,8 @@ const TICKET_BY_ASSET_ID_QUERY = gql`
             name
             description
             image
+            opened
+            used
         }
     }
 `;

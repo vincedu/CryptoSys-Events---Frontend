@@ -4,6 +4,7 @@
   "back": "Retour",
   "finish": "Compléter",
   "continue": "Continuer",
+  "close": "Close",
   "language": "fr",
   "translation": "en",
   "languageFlag": "us",
@@ -280,6 +281,10 @@
     "transactionFailed": "Transaction échouée",
     "retryButtonLabel": "Réessayer",
     "cancelButtonLabel": "Annuler"
+  },
+  "ticketValidationDialog": {
+    "validTicket": "Billet valide",
+    "invalidTicket": "Billet invalide"
   },
 
   "venue": "Lieu",

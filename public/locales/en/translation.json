@@ -4,6 +4,7 @@
   "back": "Back",
   "finish": "Finish",
   "continue": "Continue",
+  "close": "Close",
   "language": "en",
   "translation": "fr",
   "languageFlag": "fr",
@@ -280,6 +281,10 @@
     "transactionFailed": "Transaction failed",
     "retryButtonLabel": "Retry",
     "cancelButtonLabel": "Cancel"
+  },
+  "ticketValidationDialog": {
+    "validTicket": "Valid ticket",
+    "invalidTicket": "Invalid ticket"
   },
 
   "venue": "Venue",
