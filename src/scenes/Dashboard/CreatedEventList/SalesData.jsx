@@ -216,7 +216,7 @@ SalesData.propTypes = {
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         startDate: PropTypes.string.isRequired,
-        location: PropTypes.string.isRequired,
+        location: PropTypes.object.isRequired,
         createdAt: PropTypes.string.isRequired,
         ticketsListedSale: ticketSale,
         ticketsSoldSale: ticketSale,

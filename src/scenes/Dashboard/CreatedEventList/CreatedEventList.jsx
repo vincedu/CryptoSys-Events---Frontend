@@ -63,7 +63,7 @@ const CreatedEventList = () => {
                         </TableHead>
                         <TableBody>
                             {events.data.ticketsSalesByAccountName.map((event) => (
-                                <SalesData event={event} />
+                                <SalesData key={event.id} event={event} />
                             ))}
                         </TableBody>
                     </Table>
