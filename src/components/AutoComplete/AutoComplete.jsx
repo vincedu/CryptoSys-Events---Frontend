@@ -18,7 +18,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CustomEventItem from '../../scenes/SearchPage/components/CustomEventItem';
 
-const algoliaClient = algoliasearch('VCNEJZ733V', '34110b7a7dda814d41a2851e341a2f6b');
+const algoliaClient = algoliasearch('VCNEJZ733V', '706e46ab8ab63bef46ae91d9626b520a');
 const searchClient = {
     search(requests) {
         // prevent search when empty query parameter
@@ -53,9 +53,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     inputRoot: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
         '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
         },
     },
     inputFocused: {

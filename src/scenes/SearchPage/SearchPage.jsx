@@ -9,7 +9,7 @@ import CustomPagination from './components/CustomPagination';
 import CustomSearchBox from './components/CustomSearchBox';
 import CustomDate from './components/CustomDate';
 
-const searchClient = algoliasearch('VCNEJZ733V', '34110b7a7dda814d41a2851e341a2f6b');
+const searchClient = algoliasearch('VCNEJZ733V', '706e46ab8ab63bef46ae91d9626b520a');
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function SearchPage() {
+const SearchPage = () => {
     const classes = useStyles();
     const { t } = useTranslation();
 
@@ -51,6 +51,8 @@ function SearchPage() {
             </Grid>
         </InstantSearch>
     );
-}
+};
+
+SearchPage.propTypes = {};
 
 export default SearchPage;
