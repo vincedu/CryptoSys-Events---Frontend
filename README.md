@@ -74,7 +74,7 @@ Formats the entire project using Prettier.
 
 Cleans your node_module file and reinstall all the node_modules
 
-#Tech/framework used
+# Tech/framework used
 
 Atomic assets (Smart contract for NFT standart) : https://github.com/pinknetworkx/atomicassets-contract/wiki
 
