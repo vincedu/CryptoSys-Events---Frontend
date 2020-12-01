@@ -73,3 +73,9 @@ Formats the entire project using Prettier.
 ### `npm run reinstall`
 
 Cleans your node_module file and reinstall all the node_modules
+
+#Tech/framework used
+
+Atomic assets (Smart contract for NFT standart) : https://github.com/pinknetworkx/atomicassets-contract/wiki
+
+Atomic marketplace (Smart contract for marketplace standart)  : https://github.com/pinknetworkx/atomicmarket-contract
