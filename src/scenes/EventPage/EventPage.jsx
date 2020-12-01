@@ -79,6 +79,7 @@ const EventPage = () => {
                 price: originalTicket.sales.length > 0 ? originalTicket.sales[0].price.amount : undefined,
                 image: originalTicket.template.image,
                 saleIds: originalTicket.sales.map((sale) => sale.saleId),
+                creator: originalTicket.template.creator,
             };
         });
         ticketsQuery.data.ticketSalesByEventIds[0].resale.forEach((resaleTicket) => {
@@ -91,6 +92,7 @@ const EventPage = () => {
                     quantity: 1,
                     price: sale.price.amount,
                     image: resaleTicket.template.image,
+                    creator: resaleTicket.template.creator,
                 };
             });
         });
