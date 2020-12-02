@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '400px',
         minWidth: '400px',
     },
+    resultIcon: {
+        height: '100px',
+        width: '100px',
+    },
+    successIcon: {
+        color: theme.palette.success.main,
+    },
     caption: {
         textAlign: 'center',
         marginBottom: theme.spacing(2),
@@ -67,7 +74,10 @@ const TicketValidationDialog = (props) => {
             if (validateTicket(scannedData, ticketByAssetIdQuery.data.ticketByAssetId)) {
                 return (
                     <>
-                        <CheckCircleOutlineIcon fontSize="large" color="success" />
+                        <CheckCircleOutlineIcon
+                            className={`${classes.resultIcon} ${classes.successIcon}`}
+                            color="success"
+                        />
                         <Typography variant="overline" className={classes.caption}>
                             {t('ticketValidationDialog.validTicket')}
                         </Typography>
@@ -86,7 +96,7 @@ const TicketValidationDialog = (props) => {
             }
             return (
                 <>
-                    <HighlightOffIcon fontSize="large" color="error" />
+                    <HighlightOffIcon className={classes.resultIcon} color="error" />
                     <Typography variant="overline" className={classes.caption}>
                         {t('ticketValidationDialog.invalidTicket')}
                     </Typography>
