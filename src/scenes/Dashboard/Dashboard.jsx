@@ -42,6 +42,11 @@ const Dashboard = () => {
                 eventsfiltered.push(event);
             }
         });
+        if (isUpcoming) {
+            eventsfiltered.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+        } else {
+            eventsfiltered.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+        }
 
         return eventsfiltered;
     };
