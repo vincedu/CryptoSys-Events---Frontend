@@ -17,7 +17,7 @@ const WAX_TESTNET_CHAIN = {
     chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
     rpcEndpoints: [
         {
-            protocol: 'http',
+            protocol: 'https',
             host: 'testnet.waxsweden.org',
             port: 59676,
         },
@@ -33,7 +33,7 @@ const anchor = new Anchor([WAX_CHAIN], {
 
 const anchorTestnet = new Anchor([WAX_TESTNET_CHAIN], {
     appName: APP_NAME,
-    rpc: new JsonRpc('http://testnet.waxsweden.org/'),
+    rpc: new JsonRpc('https://testnet.waxsweden.org/'),
 });
 
 const waxCloudWallet = new Wax([WAX_CHAIN]);
