@@ -63,8 +63,7 @@
     "liked": "Liked",
     "browse": "Browse Events",
     "tickets": "Tickets",
-    "create": "Create Event",
-    "scanTicket": "Scan Ticket"
+    "create": "Create Event"
   },
   "sideBar": {
     "profile": "Profile",
@@ -267,9 +266,7 @@
     "message": "You do not have the permissions to access this page."
   },
   "scanTicket": {
-    "noResult": "No Result",
-    "holdSteady": "Hold QR Code Steady and Clear to Scan",
-    "scanResult": "Scan Result"
+    "holdSteady": "Hold QR Code Steady and Clear to Scan"
   },
   "retryDialog": {
     "title": "Action failed!",

@@ -18,7 +18,6 @@ import { useTranslation } from 'react-i18next';
 import firebase from 'firebase';
 import { withUAL } from 'ual-reactjs-renderer';
 import { AuthContext } from '@providers';
-import { QRCodeScanDialog } from '@scenes';
 
 const useStyles = makeStyles((theme) => ({
     primaryText: {
@@ -47,7 +46,6 @@ const ProfileMenu = (props) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const { userData } = useContext(AuthContext);
-    const [scanTicketDialogOpen, setScanTicketDialogOpen] = useState(false);
     const user = firebase.auth().currentUser;
 
     const { ual } = props;
@@ -71,15 +69,6 @@ const ProfileMenu = (props) => {
 
     const handleButtonClick = (pageURL) => {
         history.push(pageURL);
-    };
-
-    const handleScanTicketButtonClick = () => {
-        setAnchorEl(null);
-        setScanTicketDialogOpen(true);
-    };
-
-    const handleScanTicketDialogClose = () => {
-        setScanTicketDialogOpen(false);
     };
 
     const renderProfileMenu = (
@@ -136,9 +125,6 @@ const ProfileMenu = (props) => {
                                 >
                                     {t('profileMenu.create')}
                                 </MenuItem>
-                                <MenuItem className={classes.menuItem} onClick={handleScanTicketButtonClick}>
-                                    {t('profileMenu.scanTicket')}
-                                </MenuItem>
                                 <MenuItem
                                     className={classes.menuItem}
                                     onClick={() => handleButtonClick('/userProfile/manageEvents')}
@@ -168,7 +154,6 @@ const ProfileMenu = (props) => {
                 <AccountCircle />
             </IconButton>
             {renderProfileMenu}
-            <QRCodeScanDialog open={scanTicketDialogOpen} onClose={handleScanTicketDialogClose} />
         </div>
     );
 };

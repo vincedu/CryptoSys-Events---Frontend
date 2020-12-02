@@ -10,7 +10,6 @@ import Dashboard from './Dashboard';
 import EventModification from './EventModification';
 import Unauthorized from './Unauthorized';
 import SearchPage from './SearchPage';
-import QRCodeScanDialog from './QRCodeScan';
 
 export {
     EventCreation,
@@ -25,6 +24,5 @@ export {
     EventModification,
     Unauthorized,
     SearchPage,
-    QRCodeScanDialog,
     GetStarted,
 };

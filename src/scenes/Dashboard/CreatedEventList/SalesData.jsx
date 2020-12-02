@@ -18,7 +18,7 @@ import { useHistory } from 'react-router-dom';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import QRCodeScanDialog from '@scenes/QRCodeScan';
+import { QRCodeScanDialog } from '@components';
 import {
     computeGrossPerTemplateOriginal,
     computeGrossPerTemplateResale,

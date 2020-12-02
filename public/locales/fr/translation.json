@@ -63,8 +63,7 @@
     "liked": "Aimés",
     "browse": "Parcourir les événements",
     "tickets": "Billets",
-    "create": "Créer un événement",
-    "scanTicket": "Scanner un billet"
+    "create": "Créer un événement"
   },
   "sideBar": {
     "profile": "Profil",
@@ -267,9 +266,7 @@
     "message": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
   },
   "scanTicket": {
-    "noResult": "Aucun résultat",
-    "holdSteady": "Tenez fermement le code QR pour scanner",
-    "scanResult": "Résultat de scan"
+    "holdSteady": "Tenez fermement le code QR pour scanner"
   },
   "retryDialog": {
     "title": "Action échouée!",
