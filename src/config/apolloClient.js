@@ -7,7 +7,7 @@ import { RestLink } from 'apollo-link-rest';
 const isProductionEnv = process.env.NODE_ENV === 'production';
 
 const API_URI = isProductionEnv
-    ? 'http://ec2-3-23-217-19.us-east-2.compute.amazonaws.com:4000/graphql'
+    ? 'https://eosevent-57928065.us-east-2.elb.amazonaws.com:4000/graphql'
     : 'http://localhost:4000/graphql';
 
 const restLink = new RestLink({
