@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Button, Dialog, makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { NFTContext } from '@providers';
 import { TICKET_BY_ASSET_ID_QUERY } from '@graphql/queries';
-import { CenteredCircularProgress } from '@components/';
+import { NFTContext } from '@providers';
+import { CenteredCircularProgress } from '@components';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
     dialogContent: {
@@ -65,6 +67,7 @@ const TicketValidationDialog = (props) => {
             if (validateTicket(scannedData, ticketByAssetIdQuery.data.ticketByAssetId)) {
                 return (
                     <>
+                        <CheckCircleOutlineIcon fontSize="large" color="success" />
                         <Typography variant="overline" className={classes.caption}>
                             {t('ticketValidationDialog.validTicket')}
                         </Typography>
@@ -82,9 +85,12 @@ const TicketValidationDialog = (props) => {
                 );
             }
             return (
-                <Typography variant="overline" className={classes.caption}>
-                    {t('ticketValidationDialog.invalidTicket')}
-                </Typography>
+                <>
+                    <HighlightOffIcon fontSize="large" color="error" />
+                    <Typography variant="overline" className={classes.caption}>
+                        {t('ticketValidationDialog.invalidTicket')}
+                    </Typography>
+                </>
             );
         }
 
