@@ -52,12 +52,15 @@ const CustomAccordionSummary = withStyles({
     root: {
         minHeight: 20,
         padding: 0,
+        justifyContent: 'flex-start',
+        width: 'fit-content',
         '&$expanded': {
             minHeight: 20,
         },
     },
     content: {
         margin: '5px 0',
+        flex: 0,
         '&$expanded': {
             margin: '5px 0 0 0',
         },

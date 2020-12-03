@@ -41,7 +41,9 @@
     "desc": "In a While",
     "sortDate": "Sort by Date",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "openMap": "Open Map",
+    "closeMap": "Close Map"
   },
   "navBar": {
     "help": "Help",

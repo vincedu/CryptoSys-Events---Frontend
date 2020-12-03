@@ -41,7 +41,9 @@
     "desc": "Dans longtemps",
     "sortDate": "Trier par date",
     "from": "À partir de",
-    "to": "jusqu'à"
+    "to": "jusqu'à",
+    "openMap": "Ouvrir la carte",
+    "closeMap": "Fermer la carte"
   },
   "navBar": {
     "help": "Aide",

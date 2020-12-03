@@ -6,29 +6,27 @@ import { Translate } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-const useStyles = makeStyles((theme) => ({
-    media: {
-        height: '100%',
-        [theme.breakpoints.down('xs')]: {
-            height: 0,
-            paddingTop: '56.25%',
-        },
-    },
-    root: {
-        transition: 'transform .2s',
-        '&:hover': {
-            transform: 'scale(1.01)',
-        },
-        borderRadius: '2px',
-        boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-    },
-    fake: {
-        opacity: 0.5,
-        filter: 'blur(1px)',
-    },
-}));
-
 const CustomEventItem = (props) => {
+    const useStyles = makeStyles((theme) => ({
+        media: {
+            height: '100%',
+            [theme.breakpoints.down('xs')]: {
+                height: 0,
+                paddingTop: '56.25%',
+            },
+        },
+        root: {
+            transition: 'transform .2s',
+            ...(props.hoverZoom && {
+                '&:hover': {
+                    transform: 'scale(1.01)',
+                },
+            }),
+            borderRadius: '2px',
+            boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
+        },
+    }));
+
     const classes = useStyles();
 
     const history = useHistory();
@@ -44,7 +42,7 @@ const CustomEventItem = (props) => {
     };
 
     return (
-        <Grid item sm={12} className={props.fake ? classes.fake : null}>
+        <Grid item sm={12}>
             <Card className={classes.root} onClick={() => handleButtonClick(`/event/${props.id}`)}>
                 <Grid container direction="row">
                     <Grid item xs={12} sm={5}>
@@ -106,13 +104,15 @@ CustomEventItem.propTypes = {
     image: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    tags: PropTypes.array.isRequired,
-    languages: PropTypes.array.isRequired,
-    fake: PropTypes.bool,
+    tags: PropTypes.array,
+    languages: PropTypes.array,
+    hoverZoom: PropTypes.bool,
 };
 
 CustomEventItem.defaultProps = {
-    fake: false,
+    hoverZoom: true,
+    tags: [],
+    languages: [],
 };
 
 export default CustomEventItem;
