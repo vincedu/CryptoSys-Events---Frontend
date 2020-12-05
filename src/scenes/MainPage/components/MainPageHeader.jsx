@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         maxWidth: '100%',
+        margin: '30px 20px 30px 30px',
     },
     title: {
         color: 'white',

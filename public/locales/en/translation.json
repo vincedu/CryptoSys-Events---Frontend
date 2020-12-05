@@ -206,18 +206,20 @@
     "fastDesc": "EOS.IO is one of the fastest blockchain.",
     "eos": "EOS",
     "eosDesc": "Built on EOS.IO blockchain",
-    "technologies": "Based on these reliable technologies"
+    "technologies": "Based on reliable technologies"
   },
   "getStarted": {
     "title": "Get Started",
     "waxTitle": "Step 1: Create Wax account",
-    "waxDescription1": "The first step to access all the benefits from Spectacular is to create a Wax account at: ",
+    "waxDescription1": "The first step to access all the benefits from Spectacular is to create a Wax account at ",
     "waxDescription2": "Once your account is created, don't forget to keep your account keys in a safe place (offline). You can also add some WAX to your account using the same link.",
     "anchorTitle": "Step 2: Download Anchor Wallet",
-    "anchorDescription1": "The second step is downloading the Anchor Wallet App that will manage your private and public keys. You can download the App here for Windows, MacOS and Linux : ",
+    "anchorDescription1": "The second step is downloading the Anchor Wallet App that will manage your private and public keys. You can download the App here for Windows, MacOS and Linux ",
     "anchorDescription2": "At this point, you will need your private key for Anchor to retrieve your account. Don't forget to choose the right BlockChain since Anchor supports different Blockchains.",
     "spectacularTitle": "Step 3: Create Spectacular Account",
-    "spectacularDescription": "Sign into our application to link your Wax account to your Spectacular profile.  "
+    "spectacularDescription": "Sign into our application to link your Wax account to your Spectacular profile.",
+    "connectTitle": "Setp 4 : Connect",
+    "connectDescription": "Connect with people around the world and enjoy the benefits from the EOS Blockchain"
   },
   "eventsDashboard": {
     "title": "My Events Dashboard",
