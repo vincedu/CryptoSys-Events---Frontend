@@ -43,9 +43,11 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: `'Bebas Neue', sans-serif`,
     },
     caracteristicText: {
+        textAlign: 'center',
         color: '#4B5974',
     },
     caracteristicTitle: {
+        textAlign: 'center',
         fontWeight: 900,
         paddingBottom: 10,
     },
@@ -69,45 +71,49 @@ const HelpCenter = () => {
     return (
         <PageContainer>
             <Grid container justify="center">
-                <Grid item xs={11} sm={10} md={9}>
+                <Grid item xs={11}>
                     <Grid container alignItems="center" justify="space-evenly" spacing={2}>
                         <Grid item xs={12} style={{ padding: '20px 20px 0' }}>
                             <Typography className={classes.categoryTitle} variant="h1" color="secondary">
                                 {t('helpCenter.title')}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={8} md={6}>
-                            <div className={classes.sideText} style={{ textAlign: 'right' }}>
-                                <Typography color="primary" variant="h4" style={{ fontWeight: 900 }}>
-                                    {t('helpCenter.why')}
-                                </Typography>
-                                <br />
-                                <Typography className={classes.caracteristicText} variant="body1">
-                                    {t('helpCenter.whyDesc')}
-                                </Typography>
-                            </div>
+                        <Grid item xs={11} sm={10} md={9} container justify="space-around" alignItems="center">
+                            <Grid item xs={12} sm={8} md={6}>
+                                <div className={classes.sideText} style={{ textAlign: 'right' }}>
+                                    <Typography color="primary" variant="h4" style={{ fontWeight: 900 }}>
+                                        {t('helpCenter.why')}
+                                    </Typography>
+                                    <br />
+                                    <Typography className={classes.caracteristicText} variant="body1">
+                                        {t('helpCenter.whyDesc')}
+                                    </Typography>
+                                </div>
+                            </Grid>
+                            <Grid item xs={6} sm={4}>
+                                <img src="blockchain.svg" alt="eos" className={classes.img} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={6} sm={4}>
-                            <img src="blockchain.svg" alt="eos" className={classes.img} />
+                        <Grid item xs={11} sm={10} md={9} container justify="space-around" alignItems="center">
+                            <Grid item xs={6} sm={4}>
+                                <img src="ticket.svg" alt="ticket" className={classes.img} />
+                            </Grid>
+                            <Grid item xs={12} sm={7} md={6}>
+                                <div className={classes.sideText}>
+                                    <Typography color="primary" variant="h4" style={{ fontWeight: 900 }}>
+                                        {t('helpCenter.nft')}
+                                    </Typography>
+                                    <br />
+                                    <Typography className={classes.caracteristicText} variant="subtitle1">
+                                        {t('helpCenter.nftDesc')}
+                                    </Typography>
+                                </div>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={6} sm={4}>
-                            <img src="ticket.svg" alt="ticket" className={classes.img} />
-                        </Grid>
-                        <Grid item xs={12} sm={7} md={6}>
-                            <div className={classes.sideText}>
-                                <Typography color="primary" variant="h4" style={{ fontWeight: 900 }}>
-                                    {t('helpCenter.nft')}
-                                </Typography>
-                                <br />
-                                <Typography className={classes.caracteristicText} variant="subtitle1">
-                                    {t('helpCenter.nftDesc')}
-                                </Typography>
-                            </div>
-                        </Grid>
-                        <Grid container justify="space-around" style={{ paddingTop: 20 }}>
+                        <Grid container justify="space-around" style={{ padding: '60px 0 30px' }}>
                             <Grid item xs={11} sm={3}>
-                                <Grid container>
-                                    <Grid item sm={5}>
+                                <Grid container justify="center">
+                                    <Grid item sm={4}>
                                         <img src="safe.svg" alt="safe" className={classes.caracteristicImg} />
                                     </Grid>
                                     <Grid item sm={12}>
@@ -124,8 +130,8 @@ const HelpCenter = () => {
                                 <Divider orientation="vertical" className={classes.dividerVert} />
                             </Hidden>
                             <Grid item xs={10} sm={3}>
-                                <Grid container>
-                                    <Grid item sm={6}>
+                                <Grid container justify="center">
+                                    <Grid item sm={4}>
                                         <img src="fast.svg" alt="safe" className={classes.caracteristicImg} />
                                     </Grid>
                                     <Grid item xs={7} sm={11}>
@@ -142,8 +148,8 @@ const HelpCenter = () => {
                                 <Divider orientation="vertical" className={classes.dividerVert} />
                             </Hidden>
                             <Grid item xs={10} sm={3}>
-                                <Grid container>
-                                    <Grid item sm={6}>
+                                <Grid container justify="center">
+                                    <Grid item sm={4}>
                                         <img src="blockchain.svg" alt="safe" className={classes.caracteristicImg} />
                                     </Grid>
                                     <Grid item xs={8} sm={12}>
@@ -157,55 +163,56 @@ const HelpCenter = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <div
-                            style={{
-                                width: '100%',
-                                textAlign: 'center',
-                                padding: 60,
-                                display: 'flex',
-                                justifyContent: 'space-around',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Divider className={classes.dividerHor} />
-                            <Typography variant="h4" color="primary" style={{ fontWeight: 900, width: '40%' }}>
-                                {t('helpCenter.technologies')}
-                            </Typography>
-                            <Divider className={classes.dividerHor} />
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <Grid container justify="space-evenly" style={{ padding: '20px 20px' }}>
-                                <Grid item sm={3} className={classes.greyContainer}>
-                                    <a href="https://all-access.wax.io/">
-                                        <img src="wax.svg" alt="wax" className={classes.greyImg} />
-                                    </a>
+                        <Grid item xs={11} sm={10}>
+                            <div
+                                style={{
+                                    textAlign: 'center',
+                                    padding: 60,
+                                    display: 'flex',
+                                    justifyContent: 'space-around',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Divider className={classes.dividerHor} />
+                                <Typography variant="h4" color="primary" style={{ fontWeight: 900, width: '40%' }}>
+                                    {t('helpCenter.technologies')}
+                                </Typography>
+                                <Divider className={classes.dividerHor} />
+                            </div>
+                            <div style={{ width: '100%' }}>
+                                <Grid container justify="space-evenly" style={{ padding: '20px 20px' }}>
+                                    <Grid item sm={3} className={classes.greyContainer}>
+                                        <a href="https://all-access.wax.io/">
+                                            <img src="wax.svg" alt="wax" className={classes.greyImg} />
+                                        </a>
+                                    </Grid>
+                                    <Grid item sm={3} className={classes.greyContainer}>
+                                        <a href="https://dfuse.io/home/">
+                                            <img src="dfuse.svg" alt="dfuse" className={classes.greyImg} />
+                                        </a>
+                                    </Grid>
+                                    <Grid item sm={3} className={classes.greyContainer}>
+                                        <a href="https://eos.io/">
+                                            <img src="eosio.svg" alt="eosio" className={classes.greyImg} />
+                                        </a>
+                                    </Grid>
                                 </Grid>
-                                <Grid item sm={3} className={classes.greyContainer}>
-                                    <a href="https://dfuse.io/home/">
-                                        <img src="dfuse.svg" alt="dfuse" className={classes.greyImg} />
-                                    </a>
+                            </div>
+                            <div style={{ width: '100%' }}>
+                                <Grid container justify="space-evenly" style={{ padding: '40px 10px 80px' }}>
+                                    <Grid item sm={4} className={classes.greyContainer}>
+                                        <a href="https://atomicassets.io/">
+                                            <img src="atomic.svg" alt="atomic" className={classes.greyImg} />
+                                        </a>
+                                    </Grid>
+                                    <Grid item sm={4} className={classes.greyContainer}>
+                                        <a href="https://greymass.com/anchor/">
+                                            <img src="anchor.svg" alt="anchor" className={classes.greyImg} />
+                                        </a>
+                                    </Grid>
                                 </Grid>
-                                <Grid item sm={3} className={classes.greyContainer}>
-                                    <a href="https://eos.io/">
-                                        <img src="eosio.svg" alt="eosio" className={classes.greyImg} />
-                                    </a>
-                                </Grid>
-                            </Grid>
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <Grid container justify="space-evenly" style={{ padding: '40px 10px 80px' }}>
-                                <Grid item sm={4} className={classes.greyContainer}>
-                                    <a href="https://atomicassets.io/">
-                                        <img src="atomic.svg" alt="atomic" className={classes.greyImg} />
-                                    </a>
-                                </Grid>
-                                <Grid item sm={4} className={classes.greyContainer}>
-                                    <a href="https://greymass.com/anchor/">
-                                        <img src="anchor.svg" alt="anchor" className={classes.greyImg} />
-                                    </a>
-                                </Grid>
-                            </Grid>
-                        </div>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

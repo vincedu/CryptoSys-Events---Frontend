@@ -1,7 +1,6 @@
 /* eslint-disable radix */
 import React from 'react';
 import {
-    CircularProgress,
     makeStyles,
     Paper,
     TableContainer,
@@ -10,6 +9,7 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Typography,
 } from '@material-ui/core';
 
 import { useTranslation } from 'react-i18next';
@@ -42,9 +42,7 @@ const CreatedEventList = (props) => {
     const classes = useStyles();
     return (
         <div className={classes.eventListContainer}>
-            {events.loading ? (
-                <CircularProgress />
-            ) : (
+            {events.data ? (
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
@@ -67,6 +65,8 @@ const CreatedEventList = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+            ) : (
+                <Typography variant="h6">{t('searchPage.noEvent')}</Typography>
             )}
         </div>
     );

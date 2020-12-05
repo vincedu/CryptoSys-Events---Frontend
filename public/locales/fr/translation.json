@@ -218,6 +218,7 @@
     "anchorDescription2": "Pour utiliser Anchor Wallet il faudra choisir la bonne chaine de bloc et ensuite lier la clé privée de votre compte Wax au Wallet Anchor.",
     "spectacularTitle": "Étape 3: Créer un compte Spectacular",
     "spectacularDescription": "Créer votre compte sur Spectacular pour ensuite lier votre compte Wax à votre profile.",
+    "connect": "Connectez",
     "connectTitle": "Étape 4 : Connectez",
     "connectDescription": "Rejoignez les gens à travers le monde et bénéficier des avantages du réseau EOS Blockchain"
   },

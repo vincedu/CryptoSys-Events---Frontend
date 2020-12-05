@@ -15,13 +15,7 @@ import {
 import { MoreVert } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.down('xs')]: {
-            marginRight: 0,
-        },
-    },
+const useStyles = makeStyles(() => ({
     horizontalLine: {
         margin: 0,
         border: 0,
@@ -71,8 +65,8 @@ const HelpMenu = () => {
                                     >
                                         {t('navBar.create')}
                                     </MenuItem>
+                                    <hr className={classes.horizontalLine} />
                                 </Hidden>
-                                <hr className={classes.horizontalLine} />
                                 <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/helpCenter')}>
                                     {t('navBar.helpCenter')}
                                 </MenuItem>
@@ -88,7 +82,7 @@ const HelpMenu = () => {
     );
 
     return (
-        <div className={classes.menuButton}>
+        <>
             <Hidden xsDown>
                 <Button onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
                     {t('navBar.help')}
@@ -100,7 +94,7 @@ const HelpMenu = () => {
                 </IconButton>
             </Hidden>
             {renderHelpMenu}
-        </div>
+        </>
     );
 };
 

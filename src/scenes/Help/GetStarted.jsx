@@ -133,14 +133,14 @@ const GetStarted = () => {
                                     style={{ fontWeight: 900, marginTop: '0.75em' }}
                                     variant="h4"
                                 >
-                                    Connect
+                                    {t('getStarted.connect')}
                                 </Typography>
                             </TimelineOppositeContent>
                             <TimelineSeparator>
                                 <TimelineDot color="secondary">
                                     <img
                                         src="/connect.svg"
-                                        alt="spectacular"
+                                        alt="connect"
                                         style={{ width: '3.5em', height: '3.5em', margin: 15 }}
                                     />
                                 </TimelineDot>
