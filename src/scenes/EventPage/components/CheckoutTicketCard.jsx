@@ -32,6 +32,12 @@ const CheckoutTicketCard = (props) => {
     const { userData } = useContext(AuthContext);
 
     const { ticket } = props;
+
+    const cannotBuyTicket = () => {
+        return (
+            userData && (ticket.seller === userData.walletAccountName || ticket.creator === userData.walletAccountName)
+        );
+    };
     return (
         <Card className={classes.ticketCard}>
             <Grid container>
@@ -50,7 +56,7 @@ const CheckoutTicketCard = (props) => {
                         <FormControl disabled={ticket.quantity === 0}>
                             <Select
                                 variant="outlined"
-                                disabled={ticket.seller === userData.walletAccountName}
+                                disabled={cannotBuyTicket()}
                                 value={ticket.number}
                                 onChange={(event) => props.onUpdate(ticket.id, event.target.value)}
                             >
@@ -81,6 +87,7 @@ CheckoutTicketCard.propTypes = {
         price: PropTypes.number,
         number: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
+        creator: PropTypes.string.isRequired,
     }).isRequired,
 };
 

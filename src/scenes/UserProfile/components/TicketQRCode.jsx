@@ -18,7 +18,7 @@ const TicketQRCode = (props) => {
             assetId: ticket.assetId,
             name: ticket.name,
         },
-        owner: {
+        user: {
             uid: user.uid,
             name: userData.displayName,
             walletAccountName: userData.walletAccountName,

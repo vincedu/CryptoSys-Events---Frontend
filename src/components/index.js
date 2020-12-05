@@ -9,6 +9,7 @@ import ImageUpload from './ImageUpload';
 import AutoComplete from './AutoComplete';
 import { EventInformationForm, EventTicketsForm } from './Event';
 import LoadingButton from './LoadingButton';
+import QRCodeScanDialog from './QRCodeScanDialog';
 
 export {
     NavBar,
@@ -23,4 +24,5 @@ export {
     EventInformationForm,
     EventTicketsForm,
     LoadingButton,
+    QRCodeScanDialog,
 };

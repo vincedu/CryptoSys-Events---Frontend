@@ -4,6 +4,7 @@
   "back": "Back",
   "finish": "Finish",
   "continue": "Continue",
+  "close": "Close",
   "language": "en",
   "translation": "fr",
   "languageFlag": "fr",
@@ -47,8 +48,9 @@
     "help": "Help",
     "search": "Search",
     "create": "Create Event",
-    "helpCenter": "Help Center",
-    "signIn": "Sign In"
+    "helpCenter": "About Spectacular",
+    "signIn": "Sign In",
+    "getStarted": "Get Started"
   },
   "footer": {
     "contactUs": "Contact Us"
@@ -61,8 +63,7 @@
     "liked": "Liked",
     "browse": "Browse Events",
     "tickets": "Tickets",
-    "create": "Create Event",
-    "scanTicket": "Scan Ticket"
+    "create": "Create Event"
   },
   "sideBar": {
     "profile": "Profile",
@@ -95,7 +96,9 @@
     "wallet": "Wallet",
     "linkWallet": "Link Account to a Wallet",
     "submit": "Submit",
-    "error": "*You need to link a wallet to your account"
+    "error": "*You need to link a wallet to your account",
+    "help": "Need help ?",
+    "helpLink": "See our Get Started page"
   },
   "createEvent": {
     "title": "Create Event",
@@ -172,7 +175,8 @@
   "manageEvents": {
     "moreOptions": {
       "modifyGeneral": "Modify Event",
-      "modifyTickets": "Add tickets"
+      "modifyTickets": "Add tickets",
+      "scanTickets": "Scan tickets"
     }
   },
   "buyTickets": {
@@ -191,15 +195,26 @@
   "helpCenter": {
     "title": "Help Center",
     "why": "Why choose Spectacular?",
-    "whyDesc": "Spectacular is a decentralized ticket sale plateform. With the power of EOS IO's blockchain, all tickets are unique and cannot be revoke by the seller.",
+    "whyDesc": "Spectacular is a decentralized ticket sale platform. With the power of EOS IO's blockchain, all tickets are unique and cannot be revoked by the seller.",
     "nft": "Non-Fungible Tokens",
-    "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scares good such as pieces of art or collectibles. Spectacular takes advantage of this by creating NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
+    "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scarce goods such as pieces of art or collectibles. Spectacular takes advantage of this by creating an NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
     "safe": "Safe",
     "safeDesc": "NFT is safer than traditional ticket systems",
     "fast": "Fast",
     "fastDesc": "EOS.IO is one of the fastest blockchain",
     "eos": "EOS",
     "eosDesc": "Built on EOS.IO blockchain"
+  },
+  "getStarted": {
+    "title": "Get Started",
+    "waxTitle": "Step 1: Create Wax account",
+    "waxDescription1": "The first step to access all the benefits from Spectacular is to create a Wax account at: ",
+    "waxDescription2": "Once your account is created, don't forget to keep your account keys in a safe place (offline). You can also add some WAX to your account using the same link.",
+    "anchorTitle": "Step 2: Download Anchor Wallet",
+    "anchorDescription1": "The second step is downloading the Anchor Wallet App that will manage your private and public keys. You can download the App here for Windows, MacOS and Linux : ",
+    "anchorDescription2": "At this point, you will need your private key for Anchor to retrieve your account. Don't forget to choose the right BlockChain since Anchor supports different Blockchains.",
+    "spectacularTitle": "Step 3: Create Spectacular Account",
+    "spectacularDescription": "Sign into our application to link your Wax account to your Spectacular profile.  "
   },
   "eventsDashboard": {
     "title": "My Events Dashboard",
@@ -251,9 +266,7 @@
     "message": "You do not have the permissions to access this page."
   },
   "scanTicket": {
-    "noResult": "No Result",
-    "holdSteady": "Hold QR Code Steady and Clear to Scan",
-    "scanResult": "Scan Result"
+    "holdSteady": "Hold QR Code Steady and Clear to Scan"
   },
   "retryDialog": {
     "title": "Action failed!",
@@ -266,6 +279,11 @@
     "transactionFailed": "Transaction failed",
     "retryButtonLabel": "Retry",
     "cancelButtonLabel": "Cancel"
+  },
+  "ticketValidationDialog": {
+    "validTicket": "Valid ticket",
+    "invalidTicket": "Invalid ticket",
+    "checkIn": "Check in"
   },
 
   "venue": "Venue",
