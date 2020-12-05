@@ -37,7 +37,7 @@ const SearchPage = () => {
     const classes = useStyles();
     const { t } = useTranslation();
 
-    const [open, setOpen] = useState(window.innerWidth > 960);
+    const [open, setOpen] = useState(false);
 
     return (
         <InstantSearch searchClient={searchClient} indexName="events">
