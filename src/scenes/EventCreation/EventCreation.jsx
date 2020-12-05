@@ -188,7 +188,7 @@ const EventCreation = () => {
     };
 
     const handleTicketsFinishButtonClick = () => {
-        history.push('/');
+        history.push('/userProfile/manageEvents');
     };
 
     const handleCreateTicket = (ticketData) => {

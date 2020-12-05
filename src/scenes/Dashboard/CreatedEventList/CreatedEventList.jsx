@@ -11,9 +11,9 @@ import {
     TableCell,
     TableBody,
 } from '@material-ui/core';
-import { useQuery } from '@apollo/client';
-import { TICKETS_SALES_BY_ACCOUNT_NAME_QUERY } from '@graphql/queries';
+
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import SalesData from './SalesData';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,10 +35,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CreatedEventList = () => {
+const CreatedEventList = (props) => {
     const { t } = useTranslation();
-
-    const events = useQuery(TICKETS_SALES_BY_ACCOUNT_NAME_QUERY, { fetchPolicy: 'network-only' });
+    const { events } = props;
 
     const classes = useStyles();
     return (
@@ -71,6 +70,10 @@ const CreatedEventList = () => {
             )}
         </div>
     );
+};
+
+CreatedEventList.propTypes = {
+    events: PropTypes.array.isRequired,
 };
 
 export default CreatedEventList;

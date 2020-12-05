@@ -18,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { QRCodeScanDialog } from '@components';
 import {
     computeGrossPerTemplateOriginal,
     computeGrossPerTemplateResale,
@@ -52,6 +53,7 @@ const SalesData = (props) => {
     const { t } = useTranslation();
     const history = useHistory();
     const [openRow, setOpenRow] = useState(false);
+    const [isScanDialogOpen, setIsScanDialogOpen] = useState(false);
 
     const displayVenue = () => {
         if (event.location.type === 'venue') {
@@ -187,6 +189,16 @@ const SalesData = (props) => {
                                 <SalesGraph event={event} />
                             </Grid>
                             <Grid item container spacing={2} justify="flex-end" style={{ paddingBottom: 40 }}>
+                                <Grid item>
+                                    <Button variant="outlined" onClick={() => setIsScanDialogOpen(true)}>
+                                        {t('manageEvents.moreOptions.scanTickets')}
+                                    </Button>
+                                </Grid>
+                                <QRCodeScanDialog
+                                    open={isScanDialogOpen}
+                                    onClose={() => setIsScanDialogOpen(false)}
+                                    eventId={event.id}
+                                />
                                 <Grid item>
                                     <Button variant="outlined" onClick={() => handleModifyEventGeneralClick(event.id)}>
                                         {t('manageEvents.moreOptions.modifyGeneral')}

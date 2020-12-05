@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         boxShadow: '0px 0px 40px 4px #ffffff',
+        zIndex: 1,
     },
     backView: {
         position: 'absolute',
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: theme.palette.primary.main,
         backfaceVisibility: 'hidden',
+        zIndex: 0,
     },
     ticketImage: {
         maxHeight: '400px',

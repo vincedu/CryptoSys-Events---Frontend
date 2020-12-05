@@ -4,6 +4,7 @@
   "back": "Retour",
   "finish": "Compléter",
   "continue": "Continuer",
+  "close": "Close",
   "language": "fr",
   "translation": "en",
   "languageFlag": "us",
@@ -49,8 +50,9 @@
     "help": "Aide",
     "search": "Rechercher",
     "create": "Créer un événement",
-    "helpCenter": "Centre d'aide",
-    "signIn": "Connexion"
+    "helpCenter": "À props de Spectacular",
+    "signIn": "Connexion",
+    "getStarted": "Guide de démarrage"
   },
   "footer": {
     "contactUs": "Nous contacter"
@@ -63,8 +65,7 @@
     "liked": "Aimés",
     "browse": "Parcourir les événements",
     "tickets": "Billets",
-    "create": "Créer un événement",
-    "scanTicket": "Scanner un billet"
+    "create": "Créer un événement"
   },
   "sideBar": {
     "profile": "Profil",
@@ -94,10 +95,12 @@
     "description": "Avant de commencer à utiliser votre compte, on aurait besoin d'un petit peu plus d'information sur vous",
     "displayName": "Nom d'utilisateur",
     "userInfo": "Information de l'usager",
-    "wallet": "Portefeuilles",
-    "linkWallet": "Lier un portefeuilles",
+    "wallet": "Portefeuille",
+    "linkWallet": "Lier un portefeuille",
     "submit": "Soumettre",
-    "error": "*Vous devez connecter un portefeuilles à votre compte"
+    "error": "*Vous devez connecter un portefeuille à votre compte",
+    "help": "Besoin d'aide ?",
+    "helpLink": "Consultez notre page Démarrer"
   },
   "createEvent": {
     "title": "Création d'événement",
@@ -174,7 +177,8 @@
   "manageEvents": {
     "moreOptions": {
       "modifyGeneral": "Modifier",
-      "modifyTickets": "Créer des billets"
+      "modifyTickets": "Créer des billets",
+      "scanTickets": "Scanner des billets"
     }
   },
   "buyTickets": {
@@ -204,12 +208,23 @@
     "eosDesc": "Supporté par la chaine de blocs EOS",
     "technologies": "Basé sur ces technologies fiables"
   },
+  "getStarted": {
+    "title": "Démarrer",
+    "waxTitle": " Étape 1: Créer un compte WAX",
+    "waxDescription1": "La première étape pour avoir accès à tous les avantages de la plateforme Spectacular est de créer un compte WAX au : ",
+    "waxDescription2": "Une fois votre compte créé, ne pas oublier d'enregistrer vos clés privées et publiques sécuritairement (hors ligne). Vous pouvez aussi ajouter des WAX à votre compte à la même adresse.",
+    "anchorTitle": "Étape 2: Télécharger Anchor Wallet",
+    "anchorDescription1": "La deuxième étape consiste à télécharger l'application Anchor Wallet. Cette application va gérer vos clés privées et publiques. Vous pouvez télécharger l'application pour MacOS, Windows et Linux ici : ",
+    "anchorDescription2": "Pour utiliser Anchor Wallet il faudra choisir la bonne chaine de bloc et ensuite lier la clé privée de votre compte Wax au Wallet Anchor.",
+    "spectacularTitle": "Étape 3: Créer un compte Spectacular",
+    "spectacularDescription": "Créer votre compte sur Spectacular pour ensuite lier votre compte Wax à votre profile."
+  },
   "eventsDashboard": {
     "title": "Tableau de bord des mes événements",
     "totalEvents": "ÉVÉNEMENTS",
     "totalSoldTickets": "NOMBRE DE BILLETS VENDUS",
     "totalResaleTickets": "NOMBRE DE BILLETS REVENDUS",
-    "totalRevenue": "REVENUE TOTALE",
+    "totalRevenue": "REVENU TOTAL",
     "currency": "devise",
     "eventDetails": "Détails des ventes de billets",
     "tableHeader": {
@@ -254,7 +269,6 @@
     "message": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
   },
   "scanTicket": {
-    "noResult": "Aucun résultat",
     "holdSteady": "Tenez fermement le code QR pour scanner"
   },
   "retryDialog": {
@@ -268,6 +282,11 @@
     "transactionFailed": "Transaction échouée",
     "retryButtonLabel": "Réessayer",
     "cancelButtonLabel": "Annuler"
+  },
+  "ticketValidationDialog": {
+    "validTicket": "Billet valide",
+    "invalidTicket": "Billet invalide",
+    "checkIn": "Enregistrer"
   },
 
   "venue": "Lieu",

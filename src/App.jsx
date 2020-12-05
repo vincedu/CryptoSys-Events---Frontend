@@ -12,10 +12,10 @@ import {
     EventModification,
     Unauthorized,
     SearchPage,
+    GetStarted,
 } from '@scenes';
 import { NavBar, AuthenticatedRoute, Footer } from '@components';
 import { AuthProvider, NFTProvider } from '@providers';
-
 import './App.css';
 
 const App = () => {
@@ -29,6 +29,7 @@ const App = () => {
                         <Route path="/event/:id" component={EventPage} />
                         <Route exact path="/signIn" component={SignIn} />
                         <Route exact path="/helpCenter" component={HelpCenter} />
+                        <Route exact path="/getStarted" component={GetStarted} />
                         <Route path="/search" component={SearchPage} />
                         <Route path="/unauthorized" component={Unauthorized} />
                         <AuthenticatedRoute path="/createEvent" component={EventCreation} />

@@ -1,4 +1,17 @@
-# CryptoSys Events - Frontend
+# Spectacular - Frontend
+
+Spectacular is a event creation platform based on EOS blockchain technology. All the tickets created for different event are NFT also known as Non-Fungible Token (https://en.wikipedia.org/wiki/Non-fungible_token)
+
+# Motivation
+
+The motivation behind this projet was to take advantage of the NFT technology and the blockchain technology to create a Dapp that would serve the same goal as traditional Event and ticket managing platform, but with all the feature that these technology has to offer
+
+-   Verifiable digital scarcity
+-   Digital ownership
+-   Security
+-   Easy history of ownership
+-   Ticket Validation for resale
+-   Monetize the resale that are traditionally out of the hands of the selling platform and event organizers
 
 ## Development environment configuration
 
@@ -56,6 +69,16 @@ Runs eslint through the entire project.
 ### `npm run format`
 
 Formats the entire project using Prettier.
+
+### `npm run reinstall`
+
+Cleans your node_module file and reinstall all the node_modules
+
+# Tech/framework used
+
+Atomic assets (Smart contract for NFT standart) : https://github.com/pinknetworkx/atomicassets-contract/wiki
+
+Atomic marketplace (Smart contract for marketplace standart) : https://github.com/pinknetworkx/atomicmarket-contract
 
 # [Algolia](https://www.algolia.com/doc/)
 

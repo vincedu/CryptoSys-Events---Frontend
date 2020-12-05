@@ -64,9 +64,6 @@ const HelpMenu = () => {
                     <Paper style={{ borderRadius: 3 }}>
                         <ClickAwayListener onClickAway={handleMenuClose}>
                             <MenuList style={{ padding: 0 }}>
-                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/search')}>
-                                    {t('profileMenu.browse')}
-                                </MenuItem>
                                 <Hidden smUp>
                                     <MenuItem
                                         className={classes.menuItem}
@@ -79,6 +76,9 @@ const HelpMenu = () => {
                                 <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/helpCenter')}>
                                     {t('navBar.helpCenter')}
                                 </MenuItem>
+                                <MenuItem className={classes.menuItem} onClick={() => handleButtonClick('/getStarted')}>
+                                    {t('navBar.getStarted')}
+                                </MenuItem>
                             </MenuList>
                         </ClickAwayListener>
                     </Paper>
@@ -90,7 +90,7 @@ const HelpMenu = () => {
     return (
         <div className={classes.menuButton}>
             <Hidden xsDown>
-                <Button onClick={() => handleButtonClick('/helpCenter')} color="inherit">
+                <Button onClick={handleMenuOpen} color={anchorEl ? 'secondary' : 'inherit'}>
                     {t('navBar.help')}
                 </Button>
             </Hidden>
