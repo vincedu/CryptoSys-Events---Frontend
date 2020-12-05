@@ -201,7 +201,8 @@
     "fast": "Rapide",
     "fastDesc": "EOS.IO est l'une des chaine de blocs la plus rapide",
     "eos": "EOS",
-    "eosDesc": "Supporté par la chaine de blocs EOS"
+    "eosDesc": "Supporté par la chaine de blocs EOS",
+    "technologies": "Basé sur ces technologies fiables"
   },
   "eventsDashboard": {
     "title": "Tableau de bord des mes événements",
@@ -254,8 +255,7 @@
   },
   "scanTicket": {
     "noResult": "Aucun résultat",
-    "holdSteady": "Tenez fermement le code QR pour scanner",
-    "scanResult": "Résultat de scan"
+    "holdSteady": "Tenez fermement le code QR pour scanner"
   },
   "retryDialog": {
     "title": "Action échouée!",

@@ -197,11 +197,12 @@
     "nft": "Non-Fungible Tokens",
     "nftDesc": "NFT is a special type of cryptographic token which represents something unique. They can represent ownership of digitally scares good such as pieces of art or collectibles. Spectacular takes advantage of this by creating NFT for each event's tickets. That way, you know your ticket is original and cannot be copied or faked.",
     "safe": "Safe",
-    "safeDesc": "NFT is safer than traditional ticket systems",
+    "safeDesc": "NFT is safer than traditional ticket systems. The encryption makes every ticket unique.",
     "fast": "Fast",
-    "fastDesc": "EOS.IO is one of the fastest blockchain",
+    "fastDesc": "EOS.IO is one of the fastest blockchain.",
     "eos": "EOS",
-    "eosDesc": "Built on EOS.IO blockchain"
+    "eosDesc": "Built on EOS.IO blockchain",
+    "technologies": "Based on these reliable technologies"
   },
   "eventsDashboard": {
     "title": "My Events Dashboard",
@@ -254,8 +255,7 @@
   },
   "scanTicket": {
     "noResult": "No Result",
-    "holdSteady": "Hold QR Code Steady and Clear to Scan",
-    "scanResult": "Scan Result"
+    "holdSteady": "Hold QR Code Steady and Clear to Scan"
   },
   "retryDialog": {
     "title": "Action failed!",
