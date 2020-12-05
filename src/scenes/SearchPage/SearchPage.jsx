@@ -3,13 +3,14 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { ALGOLIASEARCH_CONFIG } from '@config/algoliasearch';
 import CustomHits from './components/CustomHits';
 import CustomRefinementList from './components/CustomRefinementList';
 import CustomPagination from './components/CustomPagination';
 import CustomSearchBox from './components/CustomSearchBox';
 import CustomDate from './components/CustomDate';
 
-const searchClient = algoliasearch('VCNEJZ733V', '34110b7a7dda814d41a2851e341a2f6b');
+const searchClient = algoliasearch(ALGOLIASEARCH_CONFIG.applicationId, ALGOLIASEARCH_CONFIG.apiKey);
 
 const useStyles = makeStyles((theme) => ({
     title: {
