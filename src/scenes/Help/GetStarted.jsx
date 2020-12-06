@@ -17,8 +17,8 @@ const GetStarted = () => {
 
     return (
         <PageContainer>
-            <Grid container justify="center">
-                <Grid item xs={9} style={{ padding: 20 }}>
+            <Grid container>
+                <Grid item xs={9} style={{ padding: 20, textAlign: 'center' }}>
                     <Typography style={{ fontFamily: `'Bebas Neue', sans-serif` }} variant="h1" color="secondary">
                         {t('getStarted.title')}
                     </Typography>
