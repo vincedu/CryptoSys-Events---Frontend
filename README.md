@@ -92,3 +92,22 @@ Apollo Client is a comprehensive state management library for JavaScript that en
 
 For Ui and flexible component : https://material-ui.com/getting-started/usage/
 
+#### CreateMuiTheme
+
+The App use the createMuiTheme from material ui to create a color standart for the UI
+You can find the Color configs here : src/theme.js
+
+## Test
+
+### Enzyme
+
+For component testing : https://enzymejs.github.io/enzyme/
+
+Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output. You can also manipulate, traverse, and in some ways simulate runtime given the output.
+
+### JestJS
+
+For general testing : https://jestjs.io/
+
+Jest is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase. It allows you to write tests with an approachable, familiar and feature-rich API that gives you results quickly.
+
