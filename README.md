@@ -76,11 +76,19 @@ Cleans your node_module file and reinstall all the node_modules
 
 # Tech/framework used
 
-Atomic assets (Smart contract for NFT standart) : https://github.com/pinknetworkx/atomicassets-contract/wiki
-
-Atomic marketplace (Smart contract for marketplace standart)  : https://github.com/pinknetworkx/atomicmarket-contract
+### UAL React renderer
 
 Secure connection to crypto-wallet: https://github.com/EOSIO/ual-reactjs-renderer
 
 This technology is wrapping the main App component with a UAL provider. The provider help us to have an activeuser in the App by    submitting request to login into an account. This module is important for the connection to have a secure connection and to link a crypto-wallet to an account
+
+### Appollo React Client 
+
+Appollo React Client : https://www.apollographql.com/docs/react/
+
+Apollo Client is a comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL. Use it to fetch, cache, and modify application data, all while automatically updating your UI.
+
+### Material-UI
+
+For Ui and flexible component : https://material-ui.com/getting-started/usage/
 
