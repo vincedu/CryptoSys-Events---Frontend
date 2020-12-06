@@ -44,6 +44,7 @@ const TicketValidationDialog = (props) => {
 
     const ticketByAssetIdQuery = useQuery(TICKET_BY_ASSET_ID_QUERY, {
         variables: { assetId: scannedData.ticket.assetId },
+        fetchPolicy: 'network-only',
     });
     const { setTicketData } = useContext(NFTContext);
 
@@ -64,6 +65,7 @@ const TicketValidationDialog = (props) => {
                 opened: ticketByAssetIdQuery.data.ticketByAssetId.opened,
                 used: true,
             });
+            onClose();
         } catch (error) {
             onClose();
         }
