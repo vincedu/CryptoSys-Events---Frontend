@@ -82,7 +82,7 @@ Secure connection to crypto-wallet: https://github.com/EOSIO/ual-reactjs-rendere
 
 This technology is wrapping the main App component with a UAL provider. The provider help us to have an activeuser in the App by    submitting request to login into an account. This module is important for the connection to have a secure connection and to link a crypto-wallet to an account
 
-The config can be found here: src/config/ual.js
+The config can be found [here](src/config/ual.js)
 
 ### Appollo React Client 
 
@@ -90,7 +90,7 @@ Appollo React Client : https://www.apollographql.com/docs/react/
 
 Apollo Client is a comprehensive state management library for JavaScript that enables you to manage both local and remote data with GraphQL. Use it to fetch, cache, and modify application data, all while automatically updating your UI.
 
-The config can be found here : src/config/apolloClient.js
+The config can be found [here](src/config/apolloClient.js)
 
 ### React-i18next
 
@@ -98,8 +98,8 @@ For translation: https://react.i18next.com/latest/usetranslation-hook
 
 While most of the time you only need the t function to translate your content, you can also get the i18n instance (in order to change the language).
 
-The json for the French version of the app can be found here: /public/locales/fr/translation.json
-The json for the English version of the app can be found here: /public/locales/en/translation.json
+The json for the French version of the app can be found [here](/public/locales/fr/translation.json)
+The json for the English version of the app can be found [here](/public/locales/en/translation.json)
 
 ### Material-UI
 
@@ -107,7 +107,7 @@ For Ui and flexible component : https://material-ui.com/getting-started/usage/
 
 #### CreateMuiTheme
 
-The App use the createMuiTheme from material ui to create a color standart for the UI. You can find the Color configs here : src/theme.js
+The App use the createMuiTheme from material ui to create a color standart for the UI. You can find the Color configs [here](src/theme.js)
 
 #### MakeStyles
 
