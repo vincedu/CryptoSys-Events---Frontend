@@ -79,3 +79,8 @@ Cleans your node_module file and reinstall all the node_modules
 Atomic assets (Smart contract for NFT standart) : https://github.com/pinknetworkx/atomicassets-contract/wiki
 
 Atomic marketplace (Smart contract for marketplace standart)  : https://github.com/pinknetworkx/atomicmarket-contract
+
+Secure connection to crypto-wallet: https://github.com/EOSIO/ual-reactjs-renderer
+
+This technology is wrapping the main App component with a UAL provider. The provider help us to have an activeuser in the App by    submitting request to login into an account. This module is important for the connection to have a secure connection and to link a crypto-wallet to an account
+
