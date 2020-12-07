@@ -86,4 +86,4 @@ Account [connection](https://www.algolia.com/users/sign_in) with *eospoly@gmail.
 
 See Algolia's component
 
-## [`Algolia`](src/scenes/SearchPage/README.md)
+## [`Algolia`](src/scenes/SearchPage)
