@@ -99,7 +99,7 @@ const GoogleAutocomplete = (props) => {
             autoComplete
             includeInputInList
             filterSelectedOptions
-            value={value}
+            value={props.value}
             onChange={(event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
                 setValue(newValue);
@@ -112,7 +112,6 @@ const GoogleAutocomplete = (props) => {
                 <TextField
                     {...params}
                     error={props.error}
-                    value={props.value}
                     label={t('createEvent.location.search')}
                     variant="outlined"
                     fullWidth

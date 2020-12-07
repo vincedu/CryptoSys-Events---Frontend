@@ -19,6 +19,7 @@ const LocationForm = (props) => {
         props.onChange(name, l);
     };
     const { t } = useTranslation();
+    console.log(props.value.location.value);
 
     return (
         <TitledPaper title={t('createEvent.location.title')}>
