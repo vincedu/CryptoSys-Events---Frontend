@@ -32,20 +32,28 @@ const Dashboard = () => {
     const now = new Date();
     const filterEvents = (eventsArray, isUpcoming) => {
         const eventsfiltered = [];
-        eventsArray.data.ticketsSalesByAccountName.forEach((event) => {
-            const eventDate = new Date(event.startDate);
-            if (isUpcoming) {
-                if (eventDate > now) {
+
+        if (
+            eventsArray &&
+            eventsArray.data &&
+            eventsArray.data.ticketsSalesByAccountName &&
+            eventsArray.data.ticketsSalesByAccountName
+        ) {
+            eventsArray.data.ticketsSalesByAccountName.forEach((event) => {
+                const eventDate = new Date(event.startDate);
+                if (isUpcoming) {
+                    if (eventDate > now) {
+                        eventsfiltered.push(event);
+                    }
+                } else if (eventDate < now) {
                     eventsfiltered.push(event);
                 }
-            } else if (eventDate < now) {
-                eventsfiltered.push(event);
+            });
+            if (isUpcoming) {
+                eventsfiltered.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+            } else {
+                eventsfiltered.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
             }
-        });
-        if (isUpcoming) {
-            eventsfiltered.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-        } else {
-            eventsfiltered.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
         }
 
         return eventsfiltered;

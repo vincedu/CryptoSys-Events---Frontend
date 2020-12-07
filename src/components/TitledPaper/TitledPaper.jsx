@@ -39,10 +39,11 @@ const TitledPaper = (props) => {
 
 TitledPaper.propTypes = {
     title: PropTypes.string,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
 };
 TitledPaper.defaultProps = {
     title: '',
+    children: null,
 };
 
 export default TitledPaper;
