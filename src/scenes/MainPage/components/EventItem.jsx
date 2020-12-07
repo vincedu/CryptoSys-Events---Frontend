@@ -101,7 +101,7 @@ const EventItem = (props) => {
                                     ))}
                         </div>
                         {isUserDataConfigured && (
-                            <IconButton onClick={props.clickeable && handleLike} style={{ marginRight: -5 }}>
+                            <IconButton onClick={props.clickeable ? handleLike : () => {}} style={{ marginRight: -5 }}>
                                 <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
                                     {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
                                 </Tooltip>
