@@ -1,4 +1,4 @@
 export const ALGOLIASEARCH_CONFIG = {
     applicationId: 'VCNEJZ733V',
-    apiKey: '34110b7a7dda814d41a2851e341a2f6b',
+    apiKey: '706e46ab8ab63bef46ae91d9626b520a',
 };

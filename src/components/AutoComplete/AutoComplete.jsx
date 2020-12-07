@@ -11,6 +11,7 @@ import {
     ClickAwayListener,
 } from '@material-ui/core';
 import { InstantSearch, Configure, connectAutoComplete } from 'react-instantsearch-dom';
+import { ALGOLIASEARCH_CONFIG } from '@config/algoliasearch';
 import { Search } from '@material-ui/icons';
 import algoliasearch from 'algoliasearch/lite';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +19,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CustomEventItem from '../../scenes/SearchPage/components/CustomEventItem';
 
-const algoliaClient = algoliasearch('VCNEJZ733V', '706e46ab8ab63bef46ae91d9626b520a');
+const algoliaClient = algoliasearch(ALGOLIASEARCH_CONFIG.applicationId, ALGOLIASEARCH_CONFIG.apiKey);
 const searchClient = {
     search(requests) {
         // prevent search when empty query parameter
