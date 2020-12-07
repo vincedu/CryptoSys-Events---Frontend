@@ -64,10 +64,11 @@ const EventItem = (props) => {
         if (isUserDataConfigured) {
             if (isLiked) {
                 unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
-                setUserData({ ...userData, liked: userData.liked.filter((id) => id !== props.id) });
+                const updatedLiked = userData.liked ? userData.liked.filter((id) => id !== props.id) : [];
+                setUserData({ ...userData, liked: updatedLiked });
             } else {
                 likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
-                const updatedLiked = [...userData.liked, props.id];
+                const updatedLiked = userData.liked ? [...userData.liked, props.id] : [props.id];
                 setUserData({ ...userData, liked: updatedLiked });
             }
             props.onLike();

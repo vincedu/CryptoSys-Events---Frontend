@@ -61,10 +61,14 @@ const TicketValidationDialog = (props) => {
 
     const handleCheckIn = async () => {
         try {
-            await setTicketData(ticketByAssetIdQuery.data.ticketByAssetId.assetId, {
-                opened: ticketByAssetIdQuery.data.ticketByAssetId.opened,
-                used: true,
-            });
+            await setTicketData(
+                ticketByAssetIdQuery.data.ticketByAssetId.assetId,
+                {
+                    opened: ticketByAssetIdQuery.data.ticketByAssetId.opened,
+                    used: true,
+                },
+                ticketByAssetIdQuery.data.ticketByAssetId.owner,
+            );
             onClose();
         } catch (error) {
             onClose();
