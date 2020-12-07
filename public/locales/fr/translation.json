@@ -209,7 +209,8 @@
   "getStarted": {
     "title": "Démarrer",
     "waxTitle": " Étape 1: Créer un compte WAX",
-    "waxDescription1": "La première étape pour avoir accès à tous les avantages de la plateforme Spectacular est de créer un compte WAX sur ",
+    "waxOther": "Porte-feuille Wax",
+    "waxDescription1": "La première étape pour avoir accès à tous les avantages de la plateforme Spectacular est de créer un compte le Testnet WAX sur ",
     "waxDescription2": "Une fois votre compte créé, ne pas oublier d'enregistrer vos clés privées et publiques sécuritairement (hors ligne). Vous pouvez aussi ajouter des WAX à votre compte à la même adresse.",
     "anchorTitle": "Étape 2: Télécharger Anchor Wallet",
     "anchorDescription1": "La deuxième étape consiste à télécharger l'application Anchor Wallet. Cette application va gérer vos clés privées et publiques. Vous pouvez télécharger l'application pour MacOS, Windows et Linux ici ",

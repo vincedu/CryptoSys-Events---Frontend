@@ -32,7 +32,7 @@ const GetStarted = () => {
                                         href="https://all-access.wax.io/"
                                         style={{ color: '#9f6e01', textDecoration: 'none' }}
                                     >
-                                        Wax Cloud Wallet
+                                        {t('getStarted.waxOther')}
                                     </a>
                                 </Typography>
                             </TimelineOppositeContent>

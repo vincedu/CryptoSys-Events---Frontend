@@ -209,7 +209,8 @@
   "getStarted": {
     "title": "Get Started",
     "waxTitle": "Step 1: Create Wax account",
-    "waxDescription1": "The first step to access all the benefits from Spectacular is to create a Wax account at ",
+    "waxOther": "Wax Wallet",
+    "waxDescription1": "The first step to access all the benefits from Spectacular is to create a Wax Testnet account at ",
     "waxDescription2": "Once your account is created, don't forget to keep your account keys in a safe place (offline). You can also add some WAX to your account using the same link.",
     "anchorTitle": "Step 2: Download Anchor Wallet",
     "anchorDescription1": "The second step is downloading the Anchor Wallet App that will manage your private and public keys. You can download the App here for Windows, MacOS and Linux ",
