@@ -9,7 +9,8 @@
       "@assets/*": ["assets/*"],
       "@graphql/*": ["graphql/*"],
       "@providers/*": ["providers/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@config/*": ["config/*"]
     }
   }
 }
