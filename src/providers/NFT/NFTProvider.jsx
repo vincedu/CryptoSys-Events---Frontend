@@ -77,8 +77,8 @@ class NFTProvider extends React.Component {
             cancelTicketSale: async (saleId) => {
                 return this.cancelTicketSale(saleId);
             },
-            setTicketData: async (assetId, newMutableTicketData) => {
-                return this.setTicketData(assetId, newMutableTicketData);
+            setTicketData: async (assetId, newMutableTicketData, assetOwner) => {
+                return this.setTicketData(assetId, newMutableTicketData, assetOwner);
             },
         });
     }
@@ -228,8 +228,8 @@ class NFTProvider extends React.Component {
         return this.transact(transaction);
     };
 
-    setTicketData = async (assedId, newMutableTicketData) => {
-        const action = setAssetDataAction(assedId, newMutableTicketData, this.getWalletAccountName());
+    setTicketData = async (assedId, newMutableTicketData, assetOwner) => {
+        const action = setAssetDataAction(assedId, newMutableTicketData, assetOwner, this.getWalletAccountName());
         const transaction = this.createTransactionFromActions([action]);
         return this.transact(transaction);
     };
