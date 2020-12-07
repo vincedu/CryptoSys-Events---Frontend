@@ -5,6 +5,7 @@ import { Grid, useTheme } from '@material-ui/core';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { RESALE_COMMISSION } from '@constants/ticket';
 
 const SalesGraph = (props) => {
     const { event } = props;
@@ -37,7 +38,7 @@ const SalesGraph = (props) => {
     };
 
     const originalData = getSalesData(event.ticketsSoldSale.original);
-    const resaleData = getSalesData(event.ticketsSoldSale.resale).map((x) => [x[0], 0.03 * x[1]]);
+    const resaleData = getSalesData(event.ticketsSoldSale.resale).map((x) => [x[0], RESALE_COMMISSION * x[1]]);
     const originalSalesSeries = new TimeSeries({
         name: 'sales',
         columns: ['time', columnNames[0]],

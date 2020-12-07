@@ -1,4 +1,5 @@
 /* eslint-disable radix */
+import { RESALE_COMMISSION } from '@constants/ticket';
 
 const computeGrossPerTemplateOriginal = (template) => {
     let gross = 0;
@@ -14,7 +15,7 @@ const computeGrossPerTemplateResale = (template) => {
     let gross = 0;
     template.sales.forEach((sale) => {
         const price = parseInt(sale.price.amount);
-        gross += price * 0.03; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
+        gross += price * RESALE_COMMISSION; // Taux redonner au propriétaire de la collection (Decider lors de la creation de la collection)
     });
     return gross;
 };

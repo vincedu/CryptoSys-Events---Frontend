@@ -1,3 +1,4 @@
+import { RESALE_COMMISSION } from '@constants/ticket';
 import atomicAssetsAction from './atomicAssetsAction';
 
 const createCollectionAction = (collectionName, accountName) => {
@@ -7,7 +8,7 @@ const createCollectionAction = (collectionName, accountName) => {
         allow_notify: true,
         authorized_accounts: [accountName],
         notify_accounts: [],
-        market_fee: 0.05,
+        market_fee: RESALE_COMMISSION,
         data: [],
     };
 
