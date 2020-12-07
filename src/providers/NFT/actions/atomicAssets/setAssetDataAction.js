@@ -1,9 +1,9 @@
 import atomicAssetsAction from './atomicAssetsAction';
 
-const setAssetDataAction = (assetId, newMutableTicketData, accountName) => {
+const setAssetDataAction = (assetId, newMutableTicketData, assetOwner, accountName) => {
     const actionData = {
         authorized_editor: accountName,
-        asset_owner: accountName,
+        asset_owner: assetOwner,
         asset_id: assetId,
         new_mutable_data: [
             { key: 'opened', value: ['uint8', newMutableTicketData.opened ? 1 : 0] },

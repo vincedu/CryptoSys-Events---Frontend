@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         maxWidth: '100%',
+        margin: '30px 20px 30px 30px',
     },
     title: {
         color: 'white',
@@ -50,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
     underline: {
         cursor: 'pointer',
         border: 'none!important',
+    },
+    shrink: {
+        transform: 'translate(16px, -20px) scale(0.85) !important',
+        color: '#FFF !important',
     },
 }));
 
@@ -110,6 +115,11 @@ const MainPageHeader = () => {
                                         root: classes.underline,
                                         focused: classes.underline,
                                         notchedOutline: classes.underline,
+                                    },
+                                };
+                                finalProps.InputLabelProps = {
+                                    classes: {
+                                        shrink: classes.shrink,
                                     },
                                 };
                                 return <TextField {...finalProps} />;

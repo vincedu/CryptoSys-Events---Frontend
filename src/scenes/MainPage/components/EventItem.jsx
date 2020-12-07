@@ -64,10 +64,11 @@ const EventItem = (props) => {
         if (isUserDataConfigured) {
             if (isLiked) {
                 unlikeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(false));
-                setUserData({ ...userData, liked: userData.liked.filter((id) => id !== props.id) });
+                const updatedLiked = userData.liked ? userData.liked.filter((id) => id !== props.id) : [];
+                setUserData({ ...userData, liked: updatedLiked });
             } else {
                 likeEvent({ variables: { input: { id: props.id } } }).then(setIsLiked(true));
-                const updatedLiked = [...userData.liked, props.id];
+                const updatedLiked = userData.liked ? [...userData.liked, props.id] : [props.id];
                 setUserData({ ...userData, liked: updatedLiked });
             }
             props.onLike();
@@ -76,7 +77,7 @@ const EventItem = (props) => {
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} className={classes.root}>
-            <Card onClick={props.clickeable && handleButtonClick} className={classes.card}>
+            <Card onClick={props.clickeable ? handleButtonClick : () => {}} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
                 <CardHeader
                     title={props.name}
@@ -100,7 +101,7 @@ const EventItem = (props) => {
                                     ))}
                         </div>
                         {isUserDataConfigured && (
-                            <IconButton onClick={props.clickeable && handleLike} style={{ marginRight: -5 }}>
+                            <IconButton onClick={props.clickeable ? handleLike : () => {}} style={{ marginRight: -5 }}>
                                 <Tooltip title={isLiked ? t('liked.unlike') : t('liked.like')}>
                                     {isLiked ? <Favorite /> : <FavoriteBorder color="disabled" />}
                                 </Tooltip>
