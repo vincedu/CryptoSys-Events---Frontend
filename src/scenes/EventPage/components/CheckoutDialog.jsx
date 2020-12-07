@@ -264,12 +264,12 @@ CheckoutDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     newTickets: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        quantity: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-    }).isRequired,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        quantity: PropTypes.number,
+        price: PropTypes.number,
+        image: PropTypes.string,
+    }),
     otherTickets: PropTypes.shape({
         name: PropTypes.string,
         description: PropTypes.string,
@@ -280,6 +280,10 @@ CheckoutDialog.propTypes = {
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
     }).isRequired,
+};
+
+CheckoutDialog.defaultProps = {
+    newTickets: {},
 };
 
 export default CheckoutDialog;
