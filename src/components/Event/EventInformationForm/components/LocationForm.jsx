@@ -20,7 +20,6 @@ const LocationForm = (props) => {
     };
     const { t } = useTranslation();
 
-    console.log(props.value.location);
     return (
         <TitledPaper title={t('createEvent.location.title')}>
             <Typography variant="subtitle1" style={{ paddingBottom: 15 }}>

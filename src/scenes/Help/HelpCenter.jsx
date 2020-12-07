@@ -85,7 +85,7 @@ const HelpCenter = () => {
                                         {t('helpCenter.why')}
                                     </Typography>
                                     <br />
-                                    <Typography className={classes.caracteristicText} variant="body1">
+                                    <Typography style={{ color: '#4B5974' }} variant="body1">
                                         {t('helpCenter.whyDesc')}
                                     </Typography>
                                 </div>
@@ -104,13 +104,13 @@ const HelpCenter = () => {
                                         {t('helpCenter.nft')}
                                     </Typography>
                                     <br />
-                                    <Typography className={classes.caracteristicText} variant="subtitle1">
+                                    <Typography style={{ color: '#4B5974' }} variant="subtitle1">
                                         {t('helpCenter.nftDesc')}
                                     </Typography>
                                 </div>
                             </Grid>
                         </Grid>
-                        <Grid container justify="space-around" style={{ padding: '60px 0 30px' }}>
+                        <Grid container justify="space-evenly" style={{ padding: '60px 0 30px' }}>
                             <Grid item xs={11} sm={3}>
                                 <Grid container justify="center">
                                     <Grid item sm={4}>
