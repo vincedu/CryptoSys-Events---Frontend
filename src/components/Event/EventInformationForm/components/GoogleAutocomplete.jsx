@@ -112,6 +112,7 @@ const GoogleAutocomplete = (props) => {
                 <TextField
                     {...params}
                     error={props.error}
+                    value={props.value}
                     label={t('createEvent.location.search')}
                     variant="outlined"
                     fullWidth
@@ -151,6 +152,7 @@ const GoogleAutocomplete = (props) => {
 GoogleAutocomplete.propTypes = {
     onChange: PropTypes.func.isRequired,
     error: PropTypes.bool.isRequired,
+    value: PropTypes.string.isRequired,
 };
 
 export default GoogleAutocomplete;

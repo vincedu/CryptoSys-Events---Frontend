@@ -30,7 +30,11 @@ const LocationForm = (props) => {
                     <LocationButtonGroup value={props.value.locationType.value} onChange={handleChange} />
                 </Grid>
                 <Grid item xs={12} sm={8} hidden={locationType === 'online' || locationType === 'tbd'}>
-                    <GoogleAutocomplete onChange={handleChange} error={props.value.location.error} />
+                    <GoogleAutocomplete
+                        onChange={handleChange}
+                        error={props.value.location.error}
+                        value={props.value.location.value}
+                    />
                 </Grid>
                 <Grid item xs={12} sm={8} hidden={locationType === 'venue' || locationType === 'tbd'}>
                     <TextField
