@@ -60,10 +60,12 @@ const Dashboard = () => {
                 <PageContainer>
                     <TitledPaper title={t('eventsDashboard.title')}>
                         <GlobalStats />
-                        <TitledPaper title={t('ticketList.upcoming')} />
-                        <CreatedEventList events={filterEvents(events, true)} />
-                        <TitledPaper title={t('ticketList.past')} />
-                        <CreatedEventList events={filterEvents(events, false)} />
+                        <TitledPaper title={t('ticketList.upcoming')}>
+                            <CreatedEventList events={filterEvents(events, true)} />
+                        </TitledPaper>
+                        <TitledPaper title={t('ticketList.past')}>
+                            <CreatedEventList events={filterEvents(events, false)} />
+                        </TitledPaper>
                     </TitledPaper>
                 </PageContainer>
             )}
