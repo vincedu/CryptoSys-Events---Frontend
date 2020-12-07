@@ -76,7 +76,7 @@ const EventItem = (props) => {
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} className={classes.root}>
-            <Card onClick={props.clickeable && handleButtonClick} className={classes.card}>
+            <Card onClick={props.clickeable ? handleButtonClick : () => {}} className={classes.card}>
                 <CardMedia className={classes.media} image={props.image} title={props.name} />
                 <CardHeader
                     title={props.name}

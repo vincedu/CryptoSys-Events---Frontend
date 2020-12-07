@@ -7,7 +7,7 @@ import firebase from 'firebase';
 import HelpMenu from './menu/HelpMenu';
 import ProfileMenu from './menu/ProfileMenu';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'sticky',
         zIndex: 2,
@@ -26,6 +26,10 @@ const useStyles = makeStyles(() => ({
     avatar: {
         width: 'auto',
         height: '5vh',
+        marginRight: 6,
+        [theme.breakpoints.down('xs')]: {
+            marginRight: 0,
+        },
     },
     transparent: {
         backgroundColor: 'transparent',

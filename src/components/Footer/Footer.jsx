@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         width: 'auto',
         height: '4vh',
+        marginRight: 6,
+        [theme.breakpoints.down('xs')]: {
+            marginRight: 0,
+        },
     },
     links: {
         color: '#fff',

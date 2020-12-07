@@ -1,108 +1,160 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@material-ui/core';
+import {
+    TimelineOppositeContent,
+    TimelineItem,
+    Timeline,
+    TimelineDot,
+    TimelineContent,
+    TimelineSeparator,
+    TimelineConnector,
+} from '@material-ui/lab';
 import { PageContainer } from '@components';
 
-const useStyles = makeStyles((theme) => ({
-    '@keyframes float': {
-        '0%': {
-            transform: 'translatey(0px)',
-        },
-        '50%': {
-            transform: 'translatey(-5px)',
-        },
-        '100%': {
-            transform: 'translatey(0px)',
-        },
-    },
-    img: {
-        width: '100%',
-        objectFit: 'contain',
-        animation: '$float 6s ease-in-out infinite',
-    },
-    caracteristic: {
-        padding: 30,
-        textAlign: 'center',
-        [theme.breakpoints.down('xs')]: {
-            padding: '20px!important',
-            justifyContent: 'center',
-        },
-    },
-    categoryTitle: {
-        fontFamily: `'Bebas Neue', sans-serif`,
-    },
-}));
-
 const GetStarted = () => {
-    const classes = useStyles();
     const { t } = useTranslation();
 
     return (
         <PageContainer>
-            <Grid container justify="center">
-                <Grid item xs={11} sm={10} md={9}>
-                    <Grid container alignItems="center" justify="center" spacing={2}>
-                        <Grid item xs={12} style={{ padding: 20 }}>
-                            <Typography className={classes.categoryTitle} variant="h1" color="secondary">
-                                {t('getStarted.title')}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={8} md={6}>
-                            <div className={classes.ticketText}>
-                                <Typography color="primary" variant="h4">
+            <Grid container>
+                <Grid item xs={9} style={{ padding: 20, textAlign: 'center' }}>
+                    <Typography style={{ fontFamily: `'Bebas Neue', sans-serif` }} variant="h1" color="secondary">
+                        {t('getStarted.title')}
+                    </Typography>
+                </Grid>
+                <Grid item xs={11} sm={10}>
+                    <Timeline style={{ paddingBottom: 40 }}>
+                        <TimelineItem>
+                            <TimelineOppositeContent>
+                                <Typography style={{ fontWeight: 900, marginTop: '0.75em' }} variant="h4">
+                                    <a
+                                        href="https://all-access.wax.io/"
+                                        style={{ color: '#9f6e01', textDecoration: 'none' }}
+                                    >
+                                        Wax Cloud Wallet
+                                    </a>
+                                </Typography>
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot style={{ backgroundColor: '#fdc830' }}>
+                                    <img src="wax_getstarted.svg" alt="wax" style={{ width: '5em', height: '5em' }} />
+                                </TimelineDot>
+                                <TimelineConnector style={{ backgroundColor: '#fdc830', width: 6 }} />
+                            </TimelineSeparator>
+                            <TimelineContent style={{ paddingBottom: 100 }}>
+                                <Typography variant="h5" color="primary" style={{ fontWeight: 900 }}>
                                     {t('getStarted.waxTitle')}
                                 </Typography>
-                                <br />
                                 <Typography color="primary" variant="body1">
                                     {t('getStarted.waxDescription1')}
-                                    <a href="https://waxsweden.org/create-testnet-account/">
-                                        https://waxsweden.org/create-account
+                                    <a
+                                        href="https://waxsweden.org/create-testnet-account/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Wax Sweden
                                     </a>
                                 </Typography>
                                 <Typography color="primary" variant="body1">
                                     {t('getStarted.waxDescription2')}
                                 </Typography>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <img src="wax_logo.png" alt="eos" className={classes.img} />
-                        </Grid>
-                        <Grid item xs={10} sm={5}>
-                            <img src="anchor_logo.png" alt="ticket" className={classes.img} />
-                        </Grid>
-                        <Grid item xs={12} sm={7} md={6}>
-                            <div className={classes.ticketText}>
-                                <Typography color="primary" variant="h4">
+                            </TimelineContent>
+                        </TimelineItem>
+                        <TimelineItem>
+                            <TimelineOppositeContent>
+                                <Typography style={{ fontWeight: 900, marginTop: '0.75em' }} variant="h4">
+                                    <a
+                                        href="https://greymass.com/anchor/"
+                                        style={{ color: '#3650a2', textDecoration: 'none' }}
+                                    >
+                                        Anchor
+                                    </a>
+                                </Typography>
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot style={{ backgroundColor: '#3650a2' }}>
+                                    <img
+                                        src="anchor_getstarted.svg"
+                                        alt="anchor"
+                                        style={{ width: '4em', height: '4em', margin: 10 }}
+                                    />
+                                </TimelineDot>
+                                <TimelineConnector style={{ backgroundColor: '#3650a2', width: 6 }} />
+                            </TimelineSeparator>
+                            <TimelineContent style={{ paddingBottom: 100 }}>
+                                <Typography variant="h5" color="primary" style={{ fontWeight: 900 }}>
                                     {t('getStarted.anchorTitle')}
                                 </Typography>
-                                <br />
-                                <Typography color="primary" variant="subtitle1">
+                                <Typography color="primary" variant="body1">
                                     {t('getStarted.anchorDescription1')}
-                                    <a href="https://greymass.com/en/anchor/">https://greymass.com/en/anchor/.</a>
+                                    <a href="https://greymass.com/en/anchor/" target="_blank" rel="noopener noreferrer">
+                                        Greymass
+                                    </a>
                                 </Typography>
-                                <Typography color="primary" variant="subtitle1">
+                                <Typography color="primary" variant="body1">
                                     {t('getStarted.anchorDescription2')}
                                 </Typography>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={8} md={6}>
-                            <div className={classes.ticketText}>
-                                <Typography color="primary" variant="h4">
+                            </TimelineContent>
+                        </TimelineItem>
+                        <TimelineItem>
+                            <TimelineOppositeContent>
+                                <Typography
+                                    color="primary"
+                                    style={{ fontWeight: 900, marginTop: '0.75em' }}
+                                    variant="h4"
+                                >
+                                    Spectacular
+                                </Typography>
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot color="primary">
+                                    <img
+                                        src="/spectacular.svg"
+                                        alt="spectacular"
+                                        style={{ width: '3.5em', height: '3.5em', margin: 15 }}
+                                    />
+                                </TimelineDot>
+                                <TimelineConnector style={{ backgroundColor: '#324856', width: 6 }} />
+                            </TimelineSeparator>
+                            <TimelineContent style={{ paddingBottom: 100 }}>
+                                <Typography variant="h5" color="primary" style={{ fontWeight: 900 }}>
                                     {t('getStarted.spectacularTitle')}
                                 </Typography>
-                                <br />
                                 <Typography color="primary" variant="body1">
                                     {t('getStarted.spectacularDescription')}
                                 </Typography>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <div>
-                                <img src="spectacularblue.svg" alt="eos" className={classes.img} />
-                            </div>
-                        </Grid>
-                    </Grid>
+                            </TimelineContent>
+                        </TimelineItem>
+                        <TimelineItem>
+                            <TimelineOppositeContent>
+                                <Typography
+                                    color="secondary"
+                                    style={{ fontWeight: 900, marginTop: '0.75em' }}
+                                    variant="h4"
+                                >
+                                    {t('getStarted.connect')}
+                                </Typography>
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineDot color="secondary">
+                                    <img
+                                        src="/connect.svg"
+                                        alt="connect"
+                                        style={{ width: '3.5em', height: '3.5em', margin: 15 }}
+                                    />
+                                </TimelineDot>
+                            </TimelineSeparator>
+                            <TimelineContent>
+                                <Typography variant="h5" color="primary" style={{ fontWeight: 900 }}>
+                                    {t('getStarted.connectTitle')}
+                                </Typography>
+                                <Typography color="primary" variant="body1">
+                                    {t('getStarted.connectDescription')}
+                                </Typography>
+                            </TimelineContent>
+                        </TimelineItem>
+                    </Timeline>
                 </Grid>
             </Grid>
         </PageContainer>

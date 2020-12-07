@@ -57,11 +57,14 @@ const CustomAccordionSummary = withStyles({
     root: {
         minHeight: 20,
         padding: 0,
+        justifyContent: 'flex-start',
+        width: 'fit-content',
         '&$expanded': {
             minHeight: 20,
         },
     },
     content: {
+        flex: 0,
         margin: '5px 0',
         '&$expanded': {
             margin: '5px 0 0 0',
@@ -143,6 +146,7 @@ const CustomRefinementList = (props) => {
     const attribute = {};
     if (location.state?.category && props.attribute === 'category')
         attribute.defaultRefinement = [location.state.category];
+    if (location.state?.tag && props.attribute === 'tags') attribute.defaultRefinement = [location.state.tag];
     attribute.attribute = props.attribute;
     attribute.limit = showMore;
 

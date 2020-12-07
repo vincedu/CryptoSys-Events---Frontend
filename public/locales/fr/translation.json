@@ -203,18 +203,22 @@
     "fast": "Rapide",
     "fastDesc": "EOS.IO est l'une des chaine de blocs la plus rapide",
     "eos": "EOS",
-    "eosDesc": "Supporté par la chaine de blocs EOS"
+    "eosDesc": "Supporté par la chaine de blocs EOS",
+    "technologies": "Basé sur des technologies fiables"
   },
   "getStarted": {
     "title": "Démarrer",
     "waxTitle": " Étape 1: Créer un compte WAX",
-    "waxDescription1": "La première étape pour avoir accès à tous les avantages de la plateforme Spectacular est de créer un compte WAX au : ",
+    "waxDescription1": "La première étape pour avoir accès à tous les avantages de la plateforme Spectacular est de créer un compte WAX sur ",
     "waxDescription2": "Une fois votre compte créé, ne pas oublier d'enregistrer vos clés privées et publiques sécuritairement (hors ligne). Vous pouvez aussi ajouter des WAX à votre compte à la même adresse.",
     "anchorTitle": "Étape 2: Télécharger Anchor Wallet",
-    "anchorDescription1": "La deuxième étape consiste à télécharger l'application Anchor Wallet. Cette application va gérer vos clés privées et publiques. Vous pouvez télécharger l'application pour MacOS, Windows et Linux ici : ",
+    "anchorDescription1": "La deuxième étape consiste à télécharger l'application Anchor Wallet. Cette application va gérer vos clés privées et publiques. Vous pouvez télécharger l'application pour MacOS, Windows et Linux ici ",
     "anchorDescription2": "Pour utiliser Anchor Wallet il faudra choisir la bonne chaine de bloc et ensuite lier la clé privée de votre compte Wax au Wallet Anchor.",
     "spectacularTitle": "Étape 3: Créer un compte Spectacular",
-    "spectacularDescription": "Créer votre compte sur Spectacular pour ensuite lier votre compte Wax à votre profile."
+    "spectacularDescription": "Créer votre compte sur Spectacular pour ensuite lier votre compte Wax à votre profile.",
+    "connect": "Connectez",
+    "connectTitle": "Étape 4 : Connectez",
+    "connectDescription": "Rejoignez les gens à travers le monde et bénéficier des avantages d'une appication décentralisée"
   },
   "eventsDashboard": {
     "title": "Tableau de bord des mes événements",
@@ -323,7 +327,7 @@
   "Health & Wellness": "Santé",
   "Hobbies & Special Interest": "Loisirs et intérêts particuliers",
   "Home & Lifestyle": "Maison et style de vie",
-  "Music": "La musique",
+  "Music": "Musique",
   "Performing & Visual Arts": "Arts du spectacle et visuels",
   "Religion & Spirituality": "Religion et spiritualité",
   "School Activities": "Activités scolaires",

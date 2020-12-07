@@ -53,8 +53,10 @@ const EventList = (props) => {
                 },
             })
             .then((result) => {
-                if (result.data.eventsByParam.length) window.scrollTo(0, pos);
-                else setIsMore(false);
+                if (result.data.eventsByParam.length) {
+                    window.scrollTo(0, pos);
+                    if (result.data.eventsByParam.length < 4) setIsMore(false);
+                } else setIsMore(false);
             });
     }
     const handleCategory = (category) => {
@@ -100,10 +102,12 @@ const EventList = (props) => {
                         />
                     ))}
                 </Grid>
-                <div className={classes.seeMoreBtn}>
-                    <Button variant="outlined" color="secondary" disabled={!isMore} onClick={loadMore}>
-                        {isMore ? t('eventList.seeMore') : t('eventList.noMore')} {t(props.category)}
-                    </Button>
+                <div hidden={query.data.eventsByParam.length < 4}>
+                    <div className={classes.seeMoreBtn}>
+                        <Button variant="outlined" color="secondary" disabled={!isMore} onClick={loadMore}>
+                            {isMore ? t('eventList.seeMore') : t('eventList.noMore')} {t(props.category)}
+                        </Button>
+                    </div>
                 </div>
             </div>
         );
